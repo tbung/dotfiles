@@ -14,8 +14,8 @@ Documents/WindowsPowerShell/*
 !Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
 
 # Keep the ConEmu config
-!AppData/
-AppData/*
-!AppData/Roaming/
-AppData/Roaming/*
-!AppData/Roaming/ConEmu.xml
+# !AppData/
+# AppData/*
+# !AppData/Roaming/
+# AppData/Roaming/*
+# !AppData/Roaming/ConEmu.xml
