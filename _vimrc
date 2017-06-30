@@ -30,6 +30,7 @@ set backspace=indent,eol,start
 filetype plugin indent on
 syntax on
 set textwidth=100
+set timeout timeoutlen=3000 ttimeoutlen=100
 
 " Allow easy buffer switching
 set hidden
