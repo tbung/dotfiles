@@ -29,8 +29,12 @@ set smartindent
 set backspace=indent,eol,start
 filetype plugin indent on
 syntax on
-set textwidth=100
 set timeout timeoutlen=3000 ttimeoutlen=100
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+
+set textwidth=100
+set scrolloff=2
 
 " Allow easy buffer switching
 set hidden
@@ -54,10 +58,12 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+let g:vim_markdown_folding_disabled = 1
+
 " Make Conemu work
 if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     set term=xterm
-    "set t_ut=
+    set t_ut=
     set t_Co=256
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
