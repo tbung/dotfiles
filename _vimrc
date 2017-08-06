@@ -10,6 +10,7 @@ Plug 'kien/ctrlp.vim'
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'vim-syntastic/syntastic'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'plasticboy/vim-markdown'
@@ -57,6 +58,11 @@ let g:airline_theme='onedark'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 let g:vim_markdown_folding_disabled = 1
 
