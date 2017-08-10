@@ -9,6 +9,8 @@ Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'joshdick/onedark.vim'             " Nice color scheme
 Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
+Plug 'scrooloose/nerdtree'              " Better file tree
+Plug 'Xuyuanp/nerdtree-git-plugin'      " Git support for file tree
 
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
@@ -16,6 +18,8 @@ Plug 'vim-syntastic/syntastic'          " Syntax checker, requires checker itsel
 Plug 'vim-airline/vim-airline'          " Nice status and tab bar
 Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
 Plug 'plasticboy/vim-markdown'          " Better markdown support
+
+Plug 'ryanoasis/vim-devicons'           " Nice icons in stuff, needs compatible font
 
 call plug#end()
 
@@ -100,6 +104,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 let g:vim_markdown_folding_disabled = 1
+
+map <C-n> :NERDTreeToggle<CR>
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Make Conemu work
 if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
