@@ -110,6 +110,8 @@ if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     let &t_AF="\e[38;5;%dm"
     inoremap <Char-0x07F> <BS>
     nnoremap <Char-0x07F> <BS>
+    onoremap <Char-0x07F> <BS>
+    cnoremap <Char-0x07F> <BS>
     set termguicolors
 endif
 
