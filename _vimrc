@@ -70,11 +70,17 @@ set scrolloff=2
 set hidden
 map <C-T> :buffers<CR>:buffer<Space>
 
-" Disable arrow keys
+" Disable arrow keys in normal mode
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+
+" Disable arrow keys in insert mode
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
 
 colorscheme onedark
 
