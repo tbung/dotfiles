@@ -1,40 +1,69 @@
+" Make vim non-vi-compatible because that is useless
 set nocompatible
 
+" Call our plugin manager
 call plug#begin('~\vimfiles\bundle')
 
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'joshdick/onedark.vim'
-Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'               " Easy surrounding things with brackets etc.
+Plug 'tpope/vim-fugitive'               " In-vim git stuff
+Plug 'tpope/vim-commentary'             " Easy comment-out stuff
+Plug 'joshdick/onedark.vim'             " Nice color scheme
+Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
 
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'vim-syntastic/syntastic'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'plasticboy/vim-markdown'
+Plug 'SirVer/ultisnips'                 " Snippets engine
+Plug 'honza/vim-snippets'               " Some default snippets
+Plug 'vim-syntastic/syntastic'          " Syntax checker, requires checker itself to be installed (e.g. flake8 for python)
+Plug 'vim-airline/vim-airline'          " Nice status and tab bar
+Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
+Plug 'plasticboy/vim-markdown'          " Better markdown support
 
 call plug#end()
 
+" Always use utf-8
 set encoding=utf-8
+
+" Display line numbers relative to current line, makes moving easier
 set relativenumber
+
+" Display real line number on current line
 set number
+
+" Highlight found stuff while still searching
 set incsearch
+
+" Spaces > tabs
 set expandtab
+
+" 4 spaces = 1 tab
 set shiftwidth=4
 set softtabstop=4
+
+" Display current position in bottom right
 set ruler
+
+" Autoindent based on previous line
 set autoindent
-set smartindent
-set backspace=indent,eol,start
+
+" Autoindent based on filetype
 filetype plugin indent on
+
+" Make backspace behave as expected
+set backspace=indent,eol,start
+
+" Syntax highlighting
 syntax on
+
+" Stop vim from waiting for another cmd when pressing esc
 set timeout timeoutlen=3000 ttimeoutlen=100
+
+" Disable warning bell
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
+" Auto-linebreak afte 100 characters
 set textwidth=100
+
+" Always keep 2 lines after cursor
 set scrolloff=2
 
 " Allow easy buffer switching
