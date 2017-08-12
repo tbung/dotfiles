@@ -6,6 +6,9 @@
 # Keep _vimrc
 !_vimrc
 
+# Keep .eslint
+!.eslintrc
+
 # Keep the powershell profile
 !Documents/
 Documents/*

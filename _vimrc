@@ -70,6 +70,10 @@ set textwidth=100
 " Always keep 2 lines after cursor
 set scrolloff=2
 
+" Use LF as line ending character
+set fileformat=unix
+set fileformats=unix,dos
+
 " Allow easy buffer switching
 set hidden
 map <C-T> :buffers<CR>:buffer<Space>
@@ -102,6 +106,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
 
 let g:vim_markdown_folding_disabled = 1
 
