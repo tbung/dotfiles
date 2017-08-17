@@ -10,7 +10,6 @@ Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'joshdick/onedark.vim'             " Nice color scheme
 Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
 Plug 'scrooloose/nerdtree'              " Better file tree
-Plug 'Xuyuanp/nerdtree-git-plugin'      " Git support for file tree
 
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
@@ -18,8 +17,6 @@ Plug 'vim-syntastic/syntastic'          " Syntax checker, requires checker itsel
 Plug 'vim-airline/vim-airline'          " Nice status and tab bar
 Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
 Plug 'plasticboy/vim-markdown'          " Better markdown support
-
-Plug 'ryanoasis/vim-devicons'           " Nice icons in stuff, needs compatible font
 
 call plug#end()
 
@@ -74,9 +71,8 @@ set scrolloff=2
 set fileformat=unix
 set fileformats=unix,dos
 
-" Allow easy buffer switching
-set hidden
-map <C-T> :buffers<CR>:buffer<Space>
+" Disable swap files
+set noswapfile
 
 " Disable arrow keys in normal mode
 noremap <Up> <NOP>
@@ -127,16 +123,4 @@ if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     onoremap <Char-0x07F> <BS>
     cnoremap <Char-0x07F> <BS>
     set termguicolors
-endif
-
-if has("gui_running")
-    " GUI is running or is about to start.
-    " Maximize gvim window.
-    set lines=42 columns=120
-    set guifont=Hack:h12:b
-    set guioptions-=m  "remove menu bar
-    set guioptions-=T  "remove toolbar
-    set guioptions-=r  "remove right-hand scroll bar
-    set guioptions-=L  "remove left-hand scroll bar
-    set rop=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
 endif
