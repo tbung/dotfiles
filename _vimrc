@@ -16,7 +16,9 @@ Plug 'honza/vim-snippets'               " Some default snippets
 Plug 'vim-syntastic/syntastic'          " Syntax checker, requires checker itself to be installed (e.g. flake8 for python)
 Plug 'vim-airline/vim-airline'          " Nice status and tab bar
 Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
+
 Plug 'plasticboy/vim-markdown'          " Better markdown support
+Plug 'PProvost/vim-ps1'                 " PowerShell support
 
 call plug#end()
 
