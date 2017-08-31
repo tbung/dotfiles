@@ -76,6 +76,9 @@ set fileformats=unix,dos
 " Disable swap files
 set noswapfile
 
+" Allow switching between buffers without having to save
+set hidden
+
 " Disable arrow keys in normal mode
 noremap <Up> <NOP>
 noremap <Down> <NOP>
