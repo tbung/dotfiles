@@ -2,7 +2,7 @@
 set nocompatible
 
 " Call our plugin manager
-call plug#begin('~\vimfiles\bundle')
+call plug#begin('~/.vim/bundle')
 
 Plug 'tpope/vim-surround'               " Easy surrounding things with brackets etc.
 Plug 'tpope/vim-fugitive'               " In-vim git stuff
@@ -92,6 +92,7 @@ inoremap <Left> <NOP>
 inoremap <Right> <NOP>
 
 colorscheme onedark
+set termguicolors
 
 " Configure Plugins
 set laststatus=2
@@ -127,5 +128,4 @@ if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
     nnoremap <Char-0x07F> <BS>
     onoremap <Char-0x07F> <BS>
     cnoremap <Char-0x07F> <BS>
-    set termguicolors
 endif
