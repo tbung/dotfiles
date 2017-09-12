@@ -116,16 +116,3 @@ map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Make Conemu work
-if has('win32') && !has('gui_running') && !empty($CONEMUBUILD)
-    set term=xterm
-    set t_ut=
-    set t_Co=256
-    let &t_AB="\e[48;5;%dm"
-    let &t_AF="\e[38;5;%dm"
-    inoremap <Char-0x07F> <BS>
-    nnoremap <Char-0x07F> <BS>
-    onoremap <Char-0x07F> <BS>
-    cnoremap <Char-0x07F> <BS>
-endif
