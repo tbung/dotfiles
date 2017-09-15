@@ -63,8 +63,8 @@ set timeout timeoutlen=3000 ttimeoutlen=100
 set noerrorbells visualbell t_vb=
 autocmd GUIEnter * set visualbell t_vb=
 
-" Auto-linebreak afte 100 characters
-set textwidth=100
+" Auto-linebreak after n characters
+set textwidth=79
 
 " Always keep 2 lines after cursor
 set scrolloff=2
