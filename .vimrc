@@ -7,6 +7,7 @@ call plug#begin('~/.vim/bundle')
 Plug 'tpope/vim-surround'               " Easy surrounding things with brackets etc.
 Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
+Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'joshdick/onedark.vim'             " Nice color scheme
 Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
 Plug 'scrooloose/nerdtree'              " Better file tree
