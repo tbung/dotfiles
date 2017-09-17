@@ -9,12 +9,13 @@ Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'joshdick/onedark.vim'             " Nice color scheme
-Plug 'kien/ctrlp.vim'                   " Fuzzy file finder
+Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
 Plug 'scrooloose/nerdtree'              " Better file tree
 
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
-Plug 'vim-syntastic/syntastic'          " Syntax checker, requires checker itself to be installed (e.g. flake8 for python)
+" Plug 'vim-syntastic/syntastic'          " Syntax checker, requires checker itself to be installed (e.g. flake8 for python)
+Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'          " Nice status and tab bar
 Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
 
@@ -104,12 +105,6 @@ let g:airline_theme='onedark'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
 
 let g:vim_markdown_folding_disabled = 1
 
