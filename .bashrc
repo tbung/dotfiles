@@ -22,3 +22,6 @@ export PS1='\[\e[0;36m\]\[\e[0;36m\]\W\[\033[0;35m\]$(__git_ps1 " [%s]")\[\e[0m\
 export PATH="/home/tillb/miniconda3/bin:$PATH"
 
 alias ls='ls --color=auto'
+
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
