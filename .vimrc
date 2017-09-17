@@ -9,18 +9,16 @@ Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'joshdick/onedark.vim'             " Nice color scheme
-Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
+Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy file finder
 Plug 'scrooloose/nerdtree'              " Better file tree
 
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
-" Plug 'vim-syntastic/syntastic'          " Syntax checker, requires checker itself to be installed (e.g. flake8 for python)
-Plug 'w0rp/ale'
+Plug 'w0rp/ale'                         " Syntax checker, requires checker itself to be installed (e.g. flake8 for python)
 Plug 'vim-airline/vim-airline'          " Nice status and tab bar
 Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
 
-Plug 'plasticboy/vim-markdown'          " Better markdown support
-Plug 'PProvost/vim-ps1'                 " PowerShell support
+Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 
 call plug#end()
 
@@ -94,6 +92,7 @@ inoremap <Left> <NOP>
 inoremap <Right> <NOP>
 
 colorscheme onedark
+set background=dark
 set termguicolors
 
 " Configure Plugins
@@ -106,7 +105,8 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-let g:vim_markdown_folding_disabled = 1
+" Markdown plugin currently not highlighting headers
+let g:polyglot_disabled = ['markdown']
 
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
