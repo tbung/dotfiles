@@ -4,7 +4,7 @@ set nocompatible
 " Call our plugin manager
 call plug#begin('~/.vim/bundle')
 
-Plug 'tpope/vim-surround'               " Easy surrounding things with brackets etc.
+Plug 'tpope/vim-surround'               " Easy surrounding things with brackets
 Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
@@ -14,7 +14,8 @@ Plug 'scrooloose/nerdtree'              " Better file tree
 
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
-Plug 'w0rp/ale'                         " Syntax checker, requires checker itself to be installed (e.g. flake8 for python)
+Plug 'w0rp/ale'                         " Syntax checker, requires checker itself
+                                        " to be installed
 Plug 'vim-airline/vim-airline'          " Nice status and tab bar
 Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
 
