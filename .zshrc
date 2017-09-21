@@ -11,8 +11,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-export PATH="/home/tillb/miniconda3/bin:$PATH"
-export PATH="~/.npm-global/bin:$PATH"
+export PATH=/home/tillb/miniconda3/bin:$PATH
+export PATH=/home/tillb/.npm-global/bin:$PATH
 
 setopt prompt_subst
 source /usr/share/git/completion/git-prompt.sh
