@@ -8,9 +8,12 @@ Plug 'tpope/vim-surround'               " Easy surrounding things with brackets
 Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
+Plug 'tpope/vim-dispatch'
 Plug 'joshdick/onedark.vim'             " Nice color scheme
-Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy file finder
 Plug 'scrooloose/nerdtree'              " Better file tree
+
+Plug '/usr/bin/fzf'
+Plug 'junegunn/fzf.vim'
 
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
@@ -80,6 +83,9 @@ set noswapfile
 " Allow switching between buffers without having to save
 set hidden
 
+" Since airline tells us the mode, vim does not need to
+set noshowmode
+
 " Disable arrow keys in normal mode
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -92,16 +98,30 @@ inoremap <Down> <NOP>
 inoremap <Left> <NOP>
 inoremap <Right> <NOP>
 
+" Colors
 colorscheme onedark
 set background=dark
 set termguicolors
 
-" Configure Plugins
+" Airline config
 set laststatus=2
-let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_format = '%s '
 let g:airline_theme='onedark'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.maxlinenr = ' '
 
+" UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
@@ -109,7 +129,15 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " Markdown plugin currently not highlighting headers
 let g:polyglot_disabled = ['markdown']
 
+" NERDTree config
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Auto-run latex on write
+autocmd BufWritePost *.tex Dispatch! latexmk -pdf
+
+" FZF key bindings
+nnoremap <silent> <C-p> :Files<cr>
+nnoremap <silent> <C-t> :Buffers<cr>
