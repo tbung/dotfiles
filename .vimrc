@@ -19,9 +19,7 @@ Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
 Plug 'w0rp/ale'                         " Syntax checker, requires checker itself
                                         " to be installed
-Plug 'vim-airline/vim-airline'          " Nice status and tab bar
-Plug 'vim-airline/vim-airline-themes'   " Make it theme compatible
-
+Plug 'itchyny/lightline.vim'
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 
 call plug#end()
@@ -105,21 +103,9 @@ set termguicolors
 
 " Airline config
 set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#buffer_nr_format = '%s '
-let g:airline_theme='onedark'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.linenr = '☰'
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.maxlinenr = ' '
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ }
 
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -141,3 +127,5 @@ autocmd BufWritePost *.tex Dispatch! latexmk -pdf
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
 nnoremap <silent> <C-t> :Buffers<cr>
+
+" autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
