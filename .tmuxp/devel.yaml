@@ -1,5 +1,13 @@
 session_name: devel
 windows:
+- layout: b041,170x41,0,0,4
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: 
+  start_directory: /home/tillb
+  window_name: admin
 - layout: b03e,170x41,0,0,1
   options:
     automatic-rename: 'off'
@@ -14,13 +22,5 @@ windows:
   panes:
   - focus: 'true'
   - sleep 0.4 && clear
-  start_directory: /home/tillb/Projects/revnet
-  window_name: revnet
-- layout: b041,170x41,0,0,4
-  options:
-    automatic-rename: 'off'
-  panes:
-  - focus: 'true'
-    shell_command: 
-  start_directory: /home/tillb/Projects/revnet-report
-  window_name: revnet-report
+  start_directory: /home/tillb/Projects
+  window_name: devel

@@ -128,4 +128,4 @@ autocmd BufWritePost *.tex Dispatch! latexmk -pdf
 nnoremap <silent> <C-p> :Files<cr>
 nnoremap <silent> <C-t> :Buffers<cr>
 
-" autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2

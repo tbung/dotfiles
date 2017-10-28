@@ -1,0 +1,2 @@
+set from="till.bungert@galileiconsult.de"
+set sendmail="msmtp -a gc"

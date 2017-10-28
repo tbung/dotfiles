@@ -35,6 +35,7 @@ source /usr/share/fzf/key-bindings.zsh
 # Aliases
 alias ls='ls --color=auto'
 alias open='xdg-open'
+alias devel='tmuxp load devel'
 
 # Functions
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}  # gitignore.io cli
