@@ -10,6 +10,7 @@ Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'tpope/vim-dispatch'
 Plug 'joshdick/onedark.vim'             " Nice color scheme
+Plug 'dracula/vim'
 Plug 'scrooloose/nerdtree'              " Better file tree
 
 Plug '/usr/bin/fzf'
@@ -97,14 +98,14 @@ inoremap <Left> <NOP>
 inoremap <Right> <NOP>
 
 " Colors
-colorscheme onedark
+colorscheme dracula
 set background=dark
 set termguicolors
 
 " Airline config
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
+      \ 'colorscheme': 'Dracula',
       \ }
 
 " UltiSnips config
