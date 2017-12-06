@@ -22,6 +22,7 @@ Plug 'w0rp/ale'                         " Syntax checker, requires checker itsel
                                         " to be installed
 Plug 'itchyny/lightline.vim'
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
+Plug 'ludovicchabant/vim-gutentags'     " CTAGS
 
 call plug#end()
 
