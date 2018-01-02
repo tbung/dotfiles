@@ -11,6 +11,7 @@ Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'tpope/vim-dispatch'
 Plug 'joshdick/onedark.vim'             " Nice color scheme
 Plug 'dracula/vim'
+Plug 'chriskempson/base16-vim'
 Plug 'scrooloose/nerdtree'              " Better file tree
 
 Plug '/usr/bin/fzf'
@@ -99,7 +100,8 @@ inoremap <Left> <NOP>
 inoremap <Right> <NOP>
 
 " Colors
-colorscheme dracula
+" let base16colorspace=256
+colorscheme base16-dracula
 set background=dark
 set termguicolors
 
