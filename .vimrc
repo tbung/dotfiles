@@ -8,22 +8,18 @@ Plug 'tpope/vim-surround'               " Easy surrounding things with brackets
 Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
-Plug 'tpope/vim-dispatch'
-Plug 'joshdick/onedark.vim'             " Nice color scheme
-Plug 'dracula/vim'
-Plug 'chriskempson/base16-vim'
-Plug 'scrooloose/nerdtree'              " Better file tree
-
-Plug '/usr/bin/fzf'
-Plug 'junegunn/fzf.vim'
-
+Plug 'tpope/vim-dispatch'               " Dispatch console cmd
+Plug 'junegunn/vim-easy-align'          " Align stuff easily
+Plug 'chriskempson/base16-vim'          " All the colors one needs
+Plug '/usr/bin/fzf'                     " Fzf integration
+Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
 Plug 'w0rp/ale'                         " Syntax checker, requires checker itself
                                         " to be installed
-Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'            " Statusline, deprecated soon
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
-Plug 'ludovicchabant/vim-gutentags'     " CTAGS
+Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
 
 call plug#end()
 
@@ -105,7 +101,7 @@ colorscheme base16-dracula
 set background=dark
 set termguicolors
 
-" Airline config
+" Statusline config
 set laststatus=2
 let g:lightline = {
       \ 'colorscheme': 'Dracula',
@@ -116,14 +112,12 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+" EasyAlign key bindings
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
 " Markdown plugin currently not highlighting headers
 let g:polyglot_disabled = ['markdown']
-
-" NERDTree config
-map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Auto-run latex on write
 autocmd BufWritePost *.tex Dispatch! latexmk -pdf
@@ -131,5 +125,3 @@ autocmd BufWritePost *.tex Dispatch! latexmk -pdf
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
 nnoremap <silent> <C-t> :Buffers<cr>
-
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2

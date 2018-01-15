@@ -27,7 +27,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWCOLORHINTS=true
 
-export PROMPT=$'%F{blue}%1~%F{242}$(__git_ps1 " [ %s]") %F{magenta}❯%F{white} '
+export PROMPT=$'%F{blue}%1~%F{242}$(__git_ps1 " [ %s]") %F{red}❯%F{white} '
 
 # Some config stuff
 source /usr/share/fzf/key-bindings.zsh
@@ -36,6 +36,7 @@ source /usr/share/fzf/key-bindings.zsh
 alias ls='ls --color=auto'
 alias open='xdg-open'
 alias devel='tmuxp load devel'
+alias pytorch-docker='docker run --runtime=nvidia --ipc=host -it -v $(pwd):/workspace pytorch_cuda9:latest zsh'
 
 # Functions
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}  # gitignore.io cli
