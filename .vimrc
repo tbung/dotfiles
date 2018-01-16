@@ -9,6 +9,8 @@ Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'tpope/vim-dispatch'               " Dispatch console cmd
+Plug 'tpope/vim-vinegar'                " Better netrw browsing
+Plug 'tpope/vim-eunuch'                 " Unix commands made easy
 Plug 'junegunn/vim-easy-align'          " Align stuff easily
 Plug 'chriskempson/base16-vim'          " All the colors one needs
 Plug '/usr/bin/fzf'                     " Fzf integration
@@ -82,6 +84,9 @@ set hidden
 
 " Since airline tells us the mode, vim does not need to
 set noshowmode
+
+" Fold by default
+set foldmethod=syntax
 
 " Disable arrow keys in normal mode
 noremap <Up> <NOP>
