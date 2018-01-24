@@ -13,6 +13,7 @@
     ~/.zshrc: zshrc
     ~/.tldrrc: tldrrc
     ~/.mume: mume
+    ~/.condarc: condarc
 
 
 - shell:

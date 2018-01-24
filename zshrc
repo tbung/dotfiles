@@ -12,7 +12,6 @@ compinit
 # End of lines added by compinstall
 
 # Path extensions
-export PATH=/home/tillb/miniconda3/bin:$PATH
 export PATH=/home/tillb/.npm-global/bin:$PATH
 
 # Completion
@@ -44,3 +43,6 @@ function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}  # gitignore.io cl
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+source /home/tillb/miniconda3/etc/profile.d/conda.sh
+conda activate base
