@@ -35,7 +35,7 @@ source /usr/share/fzf/key-bindings.zsh
 alias ls='ls --color=auto'
 alias open='xdg-open'
 alias devel='tmuxp load devel'
-alias pytorch-docker='docker run --runtime=nvidia --ipc=host -it -v $(pwd):/workspace pytorch_cuda9:latest zsh'
+alias pytorch-docker='docker run --runtime=nvidia --ipc=host -it -v $(pwd):/workspace pytorch_tb:latest'
 
 # Functions
 function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}  # gitignore.io cli
