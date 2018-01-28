@@ -23,6 +23,8 @@ Plug 'itchyny/lightline.vim'            " Statusline, deprecated soon
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
 Plug 'maralla/completor.vim'            " Async completion engine
+Plug 'junegunn/goyo.vim'                " Distraction free writing
+Plug 'lervag/vimtex'                    " Better latex support
 
 call plug#end()
 
@@ -113,6 +115,9 @@ let g:lightline = {
       \ 'colorscheme': 'Dracula',
       \ }
 
+" Tell vim to assume latex instead of plaintex
+let g:tex_flavor='latex'
+
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -126,7 +131,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Markdown plugin currently not highlighting headers
-let g:polyglot_disabled = ['markdown']
+let g:polyglot_disabled = ['markdown', 'latex']
 
 " Auto-run latex on write
 autocmd BufWritePost *.tex Dispatch! latexmk -pdf
