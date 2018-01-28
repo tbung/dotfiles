@@ -22,6 +22,7 @@ Plug 'w0rp/ale'                         " Syntax checker, requires checker itsel
 Plug 'itchyny/lightline.vim'            " Statusline, deprecated soon
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
+Plug 'maralla/completor.vim'            " Async completion engine
 
 call plug#end()
 
@@ -116,6 +117,9 @@ let g:lightline = {
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Completor config
+let g:completor_python_binary = 'python'
 
 " EasyAlign key bindings
 xmap ga <Plug>(EasyAlign)
