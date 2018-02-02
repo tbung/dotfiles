@@ -134,7 +134,7 @@ nmap ga <Plug>(EasyAlign)
 let g:polyglot_disabled = ['markdown', 'latex']
 
 " Auto-run latex on write
-autocmd BufWritePost *.tex Dispatch! latexmk -pdf
+" autocmd BufWritePost *.tex Dispatch! latexmk -pdf
 
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
