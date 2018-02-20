@@ -1,1 +1,24 @@
-{}
+{
+  "mathRenderingOption": "MathJax",
+  "mathInlineDelimiters": [
+    [
+      "$",
+      "$"
+    ],
+    [
+      "\\(",
+      "\\)"
+    ]
+  ],
+  "mathBlockDelimiters": [
+    [
+      "$$",
+      "$$"
+    ],
+    [
+      "\\[",
+      "\\]"
+    ]
+  ],
+  "vscode_mpe_version": "0.3.2"
+}

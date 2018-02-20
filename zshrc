@@ -13,6 +13,7 @@ compinit
 
 # Path extensions
 export PATH=/home/tillb/.npm-global/bin:$PATH
+export PATH=/home/tillb/miniconda3/bin:$PATH
 
 # Completion
 zstyle ':completion:*:*:git:*' script /usr/share/git/completion/git-completion.zsh
