@@ -5,7 +5,7 @@ windows:
     automatic-rename: 'off'
   panes:
   - focus: 'true'
-    shell_command: zsh
+    shell_command: clear
   start_directory: /home/tillb
   window_name: admin
 - focus: 'true'
@@ -14,7 +14,7 @@ windows:
     automatic-rename: 'off'
   panes:
   - focus: 'true'
-    shell_command: zsh
+    shell_command: clear
   start_directory: /home/tillb/Documents
   window_name: writing
 - layout: ff78,239x55,0,0{144x55,0,0,3,94x55,145,0,4}
@@ -22,7 +22,7 @@ windows:
     automatic-rename: 'off'
   panes:
   - focus: 'true'
-    shell_command: zsh
-  - zsh
+    shell_command: sleep 0.4 && clear
+  - sleep 0.4 && clear
   start_directory: /home/tillb/Projects
   window_name: devel
