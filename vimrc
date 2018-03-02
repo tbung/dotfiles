@@ -24,6 +24,7 @@ Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
 Plug 'maralla/completor.vim'            " Async completion engine
 Plug 'junegunn/goyo.vim'                " Distraction free writing
+Plug 'junegunn/limelight.vim'           " Even more distraction free writing
 Plug 'lervag/vimtex'                    " Better latex support
 
 call plug#end()
@@ -117,6 +118,7 @@ let g:lightline = {
 
 " Tell vim to assume latex instead of plaintex
 let g:tex_flavor='latex'
+let g:vimtex_compiler_latexmk = {'callback' : 0}
 
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -133,8 +135,11 @@ nmap ga <Plug>(EasyAlign)
 " Markdown plugin currently not highlighting headers
 let g:polyglot_disabled = ['markdown', 'latex']
 
-" Auto-run latex on write
-" autocmd BufWritePost *.tex Dispatch! latexmk -pdf
+" Enter all the distraction free writing
+autocmd! User GoyoEnter Limelight
+autocmd User GoyoEnter ALEDisableBuffer
+autocmd! User GoyoLeave Limelight!
+autocmd User GoyoLeave ALEEnableBuffer
 
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
