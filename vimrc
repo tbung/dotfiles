@@ -133,7 +133,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Markdown plugin currently not highlighting headers
-let g:polyglot_disabled = ['markdown', 'latex']
+let g:polyglot_disabled = ['latex']
 
 " Enter all the distraction free writing
 autocmd! User GoyoEnter Limelight
