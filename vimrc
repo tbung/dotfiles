@@ -119,6 +119,7 @@ let g:lightline = {
 " Tell vim to assume latex instead of plaintex
 let g:tex_flavor='latex'
 let g:vimtex_compiler_latexmk = {'callback' : 0}
+let g:vimtex_view_method="mupdf"
 
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"

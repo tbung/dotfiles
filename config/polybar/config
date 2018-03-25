@@ -1,0 +1,307 @@
+[bar/top]
+width = 100%
+height = 40
+
+; monitor = ${env:MONITOR:eDP-1}
+
+background = #00282936
+foreground = #e9e9f4
+foreground-alt = #555
+
+fixed-center = true
+# bottom = true
+
+font-0 = "Noto Sans:style=Bold:pixelsize=10;1"
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
+font-3 = "Font Awesome 5 Brands:pixelsize=10;1"
+
+modules-left = i3
+# modules-center = date
+modules-right = player-info wireless-network pulseaudio date powermenu
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+
+[module/i3]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+enable-scroll = false
+
+format = <label-state>
+format-padding-right = 3
+
+label-unfocused-foreground = #e9e9f4
+label-unfocused-padding = 3
+
+label-focused-foreground = #e9e9f4
+label-focused-background = #c16772
+label-focused-padding = 3
+
+label-urgent-foreground = #e4b226
+label-urgent-padding = 3
+
+
+[module/cpu]
+type = internal/cpu
+
+interval = 1
+
+format = <label>
+format-padding = 2
+
+label =  %percentage%%
+
+
+[module/memory]
+type = internal/memory
+
+interval = 1
+
+format = <label>
+format-padding = 2
+
+label =  %gb_used% (%percentage_used%%)
+
+
+[module/temperature]
+type = internal/temperature
+
+interval = 1
+
+thermal-zone = 6
+
+warn-temperature = 80
+
+format = <ramp> <label>
+format-padding = 2
+
+format-warn = <ramp> <label-warn>
+format-warn-padding = 2
+
+label = %temperature%
+
+label-warn = %temperature%
+label-warn-foreground = #e4b226
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+
+
+[module/date]
+type = internal/date
+
+interval = 1
+
+date = %a %b %d,
+time = %H:%M
+
+date-alt = %A, %d %B %Y
+time-alt = %H:%M:%S
+
+format = <label>
+format-padding = 2
+
+label =  %date% %time%
+
+
+[module/battery]
+type = internal/battery
+
+full-at = 100
+
+battery = BAT1
+adapter = ACAD
+
+poll-interval = 5
+
+format-charging = <animation-charging> <label-charging>
+format-charging-padding = 2
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-padding = 2
+
+format-full = <ramp-capacity> <label-full>
+format-full-padding = 2
+
+label-charging = %percentage%%
+
+label-discharging = %percentage%%
+
+label-full = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 500
+
+
+[module/backlight]
+type = internal/backlight
+
+card = intel_backlight
+
+format = <label>
+format-padding = 2
+
+label =  %percentage%%
+
+
+[module/pavolume]
+type = custom/script
+
+interval = 1
+
+format-padding = 2
+
+exec = ~/scripts/pavolume.sh
+
+click-left = ~/scripts/pavolume.sh --togmute
+scroll-up = ~/scripts/pavolume.sh --up
+scroll-down = ~/scripts/pavolume.sh --down
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Available tags:
+;   <label-volume> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-volume = <ramp-volume> <label-volume>
+format-padding = 5
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+;format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;label-volume = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+label-muted =  muted
+label-muted-foreground = #66
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL
+label-volume-foreground = ${root.foreground}
+
+format-muted-prefix = " "
+format-muted-foreground = ${root.foreground-alt}
+label-muted = sound muted
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${root.foreground-alt}
+
+
+[module/powermenu]
+type = custom/menu
+
+label-open = 
+
+label-close = cancel
+
+label-close-background = #312842
+label-close-foreground = #ffeefc
+label-open-padding-left = 4
+label-open-padding-right = 3
+label-close-padding = 3
+
+menu-0-0 = lock
+menu-0-0-exec = ~/scripts/lock.sh
+menu-0-0-background = #312842
+menu-0-0-foreground = #c05c47
+menu-0-0-padding-right = 3
+
+menu-0-1 = reboot
+menu-0-1-exec = menu-open-1
+menu-0-1-background = #312842
+menu-0-1-foreground = #c05c47
+menu-0-1-padding-right = 3
+
+menu-0-2 = power off
+menu-0-2-exec = menu-open-2
+menu-0-2-background = #312842
+menu-0-2-foreground = #c05c47
+menu-0-2-padding-right = 3
+
+menu-1-0 = reboot?
+menu-1-0-exec = reboot
+menu-1-0-background = #312842
+menu-1-0-foreground = #e4b226
+menu-1-0-padding-right = 3
+
+menu-2-0 = power off?
+menu-2-0-exec = poweroff
+menu-2-0-background = #312842
+menu-2-0-foreground = #e4b226
+menu-2-0-padding-right = 3
+
+
+[module/wireless-network]
+type = internal/network
+
+interface = enp0s20f0u1
+
+format-connected = <label-connected>
+format-connected-padding = 2
+
+format-disconnected = <label-disconnected>
+format-disconnected-padding = 2
+
+label-connected =  %essid%
+
+label-disconnected =  None
+
+
+[module/player-info]
+type = custom/script
+
+exec = ~/.config/polybar/player-mpris-simple.sh
+
+interval = 3
+
+# click-left = playerctl previous
+# click-right = playerctl next
+# click-middle = playerctl play-pause
+click-left = playerctl play-pause
