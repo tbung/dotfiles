@@ -17,8 +17,8 @@ font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;1"
 
 modules-left = i3
-# modules-center = date
-modules-right = player-info wireless-network pulseaudio date powermenu
+modules-center = date
+modules-right = player-info wireless-network pulseaudio
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -109,7 +109,7 @@ time-alt = %H:%M:%S
 format = <label>
 format-padding = 2
 
-label =  %date% %time%
+label = %date% %time%
 
 
 [module/battery]
@@ -183,7 +183,8 @@ type = internal/pulseaudio
 ;   <ramp-volume>
 ;   <bar-volume>
 format-volume = <ramp-volume> <label-volume>
-format-padding = 5
+format-volume-background = #CD9120
+format-volume-padding = 2
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -284,6 +285,7 @@ type = internal/network
 interface = enp0s20f0u1
 
 format-connected = <label-connected>
+format-connected-background = #23518F
 format-connected-padding = 2
 
 format-disconnected = <label-disconnected>
@@ -296,6 +298,9 @@ label-disconnected =  None
 
 [module/player-info]
 type = custom/script
+
+format-background = #53CA88
+format-padding = 4
 
 exec = ~/.config/polybar/player-mpris-simple.sh
 
