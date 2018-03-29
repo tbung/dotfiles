@@ -1,6 +1,6 @@
 [bar/top]
 width = 100%
-height = 40
+height = 30
 
 ; monitor = ${env:MONITOR:eDP-1}
 
@@ -12,9 +12,9 @@ fixed-center = true
 # bottom = true
 
 font-0 = "Noto Sans:style=Bold:pixelsize=10;1"
-font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;1"
-font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;1"
-font-3 = "Font Awesome 5 Brands:pixelsize=10;1"
+font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;2"
+font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
+font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
 
 modules-left = i3
 # modules-center = date
@@ -22,6 +22,8 @@ modules-right = player-info wireless-network pulseaudio fuzzy-clock
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
+
+tray-position = right
 
 
 [module/i3]
@@ -32,18 +34,29 @@ strip-wsnumbers = true
 index-sort = true
 enable-scroll = false
 
-format = <label-state>
-format-padding-right = 3
+label-unfocused-background = ${root.background}
+label-unfocused-foreground = ${root.foreground}
 
-label-unfocused-foreground = #e9e9f4
-label-unfocused-padding = 3
 
-label-focused-foreground = #e9e9f4
+label-mode = %mode%
+label-mode-padding = 2
+;label-mode-background = ${root.my_color4}
+
+label-focused = %name%
+label-focused-foreground = ${root.foreground}
 label-focused-background = #c16772
-label-focused-padding = 3
+label-focused-padding = 4
 
-label-urgent-foreground = #e4b226
-label-urgent-padding = 3
+label-unfocused = %name%
+label-unfocused-padding = 4
+
+label-visible = %name%
+label-visible-padding = 4
+
+label-urgent = %name%
+label-urgent-foreground = ${root.foreground}
+label-urgent-background = ${root.background}
+label-urgent-padding = 4
 
 
 [module/cpu]
