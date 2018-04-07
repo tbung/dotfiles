@@ -2,14 +2,12 @@
 width = 100%
 height = 30
 
-; monitor = ${env:MONITOR:eDP-1}
-
-background = #00282936
+background = #282936
+background_alt = #44475a
 foreground = #e9e9f4
-foreground-alt = #555
+foreground_alt = #4d4f68
 
 fixed-center = true
-# bottom = true
 
 font-0 = "Noto Sans:style=Bold:pixelsize=10;1"
 font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;2"
@@ -17,13 +15,10 @@ font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
 
 modules-left = i3
-# modules-center = date
-modules-right = player-info wireless-network pulseaudio fuzzy-clock
+modules-right = player-info battery battery2 wireless-network pulseaudio fuzzy-clock
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
-
-tray-position = right
 
 
 [module/i3]
@@ -44,7 +39,7 @@ label-mode-padding = 2
 
 label-focused = %name%
 label-focused-foreground = ${root.foreground}
-label-focused-background = #c16772
+label-focused-background = ${root.background_alt}
 label-focused-padding = 4
 
 label-unfocused = %name%
@@ -58,74 +53,6 @@ label-urgent-foreground = ${root.foreground}
 label-urgent-background = ${root.background}
 label-urgent-padding = 4
 
-
-[module/cpu]
-type = internal/cpu
-
-interval = 1
-
-format = <label>
-format-padding = 2
-
-label =  %percentage%%
-
-
-[module/memory]
-type = internal/memory
-
-interval = 1
-
-format = <label>
-format-padding = 2
-
-label =  %gb_used% (%percentage_used%%)
-
-
-[module/temperature]
-type = internal/temperature
-
-interval = 1
-
-thermal-zone = 6
-
-warn-temperature = 80
-
-format = <ramp> <label>
-format-padding = 2
-
-format-warn = <ramp> <label-warn>
-format-warn-padding = 2
-
-label = %temperature%
-
-label-warn = %temperature%
-label-warn-foreground = #e4b226
-
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-3 = 
-ramp-4 = 
-
-
-[module/date]
-type = internal/date
-
-interval = 1
-
-date = 
-time = %H:%M
-
-date-alt = %A, %d %B %Y
-time-alt = %H:%M:%S
-
-format = <label>
-format-padding = 2
-format-background = #7C7A7D
-
-label = %date% %time%
-
-
 [module/battery]
 type = internal/battery
 
@@ -136,14 +63,18 @@ adapter = ACAD
 
 poll-interval = 5
 
-format-charging = <animation-charging> <label-charging>
-format-charging-padding = 2
+format-charging-foreground = ${root.foreground_alt}
+format-discharging-foreground = ${root.foreground_alt}
+format-full-foreground = ${root.foreground_alt}
 
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-padding = 2
+format-charging = <animation-charging>   <label-charging>
+format-charging-padding = 6
 
-format-full = <ramp-capacity> <label-full>
-format-full-padding = 2
+format-discharging = <ramp-capacity>   <label-discharging>
+format-discharging-padding = 6
+
+format-full = <ramp-capacity>   <label-full>
+format-full-padding = 6
 
 label-charging = %percentage%%
 
@@ -164,30 +95,47 @@ animation-charging-3 = 
 animation-charging-4 = 
 animation-charging-framerate = 500
 
+[module/battery2]
+type = internal/battery
 
-[module/backlight]
-type = internal/backlight
+full-at = 100
 
-card = intel_backlight
+battery = BAT0
+adapter = ACAD
 
-format = <label>
-format-padding = 2
+poll-interval = 5
 
-label =  %percentage%%
+format-charging-foreground = ${root.foreground_alt}
+format-discharging-foreground = ${root.foreground_alt}
+format-full-foreground = ${root.foreground_alt}
 
+format-charging = <animation-charging>   <label-charging>
+format-charging-padding = 6
 
-[module/pavolume]
-type = custom/script
+format-discharging = <ramp-capacity>   <label-discharging>
+format-discharging-padding = 6
 
-interval = 1
+format-full = <ramp-capacity>   <label-full>
+format-full-padding = 6
 
-format-padding = 2
+label-charging = %percentage%%
 
-exec = ~/scripts/pavolume.sh
+label-discharging = %percentage%%
 
-click-left = ~/scripts/pavolume.sh --togmute
-scroll-up = ~/scripts/pavolume.sh --up
-scroll-down = ~/scripts/pavolume.sh --down
+label-full = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-framerate = 500
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -196,9 +144,10 @@ type = internal/pulseaudio
 ;   <label-volume> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
-format-volume = <ramp-volume> <label-volume>
-format-volume-background = #CD9120
-format-volume-padding = 2
+format-volume = <ramp-volume>   <label-volume>
+format-volume-background = ${root.background}
+format-volume-foreground = ${root.foreground_alt}
+format-volume-padding = 6
 
 ; Available tags:
 ;   <label-muted> (default)
@@ -219,35 +168,6 @@ label-muted-foreground = #66
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-
-[module/alsa]
-type = internal/alsa
-
-format-volume = <label-volume> <bar-volume>
-label-volume = VOL
-label-volume-foreground = ${root.foreground}
-
-format-muted-prefix = " "
-format-muted-foreground = ${root.foreground-alt}
-label-muted = sound muted
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${root.foreground-alt}
-
 
 [module/powermenu]
 type = custom/menu
@@ -296,25 +216,30 @@ menu-2-0-padding-right = 3
 [module/wireless-network]
 type = internal/network
 
-interface = enp0s20f0u1
+interface = wlp3s0
 
 format-connected = <label-connected>
-format-connected-background = #23518F
-format-connected-padding = 2
+format-connected-background = ${root.background}
+format-connected-foreground = ${root.foreground_alt}
+format-connected-padding = 6
 
 format-disconnected = <label-disconnected>
-format-disconnected-padding = 2
+format-disconnected-foreground = ${root.foreground_alt}
+format-disconnected-padding = 6
 
-label-connected =  %essid%
+label-connected =    %essid%
 
-label-disconnected =  None
+label-disconnected =    None
 
 
 [module/player-info]
 type = custom/script
 
-format-background = #4F7D4D
-format-padding = 4
+format-background = ${root.background}
+format-foreground = ${root.foreground_alt}
+format-padding = 6
+
+label = %output:0:25%
 
 exec = ~/.config/polybar/player-mpris-simple.sh
 
@@ -328,9 +253,9 @@ click-left = playerctl play-pause
 [module/fuzzy-clock]
 type = custom/script
 
-format-background = #7C7A7D
-format-padding = 2
+format-background = ${root.background}
+format-padding = 6
 
-exec = bash-fuzzy-clock
+exec = ~/.config/polybar/bash-fuzzy-clock.sh
 
 interval = 30

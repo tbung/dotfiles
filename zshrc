@@ -36,6 +36,8 @@ source /usr/share/fzf/key-bindings.zsh
 alias ls='ls --color=auto'
 alias open='xdg-open'
 alias devel='tmuxp load devel'
+alias todoist='google-chrome-stable --app=http://todoist.com'
+alias whatsapp='google-chrome-stable --app=http://web.whatsapp.com'
 alias pytorch-docker='docker run --runtime=nvidia --ipc=host -it -v $(pwd):/workspace pytorch_tb:latest'
 
 # Functions

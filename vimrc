@@ -138,9 +138,9 @@ let g:polyglot_disabled = ['latex']
 
 " Enter all the distraction free writing
 autocmd! User GoyoEnter Limelight
-autocmd User GoyoEnter ALEDisableBuffer
+autocmd User GoyoEnter ALEDisable
 autocmd! User GoyoLeave Limelight!
-autocmd User GoyoLeave ALEEnableBuffer
+autocmd User GoyoLeave ALEEnable
 
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
