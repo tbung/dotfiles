@@ -18,6 +18,7 @@
     ~/.config/kitty: config/kitty
     ~/.config/polybar: config/polybar
     ~/.config/rofi: config/rofi
+    ~/.config/compton.conf: config/compton.conf
 
 
 - shell:
