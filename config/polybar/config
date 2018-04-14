@@ -15,7 +15,7 @@ font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
 
 modules-left = i3
-modules-right = player-info battery battery2 wireless-network pulseaudio fuzzy-clock
+modules-right = player-info battery battery2 wireless-network pulseaudio info-redshift-temp fuzzy-clock
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -259,3 +259,9 @@ format-padding = 6
 exec = ~/.config/polybar/bash-fuzzy-clock.sh
 
 interval = 30
+
+[module/info-redshift-temp]
+type = custom/script
+exec = ~/.config/polybar/info-redshift-temp.sh
+click-left = ~/.config/polybar/toggle-redshift.sh
+interval = 5
