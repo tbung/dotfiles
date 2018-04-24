@@ -19,7 +19,7 @@ Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
 Plug 'w0rp/ale'                         " Syntax checker, requires checker itself
                                         " to be installed
-Plug 'itchyny/lightline.vim'            " Statusline, deprecated soon
+Plug 'itchyny/lightline.vim', { 'commit': '78c43c144643e49c529a93b9eaa4eda12614f923' }            " Statusline, deprecated soon
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
 Plug 'maralla/completor.vim'            " Async completion engine
@@ -119,7 +119,7 @@ let g:lightline = {
 " Tell vim to assume latex instead of plaintex
 let g:tex_flavor='latex'
 let g:vimtex_compiler_latexmk = {'callback' : 0}
-let g:vimtex_view_method="mupdf"
+let g:vimtex_view_method="zathura"
 
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"

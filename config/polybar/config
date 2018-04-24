@@ -153,7 +153,8 @@ format-volume-padding = 6
 ;   <label-muted> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
-;format-muted = <label-muted>
+format-muted = <label-muted>
+format-muted-padding = 6
 
 ; Available tokens:
 ;   %percentage% (default)
