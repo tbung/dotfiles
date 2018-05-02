@@ -38,14 +38,15 @@ alias open='xdg-open'
 alias devel='tmuxp load devel'
 alias todoist='google-chrome-stable --app=http://todoist.com'
 alias whatsapp='google-chrome-stable --app=http://web.whatsapp.com'
-alias pytorch-docker='docker run --runtime=nvidia --ipc=host -it -v $(pwd):/workspace pytorch_tb:latest'
 
 # Functions
-function gi() { curl -L -s https://www.gitignore.io/api/$@ ;}  # gitignore.io cli
+function gi() { curl -L -s https://www.gitignore.io/api/$@; }  # gitignore.io cli
+function chrome-app() { google-chrome-stable --app="$1"; }
 
 
 # Plugins
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Always activate conda base env
 source /home/tillb/miniconda3/etc/profile.d/conda.sh
 conda activate base

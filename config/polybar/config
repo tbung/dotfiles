@@ -15,7 +15,7 @@ font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
 
 modules-left = i3
-modules-right = player-info battery battery2 wireless-network pulseaudio info-redshift-temp fuzzy-clock
+modules-right = player-info battery battery2 wireless-network-tower wireless-network-laptop pulseaudio info-redshift-temp fuzzy-clock
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -214,10 +214,29 @@ menu-2-0-foreground = #e4b226
 menu-2-0-padding-right = 3
 
 
-[module/wireless-network]
+# Workaround since there is no dynamic interface finding
+[module/wireless-network-laptop]
 type = internal/network
 
 interface = wlp3s0
+
+format-connected = <label-connected>
+format-connected-background = ${root.background}
+format-connected-foreground = ${root.foreground_alt}
+format-connected-padding = 6
+
+format-disconnected = <label-disconnected>
+format-disconnected-foreground = ${root.foreground_alt}
+format-disconnected-padding = 6
+
+label-connected =    %essid%
+
+label-disconnected =    None
+
+[module/wireless-network-tower]
+type = internal/network
+
+interface = enp0s20f0u1
 
 format-connected = <label-connected>
 format-connected-background = ${root.background}
