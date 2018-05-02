@@ -38,6 +38,7 @@ alias open='xdg-open'
 alias devel='tmuxp load devel'
 alias todoist='google-chrome-stable --app=http://todoist.com'
 alias whatsapp='google-chrome-stable --app=http://web.whatsapp.com'
+alias gsa="find . -maxdepth 1 -mindepth 1 -type d -exec sh -c '(echo {} && cd {} && git status -s && echo)' \;"
 
 # Functions
 function gi() { curl -L -s https://www.gitignore.io/api/$@; }  # gitignore.io cli
