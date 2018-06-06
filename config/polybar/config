@@ -1,6 +1,7 @@
 [bar/top]
+monitor = eDP1
 width = 100%
-height = 30
+height = 25
 
 background = #282936
 background_alt = #44475a
@@ -15,11 +16,14 @@ font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
 
 modules-left = i3
-modules-right = player-info battery battery2 wireless-network-tower wireless-network-laptop pulseaudio info-redshift-temp fuzzy-clock
+modules-right = player-info battery battery2 wireless-network-tower fuzzy-clock
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
 
+tray-position = right
+tray-background = #282936
+tray-padding = 6
 
 [module/i3]
 type = internal/i3
@@ -259,7 +263,7 @@ format-background = ${root.background}
 format-foreground = ${root.foreground_alt}
 format-padding = 6
 
-label = %output:0:25%
+label = %output:0:55%
 
 exec = ~/.config/polybar/player-mpris-simple.sh
 
@@ -274,7 +278,7 @@ click-left = playerctl play-pause
 type = custom/script
 
 format-background = ${root.background}
-format-padding = 6
+format-padding = 0
 
 exec = ~/.config/polybar/bash-fuzzy-clock.sh
 
@@ -284,4 +288,10 @@ interval = 30
 type = custom/script
 exec = ~/.config/polybar/info-redshift-temp.sh
 click-left = ~/.config/polybar/toggle-redshift.sh
+interval = 5
+
+[module/caffeine]
+type = custom/script
+exec = ~/.config/polybar/info-caffeine.sh
+click-left = ~/.config/polybar/toggle-caffeine.sh
 interval = 5
