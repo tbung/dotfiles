@@ -1,1 +1,1 @@
-mailboxes "+gc/INBOX" "+gc/mitglieder" "+gc/projects.ep_110-relaunch" "+gc/projects.ep_115-smarthome" "+gc/projects.ep_123-pr-film" "+gc/qm" "+gmail/INBOX" "+gmail/archive" "+gmail/drafts" "+gmail/flagged" "+gmail/sent" "+uni/Archive" "+uni/Drafts" "+uni/INBOX" "+uni/Sent"
+mailboxes "+gmail/INBOX" "+gmail/Scheduled" "+gmail/drafts" "+gmail/flagged" "+gmail/sent" "+uni/Archive" "+uni/Drafts" "+uni/INBOX" "+uni/Sent" "+uni/sent-mail"

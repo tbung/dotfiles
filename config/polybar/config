@@ -1,5 +1,5 @@
 [bar/top]
-monitor = eDP1
+monitor = HDMI-0
 width = 100%
 height = 25
 
@@ -16,7 +16,7 @@ font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
 
 modules-left = i3
-modules-right = player-info battery battery2 wireless-network-tower fuzzy-clock
+modules-right = player-info battery battery2 fuzzy-clock
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev

@@ -1,6 +1,6 @@
 [general]
 ui = ttyui
-accounts = gmail,uni,gc
+accounts = gmail,uni
 fsync = False
 pythonfile = ~/.mutt/offlineimap.py
 
@@ -43,6 +43,7 @@ nametrans = lambda folder: {'[Gmail]/Entw&APw-rfe':      'drafts',
 folderfilter = lambda folder: folder not in ['[Gmail]/Papierkorb',
                  '[Gmail]/Wichtig',
                  '[Gmail]/Spam',
+                 '[Gmail]/Alle Nachrichten',
                  ]
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 
@@ -64,23 +65,3 @@ remotepasseval = keyring.get_password("offlineimap","bungert@stud.uni-heidelberg
 realdelete = no
 folderfilter = lambda folder: not folder.startswith("Shared Folders") and not folder.startswith("Junk Email") and not folder.startswith("Trash")
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-
-[Account gc]
-localrepository = gc-Local
-remoterepository = gc-Remote
-postsynchook = notmuch new
-
-[Repository gc-Local]
-type = Maildir
-localfolders = ~/.mail/gc
-
-[Repository gc-Remote]
-maxconnections = 1
-type = IMAP
-remoteuser = tbungert
-remotehost = galileiconsult.de
-remotepasseval = keyring.get_password("offlineimap","till.bungert@galileiconsult.de")
-realdelete = no
-# folderfilter = lambda folder: not folder.startswith("Shared Folders") and not folder.startswith("Junk Email") and not folder.startswith("Trash")
-sslcacertfile = /etc/ssl/certs/ca-certificates.crt
-folderfilter = lambda folder: folder in ["INBOX","qm","mitglieder"] or folder.startswith("projects")

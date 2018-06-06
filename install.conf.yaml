@@ -19,6 +19,10 @@
     ~/.config/polybar: config/polybar
     ~/.config/rofi: config/rofi
     ~/.config/compton.conf: config/compton.conf
+    ~/.mutt: mutt
+    ~/.muttrc: muttrc
+    ~/.offlineimaprc: offlineimaprc
+    ~/.msmtprc: msmtprc
 
 
 - shell:
