@@ -31,14 +31,15 @@ export PROMPT=$'%F{blue}%1~%F{242}$(__git_ps1 " [ %s]") %F{red}❯%F{white} '
 
 # Some config stuff
 source /usr/share/fzf/key-bindings.zsh
+source /usr/share/todoist/todoist_functions.sh
 
 # Aliases
 alias ls='ls --color=auto'
 alias open='xdg-open'
 alias devel='tmuxp load devel'
-alias todoist='google-chrome-stable --app=http://todoist.com'
 alias whatsapp='google-chrome-stable --app=http://web.whatsapp.com'
 alias gsa="find . -maxdepth 1 -mindepth 1 -type d -exec sh -c '(echo {} && cd {} && git status -s && echo)' \;"
+alias td="todoist --color"
 
 # Functions
 function gi() { curl -L -s https://www.gitignore.io/api/$@; }  # gitignore.io cli
