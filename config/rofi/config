@@ -12,4 +12,4 @@ rofi.eh: 1
 rofi.separator-style: none
 rofi.hide-scrollbar: true
 rofi.terminal: kitty
-rofi.run-shell-command: {terminal} {cmd}
+rofi.run-shell-command: {terminal} --class {cmd} {cmd}
