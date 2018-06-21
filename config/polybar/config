@@ -15,8 +15,8 @@ font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;2"
 font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
 
-modules-left = i3
-modules-right = player-info battery battery2 fuzzy-clock
+modules-left = bspwm
+modules-right = player-info fuzzy-clock
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -24,6 +24,33 @@ scroll-down = i3wm-wsprev
 tray-position = right
 tray-background = #282936
 tray-padding = 6
+
+[module/bspwm]
+type = internal/bspwm
+
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IX;
+ws-icon-4 = X;
+ws-icon-default = 
+
+format = <label-state> <label-mode>
+
+label-focused = %icon%
+label-focused-background = ${root.background_alt}
+label-focused-underline= #ddd
+label-focused-padding = 4
+
+label-occupied = %icon%
+label-occupied-padding = 4
+
+label-urgent = %icon%
+label-urgent-padding = 4
+
+label-empty = %icon%
+label-empty-foreground = #44ffffff
+label-empty-padding = 4
 
 [module/i3]
 type = internal/i3

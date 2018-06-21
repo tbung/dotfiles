@@ -21,6 +21,8 @@
     ~/.config/rofi: config/rofi
     ~/.config/compton.conf: config/compton.conf
     ~/.config/dunst: config/dunst
+    ~/.config/bspwm: config/bspwm
+    ~/.config/sxhkd: config/sxhkd
     ~/.mutt: mutt
     ~/.muttrc: muttrc
     ~/.offlineimaprc: offlineimaprc

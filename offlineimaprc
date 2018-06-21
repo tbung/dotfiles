@@ -32,7 +32,7 @@ nametrans = lambda folder: {'gmail':   '[Gmail]/INBOX',
 maxconnections = 1
 type = Gmail
 remoteuser = tillbungert@gmail.com
-remotepasseval = keyring.get_password("offlineimap","tillbungert@gmail.com")
+remotepasseval = get_pass("tillbungert@gmail.com")
 realdelete = no
 nametrans = lambda folder: {'[Gmail]/Entw&APw-rfe':      'drafts',
                             '[Gmail]/Gesendet':          'sent',
@@ -61,7 +61,7 @@ maxconnections = 1
 type = IMAP
 remoteuser = tz425
 remotehost = imap.urz.uni-heidelberg.de
-remotepasseval = keyring.get_password("offlineimap","bungert@stud.uni-heidelberg.de")
+remotepasseval = get_pass("bungert@stud.uni-heidelberg.de")
 realdelete = no
 folderfilter = lambda folder: not folder.startswith("Shared Folders") and not folder.startswith("Junk Email") and not folder.startswith("Trash")
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt

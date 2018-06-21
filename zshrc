@@ -32,7 +32,7 @@ export PROMPT=$'%F{blue}%1~%F{242}$(__git_ps1 " [ %s]") %F{red}❯%F{white} '
 
 # Some config stuff
 source /usr/share/fzf/key-bindings.zsh
-source /usr/share/todoist/todoist_functions.sh
+# source /usr/share/todoist/todoist_functions.sh
 
 # Aliases
 alias ls='ls --color=auto'
