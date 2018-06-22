@@ -18,7 +18,7 @@
 }
 div#notebook {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  line-height: 170%;
  color: #b5c2d9;
  -webkit-font-smoothing: antialiased !important;
@@ -26,7 +26,7 @@ div#notebook {
 body,
 div.body {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  color: #899ab8;
  background-color: #1d1e23;
  background: #1d1e23;
@@ -242,14 +242,14 @@ body > #header {
  z-index: 100;
 }
 .list_container {
- font-size: 13pt;
+ font-size: 12pt;
  color: #899ab8;
  border: none;
  text-shadow: none !important;
 }
 .list_container > div {
  border-bottom: 1px solid rgba(80,92,133,.22);
- font-size: 13pt;
+ font-size: 12pt;
 }
 .list_header > div,
 .list_item > div {
@@ -262,7 +262,7 @@ body > #header {
  margin-left: -1px;
  vertical-align: middle;
  line-height: 22px;
- font-size: 13pt;
+ font-size: 12pt;
 }
 .item_icon {
  color: #4c8be2;
@@ -308,7 +308,7 @@ body > #header {
 }
 button#tree-selector-btn {
  height: 34px;
- font-size: 12.0pt;
+ font-size: 11.0pt;
  border: none;
  left: 0px;
  border-radius: 0px !important;
@@ -354,7 +354,7 @@ div.list_item:hover {
  background-color: rgba(80,90,133,.06);
 }
 .breadcrumb > li {
- font-size: 12.0pt;
+ font-size: 11.0pt;
  color: #899ab8;
  border: none;
  text-shadow: none !important;
@@ -442,7 +442,7 @@ ul#tabs a {
 }
 div#notebook {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  padding-top: 4px;
 }
 .notebook_app {
@@ -485,7 +485,7 @@ div#header-container {
 #header,
 .edit_app #header {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  box-shadow: none;
  background-color: #1d1e23;
 }
@@ -527,7 +527,7 @@ p.navbar-text.indicator_area {
 }
 .navbar-default {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  background-color: #1d1e23;
  border-color: #313643;
  line-height: 1.5em;
@@ -535,7 +535,7 @@ p.navbar-text.indicator_area {
 }
 .navbar-default .navbar-nav > li > a {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  color: #899ab8;
  display: block;
  line-height: 1.5em;
@@ -643,7 +643,7 @@ div.notification_widget.info,
  color: #4c8be2;
 }
 .item_buttons .kernel-name {
- font-size: 13pt;
+ font-size: 12pt;
  color: #4c8be2;
 }
 .running_notebook_icon:before {
@@ -808,7 +808,7 @@ i.fa.fa-icon {
 }
 .dropdown-menu {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  box-shadow: none;
  padding: 0px;
  text-align: left;
@@ -819,7 +819,7 @@ i.fa.fa-icon {
 }
 .dropdown-menu:hover {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  box-shadow: none;
  padding: 0px;
  text-align: left;
@@ -830,7 +830,7 @@ i.fa.fa-icon {
 }
 .dropdown-menu > li > a {
  font-family: "Roboto", sans-serif;
- font-size: 12.0pt;
+ font-size: 11.0pt;
  display: block;
  padding: 10px 20px 9px 10px;
  color: #899ab8;
@@ -864,7 +864,7 @@ i.fa.fa-icon {
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
  font-family: "Roboto", sans-serif;
- font-size: 12.0pt;
+ font-size: 11.0pt;
  font-weight: normal;
  color: #526488;
  padding: none;
@@ -978,7 +978,7 @@ div.kse-dropdown > .dropdown-menu,
 .item_buttons > .btn,
 .item_buttons > .btn-group,
 .item_buttons > .input-group {
- font-size: 13pt;
+ font-size: 12pt;
  background: transparent;
  background-color: transparent;
  border: 0px solid #2e3642;
@@ -1101,7 +1101,7 @@ div.dynamic-buttons > button,
 }
 .dropdown-header {
  font-family: "Roboto", sans-serif !important;
- font-size: 13pt !important;
+ font-size: 12pt !important;
  color: #7aa05d !important;
  border-bottom: none !important;
  padding: 0px !important;
@@ -1164,7 +1164,7 @@ fieldset[disabled] .btn-default.focus {
 }
 .input-group-addon {
  padding: 2px 5px;
- font-size: 13pt;
+ font-size: 12pt;
  font-weight: normal;
  height: auto;
  color: #899ab8;
@@ -1244,7 +1244,7 @@ div.modal-footer > button:hover {
 }
 .modal-content {
  font-family: "Roboto", sans-serif;
- font-size: 12.0pt;
+ font-size: 11.0pt;
  position: relative;
  background: #2e3642;
  background-color: #2e3642;
@@ -1255,7 +1255,7 @@ div.modal-footer > button:hover {
 }
 .modal-header {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  color: #899ab8;
  background: #2e3642;
  background-color: #2e3642;
@@ -1299,7 +1299,7 @@ div.panel-default,
 .panel,
 .panel-default {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  background-color: #384152;
  color: #899ab8;
  margin-bottom: 14px;
@@ -1358,7 +1358,7 @@ textarea {
 }
 select.form-control.select-xs {
  height: 33px;
- font-size: 13pt;
+ font-size: 12pt;
 }
 .toolbar select,
 .toolbar label {
@@ -1729,7 +1729,7 @@ div.text_cell,
 div.text_cell_render pre,
 div.text_cell_render {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 10pt;
  line-height: 130% !important;
  color: #abb7ce;
  background: #2c303c;
@@ -1873,7 +1873,7 @@ pre {
  display: block;
  padding: 8.5px;
  margin: 0 0 9px;
- font-size: 12.0pt;
+ font-size: 11.0pt;
  line-height: 1.42857143;
  color: #b5c2d9;
  background-color: #262c36;
@@ -2062,7 +2062,7 @@ div.widget-area {
 }
 div.widget-area a {
  font-family: "Roboto", sans-serif;
- font-size: 12.0pt;
+ font-size: 11.0pt;
  font-weight: normal;
  font-style: normal;
  color: #899ab8;
@@ -2071,7 +2071,7 @@ div.widget-area a {
 div.widget-area a:hover,
 div.widget-area a:focus {
  font-family: "Roboto", sans-serif;
- font-size: 12.0pt;
+ font-size: 11.0pt;
  font-weight: normal;
  font-style: normal;
  color: #bbc2e0;
@@ -2576,7 +2576,7 @@ body > div.modal.cmd-palette.typeahead-field {
 .typeahead-dropdown,
 .typeahead-list {
  font-family: "Roboto", sans-serif;
- font-size: 13pt;
+ font-size: 12pt;
  color: #899ab8;
  background-color: #202937;
  border: none;
