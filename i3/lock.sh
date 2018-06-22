@@ -2,13 +2,16 @@
 
 icon="$HOME/.i3/lock_icon.png"
 tmpbg='/tmp/screen.png'
+font='Ubuntu'
+text='Type password to unlock'
 
 (( $# )) && { icon=$1; }
 
 scrot "$tmpbg"
 # convert "$tmpbg" -scale 10% -scale 1000% "$tmpbg"
-convert "$tmpbg" -blur 0x6 "$tmpbg"
-# convert "$tmpbg" "$icon" -gravity center -composite -matte "$tmpbg"
+convert "$tmpbg" -blur 0x6 -define modulate:colorspace=HSB -modulate 60 "$tmpbg"
+convert "$tmpbg" "$icon" -gravity center -composite -matte -font "$font" \
+        -pointsize 26 -fill white -annotate +0+160 "$text" "$tmpbg"
 i3lock -n -i "$tmpbg" \
     --insidecolor=37344500 --ringcolor=ffffffff --line-uses-inside \
     --keyhlcolor=282936ff --bshlcolor=d23c3dff --separatorcolor=00000000 \

@@ -27,6 +27,7 @@
     ~/.muttrc: muttrc
     ~/.offlineimaprc: offlineimaprc
     ~/.msmtprc: msmtprc
+    ~/.jupyter: jupyter
 
 
 - shell:
