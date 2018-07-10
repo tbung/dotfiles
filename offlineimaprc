@@ -5,7 +5,7 @@ fsync = False
 pythonfile = ~/.mutt/offlineimap.py
 
 [mbnames]
-enabled = yes
+enabled = no
 filename = ~/.mutt/mailboxes
 header = "mailboxes "
 peritem = "+%(accountname)s/%(foldername)s"

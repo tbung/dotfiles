@@ -1,1 +1,1 @@
-mailboxes "+gmail/INBOX" "+gmail/Scheduled" "+gmail/drafts" "+gmail/flagged" "+gmail/sent" "+uni/Archive" "+uni/Drafts" "+uni/INBOX" "+uni/Sent" "+uni/sent-mail"
+mailboxes "+gmail/INBOX" "+uni/INBOX"
