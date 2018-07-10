@@ -122,7 +122,7 @@ super + {m,n}
 
 # cycle windows
 alt + {_,shift + }Tab
-    bspc node -f {next,prev}
+    bspc node -f {next,prev}.local
 
 # Go to specific window
 super + Tab
@@ -278,7 +278,7 @@ super + e
 	spacefm -n
 
 super + shift + e
-	st -f "Terminus:size=14:style=regular" ranger
+	kitty ranger
 
 Print
 	scrot
@@ -314,7 +314,7 @@ super + shift + Escape
 # In case bspwmrc fails to execute/you wish have plugged in a new monitor
 super + shift + r
 	bspwmrc
-#edit this file
+# edit this file
 alt + ctrl + space
 	$GUI_EDITOR ~/.config/sxhkd/sxhkdrc
 # Toggle compositing

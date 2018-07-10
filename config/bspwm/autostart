@@ -42,7 +42,7 @@ xautolock -time 10 -locker ~/.i3/lock.sh &
 #lemonpanel &
 #limepanel &
 ~/.i3/polybar.sh &
-sleep 2s && bspc config top_padding 10 &
+# sleep 2s && bspc config top_padding 10 &
 #mylime &
 ## Light system tray to use with lemonbar. Disable if you dont need it. 
 ## Edit ~/.stalonetrayrc if it is in wrong place.
