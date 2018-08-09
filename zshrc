@@ -14,6 +14,7 @@ compinit
 # Path extensions
 export PATH=/home/tillb/.npm-global/bin:$PATH
 export PATH=/home/tillb/miniconda3/bin:$PATH
+export PATH=/home/tillb/go/bin:$PATH
 export PATH=/usr/bin:$PATH
 
 # Completion
@@ -45,6 +46,18 @@ alias td="todoist --color"
 # Functions
 function gi() { curl -L -s https://www.gitignore.io/api/$@; }  # gitignore.io cli
 function chrome-app() { google-chrome-stable --app="$1"; }
+function pdf() {
+    open=zathura
+
+    ag -U -g ".pdf$" \
+    | fast-p \
+    | fzf --read0 --reverse -e -d $'\t'  \
+        --preview-window down:80% --preview '
+            v=$(echo {q} | tr " " "|");
+            echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;
+        ' \
+    | cut -z -f 1 -d $'\t' | tr -d '\n' | xargs -r --null $open > /dev/null 2> /dev/null
+}
 
 
 # Plugins

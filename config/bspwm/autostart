@@ -13,7 +13,6 @@ xrdb merge .Xresources &
 ## It uses a lot more resources however. It you enable it you may want to 
 ## adjust ~/scripts/MouseLaunch to use xfdesktops app menu.
 #nitrogen --restore &
-sh ~/.fehbg &
 #xfdesktop -D &
 ## compositing. Required for shadows, transparency and stuff. 
 ## Reduces flicker. Disabling saves resources.
@@ -41,7 +40,6 @@ xautolock -time 10 -locker ~/.i3/lock.sh &
 #run_once xfce4-panel -d
 #lemonpanel &
 #limepanel &
-~/.i3/polybar.sh &
 # sleep 2s && bspc config top_padding 10 &
 #mylime &
 ## Light system tray to use with lemonbar. Disable if you dont need it. 
@@ -49,10 +47,13 @@ xautolock -time 10 -locker ~/.i3/lock.sh &
 #sleep 2s && stalonetray --dockapp-mode simple &
 ## Welcome message
 # notify-send "Welcome to Manjaro-bspwm! " "Press super + F1 to show keybindings" &
+# notify-send "test" "$DBUS_SESSION_BUS_ADDRESS" &
 ## Run screenlock when suspending
 #i3lock-wait-for-suspend &
 ## multimonitor support. Save monitor configurations with "autorandr.sh --save <profile>"
-srandrd atorandr.sh --change
+autorandr.sh --change
+~/.i3/polybar.sh &
+sh ~/.fehbg &
 ## Notify about package updates
 update-checker 7200 &
 xcape -e 'Super_L=Super_L|Shift_L|space' &

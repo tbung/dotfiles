@@ -1,5 +1,5 @@
 [bar/top]
-monitor = HDMI-0
+monitor = ${env:MONITOR:}
 width = 100%
 height = 25
 
@@ -30,9 +30,8 @@ type = internal/bspwm
 
 ws-icon-0 = I;
 ws-icon-1 = II;
-ws-icon-2 = III;
-ws-icon-3 = IX;
-ws-icon-4 = X;
+ws-icon-2 = IX;
+ws-icon-3 = X;
 ws-icon-default = 
 
 format = <label-state> <label-mode>
@@ -287,10 +286,10 @@ label-disconnected =    None
 type = custom/script
 
 format-background = ${root.background}
-format-foreground = ${root.foreground_alt}
+format-foreground = ${root.foreground}
 format-padding = 6
 
-label = %output:0:55%
+label = %output:0:65%
 
 exec = ~/.config/polybar/player-mpris-simple.sh
 

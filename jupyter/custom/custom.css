@@ -18,7 +18,7 @@
 }
 div#notebook {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  line-height: 170%;
  color: #b5c2d9;
  -webkit-font-smoothing: antialiased !important;
@@ -26,7 +26,7 @@ div#notebook {
 body,
 div.body {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  color: #899ab8;
  background-color: #1d1e23;
  background: #1d1e23;
@@ -242,14 +242,14 @@ body > #header {
  z-index: 100;
 }
 .list_container {
- font-size: 12pt;
+ font-size: 11pt;
  color: #899ab8;
  border: none;
  text-shadow: none !important;
 }
 .list_container > div {
  border-bottom: 1px solid rgba(80,92,133,.22);
- font-size: 12pt;
+ font-size: 11pt;
 }
 .list_header > div,
 .list_item > div {
@@ -262,7 +262,7 @@ body > #header {
  margin-left: -1px;
  vertical-align: middle;
  line-height: 22px;
- font-size: 12pt;
+ font-size: 11pt;
 }
 .item_icon {
  color: #4c8be2;
@@ -308,7 +308,7 @@ body > #header {
 }
 button#tree-selector-btn {
  height: 34px;
- font-size: 11.0pt;
+ font-size: 10.0pt;
  border: none;
  left: 0px;
  border-radius: 0px !important;
@@ -354,7 +354,7 @@ div.list_item:hover {
  background-color: rgba(80,90,133,.06);
 }
 .breadcrumb > li {
- font-size: 11.0pt;
+ font-size: 10.0pt;
  color: #899ab8;
  border: none;
  text-shadow: none !important;
@@ -442,7 +442,7 @@ ul#tabs a {
 }
 div#notebook {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  padding-top: 4px;
 }
 .notebook_app {
@@ -453,28 +453,28 @@ div#notebook {
  background-color: #1d1e23;
  min-height: 0px;
  box-shadow: none;
- width: 980px;
+ width: 600px;
  margin-right: auto;
  margin-left: auto;
 }
 div#ipython-main-app.container {
- width: 980px;
+ width: 600px;
  margin-right: auto;
  margin-left: auto;
  margin-right: auto;
  margin-left: auto;
 }
 .container {
- width: 980px;
+ width: 600px;
  margin-right: auto;
  margin-left: auto;
 }
 div#menubar-container {
  width: 100%;
- width: 980px;
+ width: 600px;
 }
 div#header-container {
- width: 980px;
+ width: 600px;
 }
 .notebook_app #header,
 .edit_app #header {
@@ -485,7 +485,7 @@ div#header-container {
 #header,
 .edit_app #header {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  box-shadow: none;
  background-color: #1d1e23;
 }
@@ -527,7 +527,7 @@ p.navbar-text.indicator_area {
 }
 .navbar-default {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  background-color: #1d1e23;
  border-color: #313643;
  line-height: 1.5em;
@@ -535,7 +535,7 @@ p.navbar-text.indicator_area {
 }
 .navbar-default .navbar-nav > li > a {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  color: #899ab8;
  display: block;
  line-height: 1.5em;
@@ -643,7 +643,7 @@ div.notification_widget.info,
  color: #4c8be2;
 }
 .item_buttons .kernel-name {
- font-size: 12pt;
+ font-size: 11pt;
  color: #4c8be2;
 }
 .running_notebook_icon:before {
@@ -808,7 +808,7 @@ i.fa.fa-icon {
 }
 .dropdown-menu {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  box-shadow: none;
  padding: 0px;
  text-align: left;
@@ -819,7 +819,7 @@ i.fa.fa-icon {
 }
 .dropdown-menu:hover {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  box-shadow: none;
  padding: 0px;
  text-align: left;
@@ -830,7 +830,7 @@ i.fa.fa-icon {
 }
 .dropdown-menu > li > a {
  font-family: "Roboto", sans-serif;
- font-size: 11.0pt;
+ font-size: 10.0pt;
  display: block;
  padding: 10px 20px 9px 10px;
  color: #899ab8;
@@ -864,7 +864,7 @@ i.fa.fa-icon {
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
  font-family: "Roboto", sans-serif;
- font-size: 11.0pt;
+ font-size: 10.0pt;
  font-weight: normal;
  color: #526488;
  padding: none;
@@ -978,7 +978,7 @@ div.kse-dropdown > .dropdown-menu,
 .item_buttons > .btn,
 .item_buttons > .btn-group,
 .item_buttons > .input-group {
- font-size: 12pt;
+ font-size: 11pt;
  background: transparent;
  background-color: transparent;
  border: 0px solid #2e3642;
@@ -1101,7 +1101,7 @@ div.dynamic-buttons > button,
 }
 .dropdown-header {
  font-family: "Roboto", sans-serif !important;
- font-size: 12pt !important;
+ font-size: 11pt !important;
  color: #7aa05d !important;
  border-bottom: none !important;
  padding: 0px !important;
@@ -1164,7 +1164,7 @@ fieldset[disabled] .btn-default.focus {
 }
 .input-group-addon {
  padding: 2px 5px;
- font-size: 12pt;
+ font-size: 11pt;
  font-weight: normal;
  height: auto;
  color: #899ab8;
@@ -1244,7 +1244,7 @@ div.modal-footer > button:hover {
 }
 .modal-content {
  font-family: "Roboto", sans-serif;
- font-size: 11.0pt;
+ font-size: 10.0pt;
  position: relative;
  background: #2e3642;
  background-color: #2e3642;
@@ -1255,7 +1255,7 @@ div.modal-footer > button:hover {
 }
 .modal-header {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  color: #899ab8;
  background: #2e3642;
  background-color: #2e3642;
@@ -1299,7 +1299,7 @@ div.panel-default,
 .panel,
 .panel-default {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  background-color: #384152;
  color: #899ab8;
  margin-bottom: 14px;
@@ -1358,7 +1358,7 @@ textarea {
 }
 select.form-control.select-xs {
  height: 33px;
- font-size: 12pt;
+ font-size: 11pt;
 }
 .toolbar select,
 .toolbar label {
@@ -1837,7 +1837,7 @@ div.text_cell.unrendered.selected .prompt {
 }
 div.rendered_html code {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt;
+ font-size: 10pt;
  padding-top: 3px;
  padding-left: 2px;
  color: #b5c2d9;
@@ -1853,7 +1853,7 @@ samp {
 .well code,
 code {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt !important;
+ font-size: 10pt !important;
  line-height: 170% !important;
  color: #abb7ce;
  background: #262c36;
@@ -1862,7 +1862,7 @@ code {
 }
 kbd {
  padding: 1px;
- font-size: 11pt;
+ font-size: 10pt;
  font-weight: 800;
  color: #b5c2d9;
  background-color: transparent !important;
@@ -1873,7 +1873,7 @@ pre {
  display: block;
  padding: 8.5px;
  margin: 0 0 9px;
- font-size: 11.0pt;
+ font-size: 10.0pt;
  line-height: 1.42857143;
  color: #b5c2d9;
  background-color: #262c36;
@@ -1893,7 +1893,7 @@ div.rendered_html {
 }
 div.rendered_html pre {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt !important;
+ font-size: 10pt !important;
  line-height: 170% !important;
  color: #abb7ce;
  background: #262c36;
@@ -1909,7 +1909,7 @@ div.rendered_html pre {
 div.text_cell_render pre,
 div.text_cell_render code {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt !important;
+ font-size: 10pt !important;
  line-height: 170% !important;
  color: #abb7ce;
  background: #1d1e23;
@@ -2062,7 +2062,7 @@ div.widget-area {
 }
 div.widget-area a {
  font-family: "Roboto", sans-serif;
- font-size: 11.0pt;
+ font-size: 10.0pt;
  font-weight: normal;
  font-style: normal;
  color: #899ab8;
@@ -2071,7 +2071,7 @@ div.widget-area a {
 div.widget-area a:hover,
 div.widget-area a:focus {
  font-family: "Roboto", sans-serif;
- font-size: 11.0pt;
+ font-size: 10.0pt;
  font-weight: normal;
  font-style: normal;
  color: #bbc2e0;
@@ -2471,7 +2471,7 @@ div.collapsible_headings_toggle .fa-caret-right:before {
 #navigate_menu a,
 .toc {
  color: #899ab8 !important;
- font-size: 11pt !important;
+ font-size: 10pt !important;
 }
 #toc li > span:hover {
  background-color: #313643 !important;
@@ -2480,15 +2480,15 @@ div.collapsible_headings_toggle .fa-caret-right:before {
 #navigate_menu a:hover,
 .toc {
  color: #d8dcee !important;
- font-size: 11pt !important;
+ font-size: 10pt !important;
 }
 #toc-wrapper .toc-item-num {
  color: #7aa05d !important;
- font-size: 11pt !important;
+ font-size: 10pt !important;
 }
 input.raw_input {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt !important;
+ font-size: 10pt !important;
  color: #b5c2d9;
  background-color: #262c36;
  border-color: #242a33;
@@ -2576,7 +2576,7 @@ body > div.modal.cmd-palette.typeahead-field {
 .typeahead-dropdown,
 .typeahead-list {
  font-family: "Roboto", sans-serif;
- font-size: 12pt;
+ font-size: 11pt;
  color: #899ab8;
  background-color: #202937;
  border: none;
@@ -2721,7 +2721,7 @@ div#short-key-bindings-intro.well,
 }
 .terminal-app .terminal {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt;
+ font-size: 10pt;
  line-height: 170%;
  color: #b5c2d9;
  background: #2c303c;
@@ -2837,7 +2837,7 @@ div#pager .ui-resizable-handle {
 div.CodeMirror,
 div.CodeMirror pre {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt;
+ font-size: 10pt;
  line-height: 170%;
  color: #b5c2d9;
 }
@@ -2899,7 +2899,7 @@ div.js-error {
 }
 .ipython_tooltip {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt;
+ font-size: 10pt;
  line-height: 170%;
  border: 2px solid #21262c;
  background: #323a44;
@@ -2913,7 +2913,7 @@ div.js-error {
 }
 .ipython_tooltip .tooltiptext pre {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt;
+ font-size: 10pt;
  line-height: 170%;
  background: #323a44;
  background-color: #323a44;
@@ -2935,7 +2935,7 @@ div.tooltiptext.bigtooltip {
 }
 .cm-s-ipython.CodeMirror {
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt;
+ font-size: 10pt;
  background: #2c303c;
  color: #b5c2d9;
  border-radius: 2px;
@@ -3158,7 +3158,7 @@ body :focus .MathJax {
  margin-left: 2px;
  overflow: auto;
  font-family: "Fira Code", monospace, monospace;
- font-size: 11pt;
+ font-size: 10pt;
  color: #b5c2d9;
  width: auto;
 }

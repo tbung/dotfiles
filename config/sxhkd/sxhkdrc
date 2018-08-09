@@ -23,7 +23,7 @@ super + shift + x
 super + shift + t
 	bspc node -t {pseudo_tiled,tiled}
 super + t
-	{bspc node -t floating && window-placer $(bspc query -T -d | grep -o '"state":"floating"' | wc -l),bspc node -t tiled}
+	{bspc node -t floating,bspc node -t tiled}
 # Force all windows of the desktop to tile
 super + ctrl + t
 	bspcp tile
@@ -258,7 +258,7 @@ super + shift + space
 	rofi -show
 
 super + p
-	dmenu_recent -h $PANEL_HEIGHT -fn 'xos4 Terminus:size=15' -i
+	rofi-pass
 
 super + shift + Return
 	default-terminal
@@ -320,7 +320,10 @@ alt + ctrl + space
 # Toggle compositing
 super + ctrl + space
 	{pkill compton ,\
-	compton -b }
+	compton --vsync drm -b }
+
+super + alt + p
+        ~/.i3/polybar.sh &
 
 # Remove receptacles
 super + BackSpace

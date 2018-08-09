@@ -15,14 +15,14 @@ Plug 'junegunn/vim-easy-align'          " Align stuff easily
 Plug 'chriskempson/base16-vim'          " All the colors one needs
 Plug '/usr/bin/fzf'                     " Fzf integration
 Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
-" Plug 'SirVer/ultisnips'                 " Snippets engine
+Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
 Plug 'w0rp/ale'                         " Syntax checker, requires checker itself
                                         " to be installed
 Plug 'itchyny/lightline.vim', { 'commit': '78c43c144643e49c529a93b9eaa4eda12614f923' }            " Statusline, deprecated soon
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
-" Plug 'maralla/completor.vim'            " Async completion engine
+Plug 'maralla/completor.vim'            " Async completion engine
 Plug 'junegunn/goyo.vim'                " Distraction free writing
 Plug 'junegunn/limelight.vim'           " Even more distraction free writing
 Plug 'lervag/vimtex'                    " Better latex support
@@ -145,3 +145,10 @@ autocmd User GoyoLeave ALEEnable
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
 nnoremap <silent> <C-t> :Buffers<cr>
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
