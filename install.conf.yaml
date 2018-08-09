@@ -23,6 +23,7 @@
     ~/.config/dunst: config/dunst
     ~/.config/bspwm: config/bspwm
     ~/.config/sxhkd: config/sxhkd
+    ~/.config/redshift: config/redshift
     ~/.mutt: mutt
     ~/.muttrc: muttrc
     ~/.offlineimaprc: offlineimaprc
