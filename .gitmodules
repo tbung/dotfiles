@@ -1,3 +1,6 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "themes/Ant-Dracula-Blue"]
+	path = themes/Ant-Dracula-Blue
+	url = https://github.com/Michedev/Ant-Dracula-Blue.git
