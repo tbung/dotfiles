@@ -12,34 +12,30 @@ compinit
 # End of lines added by compinstall
 
 # Path extensions
-export PATH=/home/tillb/.npm-global/bin:$PATH
-export PATH=/home/tillb/miniconda3/bin:$PATH
-export PATH=/home/tillb/go/bin:$PATH
-export PATH=/usr/bin:$PATH
+export PATH=$HOME/.npm-global/bin:$PATH
+export PATH=$HOME/miniconda3/bin:$PATH
+export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/bin:$PATH
 
 # Completion
-zstyle ':completion:*:*:git:*' script /usr/share/git/completion/git-completion.zsh
-zstyle ':completion:*:*:fzf:*' script /usr/share/fzf/completion.zsh
+zstyle ':completion:*:*:git:*' script $HOME/.zsh/git-completion.zsh
 
 # Prompt
 setopt prompt_subst
 
-source /usr/share/git/completion/git-prompt.sh
+source $HOME/.zsh/git-prompt.sh
 
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 export GIT_PS1_SHOWCOLORHINTS=true
 
 if [[ -z "$SSH_CLIENT" ]]; then
-        prompt_host=""
+    prompt_host=""
 else
-        prompt_host="$(hostname -s) "
+    prompt_host="($(hostname -s)) "
 fi
 
 export PROMPT=$'%B%F{green}$prompt_host%b%F{blue}%1~%F{242}$(__git_ps1 " [ %s]") %F{red}❯%F{white} '
-
-# Some config stuff
-source /usr/share/fzf/key-bindings.zsh
 
 # Aliases
 alias ls='ls --color=auto'
@@ -67,8 +63,10 @@ function pdf() {
 
 
 # Plugins
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Always activate conda base env
-source /home/tillb/miniconda3/etc/profile.d/conda.sh
+source $HOME/miniconda3/etc/profile.d/conda.sh
 conda activate base
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
