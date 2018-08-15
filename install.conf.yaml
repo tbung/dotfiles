@@ -11,6 +11,7 @@
     ~/.vim: vim
     ~/.vimrc: vimrc
     ~/.zshrc: zshrc
+    ~/.zsh: zsh
     ~/.tldrrc: tldrrc
     ~/.mume: mume
     ~/.condarc: condarc
