@@ -32,7 +32,7 @@ export GIT_PS1_SHOWCOLORHINTS=true
 if [[ -z "$SSH_CLIENT" ]]; then
     prompt_host=""
 else
-    prompt_host="($(hostname -s)) "
+    prompt_host="($(hostname)) "
 fi
 
 export PROMPT=$'%B%F{green}$prompt_host%b%F{blue}%1~%F{242}$(__git_ps1 " [ %s]") %F{red}❯%F{white} '
