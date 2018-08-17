@@ -1837,7 +1837,7 @@ div.text_cell.unrendered.selected .prompt {
 }
 div.rendered_html code {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt;
+ font-size: 11pt;
  padding-top: 3px;
  padding-left: 2px;
  color: #cdd2e9;
@@ -1853,7 +1853,7 @@ samp {
 .well code,
 code {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt !important;
+ font-size: 11pt !important;
  line-height: 170% !important;
  color: #abc1e2;
  background: #2a313c;
@@ -1862,7 +1862,7 @@ code {
 }
 kbd {
  padding: 1px;
- font-size: 9pt;
+ font-size: 11pt;
  font-weight: 800;
  color: #cdd2e9;
  background-color: transparent !important;
@@ -1893,7 +1893,7 @@ div.rendered_html {
 }
 div.rendered_html pre {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt !important;
+ font-size: 11pt !important;
  line-height: 170% !important;
  color: #abc1e2;
  background: #2a313c;
@@ -1909,7 +1909,7 @@ div.rendered_html pre {
 div.text_cell_render pre,
 div.text_cell_render code {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt !important;
+ font-size: 11pt !important;
  line-height: 170% !important;
  color: #abc1e2;
  background: #262931;
@@ -2471,7 +2471,7 @@ div.collapsible_headings_toggle .fa-caret-right:before {
 #navigate_menu a,
 .toc {
  color: #a2b0c7 !important;
- font-size: 9pt !important;
+ font-size: 11pt !important;
 }
 #toc li > span:hover {
  background-color: #343d4b !important;
@@ -2480,15 +2480,15 @@ div.collapsible_headings_toggle .fa-caret-right:before {
 #navigate_menu a:hover,
 .toc {
  color: #e4e8ee !important;
- font-size: 9pt !important;
+ font-size: 11pt !important;
 }
 #toc-wrapper .toc-item-num {
  color: #4c8be2 !important;
- font-size: 9pt !important;
+ font-size: 11pt !important;
 }
 input.raw_input {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt !important;
+ font-size: 11pt !important;
  color: #cdd2e9;
  background-color: #2a313c;
  border-color: #282f39;
@@ -2721,7 +2721,7 @@ div#short-key-bindings-intro.well,
 }
 .terminal-app .terminal {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt;
+ font-size: 11pt;
  line-height: 170%;
  color: #cdd2e9;
  background: #303845;
@@ -2837,7 +2837,7 @@ div#pager .ui-resizable-handle {
 div.CodeMirror,
 div.CodeMirror pre {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt;
+ font-size: 11pt;
  line-height: 170%;
  color: #cdd2e9;
 }
@@ -2899,7 +2899,7 @@ div.js-error {
 }
 .ipython_tooltip {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt;
+ font-size: 11pt;
  line-height: 170%;
  border: 2px solid #2b333f;
  background: #3c4657;
@@ -2913,7 +2913,7 @@ div.js-error {
 }
 .ipython_tooltip .tooltiptext pre {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt;
+ font-size: 11pt;
  line-height: 170%;
  background: #3c4657;
  background-color: #3c4657;
@@ -2935,7 +2935,7 @@ div.tooltiptext.bigtooltip {
 }
 .cm-s-ipython.CodeMirror {
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt;
+ font-size: 11pt;
  background: #303845;
  color: #cdd2e9;
  border-radius: 2px;
@@ -3158,7 +3158,7 @@ body :focus .MathJax {
  margin-left: 2px;
  overflow: auto;
  font-family: "Fira Code", monospace, monospace;
- font-size: 9pt;
+ font-size: 11pt;
  color: #cdd2e9;
  width: auto;
 }
