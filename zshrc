@@ -14,6 +14,7 @@ compinit
 # Path extensions
 export PATH=$HOME/.npm-global/bin:$PATH
 export PATH=$HOME/miniconda3/bin:$PATH
+export PATH=/usr/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/bin:$PATH
 
