@@ -30,6 +30,7 @@
     ~/.offlineimaprc: offlineimaprc
     ~/.msmtprc: msmtprc
     ~/.jupyter: jupyter
+    ~/.profile: profile
 
 
 - shell:
