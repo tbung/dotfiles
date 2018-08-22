@@ -38,4 +38,4 @@ i3lock --screen 2 -n -i "$BG_IMG" \
     --insidevercolor=55ea3400 --insidewrongcolor=d23c3d88 \
     --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="w/2:h/2" \
     --radius=80 --veriftext="" --wrongtext="" --indicator --ring-width=12 \
-    --noinputtext=""
+    --noinputtext="" &
