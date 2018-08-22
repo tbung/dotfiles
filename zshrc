@@ -65,7 +65,6 @@ function pdf() {
 
 # Plugins
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 fpath=($HOME/.zsh/zsh-completions/src $fpath)
 
 # Always activate conda base env
