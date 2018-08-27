@@ -26,6 +26,7 @@
     ~/.config/sxhkd: config/sxhkd
     ~/.config/redshift: config/redshift
     ~/.config/zathura: config/zathura
+    ~/.config/oomox: config/oomox
     ~/.mutt: mutt
     ~/.muttrc: muttrc
     ~/.offlineimaprc: offlineimaprc
