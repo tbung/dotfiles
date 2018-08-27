@@ -33,6 +33,7 @@
     ~/.msmtprc: msmtprc
     ~/.jupyter: jupyter
     ~/.profile: profile
+    ~/.gnupg/gpg-agent.conf: gpg-agent.conf
 
 
 - shell:
