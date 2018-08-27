@@ -25,6 +25,7 @@
     ~/.config/bspwm: config/bspwm
     ~/.config/sxhkd: config/sxhkd
     ~/.config/redshift: config/redshift
+    ~/.config/zathura: config/zathura
     ~/.mutt: mutt
     ~/.muttrc: muttrc
     ~/.offlineimaprc: offlineimaprc

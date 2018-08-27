@@ -174,22 +174,23 @@
     # Context menu.
     context = ctrl+mod1+c
 
+frame_color = "#eff0eb"
+separator_color = "#eff0eb"
+
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#282936"
-    foreground = "#f8f8f2"
-    frame_color = "#f8f8f2"
+    msg_urgency = low
+    background = "#34353e"
+    foreground = "#78787e"
     timeout = 10
 
 [urgency_normal]
-    background = "#282936"
-    foreground = "#f8f8f2"
-    frame_color = "#f8f8f2"
+    msg_urgency = normal
+    background = "#4a4b53"
+    foreground = "#eff0eb"
     timeout = 10
 
 [urgency_critical]
-    background = "#282936"
-    foreground = "#f8f8f2"
-    frame_color = "#ff5555"
+    msg_urgency = critical
+    background = "#ff5c57"
+    foreground = "#f1f1f0"
     timeout = 0

@@ -52,7 +52,7 @@ function chrome-app() { google-chrome-stable --app="$1"; }
 function pdf() {
     open=zathura
 
-    ag -U -g ".pdf$" \
+    fd -t f -I ".pdf$" \
     | fast-p \
     | fzf --read0 --reverse -e -d $'\t'  \
         --preview-window down:80% --preview '
