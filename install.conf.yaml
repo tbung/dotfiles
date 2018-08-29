@@ -27,6 +27,7 @@
     ~/.config/redshift: config/redshift
     ~/.config/zathura: config/zathura
     ~/.config/oomox: config/oomox
+    ~/.config/volumeicon: config/volumeicon
     ~/.mutt: mutt
     ~/.muttrc: muttrc
     ~/.offlineimaprc: offlineimaprc
