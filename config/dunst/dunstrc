@@ -180,7 +180,7 @@
 [urgency_low]
     msg_urgency = low
     background = "#1e1f29"
-    foreground = "#78787e"
+    foreground = "#eff0eb"
     timeout = 10
 
 [urgency_normal]
@@ -191,6 +191,6 @@
 
 [urgency_critical]
     msg_urgency = critical
-    background = "#1e1f29"
-    foreground = "#f1f1f0"
+    background = "#ff5c57"
+    foreground = "#eff0eb"
     timeout = 0

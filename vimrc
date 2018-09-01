@@ -11,6 +11,8 @@ Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'tpope/vim-dispatch'               " Dispatch console cmd
 Plug 'tpope/vim-vinegar'                " Better netrw browsing
 Plug 'tpope/vim-eunuch'                 " Unix commands made easy
+Plug 'justinmk/vim-sneak'
+Plug 'wellle/targets.vim'
 Plug 'junegunn/vim-easy-align'          " Align stuff easily
 Plug 'chriskempson/base16-vim'          " All the colors one needs
 Plug '/usr/bin/fzf'                     " Fzf integration
@@ -142,6 +144,9 @@ autocmd! User GoyoEnter Limelight
 autocmd User GoyoEnter ALEDisable
 autocmd! User GoyoLeave Limelight!
 autocmd User GoyoLeave ALEEnable
+
+map f <Plug>Sneak_s
+map F <Plug>Sneak_S
 
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
