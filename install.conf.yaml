@@ -35,6 +35,7 @@
     ~/.jupyter: jupyter
     ~/.profile: profile
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
+    ~/.bin: bin
 
 
 - shell:
