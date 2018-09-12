@@ -12,8 +12,6 @@ compinit
 # End of lines added by compinstall
 
 # Path extensions
-export PATH=$HOME/miniconda3/bin:$PATH
-export PATH=/usr/bin:$PATH
 export PATH=$HOME/bin:$PATH
 
 # Completion
@@ -48,7 +46,7 @@ fpath=($HOME/.zsh/zsh-completions/src $fpath)
 
 # Always activate conda base env
 source $HOME/miniconda3/etc/profile.d/conda.sh
-conda activate base
+[[ -z $TMUX ]] || conda deactivate; conda activate base
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
