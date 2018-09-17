@@ -95,6 +95,8 @@ set noshowmode
 " Fold by default
 set foldmethod=syntax
 
+set regexpengine=1
+
 " Disable arrow keys in normal mode
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -123,6 +125,8 @@ let g:lightline = {
 let g:tex_flavor='latex'
 let g:vimtex_compiler_latexmk = {'callback' : 0}
 let g:vimtex_view_method="zathura"
+let g:vimtex_fold_enabled=1
+let g:completor_tex_omni_trigger=g:vimtex#re#neocomplete
 
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"

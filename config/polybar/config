@@ -3,6 +3,8 @@ monitor = ${env:MONITOR:}
 width = 100%
 height = 25
 
+wm-restack = bspwm
+
 background = #1e1f29
 background_alt = #4a4b53
 foreground = #eff0eb

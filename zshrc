@@ -41,9 +41,11 @@ function gi() { curl -L -s https://www.gitignore.io/api/$@; }  # gitignore.io cl
 function chrome-app() { google-chrome-stable --app="$1"; }
 
 source $HOME/.zsh/aliases.zsh
+source $HOME/.zsh/functions.zsh
 
 # Plugins
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh/k/k.sh
 fpath=($HOME/.zsh/zsh-completions/src $fpath)
 
 # Always activate conda base env
