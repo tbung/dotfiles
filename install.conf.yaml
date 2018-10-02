@@ -36,6 +36,7 @@
     ~/.profile: profile
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.bin: bin
+    ~/.gitignore_global: gitignore_global
 
 
 - shell:
