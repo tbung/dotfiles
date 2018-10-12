@@ -154,7 +154,7 @@ map F <Plug>Sneak_S
 
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
-nnoremap <silent> ; :Buffers<cr>
+nnoremap <silent> - :Buffers<cr>
 nnoremap <silent> <C-t> :Tags <C-R><C-W><CR>
 
 command! -bang -nargs=* Rg
