@@ -20,7 +20,7 @@ export TERMINAL=/usr/bin/kitty
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export EDITOR=/usr/bin/vim
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-export CHROME_DEVEL_SANDBOX=/usr/lib/chromium/chrome-sandbox
+export CHROME_DEVEL_SANDBOX=/opt/google/chrome/chrome-sandbox
 
 # Load profiles from /etc/profile.d
 if test -d /etc/profile.d/; then

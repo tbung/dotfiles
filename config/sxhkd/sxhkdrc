@@ -289,13 +289,13 @@ Print
 #
 
 XF86AudioRaiseVolume
-	volume up
+	volume.sh up
 
 XF86AudioLowerVolume
-	volume down
+	volume.sh down
 
 XF86AudioMute
-	volume mute
+	volume.sh mute
 	
 XF86MonBrightnessDown
         light -U 5 

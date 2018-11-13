@@ -150,7 +150,9 @@
     icon_position = left
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Breeze-Maia-Dark/status/32:/usr/share/icons/Breeze-Maia-Dark/devices/32/:/usr/share/icons/Breeze-Maia-Dark/apps/32/:/usr/share/icons/Breeze-Maia-Dark/categories/32:/usr/share/icons/Breeze-Maia-Dark/mimetypes/32/
+    # icon_path = /usr/share/icons/Breeze-Maia-Dark/status/32:/usr/share/icons/Breeze-Maia-Dark/devices/32/:/usr/share/icons/Breeze-Maia-Dark/apps/32/:/usr/share/icons/Breeze-Maia-Dark/categories/32:/usr/share/icons/Breeze-Maia-Dark/mimetypes/32/
+
+    icon_path = /usr/share/icons/Papirus/16x16/status/:/usr/share/icons/Papirus/16x16/devices/:/usr/share/icons/Papirus/16x16/panel/
 
     max_icon_size = 64
 

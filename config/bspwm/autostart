@@ -59,6 +59,8 @@ update-checker 14400 &
 xcape -e 'Super_L=Super_L|Shift_L|space' &
 #lxpolkit &
 
+/usr/lib/geoclue-2.0/demos/agent &
+
 ## System tray applets
 nm-applet &
 xfce4-power-manager &
