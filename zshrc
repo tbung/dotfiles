@@ -48,7 +48,7 @@ source $HOME/.zsh/k/k.sh
 
 # Always activate conda base env
 [ -d ~/miniconda3 ] && source $HOME/miniconda3/etc/profile.d/conda.sh
-[[ -z $TMUX ]] || conda deactivate; conda activate base
+[ -d ~/miniconda3 ] && ( [[ -z $TMUX ]] || conda deactivate; conda activate base )
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
