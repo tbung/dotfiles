@@ -38,11 +38,11 @@ xset s noexpose &
 xset c on &
 xset -dpms &
 xbacklight -set 15 &
-xautolock -time 10 -locker ~/.i3/lock.sh &
+xautolock -time 10 -locker ~/.bin/lock.sh &
 
 ## Panel. The default is lemonbar script. Xfce4-panel can be more 
 ## easily configurable if you prefer that. Not installed by default
-~/.i3/polybar.sh &
+~/.bin/polybar.sh &
 
 ## Light system tray to use with lemonbar. Disable if you dont need it. 
 ## Edit ~/.stalonetrayrc if it is in wrong place.

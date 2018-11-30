@@ -14,40 +14,40 @@ compinit
 # Path extensions
 export PATH=$HOME/bin:$PATH
 
-# Completion
-zstyle ':completion:*:*:git:*' script $HOME/.zsh/git-completion.zsh
+fpath=($HOME/.zsh/zsh-completions/src $fpath)
+fpath=($HOME/.zsh $fpath)
 
-# Prompt
-setopt prompt_subst
-
-source $HOME/.zsh/git-prompt.sh
-
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
-export GIT_PS1_SHOWCOLORHINTS=true
-
-if [[ -z "$SSH_CLIENT" ]]; then
-    prompt_host=""
-else
-    prompt_host="($(hostname)) "
-fi
-
-export PROMPT=$'%B%F{green}$prompt_host%b%F{blue}%1~%F{242}$(__git_ps1 " [ %s]") %F{red}❯%F{white} '
-
-# Functions
-function gi() { curl -L -s https://www.gitignore.io/api/$@; }  # gitignore.io cli
-function chrome-app() { google-chrome-stable --app="$1"; }
-
+# source $HOME/.zsh/git-completion.zsh
 source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/functions.zsh
+source $HOME/.zsh/vi-mode.zsh
+
+autoload -U promptinit; promptinit
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  package       # Package version
+  node          # Node.js section
+  docker        # Docker section
+  conda         # conda virtualenv section
+  exec_time     # Execution time
+  line_sep      # Line break
+  vi_mode       # Vi-mode indicator
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
+prompt spaceship
 
 # Plugins
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/k/k.sh
-fpath=($HOME/.zsh/zsh-completions/src $fpath)
 
 # Always activate conda base env
-source $HOME/miniconda3/etc/profile.d/conda.sh
+[ -d ~/miniconda3 ] && source $HOME/miniconda3/etc/profile.d/conda.sh
 [[ -z $TMUX ]] || conda deactivate; conda activate base
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

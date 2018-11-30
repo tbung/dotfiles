@@ -16,3 +16,6 @@
 [submodule "zsh/k"]
 	path = zsh/k
 	url = https://github.com/supercrabtree/k.git
+[submodule "zsh/spaceship-prompt"]
+	path = zsh/spaceship-prompt
+	url = https://github.com/denysdovhan/spaceship-prompt.git

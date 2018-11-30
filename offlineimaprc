@@ -46,6 +46,8 @@ folderfilter = lambda folder: folder not in ['[Gmail]/Papierkorb',
                  '[Gmail]/Alle Nachrichten',
                  ]
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+ssl_version = tls1_2
+tls_level = tls_secure
 
 [Account uni]
 localrepository = uni-Local

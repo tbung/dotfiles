@@ -1,5 +1,5 @@
 # fkill - kill process
-fkill() {
+function fkill() {
     local pid
     pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
 
@@ -8,3 +8,5 @@ fkill() {
         echo $pid | xargs kill -${1:-9}
     fi
 }
+function gi() { curl -L -s https://www.gitignore.io/api/$@; }  # gitignore.io cli
+function chrome-app() { google-chrome-stable --app="$1"; }

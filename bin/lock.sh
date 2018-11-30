@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DISPLAY_RE="([0-9]+)x([0-9]+)\\+([0-9]+)\\+([0-9]+)"
-LOCK_IMG="$HOME/.i3/lock_icon.png"
+LOCK_IMG="$HOME/.bin/lock_icon.png"
 BG_IMG='/tmp/screen.png'
 FONT='Ubuntu'
 TEXT='Type password to unlock'

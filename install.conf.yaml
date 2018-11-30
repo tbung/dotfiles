@@ -16,7 +16,6 @@
     ~/.mume: mume
     ~/.condarc: condarc
     ~/.themes: themes
-    ~/.i3: i3
     ~/.config/kitty: config/kitty
     ~/.config/polybar: config/polybar
     ~/.config/rofi: config/rofi

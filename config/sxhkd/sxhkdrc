@@ -323,11 +323,11 @@ super + ctrl + space
 	compton --vsync drm -b }
 
 super + alt + p
-        ~/.i3/polybar.sh &
+        ~/.bin/polybar.sh &
 
 # Remove receptacles
 super + BackSpace
   for i in $(bspc query -N -n .leaf.!window.local); do bspc node $i -k; done
 
 super + x
-        ~/.i3/lock.sh
+        ~/.bin/lock.sh
