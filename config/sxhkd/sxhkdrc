@@ -65,8 +65,8 @@ super + ctrl + c
 super + ctrl + Return
 	auto-presel
 
-ctrl + space
-	auto-presel
+# ctrl + space
+#	auto-presel
 	
 # Presel window for splitting in certain direction
 alt + ctrl + {a,s,w,d}
