@@ -29,17 +29,14 @@ SPACESHIP_PROMPT_ORDER=(
   dir           # Current directory section
   host          # Hostname section
   git           # Git section (git_branch + git_status)
-  package       # Package version
   node          # Node.js section
-  docker        # Docker section
   conda         # conda virtualenv section
-  exec_time     # Execution time
   line_sep      # Line break
   vi_mode       # Vi-mode indicator
   jobs          # Background jobs indicator
-  exit_code     # Exit code section
   char          # Prompt character
 )
+SPACESHIP_CHAR_SYMBOL="❯ "
 prompt spaceship
 
 # Plugins
@@ -47,10 +44,11 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/k/k.sh
 
 # Always activate conda base env
-[ -d ~/miniconda3 ] && source $HOME/miniconda3/etc/profile.d/conda.sh
-[ -d ~/miniconda3 ] && ( [[ -z $TMUX ]] || conda deactivate; conda activate base )
+[[ -d ~/miniconda3 ]] && source $HOME/miniconda3/etc/profile.d/conda.sh
+[[ -d ~/miniconda3 ]] && [[ -z $TMUX ]] || conda deactivate; 
+[[ -d ~/miniconda3 ]] && conda activate base
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d . $HOME"

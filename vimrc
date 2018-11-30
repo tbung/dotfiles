@@ -113,7 +113,7 @@ inoremap <Right> <NOP>
 let base16colorspace=256
 colorscheme base16-snazzy
 set background=dark
-set termguicolors
+" set termguicolors
 
 " Statusline config
 set laststatus=2
