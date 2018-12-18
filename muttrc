@@ -21,6 +21,10 @@ unset mark_old           # read/new is good enough for me
 set beep_new             # bell on new mails
 set pipe_decode          # strip headers and eval mimes when piping
 set thorough_search      # strip headers and eval mimes before searching
+set sleep_time = 0
+set read_inc = 1000
+set header_cache=~/.cache/mutt
+unset help
 
 # Sidebar Patch --------------------------------------
 set sidebar_visible = no
@@ -36,7 +40,7 @@ sidebar_whitelist gmail/INBOX uni/INBOX
 
 # Status Bar -----------------------------------------
 set status_chars  = " *%A"
-set status_format = "[ Folder: %f ] [%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]%>─%?p?( %p postponed )?"
+set status_format = " %f %> %r%m msg  %n new%?d? (%d to delete)?%?t? (%t tagged)? "
 set date_format = "%d.%m.%Y %H:%M"
 
 # Header Options -------------------------------------
@@ -58,29 +62,12 @@ set sort_re                                # thread based on regex
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 
 # Index Key Bindings ---------------------------------
-bind index g        noop
-bind index gg       first-entry
-bind index G        last-entry
-
-bind index R        group-reply
-bind index <tab>    sync-mailbox
-bind index <space>  collapse-thread
-
-# Ctrl-R to mark all as read
-macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
-
 # Sync email
-macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
-macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
-
-# Saner copy/move dialogs
-macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
-macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 
 # Sidebar Navigation ---------------------------------
-bind index,pager <down>   sidebar-next
-bind index,pager <up>     sidebar-prev
-bind index,pager <right>  sidebar-open
+# bind index,pager <down>   sidebar-next
+# bind index,pager <up>     sidebar-prev
+# bind index,pager <right>  sidebar-open
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
@@ -94,17 +81,20 @@ set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 auto_view text/html                                      # view html automatically
 alternative_order text/plain text/enriched text/html
 
-# Pager Key Bindings ---------------------------------
-bind pager k  previous-line
-bind pager j  next-line
-bind pager g  noop
-bind pager gg top
-bind pager G  bottom
+# # Pager Key Bindings ---------------------------------
+# bind pager k  previous-line
+# bind pager j  next-line
+# bind generic,pager,index g  noop
+# bind generic,index,pager,index gg top
+# bind generic,index,pager,index G  bottom
+# bind  generic,index,pager,index q exit
+# macro generic,index,pager Q "qqq"
+macro index O "<shell-escape>offlineimap -o<enter>"           "run offlineimap to sync all mail"
 
-bind pager R  group-reply
+# bind pager R  group-reply
 
-# View attachments properly.
-bind attach <return> view-mailcap
+# # View attachments properly.
+# bind attach <return> view-mailcap
 
 # Compose View Options -------------------------------
 set realname = "Till Bungert"        # who am i?
@@ -125,13 +115,21 @@ set forward_quote                    # include message in forwards
 set editor = "vim"                   # Use terminal Vim to compose email.
 
 # Colors ---------------------------------------------
-# source ~/.mutt/colors.mutt
-source ~/.mutt/dracula.mutt
+source ~/.mutt/colors.mutt
+source ~/.mutt/vim-keys.mutt
+
+set virtual_spoolfile=yes
+virtual-mailboxes \
+        "INBOX"     "notmuch://?query=tag:inbox and NOT tag:archive"\
+        "Unread"    "notmuch://?query=tag:unread"\
+        "Starred"   "notmuch://?query=tag:*"\
+        "Sent"      "notmuch://?query=tag:sent"        # sets up queries for virtual folders
 
 # Account settings -----------------------------------
-set spoolfile = "+gmail/INBOX"
+# set spoolfile = "+gmail/INBOX"
 source ~/.mutt/mailboxes
 folder-hook gmail source "~/.mutt/accounts/gmail"
 # mailboxes =gmail
 folder-hook uni source "~/.mutt/accounts/uni"
 # mailboxes =uni
+folder-hook gc source "~/.mutt/accounts/gc"

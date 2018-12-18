@@ -1,0 +1,4 @@
+set from="till.bungert@galileiconsult.de"
+set sendmail="msmtp -a gc"
+set record = +gc/Sent
+set trash = +gc/Trash

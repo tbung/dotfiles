@@ -1,3 +1,4 @@
 set from="bungert@stud.uni-heidelberg.de"
 set sendmail="msmtp -a uni"
 set record = +uni/Sent
+set trash = +uni/Trash

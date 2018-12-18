@@ -31,6 +31,7 @@
     ~/.muttrc: muttrc
     ~/.offlineimaprc: offlineimaprc
     ~/.msmtprc: msmtprc
+    ~/.notmuch-config: notmuch-config
     ~/.jupyter: jupyter
     ~/.profile: profile
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf

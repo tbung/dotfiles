@@ -1,13 +1,14 @@
 [general]
 ui = ttyui
-accounts = gmail,uni
+accounts = gmail,uni,gc
 fsync = False
 pythonfile = ~/.mutt/offlineimap.py
+maxsyncaccounts = 1
 
 [mbnames]
-enabled = no
+enabled = yes
 filename = ~/.mutt/mailboxes
-header = "mailboxes "
+header = "mailboxes INBOX "
 peritem = "+%(accountname)s/%(foldername)s"
 sep = " "
 footer = "\n"
@@ -15,7 +16,8 @@ footer = "\n"
 [Account gmail]
 localrepository = gmail-Local
 remoterepository = gmail-Remote
-postsynchook = notmuch new
+postsynchook = ~/.bin/notmuch-hook.sh
+autorefresh = 10
 
 [Repository gmail-Local]
 type = Maildir
@@ -40,11 +42,16 @@ nametrans = lambda folder: {'[Gmail]/Entw&APw-rfe':      'drafts',
                             '[Gmail]/Papierkorb':        'trash',
                             '[Gmail]/Alle Nachrichten':  'archive',
                             }.get(folder, folder)
-folderfilter = lambda folder: folder not in ['[Gmail]/Papierkorb',
-                 '[Gmail]/Wichtig',
-                 '[Gmail]/Spam',
-                 '[Gmail]/Alle Nachrichten',
-                 ]
+# folderfilter = lambda folder: folder not in ['[Gmail]/Papierkorb',
+#                  '[Gmail]/Wichtig',
+#                  '[Gmail]/Spam',
+#                  '[Gmail]/Alle Nachrichten',
+#                  ]
+folderfilter = lambda folder: folder in [
+                   'INBOX',
+                   '[Gmail]/Gesendet',
+                   '[Gmail]/Papierkorb',
+               ]
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 ssl_version = tls1_2
 tls_level = tls_secure
@@ -52,7 +59,8 @@ tls_level = tls_secure
 [Account uni]
 localrepository = uni-Local
 remoterepository = uni-Remote
-postsynchook = notmuch new
+postsynchook = ~/.bin/notmuch-hook.sh
+autorefresh = 10
 
 [Repository uni-Local]
 type = Maildir
@@ -65,5 +73,31 @@ remoteuser = tz425
 remotehost = imap.urz.uni-heidelberg.de
 remotepasseval = get_pass("bungert@stud.uni-heidelberg.de")
 realdelete = no
-folderfilter = lambda folder: not folder.startswith("Shared Folders") and not folder.startswith("Junk Email") and not folder.startswith("Trash")
+# folderfilter = lambda folder: not folder.startswith("Shared Folders") and not folder.startswith("Junk Email") and not folder.startswith("Trash")
+folderfilter = lambda folder: folder in [
+                   'INBOX',
+                   'Sent',
+                   'Trash',
+               ]
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Account gc]
+localrepository = gc-Local
+remoterepository = gc-Remote
+postsynchook = ~/.bin/notmuch-hook.sh
+autorefresh = 10
+
+[Repository gc-Local]
+type = Maildir
+localfolders = ~/.mail/gc
+
+[Repository gc-Remote]
+maxconnections = 1
+type = IMAP
+remoteuser = tbungert
+remotehost = galileiconsult.de
+remotepasseval = get_pass("till.bungert@galileiconsult.de")
+realdelete = no
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+folderfilter = lambda folder: folder in ["INBOX","INBOX.Trash","qm","mitglieder","awp.123-ac"] or folder.startswith("projects")
+nametrans = lambda folder: {'INBOX.Trash': 'Trash',}.get(folder, folder)
