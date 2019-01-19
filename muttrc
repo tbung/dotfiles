@@ -90,6 +90,8 @@ alternative_order text/plain text/enriched text/html
 # bind  generic,index,pager,index q exit
 # macro generic,index,pager Q "qqq"
 macro index O "<shell-escape>offlineimap -o<enter>"           "run offlineimap to sync all mail"
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
 # bind pager R  group-reply
 

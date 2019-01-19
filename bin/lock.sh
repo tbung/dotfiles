@@ -31,7 +31,7 @@ scrot "$BG_IMG"
 convert "$BG_IMG" -blur 0x6 -define modulate:colorspace=HSB -modulate 60 "$BG_IMG"
 convert "$BG_IMG" "$LOCK_IMG" -gravity center \
     -geometry  "-$(($SCREEN_WIDTH/2))+0" -composite -matte -font "$FONT" \
-    -pointsize 26 -fill white -annotate "-$(($SCREEN_WIDTH/2))+160" "$TEXT" "$BG_IMG"
+    -pointsize 26 -fill white -annotate "+0+160" "$TEXT" "$BG_IMG"
 i3lock --screen 2 -n -i "$BG_IMG" \
     --insidecolor=37344500 --ringcolor=ffffffff --line-uses-inside \
     --keyhlcolor=282936ff --bshlcolor=d23c3dff --separatorcolor=00000000 \
