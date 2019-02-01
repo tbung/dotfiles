@@ -63,7 +63,7 @@ xcape -e 'Super_L=Super_L|Shift_L|space' &
 
 ## System tray applets
 nm-applet &
-xfce4-power-manager &
+mate-power-manager &
 pamac-tray &
 clipit &
 volumeicon &

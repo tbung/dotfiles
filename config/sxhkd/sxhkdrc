@@ -258,12 +258,12 @@ super + shift + space
 	rofi -show
 
 super + p
-	rofi-pass
+	keepmenu
 
 super + shift + Return
 	default-terminal
 super + z
-	default-terminal
+	$TERMINAL
 
 super + shift + z
 	open-terminal-here
@@ -310,10 +310,10 @@ XF86AudioNext
         playerctl next
 	
 XF86MonBrightnessDown
-        light -U 5 
+        light -U 10 
 
 XF86MonBrightnessUp
-        light -A 5
+        light -A 10
  
 
 XF86Sleep

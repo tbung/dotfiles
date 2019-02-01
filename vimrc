@@ -15,7 +15,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'wellle/targets.vim'
 Plug 'junegunn/vim-easy-align'          " Align stuff easily
 Plug 'chriskempson/base16-vim'          " All the colors one needs
-Plug '/usr/bin/fzf'                     " Fzf integration
+Plug '~/.fzf'                     " Fzf integration
 Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets

@@ -86,6 +86,6 @@ bspc rule -a Zathura state=tiled
 
 ##Autostart apps
 #Keybindings daemon
-#sxhkd &
+sxhkd &
 #Source autostartfile. Uncomment this if you use bspwm-git
-#. $HOME/.config/bspwm/autostart
+. $HOME/.config/bspwm/autostart
