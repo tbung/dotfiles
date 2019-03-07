@@ -29,7 +29,7 @@
     ~/.config/volumeicon: config/volumeicon
     ~/.mutt: mutt
     ~/.muttrc: muttrc
-    ~/.offlineimaprc: offlineimaprc
+    ~/.mbsyncrc: mbsyncrc
     ~/.msmtprc: msmtprc
     ~/.notmuch-config: notmuch-config
     ~/.jupyter: jupyter
