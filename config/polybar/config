@@ -16,9 +16,10 @@ font-0 = "Noto Sans:style=Bold:pixelsize=10;1"
 font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;2"
 font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
+font-4 = "MaterialIcons:style=Regular:pixelsize=12;3"
 
 modules-left = bspwm
-modules-right = player-info fuzzy-clock
+modules-right = player-info fuzzy-clock openconnect mullvad
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -311,6 +312,26 @@ format-padding = 0
 exec = ~/.config/polybar/bash-fuzzy-clock.sh
 
 interval = 30
+
+[module/mullvad]
+type = custom/script
+label = "   %output%"
+format-background = ${root.background}
+format-padding = 0
+
+exec = ~/.config/polybar/mullvad.sh
+
+intervall = 5
+
+[module/openconnect]
+type = custom/script
+label = "   %output%"
+format-background = ${root.background}
+format-padding = 0
+
+exec = ~/.config/polybar/urz-vpn.sh
+
+intervall = 5
 
 [module/info-redshift-temp]
 type = custom/script

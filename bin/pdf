@@ -10,6 +10,7 @@ file=$(fd -t f -I ".pdf$" \
     --preview-window down:80% --preview 'v=$(echo {q} | tr " " "|");echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;' \
     | cut -z -f 1 -d $'\t' | tr -d '\n')
 
-nohup $open $file > /dev/null &
+echo $file
+nohup $open "$file" > /dev/null &
 
 sleep 0.01

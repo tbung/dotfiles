@@ -169,10 +169,6 @@ super + ctrl + {Left,Down,Up,Right}
 super + f 
 	bspc desktop -l next
 	
-# Balance tree
-super + b
-	bspc node @/ -B
-
 # Balance brother node. If you do this on biggest window of the desktop, it usually means balancing all windows with except the biggest.
 super + alt + b
 	bspc node @brother -B
@@ -281,7 +277,7 @@ super + shift + e
 	kitty ranger
 
 Print
-	scrot
+	scrot -e 'mv $f ~/Pictures/'
 
 	
 #
@@ -342,4 +338,7 @@ super + BackSpace
   for i in $(bspc query -N -n .leaf.!window.local); do bspc node $i -k; done
 
 super + x
-        ~/.bin/lock.sh
+        light-locker-command --lock
+
+super + {v,b}
+        playerctl {previous,next}

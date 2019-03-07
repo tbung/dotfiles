@@ -44,7 +44,7 @@ source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/k/k.sh
 
 # Always activate conda base env
-# [[ -d ~/miniconda3 ]] && source $HOME/miniconda3/etc/profile.d/conda.sh
+[[ -d ~/miniconda3 ]] && source $HOME/miniconda3/etc/profile.d/conda.sh
 # [[ -d ~/miniconda3 ]] && [[ -z $TMUX ]] || conda deactivate; 
 # [[ -d ~/miniconda3 ]] && conda activate base
 

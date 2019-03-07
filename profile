@@ -7,6 +7,7 @@ umask 022
 PATH="/usr/local/sbin:/usr/local/bin:/usr/bin/core_perl:/usr/bin:$HOME/.config/bspwm/panel:$HOME/.bin"
 export PATH=$HOME/.npm-global/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/.fzf/bin:$PATH
 
 export PANEL_FIFO="/tmp/panel-fifo"
 export PATH
@@ -20,7 +21,7 @@ export TERMINAL=/usr/bin/kitty
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export EDITOR=/usr/bin/vim
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
-export CHROME_DEVEL_SANDBOX=/opt/google/chrome/chrome-sandbox
+export CHROME_DEVEL_SANDBOX=/usr/lib/chromium/chrome-sandbox
 
 # Load profiles from /etc/profile.d
 if test -d /etc/profile.d/; then

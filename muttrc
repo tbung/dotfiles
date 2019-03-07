@@ -89,7 +89,7 @@ alternative_order text/plain text/enriched text/html
 # bind generic,index,pager,index G  bottom
 # bind  generic,index,pager,index q exit
 # macro generic,index,pager Q "qqq"
-macro index O "<shell-escape>offlineimap -o<enter>"           "run offlineimap to sync all mail"
+macro index O "<shell-escape>mbsync -a;~/.bin/notmuch-hook.sh<enter>"           "run offlineimap to sync all mail"
 macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
 
@@ -124,6 +124,8 @@ set virtual_spoolfile=yes
 virtual-mailboxes \
         "INBOX"     "notmuch://?query=tag:inbox and NOT tag:archive"\
         "Unread"    "notmuch://?query=tag:unread"\
+        "Social"    "notmuch://?query=tag:social"\
+        "Newsletters"    "notmuch://?query=tag:news"\
         "Starred"   "notmuch://?query=tag:*"\
         "Sent"      "notmuch://?query=tag:sent"        # sets up queries for virtual folders
 

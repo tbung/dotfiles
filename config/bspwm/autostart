@@ -61,11 +61,15 @@ xcape -e 'Super_L=Super_L|Shift_L|space' &
 
 /usr/lib/geoclue-2.0/demos/agent &
 
+pulseeffects --gapplication-service &
+
 ## System tray applets
 nm-applet &
 mate-power-manager &
 pamac-tray &
 clipit &
-volumeicon &
+# volumeicon &
+pasystray &
 redshift-gtk &
 syncthing-gtk &
+light-locker &

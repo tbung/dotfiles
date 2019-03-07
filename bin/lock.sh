@@ -32,10 +32,7 @@ convert "$BG_IMG" -blur 0x6 -define modulate:colorspace=HSB -modulate 60 "$BG_IM
 convert "$BG_IMG" "$LOCK_IMG" -gravity center \
     -geometry  "-$(($SCREEN_WIDTH/2))+0" -composite -matte -font "$FONT" \
     -pointsize 26 -fill white -annotate "+0+160" "$TEXT" "$BG_IMG"
-i3lock --screen 2 -n -i "$BG_IMG" \
-    --insidecolor=37344500 --ringcolor=ffffffff --line-uses-inside \
-    --keyhlcolor=282936ff --bshlcolor=d23c3dff --separatorcolor=00000000 \
-    --insidevercolor=55ea3400 --insidewrongcolor=d23c3d88 \
-    --ringvercolor=ffffffff --ringwrongcolor=ffffffff --indpos="w/2:h/2" \
-    --radius=80 --veriftext="" --wrongtext="" --indicator --ring-width=12 \
+i3lock --screen 2 -n -u -i "$BG_IMG" \
+    --indpos="w/2:h/2" \
+    --veriftext="" --wrongtext="" \
     --noinputtext="" &

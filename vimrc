@@ -23,6 +23,8 @@ Plug 'w0rp/ale'                         " Syntax checker, requires checker itsel
                                         " to be installed
 Plug 'itchyny/lightline.vim', { 'commit': '78c43c144643e49c529a93b9eaa4eda12614f923' }            " Statusline, deprecated soon
 Plug 'tbung/vim-lightline-base16'
+Plug 'godlygeek/tabular', { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
 Plug 'maralla/completor.vim'            " Async completion engine
@@ -139,9 +141,6 @@ let g:completor_python_binary = 'python'
 " EasyAlign key bindings
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-
-" Markdown plugin currently not highlighting headers
-let g:polyglot_disabled = ['latex']
 
 " Enter all the distraction free writing
 autocmd! User GoyoEnter Limelight
