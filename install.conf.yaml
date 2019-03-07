@@ -27,6 +27,7 @@
     ~/.config/zathura: config/zathura
     ~/.config/oomox: config/oomox
     ~/.config/volumeicon: config/volumeicon
+    ~/.config/systemd: config/systemd
     ~/.mutt: mutt
     ~/.muttrc: muttrc
     ~/.mbsyncrc: mbsyncrc
