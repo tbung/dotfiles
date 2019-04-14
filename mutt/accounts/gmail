@@ -1,3 +1,4 @@
 set from="tillbungert@gmail.com"
 set sendmail="msmtp -a gmail"
 set trash = +gmail/trash
+set record = +gmail/sent

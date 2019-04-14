@@ -14,13 +14,14 @@ Plug 'tpope/vim-eunuch'                 " Unix commands made easy
 Plug 'justinmk/vim-sneak'
 Plug 'wellle/targets.vim'
 Plug 'junegunn/vim-easy-align'          " Align stuff easily
-Plug 'chriskempson/base16-vim'          " All the colors one needs
+" Plug 'chriskempson/base16-vim'          " All the colors one needs
+Plug 'danielwe/base16-vim'
 Plug '~/.fzf'                     " Fzf integration
 Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
 Plug 'w0rp/ale'                         " Syntax checker, requires checker itself
-                                        " to be installed
+"                                         " to be installed
 Plug 'itchyny/lightline.vim', { 'commit': '78c43c144643e49c529a93b9eaa4eda12614f923' }            " Statusline, deprecated soon
 Plug 'tbung/vim-lightline-base16'
 Plug 'godlygeek/tabular', { 'for': 'markdown' }
@@ -129,6 +130,7 @@ let g:vimtex_compiler_latexmk = {'callback' : 0}
 let g:vimtex_view_method="zathura"
 let g:vimtex_fold_enabled=1
 let g:completor_tex_omni_trigger=g:vimtex#re#neocomplete
+let g:polyglot_disabled = ['latex', 'markdown']
 
 " UltiSnips config
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -155,6 +157,10 @@ map F <Plug>Sneak_S
 nnoremap <silent> <C-p> :Files<cr>
 nnoremap <silent> - :Buffers<cr>
 nnoremap <silent> <C-t> :Tags <C-R><C-W><CR>
+
+au! BufRead,BufNewFile *.md set filetype=markdown
+let g:vim_markdown_math = 1
+let g:vim_markdown_frontmatter = 1
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(

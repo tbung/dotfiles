@@ -39,7 +39,7 @@ bind index                      za  collapse-thread
 bind index                      zA  collapse-all # Missing :folddisable/foldenable
 
 macro pager,index                i   <change-vfolder>INBOX<Enter>
-macro pager,index                v   <change-vfolder>?
+macro pager,index                n   <change-vfolder>?
 
 # bind pager,index                 t  noop
 macro index               t  "<modify-labels>-inbox +test\\n<sync-mailbox>"

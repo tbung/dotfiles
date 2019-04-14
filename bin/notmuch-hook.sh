@@ -15,7 +15,11 @@ notmuch tag +news -inbox -- \
     from:*medium.com
 
 NEW=$(notmuch count tag:inbox and not tag:notified)
-if [[ $NEW -gt 0 ]]; then
-    dunstify --icon="/usr/share/icons/Papirus-Dark/16x16/actions/mail-message.svg" "$NEW new Email(s)"
+if [[ $NEW -eq 1 ]]; then
+    dunstify --icon="/usr/share/icons/Papirus-Dark/16x16/actions/mail-message.svg" "$NEW new email"
+    notmuch tag +notified -- tag:inbox
+fi
+if [[ $NEW -gt 1 ]]; then
+    dunstify --icon="/usr/share/icons/Papirus-Dark/16x16/actions/mail-message.svg" "$NEW new emails"
     notmuch tag +notified -- tag:inbox
 fi
