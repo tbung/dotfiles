@@ -124,10 +124,6 @@ super + {m,n}
 alt + {_,shift + }Tab
     bspc node -f {next,prev}.local
 
-# Go to specific window
-super + Tab
-	WindowSelector
-	
 #Focus windows by direction, works with multihead
 super +  {a,s,w,d}
     focusmover {west,south,north,east}
@@ -196,24 +192,6 @@ super + g
 
 super + button{4,5}
 	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 ))
-#
-# mouse bindings
-# __________________
-
-~button1
-	DidIClickDesktop.sh && mygtkmenui -- .config/GTKmenu/LaunchMenu
-
-~button2
-	DidIClickDesktop.sh && mygtkmenui -- .config/GTKmenu/BspwmWindowMenui
-		
-~button3
-	DidIClickDesktop.sh && mygtkmenui -- .config/GTKmenu/BspwmDesktopMenui
-
-# Switch workspace by scrolling on the desktop. Causes scrolling issues on some systems.
-#~button4
-#	DidIClickDesktop.sh && bspc desktop -f next
-#~button5
-#	DidIClickDesktop.sh && bspc desktop -f prev
 	
 ### Add or remove desktops by scrolling
 super + ctrl + button5
@@ -222,25 +200,6 @@ super + ctrl + button5
 super + ctrl + button4
     bspcp dsktp add
 
-# Spawn applications popup menu and manually tile selected 
-# app where your mouse was when you opened the menu. Smartsplit only chooses
-# biggest dimension of the window, MouseLaunch only cares which edge is closer.
-# mod5 is alt_gr (first key right from space) on most keyboards. 
-mod5 + @button1
-    MouseLaunch ; mygtkmenui -- .config/GTKmenu/LaunchMenu
-#	smartsplit ; dboxmenu
-
-# Spawn window manipulation menu
-# Mod1 is alt
-#    BspwmWindowMenu
-mod1 + @button1
-    mygtkmenui -- .config/GTKmenu/BspwmWindowMenui
-
-
-#
-# Touchpad "gestures" (depend on your touchpad driver, very likely to be unavailable)
-#_____________________
-    
 #
 # spawn programs
 #
@@ -250,7 +209,7 @@ super + space
 #	dmenu_recent -fn 'xos4 Terminus:size=15' -i -l 14 -w 600 -y $PANEL_HEIGHT
 	rofi -show run
 
-super + shift + space
+super + Tab
 	rofi -show
 
 super + p
@@ -279,7 +238,6 @@ super + shift + e
 Print
 	scrot -e 'mv $f ~/Pictures/'
 
-	
 #
 # Media keys
 #
@@ -310,7 +268,6 @@ XF86MonBrightnessDown
 
 XF86MonBrightnessUp
         light -A 10
- 
 
 XF86Sleep
 	systemctl suspend
@@ -318,17 +275,6 @@ XF86Sleep
 # make sxhkd reload its configuration files:
 super + shift + Escape
 	pkill -USR1 -x sxhkd
-
-# In case bspwmrc fails to execute/you wish have plugged in a new monitor
-super + shift + r
-	bspwmrc
-# edit this file
-alt + ctrl + space
-	$GUI_EDITOR ~/.config/sxhkd/sxhkdrc
-# Toggle compositing
-super + ctrl + space
-	{pkill compton ,\
-	compton --vsync drm -b }
 
 super + alt + p
         ~/.bin/polybar.sh &

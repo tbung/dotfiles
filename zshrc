@@ -42,11 +42,11 @@ prompt spaceship
 # Plugins
 source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $HOME/.zsh/k/k.sh
+source $HOME/.zsh/z/z.sh
+source $HOME/.zsh/colored-man-pages.plugin.zsh
+source $HOME/.zsh/web-search.plugin.zsh
 
-# Always activate conda base env
 [[ -d ~/miniconda3 ]] && source $HOME/miniconda3/etc/profile.d/conda.sh
-# [[ -d ~/miniconda3 ]] && [[ -z $TMUX ]] || conda deactivate; 
-# [[ -d ~/miniconda3 ]] && conda activate base
 
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'

@@ -111,10 +111,14 @@ set forward_format = "Fwd: %s"       # format of subject when forwarding
 set forward_decode                   # decode when forwarding
 set attribution = "On %d, %n wrote:" # format of quoting header
 set reply_to                         # reply to Reply to: field
+alternates tillbungert@gmail\.com
+alternates bungert@stud\.uni-heidelberg\.de
+subscribe .*@listserv.uni-heidelberg.de
 set reverse_name                     # reply as whomever it was to
 set include                          # include message in replies
 set forward_quote                    # include message in forwards
 set editor = "vim"                   # Use terminal Vim to compose email.
+set from = "tillbungert@gmail.com"
 
 # Colors ---------------------------------------------
 source ~/.mutt/colors.mutt

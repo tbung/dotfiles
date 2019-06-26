@@ -81,6 +81,7 @@ bspc rule -a firefox desktop=I
 bspc rule -a 9menu border=off manage=off
 bspc rule -a tint2 border=off manage=off
 bspc rule -a Zathura state=tiled
+bspc rule -a "Tor Browser" state=floating
 #bspc desktop I --layout monocle
 #bspc desktop II --layout monocle
 

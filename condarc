@@ -1,5 +1,5 @@
 channels:
+  - http://ssb.stsci.edu/astroconda
   - defaults
   - conda-forge
-
-changeps1: False
+changeps1: false

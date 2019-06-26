@@ -1,7 +1,8 @@
 # Base16 Snazzy
 # Author: Chawye Hsu (https://github.com/h404bi) based on Hyper Snazzy Theme (https://github.com/sindresorhus/hyper-snazzy)
 
-set default-bg                  "#1e1f29"
+set default-bg                  "#ffffff"
+# set default-bg                  "#1e1f29"
 set default-fg                  "#34353e"
 
 set statusbar-fg                "#a5a5a9"

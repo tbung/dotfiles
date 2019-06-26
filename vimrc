@@ -150,8 +150,8 @@ autocmd User GoyoEnter ALEDisable
 autocmd! User GoyoLeave Limelight!
 autocmd User GoyoLeave ALEEnable
 
-map f <Plug>Sneak_s
-map F <Plug>Sneak_S
+" map f <Plug>Sneak_s
+" map F <Plug>Sneak_S
 
 " FZF key bindings
 nnoremap <silent> <C-p> :Files<cr>
