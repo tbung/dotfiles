@@ -1,0 +1,1 @@
+/home/tillb/Projects/bspwm-scripts/bin/list_windows_by_size.sh
