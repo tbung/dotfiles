@@ -167,7 +167,7 @@ super + f
 	
 # Balance brother node. If you do this on biggest window of the desktop, it usually means balancing all windows with except the biggest.
 super + alt + b
-	bspc node @brother -B
+	bspc node @/ -B
 	
 # Undo balancing (equalize windows)
 super + ctrl + b
