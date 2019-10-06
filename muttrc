@@ -120,6 +120,8 @@ set forward_quote                    # include message in forwards
 set editor = "vim"                   # Use terminal Vim to compose email.
 set from = "tillbungert@gmail.com"
 
+source ~/.mutt/alias
+
 # Colors ---------------------------------------------
 source ~/.mutt/colors.mutt
 source ~/.mutt/vim-keys.mutt
