@@ -3,45 +3,44 @@ set folder           = ~/.mail               # mailbox location
 set alias_file       = ~/.mutt/alias         # where to store aliases
 set header_cache     = ~/.mutt/cache/headers # where to store headers
 set message_cachedir = ~/.mutt/cache/bodies  # where to store bodies
-set certificate_file = nomutt/certificates  # where to store certs
+set certificate_file = nomutt/certificates   # where to store certs
 set mailcap_path     = ~/.mutt/mailcap       # entries for filetypes
 set tmpdir           = ~/.mutt/temp          # where to keep temp files
 set signature        = ~/.mutt/sig           # my signature file
 
 # Basic Options --------------------------------------
-set wait_key = no        # shut up, mutt
-set mbox_type = Maildir  # mailbox type
-set timeout = 3          # idle time before scanning
-set mail_check = 0       # minimum time between scans
-unset move               # gmail does that
-set delete               # don't ask, just do
-unset confirmappend      # don't ask, just do!
-set quit                 # don't ask, just do!!
-unset mark_old           # read/new is good enough for me
-set beep_new             # bell on new mails
-set pipe_decode          # strip headers and eval mimes when piping
-set thorough_search      # strip headers and eval mimes before searching
-set sleep_time = 0
-set read_inc = 1000
-set header_cache=~/.cache/mutt
-unset help
+set wait_key = no              # shut up, mutt
+set mbox_type = Maildir        # mailbox type
+set timeout = 3                # idle time before scanning
+set mail_check = 0             # minimum time between scans
+unset move                     # gmail does that
+set delete                     # don't ask, just do
+unset confirmappend            # don't ask, just do!
+set quit                       # don't ask, just do!!
+unset mark_old                 # read/new is good enough for me
+set beep_new                   # bell on new mails
+set pipe_decode                # strip headers and eval mimes when piping
+set thorough_search            # strip headers and eval mimes before searching
+set sleep_time = 0             # don't pause when doing things
+set read_inc = 1000            # show progress while reading an inbox
+set header_cache=~/.cache/mutt # cache dir
+unset help                     # don't show help bar
 
 # Sidebar Patch --------------------------------------
 set sidebar_visible = no
-set sidebar_width   = 20
-set sidebar_short_path                  # Shorten mailbox names
+# set sidebar_width   = 20
+# set sidebar_short_path                  # Shorten mailbox names
 # set sidebar_delim_chars="/"             # Delete everything up to the last / character
 # set sidebar_folder_indent               # Indent folders whose names we've shortened
 # set sidebar_indent_string="  "          # Indent with two spaces
-set sidebar_sort_method = 'path'
-set sidebar_format = "%B %* [%?N?%N / ?%S]"
-set sidebar_new_mail_only
-sidebar_whitelist gmail/INBOX uni/INBOX
+# set sidebar_sort_method = 'path'
+# set sidebar_format = "%B %* [%?N?%N / ?%S]"
+# set sidebar_new_mail_only
+# sidebar_whitelist gmail/INBOX uni/INBOX
 
 # Status Bar -----------------------------------------
-set status_chars  = " *%A"
-set status_format = " %f %> %r%m msg  %n new%?d? (%d to delete)?%?t? (%t tagged)? "
-set date_format = "%d.%m.%Y %H:%M"
+set status_chars  = " *%A"                                                          # show open folder in status bar
+set status_format = " %f %> %r%m msg  %n new%?d? (%d to delete)?%?t? (%t tagged)? " # status bar format
 
 # Header Options -------------------------------------
 ignore *                                # ignore all headers
@@ -53,21 +52,14 @@ hdr_order from: to: cc: date: subject:  # and in this order
 set date_format = "%m/%d"
 set index_format = "[%Z]  %D  %-20.20F  %s"
 set change_folder_next = yes
-set sort_browser = alpha
-set folder_format ="%2C %t %N %8s %d %f" 
+set sort_browser = unsorted
+set folder_format ="%2C %t %N %20i" 
 set sort = threads                         # like gmail
 set sort_aux = reverse-last-date-received  # like gmail
 set uncollapse_jump                        # don't collapse on an unread message
 set sort_re                                # thread based on regex
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 
-# Index Key Bindings ---------------------------------
-# Sync email
-
-# Sidebar Navigation ---------------------------------
-# bind index,pager <down>   sidebar-next
-# bind index,pager <up>     sidebar-prev
-# bind index,pager <right>  sidebar-open
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
@@ -81,26 +73,10 @@ set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 auto_view text/html                                      # view html automatically
 alternative_order text/plain text/enriched text/html
 
-# # Pager Key Bindings ---------------------------------
-# bind pager k  previous-line
-# bind pager j  next-line
-# bind generic,pager,index g  noop
-# bind generic,index,pager,index gg top
-# bind generic,index,pager,index G  bottom
-# bind  generic,index,pager,index q exit
-# macro generic,index,pager Q "qqq"
-macro index O "<shell-escape>mbsync -a;~/.bin/notmuch-hook.sh<enter>"           "run offlineimap to sync all mail"
-macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to extract URLs out of a message"
-macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to extract URLs out of a message"
-
-# bind pager R  group-reply
-
-# # View attachments properly.
-# bind attach <return> view-mailcap
-
 # Compose View Options -------------------------------
 set realname = "Till Bungert"        # who am i?
-set envelope_from                    # which from?
+set use_envelope_from                # which from?
+set sendmail = "msmtp"               # use msmtp to send mail
 set sig_dashes                       # dashes before sig
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
@@ -114,32 +90,25 @@ set reply_to                         # reply to Reply to: field
 alternates tillbungert@gmail\.com
 alternates bungert@stud\.uni-heidelberg\.de
 subscribe .*@listserv.uni-heidelberg.de
+subscribe elearning@mathphys.stura.uni-heidelberg.de
+subscribe elearning-teams-all@mathphys.stura.uni-heidelberg.de
 set reverse_name                     # reply as whomever it was to
 set include                          # include message in replies
 set forward_quote                    # include message in forwards
 set editor = "vim"                   # Use terminal Vim to compose email.
 set from = "tillbungert@gmail.com"
 
-source ~/.mutt/alias
-
-# Colors ---------------------------------------------
-source ~/.mutt/colors.mutt
-source ~/.mutt/vim-keys.mutt
-
-set virtual_spoolfile=yes
-virtual-mailboxes \
-        "INBOX"     "notmuch://?query=tag:inbox and NOT tag:archive"\
-        "Unread"    "notmuch://?query=tag:unread"\
-        "Social"    "notmuch://?query=tag:social"\
-        "Newsletters"    "notmuch://?query=tag:news"\
-        "Starred"   "notmuch://?query=tag:*"\
-        "Sent"      "notmuch://?query=tag:sent"        # sets up queries for virtual folders
+set spoolfile=INBOX
+set trash = +gmail/Trash
+set trash = +uni/Trash
 
 # Account settings -----------------------------------
-# set spoolfile = "+gmail/INBOX"
-source ~/.mutt/mailboxes
+folder-hook notmuch source "~/.mutt/accounts/inbox"
 folder-hook gmail source "~/.mutt/accounts/gmail"
-# mailboxes =gmail
 folder-hook uni source "~/.mutt/accounts/uni"
-# mailboxes =uni
-folder-hook gc source "~/.mutt/accounts/gc"
+
+source ~/.mutt/alias
+source ~/.mutt/colors.mutt
+source ~/.mutt/keybinds.mutt
+
+source ~/.mutt/mailboxes.mutt
