@@ -7,6 +7,9 @@ bindkey -v
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/tillb/.zshrc'
 
+fpath=($HOME/.zsh $fpath)
+fpath=($HOME/.zsh/zsh-completions/src $fpath)
+
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -14,8 +17,6 @@ compinit
 # Path extensions
 export PATH=$HOME/bin:$PATH
 
-fpath=($HOME/.zsh/zsh-completions/src $fpath)
-fpath=($HOME/.zsh $fpath)
 
 # source $HOME/.zsh/git-completion.zsh
 source $HOME/.zsh/aliases.zsh
@@ -52,3 +53,20 @@ source $HOME/.zsh/web-search.plugin.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d . $HOME"
+
+autoload -Uz add-zsh-hook
+
+function xterm_title_precmd () {
+	print -Pn -- '\e]2;%n@%m %~\a'
+	[[ "$TERM" == 'screen'* ]] && print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-}\e\\'
+}
+
+function xterm_title_preexec () {
+	print -Pn -- '\e]2;%n@%m %~ %# ' && print -n -- "${(q)1}\a"
+	[[ "$TERM" == 'screen'* ]] && { print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-} %# ' && print -n -- "${(q)1}\e\\"; }
+}
+
+if [[ "$TERM" == (alacritty*|gnome*|konsole*|putty*|rxvt*|screen*|tmux*|xterm*|kitty*) ]]; then
+	add-zsh-hook -Uz precmd xterm_title_precmd
+	add-zsh-hook -Uz preexec xterm_title_preexec
+fi
