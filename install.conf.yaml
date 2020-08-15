@@ -28,6 +28,7 @@
     ~/.config/oomox: config/oomox
     ~/.config/volumeicon: config/volumeicon
     ~/.config/systemd: config/systemd
+    ~/.config/nvim: config/nvim
     ~/.mutt: mutt
     ~/.muttrc: muttrc
     ~/.mbsyncrc: mbsyncrc
