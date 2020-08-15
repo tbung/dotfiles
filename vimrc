@@ -9,29 +9,31 @@ Plug 'tpope/vim-fugitive'               " In-vim git stuff
 Plug 'tpope/vim-commentary'             " Easy comment-out stuff
 Plug 'tpope/vim-repeat'                 " Enable plugin motion repeat
 Plug 'tpope/vim-dispatch'               " Dispatch console cmd
-Plug 'tpope/vim-vinegar'                " Better netrw browsing
 Plug 'tpope/vim-eunuch'                 " Unix commands made easy
 Plug 'justinmk/vim-sneak'
 Plug 'wellle/targets.vim'
 Plug 'junegunn/vim-easy-align'          " Align stuff easily
-" Plug 'chriskempson/base16-vim'          " All the colors one needs
-Plug 'danielwe/base16-vim'
+Plug 'chriskempson/base16-vim'          " All the colors one needs
 Plug '~/.fzf'                     " Fzf integration
 Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
 Plug 'SirVer/ultisnips'                 " Snippets engine
 Plug 'honza/vim-snippets'               " Some default snippets
-Plug 'w0rp/ale'                         " Syntax checker, requires checker itself
+Plug 'dense-analysis/ale'                         " Syntax checker, requires checker itself
 "                                         " to be installed
-Plug 'itchyny/lightline.vim', { 'commit': '78c43c144643e49c529a93b9eaa4eda12614f923' }            " Statusline, deprecated soon
+Plug 'itchyny/lightline.vim' ", { 'commit': '78c43c144643e49c529a93b9eaa4eda12614f923' }             Statusline, deprecated soon
 Plug 'tbung/vim-lightline-base16'
 Plug 'godlygeek/tabular', { 'for': 'markdown' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'sheerun/vim-polyglot'             " Support for basically all languages
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
-Plug 'maralla/completor.vim'            " Async completion engine
+" Plug 'maralla/completor.vim'            " Async completion engine
 Plug 'junegunn/goyo.vim'                " Distraction free writing
 Plug 'junegunn/limelight.vim'           " Even more distraction free writing
 Plug 'lervag/vimtex'                    " Better latex support
+Plug 'preservim/nerdtree'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'hkupty/iron.nvim'
 
 call plug#end()
 
@@ -100,6 +102,10 @@ set foldmethod=syntax
 
 set regexpengine=1
 
+" Intuitive splits (bottom/right)
+set splitbelow
+set splitright
+
 " Disable arrow keys in normal mode
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -138,7 +144,7 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Completor config
-let g:completor_python_binary = 'python'
+" let g:completor_python_binary = 'python'
 
 " EasyAlign key bindings
 xmap ga <Plug>(EasyAlign)
