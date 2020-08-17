@@ -1,15 +1,20 @@
-rofi.color-window: argb:c82d303b, #7c8389, #1d1f21
-rofi.color-normal: argb:331d1f21, #c4cbd4, argb:96404552, #4084d6, #f9f9f9
-rofi.color-urgent: argb:2c1d1f21, #cc6666, argb:e54b5160, #a54242, #f9f9f9
-rofi.color-active: argb:2c1d1f21, #65acff, argb:e44b5160, #4491ed, #f9f9f9
-rofi.width: 100
+rofi.color-window: argb:ff2d303b, #7c8389, #1d1f21
+rofi.color-normal: argb:ff1d1f21, #c4cbd4, argb:96404552, #4084d6, #f9f9f9
+rofi.color-urgent: argb:ff1d1f21, #cc6666, argb:e54b5160, #a54242, #f9f9f9
+rofi.color-active: argb:ff1d1f21, #65acff, argb:e44b5160, #4491ed, #f9f9f9
+rofi.width: 40%
+rofi.layout: horizontal
+rofi.modi: window,run,ssh,combi,drun
 rofi.lines: 3
 rofi.columns: 1
-rofi.font: Noto Sans 14
+rofi.font: Noto Sans 16
 rofi.bw: 0
-rofi.padding: 400
+rofi.padding: 10
 rofi.eh: 1
 rofi.separator-style: none
 rofi.hide-scrollbar: true
 rofi.terminal: kitty
 rofi.run-shell-command: {terminal} --class {cmd} {cmd}
+rofi.show-icons: true
+rofi.icon-theme: Papirus
+rofi.combi-hide-mode-prefix: true
