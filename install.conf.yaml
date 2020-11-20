@@ -6,39 +6,13 @@
 
 - link:
     ~/.dotfiles: ''
-    ~/.tmux.conf: tmux.conf
-    ~/.tmuxp: tmuxp
-    ~/.vim: vim
-    ~/.vimrc: vimrc
-    ~/.zshrc: zshrc
-    ~/.zsh: zsh
-    ~/.tldrrc: tldrrc
-    ~/.mume: mume
-    ~/.condarc: condarc
-    ~/.themes: themes
-    ~/.config/kitty: config/kitty
-    ~/.config/polybar: config/polybar
-    ~/.config/rofi: config/rofi
-    ~/.config/compton.conf: config/compton.conf
-    ~/.config/dunst: config/dunst
-    ~/.config/bspwm: config/bspwm
-    ~/.config/sxhkd: config/sxhkd
-    ~/.config/redshift: config/redshift
-    ~/.config/zathura: config/zathura
-    ~/.config/oomox: config/oomox
-    ~/.config/volumeicon: config/volumeicon
-    ~/.config/systemd: config/systemd
-    ~/.config/nvim: config/nvim
-    ~/.mutt: mutt
-    ~/.muttrc: muttrc
-    ~/.mbsyncrc: mbsyncrc
-    ~/.msmtprc: msmtprc
-    ~/.notmuch-config: notmuch-config
-    ~/.jupyter: jupyter
+    ~/.config/:
+      glob: true
+      path: config/*
+      relink: true
     ~/.profile: profile
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
-    ~/.bin: bin
-    ~/.gitignore_global: gitignore_global
+    ~/.local/bin: local/bin
 
 
 - shell:
