@@ -1,0 +1,6 @@
+channels:
+  - http://ssb.stsci.edu/astroconda
+  - defaults
+  - conda-forge
+changeps1: false
+envs_dir: $HOME/.config/conda
