@@ -25,6 +25,7 @@ bspc config external_rules_command $HOME/.config/bspwm/external_rules.sh
 
 bspc rule -a "Tor Browser" state=floating
 bspc rule -a firefox desktop='VI' 
+bspc rule -a firefox:*:Picture-in-Picture state=floating
 bspc rule -a Zathura state=floating
 bspc rule -a Sxiv state=floating
 bspc rule -a discord desktop='IX' follow=off  
