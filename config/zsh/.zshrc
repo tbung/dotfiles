@@ -5,7 +5,7 @@ HISTFILE=~/.cache/zsh/history
 
 # Enable completion
 autoload -Uz compinit
-compinit
+compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 zstyle ':completion:*' menu select
 
 # Add completions to fpath
