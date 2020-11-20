@@ -1,307 +1,228 @@
-[bar/top]
+          ;=====================================;
+          ; ____       _       _                ;
+          ;|  _ \ ___ | |_   _| |__   __ _ _ __ ;
+          ;| |_) / _ \| | | | | '_ \ / _` | '__|;
+          ;|  __/ (_) | | |_| | |_) | (_| | |   ;
+          ;|_|   \___/|_|\__, |_.__/ \__,_|_|   ;
+          ;              |___/                  ;
+          ;=====================================;
+
+[colors]
+background = #1c2c43
+background-alt = #0e1827
+foreground = #FEFEFE
+foreground-alt = #9ac4ff
+primary = #fff
+secondary = #a9b3c2
+background-level= #cec8d8ff
+alert = #ff004b
+
+[bar/level]
+width = 19%
+height = 4.3%
+offset-x = 40.5%
+offset-y = 5%
+radius = 22
+fixed-center = true
+bottom = false
+
+background = ${colors.background-level}
+foreground = ${colors.background}
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 1
+ 
+font-0 = UbuntuMono Nerd Font:pixelsize=14:style=Medium Condensed;5
+font-1 = Material Design Icons:style=Regular:pixelsize=20;5
+font-2 = UbuntuMono Nerd Font:pixelsize=20:style=Medium Condensed;7
+ 
+modules-center = pulseaudio
+
+override-redirect = true
+enable-ipc = true
+
+[bar/workspace]
 monitor = ${env:MONITOR:}
 width = 100%
-height = 25
+height = 3.3%
+# offset-x = 8%:10
+offset-y = 0%
+radius = 0
+fixed-center = true
+bottom = true
+
+background = #00000000
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+padding-left = 2
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+ 
+font-0 = Material Design Icons:style=Regular:pixelsize=24;1
+font-1 = BreezeSans:pixelsize=22:style=Regular Condensed;-2
+font-2 = Material Design Icons:style=Regular:pixelsize=11;-10
+ 
+modules-center = bspwm
 
 wm-restack = bspwm
 
-background = #1e1f29
-background_alt = #4a4b53
-foreground = #eff0eb
-foreground_alt = #78787e
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
 
+cursor-click = pointer
+cursor-scroll = default
+
+[bar/music]
+monitor = ${env:MONITOR:}
+width = 30%
+height = 3.3%
+offset-x = 0%
+offset-y = 0%
+radius = 22
 fixed-center = true
+bottom = true
 
-font-0 = "Noto Sans:style=Bold:pixelsize=10;1"
-font-1 = "Font Awesome 5 Free:style=Regular:pixelsize=10;2"
-font-2 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
-font-3 = "Font Awesome 5 Brands:pixelsize=10;2"
-font-4 = "MaterialDesignIcons:style=Regular:pixelsize=12;3"
+background = #00000000
+foreground = #fff
 
-modules-left = bspwm
-modules-right = player-info fuzzy-clock openconnect mullvad
+border-size = 0
+border-color = #000
 
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+padding-left = 2
+padding-right = 2
 
-tray-position = right
-tray-background = #1e1f29
-tray-padding = 6
+module-margin-left = 0
+module-margin-right = 0
+ 
+font-0 = BreezeSans:pixelsize=16:style=Medium Condensed;2
+font-1 = Font Awesome 5 Pro:pixelsize=20:style=Solid;3
+font-2 = Font Awesome 5 Brands:pixelsize=21;3
+font-3 = SourceHanSansJP:pixelsize=14:style=Medium;2
+font-4 = Font Awesome 5 Pro:pixelsize=18:style=Solid;3
+font-5 = UbuntuMono Nerd Font Mono:pixelsize=36:style=Medium Condensed;7
+font-6 = Noto Sans Mono:pixelsize=14:style=Medium;2
+font-7 = BreezeSans:pixelsize=14:style=Medium Condensed;2
+ 
+modules-left = song
+
+override-redirect = true
+
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
+cursor-click = pointer
+
+[bar/status]
+monitor = ${env:MONITOR:}
+width = 16%
+height = 3.3%
+offset-x = 82.0%:-15
+offset-y = 0.5%
+radius = 18
+fixed-center = true
+bottom = true
+
+background = #00000000
+foreground = ${colors.foreground}
+
+border-size = 0
+border-color = #000
+
+padding-left = 13
+padding-right = 0
+
+module-margin-left = 10
+module-margin-right = 1
+ 
+font-0 = Noto Sans:pixelsize=14:style=SemiCondensed Bold;4
+font-1 = Material Design Icons:style=Regular:pixelsize=21;5
+font-2 = Noto Sans:pixelsize=10:style=SemiCondensed Bold;3
+ 
+modules-right = fuzzy-clock 
+
+wm-restack = bspwm
+
+cursor-click = pointer
+cursor-scroll = default
 
 [module/bspwm]
 type = internal/bspwm
 
-ws-icon-0 = I;
-ws-icon-1 = II;
-ws-icon-2 = IX;
-ws-icon-3 = X;
-ws-icon-default = 
-
-format = <label-state> <label-mode>
-
-label-focused = %icon%
-label-focused-background = ${root.background_alt}
-label-focused-underline= #ddd
-label-focused-padding = 4
-
-label-occupied = %icon%
-label-occupied-padding = 4
-
-label-urgent = %icon%
-label-urgent-padding = 4
-
-label-empty = %icon%
-label-empty-foreground = #44ffffff
-label-empty-padding = 4
-
-[module/i3]
-type = internal/i3
-
-pin-workspaces = true
-strip-wsnumbers = true
-index-sort = true
+reverse-scroll = false
 enable-scroll = false
 
-label-unfocused-background = ${root.background}
-label-unfocused-foreground = ${root.foreground}
+ws-icon-0 = I;%{A3:alacritty &:}󰆍%{A}
+ws-icon-5 = II;%{F#c46a4b}%{A3:zathura &:}󰉨%{A}%{F-}
+ws-icon-2 = III;%{F#ff004b}%{A3:grep " T " /tmp/mpv-wpf.txt | tail -1 | cut -d' ' -f2| xargs -L1 -I[] xdotool key --window "[]" p &:}󰄘%{A}%{F-}
+ws-icon-3 = IV;%{F#ffca00}%{A3:start-newsboat.sh &:}󰇰%{A}%{F-}
+ws-icon-4 = V;%{F#2944f2}%{A3:start-vim.sh -c &:}󰹻%{A}%{F-}
+ws-icon-1 = VI;%{F#00c0ff}%{A3:firefox &:}󰇧%{A}%{F-}
+ws-icon-6 = VII;%{F#ff93aa}%{A3:gimp &:}󰿁%{A}%{F-}
+ws-icon-7 = VIII;%{F#FF8C00}%{A3:retroarch &:}󰊠%{A}%{F-}
+ws-icon-8 = IX;%{F#d448ff}%{A3:discord &:}󰆉%{A}%{F-}
+ws-icon-9 = X;%{F#05d183}%{A3:start-spotify || playerctl -p spotify play-pause &:}󰫔%{A}%{F-}
+ws-icon-default =%{F#9e43ba}%{A3:<!!>:}󰗹%{A}%{F-}
 
+format = "<label-state>" 
 
-label-mode = %mode%
-label-mode-padding = 2
-;label-mode-background = ${root.my_color4}
+label-focused ="%{-u}{%{A1:bspc node -f next.local.!floating:}%{A2:xdo close:}%{u#ff9900}%{+u}%icon%%{-u}%{A}%{A}} "
+label-focused-padding = 0
 
-label-focused = %name%
-label-focused-foreground = ${root.foreground}
-label-focused-background = ${root.background_alt}
-label-focused-padding = 4
+label-occupied ="%{-u} %{u#ff9900}%{+u}%icon%%{-u} "
+label-occupied-padding = 0
 
-label-unfocused = %name%
-label-unfocused-padding = 4
+label-urgent ="%{-u} %{u#ff9900}%{+u}%icon%%{-u} %{F#ff004b}%{T3}%{O-10}󰀨 %{T-}%{F-}"
+label-foreground= ${color.alert}
+label-urgent-padding = 0
 
-label-visible = %name%
-label-visible-padding = 4
-
-label-urgent = %name%
-label-urgent-foreground = ${root.foreground}
-label-urgent-background = ${root.background}
-label-urgent-padding = 4
-
-[module/battery]
-type = internal/battery
-
-full-at = 100
-
-battery = BAT1
-adapter = ACAD
-
-poll-interval = 5
-
-format-charging-foreground = ${root.foreground}
-format-discharging-foreground = ${root.foreground}
-format-full-foreground = ${root.foreground}
-
-format-charging = <animation-charging>   <label-charging>
-format-charging-padding = 4
-
-format-discharging = <ramp-capacity>   <label-discharging>
-format-discharging-padding = 4
-
-format-full = <ramp-capacity>   <label-full>
-format-full-padding = 4
-
-label-charging = %percentage%%
-
-label-discharging = %percentage%%
-
-label-full = %percentage%%
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-framerate = 500
-
-[module/battery2]
-type = internal/battery
-
-full-at = 100
-
-battery = BAT0
-adapter = ACAD
-
-poll-interval = 5
-
-format-charging-foreground = ${root.foreground}
-format-discharging-foreground = ${root.foreground}
-format-full-foreground = ${root.foreground}
-
-format-charging = <animation-charging>   <label-charging>
-format-charging-padding = 4
-
-format-discharging = <ramp-capacity>   <label-discharging>
-format-discharging-padding = 4
-
-format-full = <ramp-capacity>   <label-full>
-format-full-padding = 4
-
-label-charging = %percentage%%
-
-label-discharging = %percentage%%
-
-label-full = %percentage%%
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-framerate = 500
+label-empty =" %icon% "
+label-empty-padding = 0
 
 [module/pulseaudio]
 type = internal/pulseaudio
 
-; Available tags:
-;   <label-volume> (default)
-;   <ramp-volume>
-;   <bar-volume>
-format-volume = <ramp-volume>   <label-volume>
-format-volume-background = ${root.background}
-format-volume-foreground = ${root.foreground_alt}
-format-volume-padding = 6
+format-volume = <label-volume><bar-volume>
+label-volume = "󰎇 "
+label-volume-foreground = ${root.foreground}
 
-; Available tags:
-;   <label-muted> (default)
-;   <ramp-volume>
-;   <bar-volume>
-format-muted = <label-muted>
-format-muted-padding = 6
+label-muted = 󰎊 Muted
+label-muted-foreground = #607290
 
-; Available tokens:
-;   %percentage% (default)
-;label-volume = %percentage%%
+bar-volume-width = 20
+bar-volume-foreground-0 = ${colors.background}
+bar-volume-foreground-1 = ${colors.background}
+bar-volume-foreground-2 = ${colors.background}
+bar-volume-foreground-3 = ${colors.background}
+bar-volume-foreground-4 = #fb8720
+bar-volume-foreground-5 = #fb5a20
+bar-volume-foreground-6 = #fb2020
+bar-volume-gradient = false
+bar-volume-indicator = "%{T3}%{T-}"
+bar-volume-indicator-font = 2
+bar-volume-fill = 
+bar-volume-fill-font = 2
+bar-volume-empty = 
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = #607290
 
-; Available tokens:
-;   %percentage% (default)
-label-muted =  muted
-label-muted-foreground = #66
-
-; Only applies if <ramp-volume> is used
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
-
-[module/powermenu]
-type = custom/menu
-
-label-open = 
-
-label-close = cancel
-
-label-close-background = #312842
-label-close-foreground = #ffeefc
-label-open-padding-left = 4
-label-open-padding-right = 3
-label-close-padding = 3
-
-menu-0-0 = lock
-menu-0-0-exec = ~/scripts/lock.sh
-menu-0-0-background = #312842
-menu-0-0-foreground = #c05c47
-menu-0-0-padding-right = 3
-
-menu-0-1 = reboot
-menu-0-1-exec = menu-open-1
-menu-0-1-background = #312842
-menu-0-1-foreground = #c05c47
-menu-0-1-padding-right = 3
-
-menu-0-2 = power off
-menu-0-2-exec = menu-open-2
-menu-0-2-background = #312842
-menu-0-2-foreground = #c05c47
-menu-0-2-padding-right = 3
-
-menu-1-0 = reboot?
-menu-1-0-exec = reboot
-menu-1-0-background = #312842
-menu-1-0-foreground = #e4b226
-menu-1-0-padding-right = 3
-
-menu-2-0 = power off?
-menu-2-0-exec = poweroff
-menu-2-0-background = #312842
-menu-2-0-foreground = #e4b226
-menu-2-0-padding-right = 3
-
-
-# Workaround since there is no dynamic interface finding
-[module/wireless-network-laptop]
-type = internal/network
-
-interface = wlp3s0
-
-format-connected = <label-connected>
-format-connected-background = ${root.background}
-format-connected-foreground = ${root.foreground_alt}
-format-connected-padding = 6
-
-format-disconnected = <label-disconnected>
-format-disconnected-foreground = ${root.foreground_alt}
-format-disconnected-padding = 6
-
-label-connected =    %essid%
-
-label-disconnected =    None
-
-[module/wireless-network-tower]
-type = internal/network
-
-interface = enp0s20f0u1
-
-format-connected = <label-connected>
-format-connected-background = ${root.background}
-format-connected-foreground = ${root.foreground_alt}
-format-connected-padding = 6
-
-format-disconnected = <label-disconnected>
-format-disconnected-foreground = ${root.foreground_alt}
-format-disconnected-padding = 6
-
-label-connected =    %essid%
-
-label-disconnected =    None
-
-
-[module/player-info]
+[module/song]
 type = custom/script
+exec = ~/.config/polybar/scripts/song.sh 2>/dev/null || echo ""
+format = "<label>  "
+format-prefix = "%{F#1db954}   %{F-}"
+format-background = #00000000
+interval = 10
 
-format-background = ${root.background}
-format-foreground = ${root.foreground}
-format-padding = 6
-
-label = %output:0:65%
-
-exec = ~/.config/polybar/player-mpris-simple.sh
-
-interval = 3
-
-# click-left = playerctl previous
-# click-right = playerctl next
-# click-middle = playerctl play-pause
-click-left = playerctl play-pause
+tail = true
+click-left = bspc desktop -f ^10 &
 
 [module/fuzzy-clock]
 type = custom/script
@@ -313,34 +234,16 @@ exec = ~/.config/polybar/bash-fuzzy-clock.sh
 
 interval = 30
 
-[module/mullvad]
+[module/power-menu]
 type = custom/script
-label = "   %output%"
-format-background = ${root.background}
-format-padding = 0
+exec = echo "󰐥 "
 
-exec = ~/.config/polybar/mullvad.sh
+[settings]
+screenchange-reload = false
+pseudo-transparency = false
 
-intervall = 5
+[global/wm]
+margin-top = 1
+margin-bottom = 5
 
-[module/openconnect]
-type = custom/script
-label = "   %output%"
-format-background = ${root.background}
-format-padding = 0
-
-exec = ~/.config/polybar/urz-vpn.sh
-
-intervall = 5
-
-[module/info-redshift-temp]
-type = custom/script
-exec = ~/.config/polybar/info-redshift-temp.sh
-click-left = ~/.config/polybar/toggle-redshift.sh
-interval = 5
-
-[module/caffeine]
-type = custom/script
-exec = ~/.config/polybar/info-caffeine.sh
-click-left = ~/.config/polybar/toggle-caffeine.sh
-interval = 5
+; vim:ft=dosini
