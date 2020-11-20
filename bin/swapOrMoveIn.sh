@@ -1,1 +1,0 @@
-/home/tillb/Projects/bspwm-scripts/bin/swapOrMoveIn.sh
