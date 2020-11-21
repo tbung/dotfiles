@@ -1,124 +1,92 @@
-﻿# bspwm hotkeys
-#
-# Cleanly quit bspwm
-super + shift + q
-	bspc quit 1 && pkill lemonpanel && pkill lemonbar
+﻿# make sxhkd reload its configuration files:
+super + shift + Escape
+    pkill -USR1 -x sxhkd && dunstify -r 500 "SXHKD" "config reloaded"
 
-# Show keybindings
-super + F1
-	$TERMINAL -e keybindings.sh
-#
+# bspwm hotkeys
+
 # Window manipulation
-# ______________
 
 # Close window
 super + q
-	bspc  node -c
+    bspc  node -c
 
 # Kill window
 super + shift + x
-	bspc  node -k
+    bspc  node -k
 
 # Toggle tiling mode of window
 super + shift + t
-	bspc node -t {pseudo_tiled,tiled}
+    bspc node -t {pseudo_tiled,tiled}
 super + t
-	{bspc node -t floating,bspc node -t tiled}
+    {bspc node -t floating,bspc node -t tiled}
 # Force all windows of the desktop to tile
 super + ctrl + t
-	bspcp tile
+    bspcp tile
 # Force all windows of the desktop to float and arrange them
 super + ctrl + shift + t
-	bspcp float
+    bspcp float
 	
 # Toggle fullscreen
 super + shift + f 
-	bspc node -t {fullscreen,tiled}	
+    bspc node -t {fullscreen,tiled}	
 
 # Try to keep size and position of the selected window
 super + o
-	bspc node -g private
+    bspc node -g private
 
 # Make window sticky
 super + i
-	bspc node -g sticky
+    bspc node -g sticky
 
 # Lock a window from closing
 super + Escape
-	bspc node -g locked 
+    bspc node -g locked 
 
-### Map or unmap windows (functional equivalent of "minimize")
+# Hide and un-hide windows
 super + c
-    whid dmenu
-
+    bspc node -g hidden
 super + shift + c
-    whid hide
+    nodes=( $(bspc query -N -n .hidden) ) && s=$(xtitle ${nodes[@]} | rofi -dmenu -format i -p "Hidden windows") && [[ -n "$s" ]] && bspc node "${nodes[$s+1]}" -g hidden=off
 
-super + ctrl + c
-    whid last
-
-#
-# Window moving and splitting
-# ______________    
-
-# Autopresel (split window in its largest dimension)
-super + ctrl + Return
-	auto-presel
-
-# ctrl + space
-#	auto-presel
-	
 # Presel window for splitting in certain direction
 alt + ctrl + {a,s,w,d}
-	bspc node -p \~{west,south,north,east} -i
+    bspc node -p \~{west,south,north,east} -i
 
 alt + ctrl + {h,j,k,l}
-	bspc node -p \~{west,south,north,east}
+    bspc node -p \~{west,south,north,east}
 
 alt + ctrl + {Left,Down,Up,Right}
-	bspc node -p \~{west,south,north,east}
+    bspc node -p \~{west,south,north,east}
 
 # Presel the desktop for splitting in certain direction
 alt + shift + {a,s,w,d}
-	bspc node @/ -p \~{west,south,north,east}
+    bspc node @/ -p \~{west,south,north,east}
 
 alt + shift + {h,j,k,l}
-	bspc node @/ -p \~{west,south,north,east}
+    bspc node @/ -p \~{west,south,north,east}
 
 alt + shift + {Left,Down,Up,Right}
-	bspc node @/ -p \~{west,south,north,east}
+    bspc node @/ -p \~{west,south,north,east}
+
 # Set splitting ratio of windows
 alt + ctrl + {1-9}
-	bspc node -o 0.{1-9}
+    bspc node -o 0.{1-9}
 		
 # Move current window to largest space or preselected area if there is one.
 super + Return
-    windowpromoter
+    bspc node focused --swap biggest.local
 
 # Create a new "master area", splitting the whole desktop instead of just windows.
 alt + Return
-	bspc node -n @/
+    bspc node -n @/
 	
 # go (Shift=move) to desktop (and focus the monitor that the desktop is located on. Bspwm style)
 super + {_,shift + }{1-9,0}
     bspc {desktop -f,node -d} ^{1-9,10}
 
-## Alternative: i3 style behavior (focus nth, desktop of the focused monitor)
-#super + {1-9,0}
-#	focusdesktopofthismonitor {1-9}
-#super + shift + {1-9,0}
-#	movetodesktopofthismonitor {1-9,10}
-
-## Another alternative: xmonad style desktops. You have 10 desktops shared between all monitors,
-## and focusing a desktop focuses it on the currently focused monitor
-#super + {1-9,0}
-#	summondesktop.sh {1-9,10}
-#super + shift + {1-9,0}
-#	bspc node -d ^{1-9,10}
-
 # Select previous / next desktop
 super + {m,n}
-	bspc desktop -f {prev.occupied,next.occupied} 
+    bspc desktop -f {prev.occupied,next.occupied} 
 
 # cycle windows
 alt + {_,shift + }Tab
@@ -126,165 +94,134 @@ alt + {_,shift + }Tab
 
 #Focus windows by direction, works with multihead
 super +  {a,s,w,d}
-    focusmover {west,south,north,east}
+    bspc node -f {west,south,north,east}
 
 super +  {h,j,k,l}
-    focusmover {west,south,north,east}
+    bspc node -f {west,south,north,east}
 
 super +  {Left,Down,Up,Right}
-    focusmover {west,south,north,east}
+    bspc node -f {west,south,north,east}
         	
 # Move tiled windows. Moving a tiled window to 
 # preselected one moves into preselection instead. 
 # Moving out of the screen should move the window to next monitor if possible
 super + shift + {a,s,w,d}
-	windowgrabber {west,south,north,east}
+    bspc node focused -v {-20 0,0 20,0 -20,20 0}
 
 super + shift + {h,j,k,l}
-	windowgrabber {west,south,north,east}
+    bspc node focused -v {-20 0,0 20,0 -20,20 0}
 	
-# Different style of movement: transplant into window in chosen direction
 super + shift + {Left,Down,Up,Right}
-	euclid_mover {west,south,north,east}
+    bspc node focused -v {-20 0,0 20,0 -20,20 0}
 
 #resize windows
 super + ctrl + {a,s,w,d}
-	bspwm_resize.sh {west,south,north,east}
+    bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
 
 super + ctrl + {h,j,k,l}
-	bspwm_resize.sh {west,south,north,east}
+    bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
 	
 super + ctrl + {Left,Down,Up,Right}
-	bspwm_resize.sh {west,south,north,east}
-
-#
-# Layout manipulation/desktop level controls
-# ______________    
+    bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
 
 # Toggle monocle mode
 super + f 
-	bspc desktop -l next
+    bspc desktop -l next
 	
 # Balance brother node. If you do this on biggest window of the desktop, it usually means balancing all windows with except the biggest.
 super + alt + b
-	bspc node @/ -B
+    bspc node @/ -B
 	
 # Undo balancing (equalize windows)
 super + ctrl + b
-	bspc node @/ -E
-
-# Toggle automatic balancing of windows
-alt + b
-	euclid_balancer
+    bspc node @/ -E
 
 # Mirror and flip leaves of tree
 super + {comma,period}
-	bspc node @/ -F {horizontal,vertical}
+    bspc node @/ -F {horizontal,vertical}
 	
 # Rotate leaves of tree
 super + shift + {comma,period}
-	bspc node @/ -R {90,270}
+    bspc node @/ -R {90,270}
 
 # Change window gap
-
 super + g
-	bspc config -d focused window_gap {$gap,$(($gap+$gap)),$(($gap+$gap+$gap))}
+    bspc config -d focused window_gap {$gap,$(($gap+$gap)),$(($gap+$gap+$gap))}
 
 super + button{4,5}
-	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 ))
+    bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 2 ))
 	
-### Add or remove desktops by scrolling
-super + ctrl + button5
-    bspcp dsktp rm
-
-super + ctrl + button4
-    bspcp dsktp add
-
 #
 # spawn programs
 #
 
 # run applications
 super + space
-#	dmenu_recent -fn 'xos4 Terminus:size=15' -i -l 14 -w 600 -y $PANEL_HEIGHT
-	rofi -show run
+    rofi -combi-modi window,drun,run -show combi -modi combi -display-combi "Launch"
 
 super + Tab
-	rofi -show
+    rofi -show
 
-super + p
-	keepmenu
-
-super + shift + Return
-	default-terminal
 super + z
-	$TERMINAL
+    $TERMINAL
 
 super + shift + z
-	open-terminal-here
+    open-terminal-here
 	
-super + r
-	rofi-finder.sh
-
-super + shift + b
-	$BROWSER
+super + {,shift} + b
+    $BROWSER {,--private-window}
     		
 super + e
-	spacefm -n
+    spacefm -n
 
 super + shift + e
-	kitty ranger
+    $TERMINAL ranger
 
 Print
-	scrot -e 'mv $f ~/Pictures/'
+    shotgun -g "$(hacksaw)" "${HOME}/Pictures/screenshot_$(date +%F_%H-%M-%S).png"
+
+super + alt + p
+    dock.sh &
+
+super + x
+    light-locker-command --lock
+
+super + {v,b}
+    playerctl {previous,next}
 
 #
 # Media keys
 #
 
-XF86AudioRaiseVolume
-	volume.sh up
+# Volume up
+XF86AudioRaiseVolume 
+    pamixer -i 5 ; ~/.config/polybar/scripts/volume.sh
 
-XF86AudioLowerVolume
-	volume.sh down
+# Volume down
+XF86AudioLowerVolume 
+    pamixer -d 5 ; ~/.config/polybar/scripts/volume.sh
 
-XF86AudioMute
-	volume.sh mute
+# Volume mute
+XF86AudioMute 
+    pamixer -t ; ~/.config/polybar/scripts/volume.sh
 
 XF86AudioPlay
-        playerctl play-pause
+    playerctl play-pause
 
 XF86AudioStop
-        playerctl stop
+    playerctl stop
 
 XF86AudioPrev
-        playerctl previous
+    playerctl previous
 
 XF86AudioNext
-        playerctl next
+    playerctl next
 	
 XF86MonBrightnessDown
-        light -U 10 
+    light -U 10 
 
 XF86MonBrightnessUp
-        light -A 10
+    light -A 10
 
 XF86Sleep
-	systemctl suspend
-
-# make sxhkd reload its configuration files:
-super + shift + Escape
-	pkill -USR1 -x sxhkd
-
-super + alt + p
-        ~/.bin/polybar.sh &
-
-# Remove receptacles
-super + BackSpace
-  for i in $(bspc query -N -n .leaf.!window.local); do bspc node $i -k; done
-
-super + x
-        light-locker-command --lock
-
-super + {v,b}
-        playerctl {previous,next}
+    systemctl suspend
