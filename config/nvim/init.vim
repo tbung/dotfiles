@@ -3,10 +3,10 @@ set nocompatible
 
 " Call our plugin manager
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
-	echo "Downloading junegunn/vim-plug to manage plugins..."
-	silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
-	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
-	autocmd VimEnter * PlugInstall
+    echo "Downloading junegunn/vim-plug to manage plugins..."
+    silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
+    silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim
+    autocmd VimEnter * PlugInstall
 endif
 
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
@@ -42,8 +42,9 @@ Plug 'dense-analysis/ale'               " Syntax checker, requires checker itsel
                                         " to be installed
 
 " Support all the languages
-let g:polyglot_disabled = ['latex', 'markdown']
-Plug 'sheerun/vim-polyglot'
+" let g:polyglot_disabled = ['latex', 'markdown']
+" Plug 'sheerun/vim-polyglot'
+" Plug 'HerringtonDarkholme/yats.vim'
 
 " Writing
 Plug 'godlygeek/tabular', { 'for': 'markdown' }
@@ -122,7 +123,7 @@ set noshowmode
 " Fold by default
 set foldmethod=syntax
 
-set regexpengine=1
+set regexpengine=0
 
 " Intuitive splits (bottom/right)
 set splitbelow
