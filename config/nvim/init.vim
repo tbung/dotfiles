@@ -36,8 +36,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
 Plug 'preservim/nerdtree'
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-Plug 'psf/black', { 'branch': 'stable' }
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
+Plug 'psf/black', { 'branch': 'stable', 'for': ['python'] }
+Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript'] }
 Plug 'dense-analysis/ale'               " Syntax checker, requires checker itself
                                         " to be installed
 
