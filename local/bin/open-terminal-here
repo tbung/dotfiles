@@ -2,7 +2,7 @@
 # i3 thread: https://faq.i3wm.org/question/150/how-to-launch-a-terminal-from-here/?answer=152#post-id-152
 
 # Set command to be run
-CMD=default-terminal
+CMD=$TERMINAL
 # clear the Current Working Directory variable
 CWD=''
 
