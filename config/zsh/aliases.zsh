@@ -4,6 +4,8 @@ alias ls='ls --color=auto'
 alias cd..='cd ..'
 alias :q='exit'
 alias :wq='exit'
+alias wiki='nvim ~/vimwiki/index.md'
+alias vim='nvim'
 
 ## Git
 alias g='git'
