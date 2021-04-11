@@ -79,6 +79,7 @@ scroll-down = bspwm-deskprev
 
 cursor-click = pointer
 cursor-scroll = default
+enable-ipc = true
 
 [bar/music]
 monitor = ${env:MONITOR:}
@@ -113,20 +114,22 @@ font-7 = BreezeSans:pixelsize=14:style=Medium Condensed;2
  
 modules-left = song
 
-override-redirect = true
-
 scroll-up = bspwm-desknext
 scroll-down = bspwm-deskprev
+enable-ipc = true
+
+wm-restack = bspwm
+override-redirect = true
 
 cursor-click = pointer
 
 [bar/status]
 monitor = ${env:MONITOR:}
-width = 16%
+width = 30%
 height = 3.3%
-offset-x = 82.0%:-15
-offset-y = 0.5%
-radius = 18
+offset-x = 70%
+offset-y = 0%
+radius = 0
 fixed-center = true
 bottom = true
 
@@ -136,12 +139,6 @@ foreground = ${colors.foreground}
 border-size = 0
 border-color = #000
 
-padding-left = 13
-padding-right = 0
-
-module-margin-left = 10
-module-margin-right = 1
- 
 font-0 = Noto Sans:pixelsize=14:style=SemiCondensed Bold;4
 font-1 = Material Design Icons:style=Regular:pixelsize=21;5
 font-2 = Noto Sans:pixelsize=10:style=SemiCondensed Bold;3
@@ -149,6 +146,8 @@ font-2 = Noto Sans:pixelsize=10:style=SemiCondensed Bold;3
 modules-right = fuzzy-clock 
 
 wm-restack = bspwm
+override-redirect = true
+enable-ipc = true
 
 cursor-click = pointer
 cursor-scroll = default

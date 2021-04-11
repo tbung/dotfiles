@@ -183,6 +183,9 @@ Print
 super + alt + p
     dock.sh &
 
+super + p
+    ~/.config/polybar/scripts/toggle.sh 
+
 super + x
     light-locker-command --lock
 
