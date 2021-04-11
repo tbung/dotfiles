@@ -4,12 +4,11 @@
 umask 022
 
 # Set our default path
-PATH="/usr/local/sbin:/usr/local/bin:/usr/bin/core_perl:/usr/bin:$HOME/.local/bin"
 export PATH=$HOME/.npm-global/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 
 export PANEL_FIFO="/tmp/panel-fifo"
-export PATH
 export XDG_CONFIG_HOME="$HOME/.config"
 export BSPWM_SOCKET="/tmp/bspwm-socket"
 export XDG_CONFIG_DIRS=/usr/etc/xdg:/etc/xdg
@@ -25,20 +24,6 @@ export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export CONDARC="${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc"
 export _JAVA_AWT_WM_NONREPARENTING=1
-
-
-# Load profiles from /etc/profile.d
-if test -d /etc/profile.d/; then
-	for profile in /etc/profile.d/*.sh; do
-		test -r "$profile" && . "$profile"
-	done
-	unset profile
-fi
-
-# Source global bash config
-if test "$PS1" && test "$BASH" && test -r /etc/bash.bashrc; then
-	. /etc/bash.bashrc
-fi
 
 # Termcap is outdated, old, and crusty, kill it.
 unset TERMCAP
