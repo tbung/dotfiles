@@ -37,6 +37,8 @@ Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 Plug 'jpalardy/vim-slime'
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
@@ -46,7 +48,7 @@ Plug 'liuchengxu/vista.vim'             " Tag tree sidebar
                                         " to be installed
 
 " Language-specific stuff
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for': ['python'] }
 Plug 'psf/black', { 'branch': 'stable', 'for': ['python'] }
 Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript'] }
 
@@ -125,7 +127,9 @@ set hidden
 set noshowmode
 
 " Fold by default
-set foldmethod=syntax
+" set foldmethod=syntax
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 
 " Apparently faster
 set regexpengine=0
@@ -188,3 +192,27 @@ nnoremap <silent> gW         <cmd> lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> gd         <cmd> lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <c-]>      <cmd> lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <leader>sd <cmd> lua vim.lsp.buf.show_line_diagnostics()<CR>
+
+" Enable treesitter based highlight, indent and text objects
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+  },
+}
+EOF
