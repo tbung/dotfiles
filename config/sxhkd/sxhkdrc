@@ -105,24 +105,48 @@ super +  {Left,Down,Up,Right}
 # Move tiled windows. Moving a tiled window to 
 # preselected one moves into preselection instead. 
 # Moving out of the screen should move the window to next monitor if possible
+# super + shift + {a,s,w,d}
+#     bspc node focused -v {-20 0,0 20,0 -20,20 0}
+
+# super + shift + {h,j,k,l}
+#     bspc node focused -v {-20 0,0 20,0 -20,20 0}
+	
+# super + shift + {Left,Down,Up,Right}
+#     bspc node focused -v {-20 0,0 20,0 -20,20 0}
+
+#resize windows
+# super + ctrl + {a,s,w,d}
+#     bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
+
+# super + ctrl + {h,j,k,l}
+#     bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
+	
+# super + ctrl + {Left,Down,Up,Right}
+#     bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
+
+# Move tiled windows. Moving a tiled window to 
+# preselected one moves into preselection instead. 
+# Moving out of the screen should move the window to next monitor if possible
 super + shift + {a,s,w,d}
-    bspc node focused -v {-20 0,0 20,0 -20,20 0}
+	windowgrabber {west,south,north,east}
 
 super + shift + {h,j,k,l}
-    bspc node focused -v {-20 0,0 20,0 -20,20 0}
+	windowgrabber {west,south,north,east}
 	
+# Different style of movement: transplant into window in chosen direction
 super + shift + {Left,Down,Up,Right}
-    bspc node focused -v {-20 0,0 20,0 -20,20 0}
+	euclid_mover {west,south,north,east}
 
 #resize windows
 super + ctrl + {a,s,w,d}
-    bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
+	bspwm_resize.sh {west,south,north,east}
 
 super + ctrl + {h,j,k,l}
-    bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
+	bspwm_resize.sh {west,south,north,east}
 	
 super + ctrl + {Left,Down,Up,Right}
-    bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
+	bspwm_resize.sh {west,south,north,east}
+
 
 # Toggle monocle mode
 super + f 
