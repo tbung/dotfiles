@@ -33,12 +33,16 @@ Plug 'junegunn/fzf'                     " Fzf integration
 Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
 
 " IDE-like features
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
 Plug 'jpalardy/vim-slime'
 Plug 'ludovicchabant/vim-gutentags'     " CTAGS management
 Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'liuchengxu/vista.vim'             " Tag tree sidebar
-Plug 'dense-analysis/ale'               " Syntax checker, requires checker itself
+" Plug 'dense-analysis/ale'               " Syntax checker, requires checker itself
                                         " to be installed
 
 " Language-specific stuff
@@ -152,3 +156,35 @@ let g:vimwiki_global_ext = 0
 
 let g:vimtex_grammar_textidote =  {'jar': '/opt/textidote/textidote.jar',
                                   \ 'args': '--read-all'}
+
+" Set up language servers
+lua require('lspconfig').jedi_language_server.setup{}
+lua require('lspconfig').texlab.setup{}
+lua require('lspconfig').tsserver.setup{}
+
+
+" Set up completion
+autocmd BufEnter * lua require'completion'.on_attach()
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+" Avoid showing message extra message when using completion
+set shortmess+=c
+" Show snippets in completion
+let g:completion_enable_snippet = 'UltiSnips'
+"map <c-p> to manually trigger completion
+imap <silent> <c-p> <Plug>(completion_trigger)
+
+" LSP Keybinding
+" TODO: Only load them when an LSP is active
+nnoremap <silent> 1gD        <cmd> lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> <C-k>      <cmd> lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <leader>rn <cmd> lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <c-k>      <cmd> lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> K          <cmd> lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> H          <cmd> lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> g0         <cmd> lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gD         <cmd> lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gW         <cmd> lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd         <cmd> lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <c-]>      <cmd> lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <leader>sd <cmd> lua vim.lsp.buf.show_line_diagnostics()<CR>
