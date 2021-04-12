@@ -29,8 +29,11 @@ Plug 'mbbill/undotree'
 Plug 'connorholyday/vim-snazzy'
 
 " FZF
-Plug 'junegunn/fzf'                     " Fzf integration
-Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
+" Plug 'junegunn/fzf'                     " Fzf integration
+" Plug 'junegunn/fzf.vim'                 " Preconfigured fzf integration
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " IDE-like features
 
