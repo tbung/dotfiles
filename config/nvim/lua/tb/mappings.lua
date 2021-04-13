@@ -21,12 +21,15 @@ map('n', '<C-k>', '<C-w>k')
 map('n', '<C-l>', '<C-w>l')
 
 -- Telescope Keymaps
-map('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
-map('n', '<C-p>',      '<cmd>Telescope find_files<cr>')
-map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
-map('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
-map('n', '<C-n>',      '<cmd>Telescope buffers<cr>')
-map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
+map('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
+map('n', '<C-p>',      [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
+map('n', '<leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
+map('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true })<cr>]])
+map('n', '<C-n>',      [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true })<cr>]])
+map('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]])
+
+-- Open dotfiles from anywhere
+map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prompt_title = "dotfiles", shorten_path = false, cwd = "~/.dotfiles" })<cr>]])
 
 -- EasyAlign
 map('n','ga', '<Plug>(EasyAlign)')
