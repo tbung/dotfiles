@@ -47,7 +47,19 @@ local on_attach = function(client, bufnr)
   end
 end
 
-lsp.jedi_language_server.setup{ on_attach = on_attach }
+-- lsp.jedi_language_server.setup{ on_attach = on_attach }
+lsp.pyls.setup{
+    on_attach = on_attach,
+    settings = {
+        plugins = {
+            pylint = {
+                enabled = true,
+                executable = 'pylint',
+            }
+        }
+    }
+}
+
 lsp.texlab.setup{ on_attach = on_attach }
 lsp.tsserver.setup{ on_attach = on_attach }
 lsp.sumneko_lua.setup{
