@@ -55,6 +55,8 @@ xsetwacom set 11 Button 3 13
 picom -b &
 dock.sh
 
+xcape -e 'Caps_Lock=Escape'
+
 # System tray applets
 # nm-applet &
 # mate-power-manager &
