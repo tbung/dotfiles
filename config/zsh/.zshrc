@@ -48,6 +48,7 @@ bindkey -M vicmd 'v' edit-command-line
 
 # Backspace should work as in vim
 bindkey -v '^?' backward-delete-char
+KEYTIMEOUT=1
 
 # Plugins
 if [[ -r "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
