@@ -45,16 +45,22 @@ local on_attach = function(client, bufnr)
       augroup END
     ]], false)
   end
+
+  vim.api.nvim_exec([[
+    hi LspDiagnosticsDefaultError guifg=red
+    hi LspDiagnosticsDefaultWarning guifg=orange
+  ]], false)
 end
 
 -- lsp.jedi_language_server.setup{ on_attach = on_attach }
 lsp.pyls.setup{
     on_attach = on_attach,
     settings = {
-        plugins = {
-            pylint = {
-                enabled = true,
-                executable = 'pylint',
+        pyls = {
+            plugins = {
+                pycodestyle = {
+                    maxLineLength = 88
+                }
             }
         }
     }

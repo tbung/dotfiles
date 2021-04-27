@@ -71,11 +71,6 @@ vim.o.regexpengine = 0
 vim.o.splitbelow = true
 vim.o.splitright = true
 
--- vim.o.spell spelllang=en_us,de_de
--- highlight clear SpellBad
--- highlight SpellBad gui=undercurl
-vim.cmd [[highlight clear Conceal]]
-
 -- Colors
 -- let &t_8f = --38;2;%lu;%lu;%lum--
 -- let &t_8b = --48;2;%lu;%lu;%lum--
@@ -86,3 +81,6 @@ vim.o.background = 'dark'
 vim.o.completeopt = 'menuone,noinsert,noselect'
 -- Don't show the dumb matching stuff.
 vim.cmd [[set shortmess+=c]]
+
+vim.wo.spell = true
+vim.o.spelllang = 'en_us,de_de'
