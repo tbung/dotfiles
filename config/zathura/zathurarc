@@ -1,8 +1,8 @@
 # Base16 Snazzy
 # Author: Chawye Hsu (https://github.com/h404bi) based on Hyper Snazzy Theme (https://github.com/sindresorhus/hyper-snazzy)
 
-set default-bg                  "#ffffff"
-# set default-bg                  "#1e1f29"
+# set default-bg                  "#ffffff"
+set default-bg                  "#282a36"
 set default-fg                  "#34353e"
 
 set statusbar-fg                "#a5a5a9"
@@ -29,7 +29,7 @@ set completion-fg               "#57c7ff"
 set completion-highlight-fg     "#f1f1f0"
 set completion-highlight-bg     "#57c7ff"
 
-set recolor-lightcolor          "#1e1f29"
+set recolor-lightcolor          "#282a36"
 set recolor-darkcolor           "#f1f1f0"
 
 set recolor                     "false"
