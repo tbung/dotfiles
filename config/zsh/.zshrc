@@ -1,33 +1,39 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # History in cache directory:
 HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE=~/.cache/zsh/history
 
 # Enable completion
+# Add completions to fpath
+fpath=(/home/tillb/.config/zsh/completions $fpath)
 autoload -Uz compinit
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 zstyle ':completion:*' menu select
 
-# Add completions to fpath
-fpath=(/usr/share/zsh/plugins/zsh-completions/src $fpath)
-
 # Prompt
-autoload -U promptinit; promptinit
-SPACESHIP_PROMPT_ORDER=(
-  time          # Time stamps section
-  user          # Username section
-  dir           # Current directory section
-  host          # Hostname section
-  git           # Git section (git_branch + git_status)
-  node          # Node.js section
-  conda         # conda virtualenv section
-  line_sep      # Line break
-  vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
-  char          # Prompt character
-)
-SPACESHIP_CHAR_SYMBOL="❯ "
-prompt spaceship
+# autoload -U promptinit; promptinit
+# SPACESHIP_PROMPT_ORDER=(
+#   time          # Time stamps section
+#   user          # Username section
+#   dir           # Current directory section
+#   host          # Hostname section
+#   git           # Git section (git_branch + git_status)
+#   node          # Node.js section
+#   conda         # conda virtualenv section
+#   line_sep      # Line break
+#   vi_mode       # Vi-mode indicator
+#   jobs          # Background jobs indicator
+#   char          # Prompt character
+# )
+# SPACESHIP_CHAR_SYMBOL="❯ "
+# prompt spaceship
 
 # Aliases, functions, keymaps
 source $ZDOTDIR/aliases.zsh
@@ -54,7 +60,15 @@ KEYTIMEOUT=1
 if [[ -r "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
-[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+if [[ -r "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+    # export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+if [[ -r "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+    source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+fi
+# [[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
+[[ -r $(which zoxide) ]] && eval "$(zoxide init zsh)"
 
 # Python conda
 [[ -d ~/miniconda3 ]] && source $HOME/miniconda3/etc/profile.d/conda.sh
@@ -83,3 +97,6 @@ if [[ "$TERM" == (st*|alacritty*|gnome*|konsole*|putty*|rxvt*|screen*|tmux*|xter
 	add-zsh-hook -Uz precmd xterm_title_precmd
 	add-zsh-hook -Uz preexec xterm_title_preexec
 fi
+
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
