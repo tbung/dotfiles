@@ -29,7 +29,7 @@ map('n', '<C-n>',      [[<cmd>lua require('telescope.builtin').buffers({ sort_la
 map('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]])
 
 -- Open dotfiles from anywhere
-map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prompt_title = "dotfiles", shorten_path = false, cwd = "~/.dotfiles" })<cr>]])
+map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prompt_title = "dotfiles", shorten_path = false, cwd = "~/.dotfiles", hidden = true })<cr>]])
 
 -- EasyAlign
 map('n','ga', '<Plug>(EasyAlign)')

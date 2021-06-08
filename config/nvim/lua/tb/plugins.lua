@@ -29,6 +29,11 @@ return require('packer').startup(function()
 
     -- Colors
     use 'connorholyday/vim-snazzy'
+    use 'RRethy/nvim-base16'
+    use 'shaunsingh/moonlight.nvim'
+    use 'folke/tokyonight.nvim'
+    use 'marko-cerovac/material.nvim'
+    use 'sainnhe/sonokai'
 
     -- FZF
     -- use 'junegunn/fzf'                     -- Fzf integration
@@ -39,9 +44,12 @@ return require('packer').startup(function()
 
     -- IDE-like features
     use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/completion-nvim'
+    -- use 'nvim-lua/completion-nvim'
+    use 'hrsh7th/nvim-compe'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use 'kyazdani42/nvim-web-devicons'
+    use 'onsails/lspkind-nvim'
 
     use 'jpalardy/vim-slime'
     use 'ludovicchabant/vim-gutentags'     -- CTAGS management
@@ -59,8 +67,9 @@ return require('packer').startup(function()
     use { 'godlygeek/tabular', ft = 'markdown' }
     -- use 'plasticboy/vim-markdown', { 'for': 'markdown' }
     use 'lervag/vimtex'                    -- Better latex support
-    use 'junegunn/goyo.vim'                -- Distraction free writing
+    -- use 'junegunn/goyo.vim'                -- Distraction free writing
     use 'junegunn/limelight.vim'           -- Even more distraction free writing
+    use 'kdav5758/TrueZen.nvim'
     use 'vimwiki/vimwiki'
 
     -- Snippets
@@ -68,3 +77,4 @@ return require('packer').startup(function()
     use 'honza/vim-snippets'               -- Some default snippets
 
 end)
+

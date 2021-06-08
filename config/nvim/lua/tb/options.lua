@@ -75,8 +75,13 @@ vim.o.splitright = true
 -- let &t_8f = --38;2;%lu;%lu;%lum--
 -- let &t_8b = --48;2;%lu;%lu;%lum--
 vim.o.termguicolors = true
-vim.g.colors_name = 'snazzy'
+-- vim.g.colors_name = 'snazzy'
+-- vim.g.tokyonight_style = "night"
+vim.g.sonokai_style = 'andromeda'
+vim.g.sonokai_enable_italic = true
+vim.g.sonokai_diagnostic_virtual_text = 'colored'
 vim.o.background = 'dark'
+vim.cmd('colorscheme sonokai')
 
 vim.o.completeopt = 'menuone,noinsert,noselect'
 -- Don't show the dumb matching stuff.
