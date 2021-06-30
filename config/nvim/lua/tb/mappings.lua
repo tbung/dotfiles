@@ -27,6 +27,7 @@ map('n', '<leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]]
 map('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true })<cr>]])
 map('n', '<C-n>',      [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true })<cr>]])
 map('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]])
+map('n', '<leader>ws', [[<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>]])
 
 -- Open dotfiles from anywhere
 map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prompt_title = "dotfiles", shorten_path = false, cwd = "~/.dotfiles", hidden = true })<cr>]])

@@ -29,3 +29,5 @@ require'compe'.setup {
     ultisnips = true;
   };
 }
+
+require('telescope').load_extension('media_files')

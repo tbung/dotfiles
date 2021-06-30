@@ -12,7 +12,7 @@ end
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function()
+return require('packer').startup(function(use)
 
     use 'tpope/vim-surround'               -- Easy surrounding things with brackets
     use 'tpope/vim-fugitive'               -- In-vim git stuff
@@ -20,7 +20,7 @@ return require('packer').startup(function()
     use 'tpope/vim-repeat'                 -- Enable plugin motion repeat
     use 'tpope/vim-dispatch'               -- Dispatch console cmd
     use 'tpope/vim-eunuch'                 -- Unix commands made easy
-    use 'tpope/vim-abolish'		-- Smart replace words
+    use 'tpope/vim-abolish'		   -- Smart replace words
 
     use 'justinmk/vim-sneak'               -- Fast moving around
     use 'wellle/targets.vim'
@@ -28,11 +28,10 @@ return require('packer').startup(function()
     use 'mbbill/undotree'
 
     -- Colors
-    use 'connorholyday/vim-snazzy'
-    use 'RRethy/nvim-base16'
-    use 'shaunsingh/moonlight.nvim'
-    use 'folke/tokyonight.nvim'
-    use 'marko-cerovac/material.nvim'
+    -- use 'connorholyday/vim-snazzy'
+    -- use 'RRethy/nvim-base16'
+    -- use 'shaunsingh/moonlight.nvim'
+    -- use 'folke/tokyonight.nvim'
     use 'sainnhe/sonokai'
 
     -- FZF
@@ -41,27 +40,28 @@ return require('packer').startup(function()
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'nvim-telescope/telescope.nvim'
+    use 'nvim-telescope/telescope-media-files.nvim'
 
     -- IDE-like features
     use 'neovim/nvim-lspconfig'
-    -- use 'nvim-lua/completion-nvim'
     use 'hrsh7th/nvim-compe'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
     use 'kyazdani42/nvim-web-devicons'
     use 'onsails/lspkind-nvim'
+    use 'voldikss/vim-floaterm'
 
-    use 'jpalardy/vim-slime'
+    -- use 'jpalardy/vim-slime'
     use 'ludovicchabant/vim-gutentags'     -- CTAGS management
-    use { 'ms-jpq/chadtree', branch = 'chad', run = 'python3 -m chadtree deps' }
+    -- use { 'ms-jpq/chadtree', branch = 'chad', run = 'python3 -m chadtree deps' }
     use 'liuchengxu/vista.vim'             -- Tag tree sidebar
     -- use 'dense-analysis/ale'               -- Syntax checker, requires checker itself
     -- to be installed
 
     -- Language-specific stuff
     -- use 'numirias/semshi', { 'do': ':UpdateRemoteuseins', 'for': ['python'] }
-    use { 'psf/black',  branch = 'stable', ft = {'python'} }
-    use { 'prettier/vim-prettier', run = 'npm install', ft = {'javascript', 'typescript'} }
+    use { 'psf/black',  tag = 'stable', ft = {'python'} }
+    use { 'prettier/vim-prettier', run = 'npm install', ft = {'javascript', 'typescript', 'json'} }
 
     -- Writing
     use { 'godlygeek/tabular', ft = 'markdown' }
