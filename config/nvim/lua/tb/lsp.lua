@@ -53,10 +53,10 @@ local on_attach = function(client, bufnr)
 end
 
 -- lsp.jedi_language_server.setup{ on_attach = on_attach }
-lsp.pyls.setup{
+lsp.pylsp.setup{
     on_attach = on_attach,
     settings = {
-        pyls = {
+        pylsp = {
             plugins = {
                 pycodestyle = {
                     maxLineLength = 88
