@@ -57,6 +57,8 @@ return require('packer').startup(function(use)
     use 'liuchengxu/vista.vim'             -- Tag tree sidebar
     -- use 'dense-analysis/ale'               -- Syntax checker, requires checker itself
     -- to be installed
+    use 'norcalli/nvim-colorizer.lua'
+    use 'p00f/nvim-ts-rainbow'
 
     -- Language-specific stuff
     -- use 'numirias/semshi', { 'do': ':UpdateRemoteuseins', 'for': ['python'] }
