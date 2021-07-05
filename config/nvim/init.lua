@@ -3,7 +3,7 @@ require('tb.mappings')
 require('tb.options')
 require('tb.lsp')
 require('tb.treesitter')
-require('tb.floatterm')
+-- require('tb.floatterm')
 
 require'compe'.setup {
   enabled = true;
@@ -27,7 +27,22 @@ require'compe'.setup {
     nvim_lua = true;
     vsnip = true;
     ultisnips = true;
+    luasnip = true;
   };
+}
+
+require('telescope').setup{
+    defaults = {
+        layout_strategy = "horizontal",
+        layout_config = {
+            horizontal = {
+                mirror = false,
+            },
+            vertical = {
+                mirror = false,
+            },
+        },
+    }
 }
 
 require('telescope').load_extension('media_files')
@@ -42,4 +57,5 @@ require'nvim-treesitter.configs'.setup {
 
 require 'colorizer'.setup()
 
-
+require'lsp_signature'.on_attach()
+-- require("luasnip/loaders/from_vscode").load({ path = '.local/share/nvim/site/pack/packer/start/friendly-snippets/snippets' })

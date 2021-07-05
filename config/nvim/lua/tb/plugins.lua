@@ -21,6 +21,8 @@ return require('packer').startup(function(use)
     use 'tpope/vim-dispatch'               -- Dispatch console cmd
     use 'tpope/vim-eunuch'                 -- Unix commands made easy
     use 'tpope/vim-abolish'		   -- Smart replace words
+    use 'tpope/vim-obsession'
+    use 'tpope/vim-vinegar'
 
     use 'justinmk/vim-sneak'               -- Fast moving around
     use 'wellle/targets.vim'
@@ -45,10 +47,12 @@ return require('packer').startup(function(use)
     -- IDE-like features
     use 'neovim/nvim-lspconfig'
     use 'hrsh7th/nvim-compe'
+    use 'ray-x/lsp_signature.nvim'
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
     use 'nvim-treesitter/nvim-treesitter-textobjects'
     use 'kyazdani42/nvim-web-devicons'
     use 'onsails/lspkind-nvim'
+    use 'glepnir/lspsaga.nvim'
     use 'voldikss/vim-floaterm'
 
     -- use 'jpalardy/vim-slime'
@@ -77,6 +81,8 @@ return require('packer').startup(function(use)
     -- Snippets
     use 'SirVer/ultisnips'                 -- Snippets engine
     use 'honza/vim-snippets'               -- Some default snippets
+    -- use 'L3MON4D3/LuaSnip'
+    -- use 'rafamadriz/friendly-snippets'
 
 end)
 

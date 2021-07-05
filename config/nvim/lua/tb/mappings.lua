@@ -37,3 +37,12 @@ map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prom
 -- EasyAlign
 map('n','ga', '<Plug>(EasyAlign)')
 
+-- Snippets
+-- vim.api.nvim_set_keymap('i', '<Tab>', [[luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>']], { noremap = false })
+-- map('i', '<silent> <S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]])
+
+-- map('s', '<silent> <Tab>', [[<cmd>lua require('luasnip').jump(1)<Cr>]])
+-- map('s', '<silent> <S-Tab>', [[<cmd>lua require('luasnip').jump(-1)<Cr>]])
+
+-- vim.api.nvim_set_keymap('i', '<silent><expr> <C-E>', [[luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']], { noremap = false })
+-- vim.api.nvim_set_keymap('s', '<silent><expr> <C-E>', [[luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']], { noremap = false })
