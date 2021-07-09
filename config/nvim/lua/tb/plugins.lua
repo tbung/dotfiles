@@ -33,7 +33,7 @@ return require('packer').startup(function(use)
     -- use 'connorholyday/vim-snazzy'
     -- use 'RRethy/nvim-base16'
     -- use 'shaunsingh/moonlight.nvim'
-    -- use 'folke/tokyonight.nvim'
+    use 'folke/tokyonight.nvim'
     use 'sainnhe/sonokai'
 
     -- FZF
@@ -42,6 +42,7 @@ return require('packer').startup(function(use)
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'nvim-telescope/telescope.nvim'
+    use 'nvim-telescope/telescope-project.nvim'
     use 'nvim-telescope/telescope-media-files.nvim'
 
     -- IDE-like features
@@ -54,6 +55,9 @@ return require('packer').startup(function(use)
     use 'onsails/lspkind-nvim'
     use 'glepnir/lspsaga.nvim'
     use 'voldikss/vim-floaterm'
+    use 'folke/trouble.nvim'
+    use 'lukas-reineke/indent-blankline.nvim'
+    use 'windwp/nvim-autopairs'
 
     -- use 'jpalardy/vim-slime'
     use 'ludovicchabant/vim-gutentags'     -- CTAGS management

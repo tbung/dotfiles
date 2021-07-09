@@ -1,7 +1,12 @@
 local lsp = require('lspconfig')
 
 require('lspkind').init()
-require('lspsaga').init_lsp_saga()
+require('lspsaga').init_lsp_saga({
+    error_sign = " ",
+    warn_sign = " ",
+    hint_sign = " ",
+    infor_sign = " ",
+})
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -47,6 +52,7 @@ local on_attach = function(client, bufnr)
     hi LspDiagnosticsDefaultError guifg=red
     hi LspDiagnosticsDefaultWarning guifg=orange
   ]], false)
+  require'lsp_signature'.on_attach()
 end
 
 -- lsp.jedi_language_server.setup{ on_attach = on_attach }
