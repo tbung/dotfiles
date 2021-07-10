@@ -160,31 +160,33 @@ type = internal/bspwm
 reverse-scroll = false
 enable-scroll = false
 
-ws-icon-0 = I;%{A3:alacritty &:}󰆍%{A}
-ws-icon-5 = II;%{F#c46a4b}%{A3:zathura &:}󰉨%{A}%{F-}
-ws-icon-2 = III;%{F#ff004b}%{A3:grep " T " /tmp/mpv-wpf.txt | tail -1 | cut -d' ' -f2| xargs -L1 -I[] xdotool key --window "[]" p &:}󰄘%{A}%{F-}
-ws-icon-3 = IV;%{F#ffca00}%{A3:start-newsboat.sh &:}󰇰%{A}%{F-}
-ws-icon-4 = V;%{F#2944f2}%{A3:start-vim.sh -c &:}󰹻%{A}%{F-}
-ws-icon-1 = VI;%{F#00c0ff}%{A3:firefox &:}󰇧%{A}%{F-}
-ws-icon-6 = VII;%{F#ff93aa}%{A3:gimp &:}󰿁%{A}%{F-}
-ws-icon-7 = VIII;%{F#FF8C00}%{A3:retroarch &:}󰊠%{A}%{F-}
-ws-icon-8 = IX;%{F#d448ff}%{A3:discord &:}󰆉%{A}%{F-}
-ws-icon-9 = X;%{F#05d183}%{A3:start-spotify || playerctl -p spotify play-pause &:}󰫔%{A}%{F-}
-ws-icon-default =%{F#9e43ba}%{A3:<!!>:}󰗹%{A}%{F-}
+; 󰍹󰇰
+ws-icon-0 = I;%{F#c46a4b}󰈹%{F-}
+ws-icon-5 = II;󰆍%{F-}
+ws-icon-2 = III;%{F#ff004b}󰍹%{F-}
+ws-icon-3 = IV;%{F#ffca00}󰍹%{F-}
+ws-icon-4 = V;%{F#2944f2}󰍹%{F-}
+
+ws-icon-1 = VI;%{F#00c0ff}󰈹%{F-}
+ws-icon-6 = VII;%{F#ff93aa}󰍹%{F-}
+ws-icon-7 = VIII;%{F#FF8C00}󰍹%{F-}
+ws-icon-8 = IX;%{F#d448ff}󰆉%{F-}
+ws-icon-9 = X;%{F#05d183}󰓇%{F-}
+ws-icon-default =%{F#9e43ba}󰍹%{F-}
 
 format = "<label-state>" 
 
-label-focused ="%{-u}{%{A1:bspc node -f next.local.!floating:}%{A2:xdo close:}%{u#ff9900}%{+u}%icon%%{-u}%{A}%{A}} "
+label-focused ="%{-u}{%{u#ff9900}%{+u}%icon%%{-u}}"
 label-focused-padding = 0
 
-label-occupied ="%{-u} %{u#ff9900}%{+u}%icon%%{-u} "
+label-occupied ="%{-u}%{F#00000000}{%{F-}%{u#ff9900}%{+u}%icon%%{-u}%{F#00000000}}%{F-}"
 label-occupied-padding = 0
 
 label-urgent ="%{-u} %{u#ff9900}%{+u}%icon%%{-u} %{F#ff004b}%{T3}%{O-10}󰀨 %{T-}%{F-}"
 label-foreground= ${color.alert}
 label-urgent-padding = 0
 
-label-empty =" %icon% "
+label-empty ="%{F#00000000}{%{F-}%icon%%{F#00000000}}%{F-}"
 label-empty-padding = 0
 
 [module/pulseaudio]
