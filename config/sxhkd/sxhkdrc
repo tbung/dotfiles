@@ -196,7 +196,7 @@ super + {,shift} + b
     $BROWSER {,--private-window}
     		
 super + e
-    spacefm -n
+    thunar
 
 super + shift + e
     $TERMINAL ranger
@@ -213,24 +213,21 @@ super + p
 super + x
     light-locker-command --lock
 
-super + {v,b}
-    playerctl {previous,next}
-
 #
 # Media keys
 #
 
 # Volume up
 XF86AudioRaiseVolume 
-    pamixer -i 5 # ; ~/.config/polybar/scripts/volume.sh
+    pamixer -i 5; ~/.local/bin/volume.sh
 
 # Volume down
 XF86AudioLowerVolume 
-    pamixer -d 5 # ; ~/.config/polybar/scripts/volume.sh
+    pamixer -d 5; ~/.local/bin/volume.sh
 
 # Volume mute
 XF86AudioMute 
-    pamixer -t # ; ~/.config/polybar/scripts/volume.sh
+    pamixer -t  ; ~/.local/bin/volume.sh
 
 XF86AudioPlay
     playerctl play-pause
