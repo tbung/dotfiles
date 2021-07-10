@@ -314,15 +314,15 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#FEFEFE"
-    foreground = "#0E0E0E"
+    background = "#f1f1f0"
+    foreground = "#2b2d3a"
     timeout = 3
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#0B3D91"
-    foreground = "#ffffff"
+    background = "#2b2d3a"
+    foreground = "#f1f1f0"
     timeout = 5
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
@@ -426,28 +426,9 @@
 #    summary = "foobar"
 #    skip_display = yes
 
-#[signed_on]
-#    appname = Pidgin
-#    summary = "*signed on*"
-#    urgency = low
-#
-#[signed_off]
-#    appname = Pidgin
-#    summary = *signed off*
-#    urgency = low
-#
-#[says]
-#    appname = Pidgin
-#    summary = *says*
-#    urgency = critical
-#
-#[twitter]
-#    appname = Pidgin
-#    summary = *twitter.com*
-#    urgency = normal
-#
-#[stack-volumes]
-#    appname = "some_volume_notifiers"
-#    set_stack_tag = "volume"
-#
+[spotify]
+    appname = Spotify
+    background = "#1DB954"
+    urgency = normal
+
 # vim: ft=cfg
