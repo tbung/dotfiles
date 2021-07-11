@@ -16,6 +16,8 @@ fpath=(/home/tillb/.config/zsh/completions $fpath)
 autoload -Uz compinit
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
 zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+setopt COMPLETE_ALIASES
 
 # Prompt
 # autoload -U promptinit; promptinit
