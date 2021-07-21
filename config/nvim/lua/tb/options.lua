@@ -27,7 +27,7 @@ vim.o.autoindent = true
 -- filetype plugin indent on
 
 -- Make backspace behave as expected
-vim.o.backspace =  'indent,eol,start' 
+vim.o.backspace =  'indent,eol,start'
 
 -- Syntax highlighting
 -- syntax on
@@ -78,12 +78,14 @@ vim.o.termguicolors = true
 vim.o.background = 'dark'
 -- vim.g.colors_name = 'snazzy'
 -- vim.g.tokyonight_style = "storm"
--- vim.g.tokyonight_italic_functions = true
--- vim.cmd('colorscheme tokyonight')
-vim.g.sonokai_style = 'andromeda'
-vim.g.sonokai_enable_italic = true
-vim.g.sonokai_diagnostic_virtual_text = 'colored'
-vim.cmd('colorscheme sonokai')
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_italic_functions = true
+-- vim.g.tokyonight_transparent = true
+vim.cmd('colorscheme tokyonight')
+-- vim.g.sonokai_style = 'andromeda'
+-- vim.g.sonokai_enable_italic = true
+-- vim.g.sonokai_diagnostic_virtual_text = 'colored'
+-- vim.cmd('colorscheme sonokai')
 
 vim.o.completeopt = 'menuone,noinsert,noselect'
 -- Don't show the dumb matching stuff.

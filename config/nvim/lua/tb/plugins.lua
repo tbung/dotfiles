@@ -56,7 +56,13 @@ return require('packer').startup(function(use)
     use 'glepnir/lspsaga.nvim'
     use 'voldikss/vim-floaterm'
     use 'folke/trouble.nvim'
-    use 'lukas-reineke/indent-blankline.nvim'
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        setup = function ()
+            vim.g.indent_blankline_char = "│"
+            vim.g.indent_blankline_use_treesitter = true
+        end
+    }
     use 'windwp/nvim-autopairs'
 
     -- use 'jpalardy/vim-slime'
