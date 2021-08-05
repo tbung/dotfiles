@@ -64,6 +64,8 @@ return require('packer').startup(function(use)
         end
     }
     use 'windwp/nvim-autopairs'
+    use 'puremourning/vimspector'
+    use 'szw/vim-maximizer'
 
     -- use 'jpalardy/vim-slime'
     use 'ludovicchabant/vim-gutentags'     -- CTAGS management
@@ -93,6 +95,8 @@ return require('packer').startup(function(use)
     use 'honza/vim-snippets'               -- Some default snippets
     -- use 'L3MON4D3/LuaSnip'
     -- use 'rafamadriz/friendly-snippets'
+    use 'tikhomirov/vim-glsl'
+    use 'HiPhish/info.vim'
 
 end)
 
