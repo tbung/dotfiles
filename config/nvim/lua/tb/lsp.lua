@@ -71,6 +71,7 @@ lsp.pylsp.setup{
 
 lsp.texlab.setup{ on_attach = on_attach }
 lsp.tsserver.setup{ on_attach = on_attach }
+lsp.ccls.setup{ on_attach = on_attach }
 lsp.sumneko_lua.setup{
     on_attach = on_attach,
     -- This assume lls is install like it is on arch, where this bin is

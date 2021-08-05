@@ -37,6 +37,25 @@ map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prom
 -- EasyAlign
 map('n','ga', '<Plug>(EasyAlign)')
 
+-- Vimspector
+map('n', '<leader>m', [[<cmd>MaximizerToggle!<cr>]])
+map('n', '<leader>dd', [[<cmd>call vimspector#Launch()<cr>]])
+map('n', '<leader>dc', [[<cmd>call GotoWindow(g:vimspector_session_windows.code)<cr>]])
+map('n', '<leader>dt', [[<cmd>call GotoWindow(g:vimspector_session_windows.tagpage)<cr>]])
+map('n', '<leader>dv', [[<cmd>call GotoWindow(g:vimspector_session_windows.variables)<cr>]])
+map('n', '<leader>dw', [[<cmd>call GotoWindow(g:vimspector_session_windows.watches)<cr>]])
+map('n', '<leader>ds', [[<cmd>call GotoWindow(g:vimspector_session_windows.stacktrace)<cr>]])
+map('n', '<leader>do', [[<cmd>call GotoWindow(g:vimspector_session_windows.output)<cr>]])
+
+map('n', '<leader>dl', [[<cmd>call vimspector#StepInto()<cr>]])
+map('n', '<leader>dj', [[<cmd>call vimspector#StepOver()<cr>]])
+map('n', '<leader>dk', [[<cmd>call vimspector#StepOut()<cr>]])
+map('n', '<leader>d_', [[<cmd>call vimspector#Restart()<cr>]])
+map('n', '<leader>d<space>', [[<cmd>call vimspector#Continue()<cr>]])
+map('n', '<leader>drc', [[<cmd>call vimspector#RunToCursor()<cr>]])
+map('n', '<leader>dbp', [[<cmd>call vimspector#ToggleBreakpoint()<cr>]])
+map('n', '<leader>dcbp', [[<cmd>call vimspector#ToggleConditionalBreakpoint()<cr>]])
+
 -- Snippets
 -- vim.api.nvim_set_keymap('i', '<Tab>', [[luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>']], { noremap = false })
 -- map('i', '<silent> <S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]])
