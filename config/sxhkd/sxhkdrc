@@ -49,9 +49,6 @@ super + shift + c
     nodes=( $(bspc query -N -n .hidden) ) && s=$(xtitle ${nodes[@]} | rofi -dmenu -format i -p "Hidden windows") && [[ -n "$s" ]] && bspc node "${nodes[$s+1]}" -g hidden=off
 
 # Presel window for splitting in certain direction
-alt + ctrl + {a,s,w,d}
-    bspc node -p \~{west,south,north,east} -i
-
 alt + ctrl + {h,j,k,l}
     bspc node -p \~{west,south,north,east}
 
@@ -59,9 +56,6 @@ alt + ctrl + {Left,Down,Up,Right}
     bspc node -p \~{west,south,north,east}
 
 # Presel the desktop for splitting in certain direction
-alt + shift + {a,s,w,d}
-    bspc node @/ -p \~{west,south,north,east}
-
 alt + shift + {h,j,k,l}
     bspc node @/ -p \~{west,south,north,east}
 
@@ -93,9 +87,6 @@ alt + {_,shift + }Tab
     bspc node -f {next,prev}.local
 
 #Focus windows by direction, works with multihead
-# super +  {a,s,w,d}
-#     bspc node -f {west,south,north,east}
-
 super +  {h,j,k,l}
     bspc node -f {west,south,north,east}
 
@@ -105,42 +96,13 @@ super +  {Left,Down,Up,Right}
 # Move tiled windows. Moving a tiled window to 
 # preselected one moves into preselection instead. 
 # Moving out of the screen should move the window to next monitor if possible
-# super + shift + {a,s,w,d}
-#     bspc node focused -v {-20 0,0 20,0 -20,20 0}
-
-# super + shift + {h,j,k,l}
-#     bspc node focused -v {-20 0,0 20,0 -20,20 0}
-	
-# super + shift + {Left,Down,Up,Right}
-#     bspc node focused -v {-20 0,0 20,0 -20,20 0}
-
-#resize windows
-# super + ctrl + {a,s,w,d}
-#     bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
-
-# super + ctrl + {h,j,k,l}
-#     bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
-	
-# super + ctrl + {Left,Down,Up,Right}
-#     bspc node focused -z {right -20 0, bottom 0 20, bottom 0 -20, right 20 0}
-
-# Move tiled windows. Moving a tiled window to 
-# preselected one moves into preselection instead. 
-# Moving out of the screen should move the window to next monitor if possible
-super + shift + {a,s,w,d}
-	windowgrabber {west,south,north,east}
-
 super + shift + {h,j,k,l}
 	windowgrabber {west,south,north,east}
 	
-# Different style of movement: transplant into window in chosen direction
 super + shift + {Left,Down,Up,Right}
-	euclid_mover {west,south,north,east}
+	windowgrabber {west,south,north,east}
 
 #resize windows
-super + ctrl + {a,s,w,d}
-	bspwm_resize.sh {west,south,north,east}
-
 super + ctrl + {h,j,k,l}
 	bspwm_resize.sh {west,south,north,east}
 	
