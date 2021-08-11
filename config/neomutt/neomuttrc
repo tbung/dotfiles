@@ -99,8 +99,9 @@ set editor = "nvim"                   # Use terminal Vim to compose email.
 set from = "tillbungert@gmail.com"
 
 set spoolfile=INBOX
-set trash = +gmail/Trash
-set trash = +uni/Trash
+set trash = +Trash
+# set trash = +gmail/Trash
+# set trash = +uni/Trash
 
 send-hook ~fbungert@stud.uni-heidelberg.de 'set record=+uni/Sent'
 send-hook ~ftillbungert@gmail.com 'set record=+gmail/Sent'

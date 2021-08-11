@@ -42,6 +42,7 @@ bind index,pager                 @  compose-to-sender
 macro pager,index                i  <change-vfolder>INBOX<Enter>
 macro pager,index                n  <change-vfolder>
 macro index                      l  <vfolder-from-query>
+bind index                       L  limit
 
 # bind pager,index                 t  noop
 macro index                      t  "<modify-labels>-inbox +test\\n<sync-mailbox>"

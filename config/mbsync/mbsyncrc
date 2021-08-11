@@ -20,20 +20,20 @@ Path ~/.mail/gmail/
 Inbox ~/.mail/gmail/INBOX
 
 Channel sync-gmail-default
-Master :gmail-remote:
-Slave :gmail-local:
+Far :gmail-remote:
+Near :gmail-local:
 # Select some mailboxes to sync
 Patterns "INBOX"
 
 Channel sync-gmail-sent
-Master :gmail-remote:"[Gmail]/Gesendet"
-Slave :gmail-local:sent
-Create Slave
+Far :gmail-remote:"[Gmail]/Gesendet"
+Near :gmail-local:sent
+Create Near
 
 Channel sync-gmail-trash
-Master :gmail-remote:"[Gmail]/Papierkorb"
-Slave :gmail-local:trash
-Create Slave
+Far :gmail-remote:"[Gmail]/Papierkorb"
+Near :gmail-local:trash
+Create Near
 
 # Get all the channels together into a group.
 Group gmail
@@ -64,8 +64,8 @@ Path ~/.mail/uni/
 Inbox ~/.mail/uni/INBOX
 
 Channel uni
-Master :uni-remote:
-Slave :uni-local:
+Far :uni-remote:
+Near :uni-local:
 # Exclude everything under the internal [Gmail] folder, except the interesting folders
 Patterns "INBOX" "Sent" "Trash"
 # Or include everything
