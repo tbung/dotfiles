@@ -93,8 +93,8 @@ alt + {_,shift + }Tab
     bspc node -f {next,prev}.local
 
 #Focus windows by direction, works with multihead
-super +  {a,s,w,d}
-    bspc node -f {west,south,north,east}
+# super +  {a,s,w,d}
+#     bspc node -f {west,south,north,east}
 
 super +  {h,j,k,l}
     bspc node -f {west,south,north,east}
@@ -212,6 +212,10 @@ super + p
 
 super + x
     light-locker-command --lock
+
+super + s
+    rofi -dmenu -p "Search" -lines 0 | xargs -I"%s" xdg-open "https://www.duckduckgo.com/?q=%s"
+
 
 #
 # Media keys
