@@ -30,6 +30,7 @@ map('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]]
 map('n', '<leader>ws', [[<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>]])
 map('n', '<leader>ds', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]])
 map('n', '<leader>fe', [[<cmd>lua require('telescope.builtin').file_browser()<cr>]])
+map('n', '<leader>fw', [[<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>]])
 
 -- Open dotfiles from anywhere
 map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prompt_title = "dotfiles", shorten_path = false, cwd = "~/.dotfiles", hidden = true })<cr>]])
