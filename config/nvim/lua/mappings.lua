@@ -42,6 +42,7 @@ map('n', '<C-l>', '<C-w>l')
 
 -- Telescope Keymaps
 map('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
+map('n', '<leader>ca', [[<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>]])
 map('n', '<C-p>',      [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
 map('n', '<leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
 map('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>]])
