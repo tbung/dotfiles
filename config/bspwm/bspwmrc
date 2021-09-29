@@ -6,6 +6,7 @@ bspc config window_gap 5
 bspc config split_ratio 0.5
 bspc config borderless_monocle true
 bspc config single_monocle true
+bspc config gapless_monocle false
 bspc config paddingless_monocle false
 bspc config initial_polarity second_child
 bspc config remove_disabled_monitors true
@@ -43,9 +44,11 @@ sxhkd &
 # bspc wm --reorder-monitors DVI-D-0 HDMI-0
 workspaces_multimonitor
 
+touchegg &
+
 xsetroot -cursor_name left_ptr &
 sh ~/.fehbg &
-# light-locker &
+light-locker &
 
 # wacom buttons
 xsetwacom set 11 Button 1 11
@@ -58,11 +61,11 @@ dock.sh
 xcape -e 'Caps_Lock=Escape'
 
 # System tray applets
-# nm-applet &
-# mate-power-manager &
+nm-applet &
+mate-power-manager &
 # pamac-tray &
 # clipit &
-# pasystray &
-# redshift-gtk &
+pasystray &
+redshift-gtk &
 # syncthing-gtk &
-# blueman-applet &
+blueman-applet &
