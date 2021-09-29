@@ -63,6 +63,10 @@ vim.o.showmode = false
 -- vim.o.foldmethod=syntax
 vim.wo.foldmethod = 'expr'
 vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.wo.foldtext = "getline(v:foldstart).'...'.trim(getline(v:foldend))"
+vim.wo.fillchars = [[fold: ]]
+vim.wo.foldnestmax = 3
+vim.wo.foldminlines = 1
 
 -- Apparently faster
 vim.o.regexpengine = 0

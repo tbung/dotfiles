@@ -10,9 +10,9 @@ map('n', 'N', 'Nzzzv')
 map('n', 'J', 'mzJ`z')
 -- Undo breakpoints
 map('i', ',', ',<c-g>u')
-map('i', '.', ',<c-g>u')
-map('i', '!', ',<c-g>u')
-map('i', '?', ',<c-g>u')
+map('i', '.', '.<c-g>u')
+map('i', '!', '!<c-g>u')
+map('i', '?', '?<c-g>u')
 -- Moving lines
 map('v', 'J', ":m '>+1<CR>gv=gv")
 map('v', 'K', ":m '<-2<CR>gv=gv")
