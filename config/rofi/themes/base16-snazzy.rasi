@@ -7,13 +7,13 @@
  */
 
 * {
-    red:                         rgba ( 255, 92, 87, 100 % );
-    blue:                        rgba ( 87, 199, 255, 100 % );
-    lightfg:                     rgba ( 239, 240, 235, 100 % );
-    lightbg:                     rgba ( 52, 53, 62, 100 % );
-    foreground:                  rgba ( 226, 228, 229, 100 % );
-    background:                  rgba ( 30, 31, 41, 100 % );
-    background-color:            rgba ( 40, 42, 54, 0 % );
+    red:                         rgba ( 255, 92, 87, 1 );
+    blue:                        rgba ( 87, 199, 255, 1 );
+    lightfg:                     rgba ( 239, 240, 235, 1 );
+    lightbg:                     rgba ( 52, 53, 62, 1 );
+    foreground:                  rgba ( 226, 228, 229, 1 );
+    background:                  rgba ( 30, 31, 41, 1 );
+    background-color:            rgba ( 40, 42, 54, 0 );
     separatorcolor:              @foreground;
     border-color:                @foreground;
     selected-normal-foreground:  @lightbg;
@@ -143,4 +143,11 @@ textbox-prompt-colon {
     str:              ":";
     margin:           0px 0.3000em 0.0000em 0.0000em ;
     text-color:       inherit;
+}
+element-text, element-icon {
+    background-color: inherit;
+    text-color:       inherit;
+}
+listview {
+	lines: 4;
 }
