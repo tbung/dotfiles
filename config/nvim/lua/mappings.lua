@@ -2,6 +2,26 @@ local function map(mode, from, to)
     vim.api.nvim_set_keymap(mode, from, to, { noremap = true })
 end
 
+-- Sensible remaps
+map('n', 'Y', 'y$')
+-- Keep it centered
+map('n', 'n', 'nzzzv')
+map('n', 'N', 'Nzzzv')
+map('n', 'J', 'mzJ`z')
+-- Undo breakpoints
+map('i', ',', ',<c-g>u')
+map('i', '.', ',<c-g>u')
+map('i', '!', ',<c-g>u')
+map('i', '?', ',<c-g>u')
+-- Moving lines
+map('v', 'J', ":m '>+1<CR>gv=gv")
+map('v', 'K', ":m '<-2<CR>gv=gv")
+map('n', '<leader>k', ':m .-2<CR>==')
+map('n', '<leader>j', ':m .+1<CR>==')
+-- Best thing since sliced bread
+map('x', '<leader>p', '"_dP')
+
+
 -- Disable arrow keys in normal mode
 map('n', '<Up>',    '<NOP>')
 map('n', '<Down>',  '<NOP>')
