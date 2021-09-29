@@ -145,7 +145,8 @@ font-0 = Noto Sans:pixelsize=14:style=SemiCondensed Bold;4
 font-1 = Material Design Icons:style=Regular:pixelsize=21;5
 font-2 = Noto Sans:pixelsize=10:style=SemiCondensed Bold;3
  
-modules-right = battery0 battery1 fuzzy-clock 
+modules-right = fuzzy-clock 
+tray-position = right
 
 wm-restack = bspwm
 override-redirect = true
