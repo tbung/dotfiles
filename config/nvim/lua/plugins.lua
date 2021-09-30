@@ -51,15 +51,29 @@ return require('packer').startup(function(use)
         end,
     }
 
-    -- IDE-like features
+    -- LSP
     use 'neovim/nvim-lspconfig'
+    use 'ray-x/lsp_signature.nvim'
+    use 'onsails/lspkind-nvim'
+
+    -- use {
+    --     'hrsh7th/nvim-compe',
+    --     config = function ()
+    --         require('config.compe')
+    --     end
+    -- }
     use {
-        'hrsh7th/nvim-compe',
+        'hrsh7th/nvim-cmp',
+        requires = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'saadparwaiz1/cmp_luasnip',
+        },
         config = function ()
-            require('config.compe')
+            require('config.cmp')
         end
     }
-    use 'ray-x/lsp_signature.nvim'
+
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
@@ -75,7 +89,6 @@ return require('packer').startup(function(use)
         end,
     }
     use 'kyazdani42/nvim-web-devicons'
-    use 'onsails/lspkind-nvim'
     use {
         'folke/trouble.nvim',
         config = function ()
@@ -113,7 +126,6 @@ return require('packer').startup(function(use)
 
     -- Writing
     use { 'godlygeek/tabular', ft = 'markdown' }
-    -- use 'plasticboy/vim-markdown', { 'for': 'markdown' }
     use 'lervag/vimtex'                    -- Better latex support
     use 'vimwiki/vimwiki'
 

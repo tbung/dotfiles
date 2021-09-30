@@ -49,5 +49,3 @@ vim.api.nvim_set_keymap("s", "<C-E>", "<Plug>luasnip-next-choice", {})
 
 
 require("luasnip/loaders/from_vscode").load()
-require'compe'.register_source('luasnip', require'compe_luasnip')
-
