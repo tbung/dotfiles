@@ -13,6 +13,7 @@ end
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
+    -- use({ "wbthomason/packer.nvim", opt = true })
 
     use 'tpope/vim-surround'               -- Easy surrounding things with brackets
     use 'tpope/vim-fugitive'               -- In-vim git stuff
@@ -23,7 +24,9 @@ return require('packer').startup(function(use)
     -- use 'tpope/vim-obsession'
     use 'tpope/vim-vinegar'
 
-    use 'justinmk/vim-sneak'               -- Fast moving around
+    -- use 'justinmk/vim-sneak'               -- Fast moving around
+    use 'ggandor/lightspeed.nvim'
+
     use 'wellle/targets.vim'
     use 'junegunn/vim-easy-align'          -- Align stuff easily
     use 'mbbill/undotree'
@@ -38,7 +41,7 @@ return require('packer').startup(function(use)
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-project.nvim',
-            'nvim-telescope/telescope-media-files.nvim',
+            'nvim-telescope/telescope-symbols.nvim',
             {
                 'ThePrimeagen/git-worktree.nvim',
                 config = function ()
@@ -200,12 +203,10 @@ return require('packer').startup(function(use)
 
     use { 'michaelb/sniprun', run = 'bash ./install.sh'}
 
-    use {
-        'jbyuki/nabla.nvim',
-        config = vim.cmd[[
-        nnoremap <F5> :lua require("nabla").action()<CR>
-        ]],
-    }
+    use({
+        "simrat39/symbols-outline.nvim",
+        cmd = { "SymbolsOutline" },
+    })
 
     use {
         'lewis6991/spellsitter.nvim',
