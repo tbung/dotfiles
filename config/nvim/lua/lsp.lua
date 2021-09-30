@@ -67,12 +67,22 @@ lsp.pylsp.setup{
                 }
             }
         }
-    }
+    },
+    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 
-lsp.texlab.setup{ on_attach = on_attach }
-lsp.tsserver.setup{ on_attach = on_attach }
-lsp.ccls.setup{ on_attach = on_attach }
+lsp.texlab.setup{
+    on_attach = on_attach,
+    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+}
+lsp.tsserver.setup{
+    on_attach = on_attach,
+    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+}
+lsp.ccls.setup{
+    on_attach = on_attach,
+    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+}
 lsp.sumneko_lua.setup{
     on_attach = on_attach,
     -- This assume lls is install like it is on arch, where this bin is
@@ -105,5 +115,6 @@ lsp.sumneko_lua.setup{
             },
         },
     },
+    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 
