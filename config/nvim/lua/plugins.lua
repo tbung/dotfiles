@@ -97,10 +97,14 @@ return require('packer').startup(function(use)
     }
     use {
         'lukas-reineke/indent-blankline.nvim',
-        setup = function ()
-            vim.g.indent_blankline_char = "│"
-            vim.g.indent_blankline_use_treesitter = true
-        end
+        config = function ()
+            require('indent_blankline').setup({
+                char = "│",
+                use_treesitter = true,
+                buftype_exclude = {"terminal"},
+                filetype_exclude = {"dashboard"}
+            })
+        end,
     }
     use {
         'windwp/nvim-autopairs',
@@ -248,6 +252,9 @@ return require('packer').startup(function(use)
             require('config.harpoon')
         end
     }
+
+    -- Dashboard
+    use({ "glepnir/dashboard-nvim", config = [[require('config.dashboard')]] })
 
 end)
 
