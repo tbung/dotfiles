@@ -40,6 +40,8 @@ map('n', '<C-j>', '<C-w>j')
 map('n', '<C-k>', '<C-w>k')
 map('n', '<C-l>', '<C-w>l')
 
+map("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]])
+
 -- Telescope Keymaps
 map('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
 map('n', '<leader>ca', [[<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>]])
