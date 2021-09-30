@@ -76,8 +76,6 @@ return require('packer').startup(function(use)
     }
     use 'kyazdani42/nvim-web-devicons'
     use 'onsails/lspkind-nvim'
-    use 'glepnir/lspsaga.nvim'
-    use 'voldikss/vim-floaterm'
     use {
         'folke/trouble.nvim',
         config = function ()

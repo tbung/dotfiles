@@ -1,14 +1,19 @@
 local lsp = require('lspconfig')
 
 require('lspkind').init()
-require('lspsaga').init_lsp_saga({
-    error_sign = " ",
-    warn_sign = " ",
-    hint_sign = " ",
-    infor_sign = " ",
-})
 
 local on_attach = function(client, bufnr)
+  vim.api.nvim_exec([[
+    sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
+    sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
+    sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=
+    sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=
+    highlight DiagnosticUnderlineError gui=undercurl
+    highlight DiagnosticUnderlineWarn gui=undercurl
+    highlight DiagnosticUnderlineInfo gui=undercurl
+    highlight DiagnosticUnderlineHint gui=undercurl
+  ]], false)
+
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -48,10 +53,6 @@ local on_attach = function(client, bufnr)
     ]], false)
   end
 
-  vim.api.nvim_exec([[
-    hi LspDiagnosticsDefaultError guifg=red
-    hi LspDiagnosticsDefaultWarning guifg=orange
-  ]], false)
   require'lsp_signature'.on_attach()
 end
 
