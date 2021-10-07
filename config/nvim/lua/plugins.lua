@@ -42,6 +42,7 @@ return require('packer').startup(function(use)
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-project.nvim',
             'nvim-telescope/telescope-symbols.nvim',
+            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
             {
                 'ThePrimeagen/git-worktree.nvim',
                 config = function ()
@@ -115,8 +116,12 @@ return require('packer').startup(function(use)
             require('config.autopairs')
         end,
     }
-    use 'puremourning/vimspector'
-    use 'szw/vim-maximizer'
+    -- use 'puremourning/vimspector'
+    -- use 'szw/vim-maximizer'
+    use 'mfussenegger/nvim-dap'
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+    use 'theHamsta/nvim-dap-virtual-text'
+    use 'mfussenegger/nvim-dap-python'
 
     use 'ludovicchabant/vim-gutentags'     -- CTAGS management
     use {
@@ -256,6 +261,13 @@ return require('packer').startup(function(use)
 
     -- Dashboard
     use({ "glepnir/dashboard-nvim", config = [[require('config.dashboard')]] })
+
+    use {
+        'karb94/neoscroll.nvim',
+        config = function ()
+            require('neoscroll').setup()
+        end,
+    }
 
 end)
 
