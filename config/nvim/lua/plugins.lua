@@ -260,14 +260,14 @@ return require('packer').startup(function(use)
     }
 
     -- Dashboard
-    use({ "glepnir/dashboard-nvim", config = [[require('config.dashboard')]] })
+    -- use({ "glepnir/dashboard-nvim", config = [[require('config.dashboard')]] })
 
-    use {
-        'karb94/neoscroll.nvim',
-        config = function ()
-            require('neoscroll').setup()
-        end,
-    }
+    -- use {
+    --     'karb94/neoscroll.nvim',
+    --     config = function ()
+    --         require('neoscroll').setup()
+    --     end,
+    -- }
 
 end)
 

@@ -41,7 +41,9 @@ vim.o.backspace =  'indent,eol,start'
 vim.o.belloff = 'all'
 
 -- Auto-linebreak after n characters
-vim.o.textwidth = 79
+-- vim.o.textwidth = 79
+vim.o.wrap = false
+vim.o.signcolumn = "yes"
 
 -- Always keep 2 lines after cursor
 vim.o.scrolloff = 2
