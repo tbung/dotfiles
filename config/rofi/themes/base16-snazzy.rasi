@@ -14,8 +14,10 @@
     foreground:                  rgba ( 226, 228, 229, 1 );
     background:                  rgba ( 30, 31, 41, 1 );
     background-color:            rgba ( 40, 42, 54, 0 );
-    separatorcolor:              @foreground;
-    border-color:                @foreground;
+    /* separatorcolor:              @foreground; */
+    /* border-color:                @foreground; */
+    separatorcolor:              @background;
+    border-color:                @background;
     selected-normal-foreground:  @lightbg;
     selected-normal-background:  @lightfg;
     selected-active-foreground:  @background;
@@ -29,11 +31,14 @@
     urgent-foreground:           @red;
     urgent-background:           @background;
     alternate-normal-foreground: @foreground;
-    alternate-normal-background: @lightbg;
+    /* alternate-normal-background: @lightbg; */
+    alternate-normal-background: @background;
     alternate-active-foreground: @blue;
-    alternate-active-background: @lightbg;
+    /* alternate-active-background: @lightbg; */
+    alternate-active-background: @background;
     alternate-urgent-foreground: @red;
-    alternate-urgent-background: @lightbg;
+    /* alternate-urgent-background: @lightbg; */
+    alternate-urgent-background: @background;
     spacing:                     2;
 }
 window {
@@ -47,7 +52,8 @@ mainbox {
 }
 message {
     border:           1px dash 0px 0px ;
-    border-color:     @separatorcolor;
+    /* border-color:     @separatorcolor; */
+    border-color:     @background;
     padding:          1px ;
 }
 textbox {
@@ -140,14 +146,15 @@ prompt {
 }
 textbox-prompt-colon {
     expand:           false;
-    str:              ":";
+    str:              "";
     margin:           0px 0.3000em 0.0000em 0.0000em ;
     text-color:       inherit;
 }
 element-text, element-icon {
+    size:             1.0000em ;
     background-color: inherit;
     text-color:       inherit;
 }
 listview {
-	lines: 4;
+	lines: 3;
 }
