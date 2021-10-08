@@ -56,19 +56,27 @@ local on_attach = function(client, bufnr)
   require'lsp_signature'.on_attach()
 end
 
--- lsp.jedi_language_server.setup{ on_attach = on_attach }
-lsp.pylsp.setup{
+require("null-ls").config({
+    sources = {
+        require("null-ls").builtins.diagnostics.flake8.with({
+            extra_args = {"--max-line-length", "89"}
+        }),
+        require("null-ls").builtins.formatting.black,
+        require("null-ls").builtins.formatting.isort,
+    }
+})
+require("lspconfig")["null-ls"].setup({
+    on_attach = on_attach,
+    autostart = true
+})
+
+lsp.pyright.setup{
     on_attach = on_attach,
     settings = {
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    maxLineLength = 88
-                }
-            }
+        python = {
+            pythonPath = "python"
         }
-    },
-    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    }
 }
 
 lsp.texlab.setup{

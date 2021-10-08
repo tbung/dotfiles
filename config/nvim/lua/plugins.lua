@@ -57,6 +57,7 @@ return require('packer').startup(function(use)
 
     -- LSP
     use 'neovim/nvim-lspconfig'
+    use 'jose-elias-alvarez/null-ls.nvim'
     use 'ray-x/lsp_signature.nvim'
     use 'onsails/lspkind-nvim'
 
@@ -258,6 +259,18 @@ return require('packer').startup(function(use)
             require('config.harpoon')
         end
     }
+
+    use {
+        "ThePrimeagen/refactoring.nvim",
+        requires = {
+            {"nvim-lua/plenary.nvim"},
+            {"nvim-treesitter/nvim-treesitter"}
+        },
+        config = function ()
+            require('config.refactoring')
+        end
+    }
+
 
     -- Dashboard
     -- use({ "glepnir/dashboard-nvim", config = [[require('config.dashboard')]] })
