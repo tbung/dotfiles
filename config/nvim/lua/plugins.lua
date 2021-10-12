@@ -271,16 +271,13 @@ return require('packer').startup(function(use)
         end
     }
 
-
-    -- Dashboard
-    -- use({ "glepnir/dashboard-nvim", config = [[require('config.dashboard')]] })
-
-    -- use {
-    --     'karb94/neoscroll.nvim',
-    --     config = function ()
-    --         require('neoscroll').setup()
-    --     end,
-    -- }
+    use {
+        "rcarriga/nvim-notify",
+        config = function ()
+            require("notify").setup()
+            vim.notify = require("notify")
+        end
+    }
 
 end)
 

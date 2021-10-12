@@ -67,7 +67,8 @@ require("null-ls").config({
 })
 require("lspconfig")["null-ls"].setup({
     on_attach = on_attach,
-    autostart = true
+    autostart = true,
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 })
 
 lsp.pyright.setup{
@@ -76,20 +77,21 @@ lsp.pyright.setup{
         python = {
             pythonPath = "python"
         }
-    }
+    },
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 
 lsp.texlab.setup{
     on_attach = on_attach,
-    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 lsp.tsserver.setup{
     on_attach = on_attach,
-    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 lsp.ccls.setup{
     on_attach = on_attach,
-    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 lsp.sumneko_lua.setup{
     on_attach = on_attach,
@@ -123,6 +125,6 @@ lsp.sumneko_lua.setup{
             },
         },
     },
-    -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 }
 
