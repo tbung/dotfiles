@@ -134,6 +134,12 @@ return require('packer').startup(function(use)
 
     -- Language-specific stuff
     use { 'psf/black',  tag = 'stable', ft = {'python'} }
+    use {
+        'goerz/jupytext.vim',
+        config = function ()
+            vim.g.jupytext_fmt = "py"
+        end
+    }
     use { 'prettier/vim-prettier', run = 'npm install', ft = {'javascript', 'typescript', 'json'} }
     use { 'tikhomirov/vim-glsl', ft = {'glsl'} }
 
