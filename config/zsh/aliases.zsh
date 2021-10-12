@@ -18,3 +18,5 @@ alias gps='git push'
 alias gpl='git pull'
 
 alias tmux="tmux -f $HOME/.config/tmux/tmux.conf"
+
+alias lsd="lsd -lah"
