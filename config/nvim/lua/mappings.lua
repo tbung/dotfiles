@@ -64,7 +64,7 @@ map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prom
 map('n','ga', '<Plug>(EasyAlign)')
 
 -- Vimspector
--- map('n', '<leader>m', [[<cmd>MaximizerToggle!<cr>]])
+map('n', '<leader>m', [[<cmd>MaximizerToggle!<cr>]])
 -- map('n', '<leader>dd', [[<cmd>call vimspector#Launch()<cr>]])
 -- map('n', '<leader>dc', [[<cmd>call GotoWindow(g:vimspector_session_windows.code)<cr>]])
 -- map('n', '<leader>dt', [[<cmd>call GotoWindow(g:vimspector_session_windows.tagpage)<cr>]])

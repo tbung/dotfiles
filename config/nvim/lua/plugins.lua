@@ -118,7 +118,7 @@ return require('packer').startup(function(use)
         end,
     }
     -- use 'puremourning/vimspector'
-    -- use 'szw/vim-maximizer'
+    use 'szw/vim-maximizer'
     use 'mfussenegger/nvim-dap'
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
     use 'theHamsta/nvim-dap-virtual-text'
