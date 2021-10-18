@@ -235,10 +235,12 @@ return require('packer').startup(function(use)
 
     use {
         "folke/persistence.nvim",
-        -- event = "BufReadPre", -- this will only start session saving when an actual file was opened
+        event = "BufReadPre", -- this will only start session saving when an actual file was opened
         module = "persistence",
         config = function()
             require("persistence").setup()
+        end,
+        setup = function()
             -- restore the session for the current directory
             vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {})
 
@@ -286,7 +288,11 @@ return require('packer').startup(function(use)
 
     use {
         'kyazdani42/nvim-tree.lua',
+        cmd = { "NvimTreeOpen", "NvimTreeToggle" },
         requires = 'kyazdani42/nvim-web-devicons',
+        setup = function ()
+            vim.api.nvim_set_keymap("n", "<leader>n", [[<Cmd>NvimTreeToggle<CR>]], {})
+        end,
         config = function()
             require'nvim-tree'.setup {
                 diagnostics = {
