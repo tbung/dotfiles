@@ -17,7 +17,7 @@ return require('packer').startup(function(use)
 
     use 'tpope/vim-surround'               -- Easy surrounding things with brackets
     use 'tpope/vim-fugitive'               -- In-vim git stuff
-    use 'tpope/vim-commentary'             -- Easy comment-out stuff
+    -- use 'tpope/vim-commentary'             -- Easy comment-out stuff
     use 'tpope/vim-repeat'                 -- Enable plugin motion repeat
     use 'tpope/vim-eunuch'                 -- Unix commands made easy
     use 'tpope/vim-abolish'		   -- Smart replace words
@@ -93,7 +93,6 @@ return require('packer').startup(function(use)
             require('config.treesitter')
         end,
     }
-    use 'kyazdani42/nvim-web-devicons'
     use {
         'folke/trouble.nvim',
         config = function ()
@@ -285,5 +284,19 @@ return require('packer').startup(function(use)
         end
     }
 
-end)
+    use {
+        'kyazdani42/nvim-tree.lua',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function() require'nvim-tree'.setup {} end
+    }
 
+    use "jbyuki/venn.nvim"
+
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
+
+end)
