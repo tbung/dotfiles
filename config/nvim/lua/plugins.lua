@@ -61,17 +61,13 @@ return require('packer').startup(function(use)
     use 'ray-x/lsp_signature.nvim'
     use 'onsails/lspkind-nvim'
 
-    -- use {
-    --     'hrsh7th/nvim-compe',
-    --     config = function ()
-    --         require('config.compe')
-    --     end
-    -- }
     use {
         'hrsh7th/nvim-cmp',
         requires = {
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lua',
             'saadparwaiz1/cmp_luasnip',
         },
         config = function ()
@@ -312,6 +308,11 @@ return require('packer').startup(function(use)
         config = function()
             require('Comment').setup()
         end
+    }
+
+    use {
+        "luukvbaal/stabilize.nvim",
+        config = function() require("stabilize").setup() end
     }
 
 end)
