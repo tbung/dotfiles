@@ -1,2 +1,0 @@
-text/html; w3m -v -F -o display_link_number=1 -I %{charset} -T text/html; copiousoutput;
-image/jpeg; feh %s;

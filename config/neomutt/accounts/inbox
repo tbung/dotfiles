@@ -1,5 +1,0 @@
-set from="tillbungert@gmail.com"
-set sendmail="msmtp"
-
-color status        black           blue            "(^ [=/\.a-zA-Z0-9-]+ ).*$" 1
-color status        black           blue            "( [0-9]* new.*$)" 1

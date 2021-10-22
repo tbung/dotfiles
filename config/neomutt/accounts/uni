@@ -1,7 +1,0 @@
-set from="bungert@stud.uni-heidelberg.de"
-set sendmail="msmtp -a uni"
-set record = +uni/Sent
-set trash = +uni/Trash
-
-color status        black           green            "(^ [=/\.a-zA-Z0-9-]+ ).*$" 1
-color status        black           green            "( [0-9]* new.*$)" 1
