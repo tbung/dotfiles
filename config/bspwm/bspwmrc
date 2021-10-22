@@ -58,11 +58,11 @@ dock.sh
 xcape -e 'Caps_Lock=Escape'
 
 # System tray applets
-# nm-applet &
+nm-applet &
 # mate-power-manager &
 # pamac-tray &
 # clipit &
-# pasystray &
-# redshift-gtk &
+pasystray &
+redshift-gtk &
 # syncthing-gtk &
-# blueman-applet &
+blueman-applet &

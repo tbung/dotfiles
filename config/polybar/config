@@ -143,6 +143,7 @@ font-0 = Noto Sans:pixelsize=14:style=SemiCondensed Bold;4
 font-1 = Material Design Icons:style=Regular:pixelsize=21;5
 font-2 = Noto Sans:pixelsize=10:style=SemiCondensed Bold;3
  
+tray-position = right
 modules-right = fuzzy-clock 
 
 wm-restack = bspwm
@@ -159,8 +160,8 @@ reverse-scroll = false
 enable-scroll = false
 
 ; 󰍹󰇰
-ws-icon-0 = I;%{F#c46a4b}󰈹%{F-}
-ws-icon-5 = II;󰆍%{F-}
+ws-icon-0 = I;󰆍%{F-}
+ws-icon-5 = II;%{F#c46a4b}󰍹%{F-}
 ws-icon-2 = III;%{F#ff004b}󰍹%{F-}
 ws-icon-3 = IV;%{F#ffca00}󰍹%{F-}
 ws-icon-4 = V;%{F#2944f2}󰍹%{F-}

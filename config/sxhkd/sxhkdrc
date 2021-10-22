@@ -176,7 +176,7 @@ super + x
     light-locker-command --lock
 
 super + s
-    rofi -dmenu -p "Search" -lines 0 | xargs -I"%s" xdg-open "https://www.duckduckgo.com/?q=%s"
+    rofi -dmenu -p "Search  " -theme "~/.config/rofi/themes/search.rasi" | xargs -I"%s" xdg-open "https://www.duckduckgo.com/?q=%s"
 
 
 #
