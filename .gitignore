@@ -3,6 +3,10 @@
 tags
 config/nvim/plugged
 config/nvim/autoload
+config/nvim/spell
+config/nvim/plugin/packer_compiled.lua
+config/nvim/sessions
+config/oomox
 
 # Created by https://www.gitignore.io/api/vim,linux
 
