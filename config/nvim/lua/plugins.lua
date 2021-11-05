@@ -310,9 +310,11 @@ return require('packer').startup(function(use)
         end
     }
 
-    use {
-        "luukvbaal/stabilize.nvim",
-        config = function() require("stabilize").setup() end
-    }
+    -- use {
+    --     "luukvbaal/stabilize.nvim",
+    --     config = function() require("stabilize").setup() end
+    -- }
+    --
+    use 'sindrets/diffview.nvim'
 
 end)
