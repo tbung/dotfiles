@@ -132,7 +132,7 @@ return require('packer').startup(function(use)
     use {
         'goerz/jupytext.vim',
         config = function ()
-            vim.g.jupytext_fmt = "py"
+            vim.g.jupytext_fmt = "py:percent"
         end
     }
     use { 'prettier/vim-prettier', run = 'npm install', ft = {'javascript', 'typescript', 'json'} }
@@ -236,17 +236,6 @@ return require('packer').startup(function(use)
         config = function()
             require("persistence").setup()
         end,
-        setup = function()
-            -- restore the session for the current directory
-            vim.api.nvim_set_keymap("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], {})
-
-            -- restore the last session
-            vim.api.nvim_set_keymap("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], {})
-
-            -- stop Persistence => session won't be saved on exit
-            vim.api.nvim_set_keymap("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], {})
-
-        end,
     }
 
     use {
@@ -258,9 +247,6 @@ return require('packer').startup(function(use)
 
     use {
         'ThePrimeagen/harpoon',
-        config = function ()
-            require('config.harpoon')
-        end
     }
 
     use {
@@ -286,9 +272,6 @@ return require('packer').startup(function(use)
         'kyazdani42/nvim-tree.lua',
         cmd = { "NvimTreeOpen", "NvimTreeToggle" },
         requires = 'kyazdani42/nvim-web-devicons',
-        setup = function ()
-            vim.api.nvim_set_keymap("n", "<leader>n", [[<Cmd>NvimTreeToggle<CR>]], {})
-        end,
         config = function()
             require'nvim-tree'.setup {
                 diagnostics = {
@@ -310,9 +293,5 @@ return require('packer').startup(function(use)
         end
     }
 
-    use {
-        "luukvbaal/stabilize.nvim",
-        config = function() require("stabilize").setup() end
-    }
-
+    use 'sindrets/diffview.nvim'
 end)

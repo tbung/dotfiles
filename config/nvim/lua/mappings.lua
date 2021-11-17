@@ -1,93 +1,120 @@
-local function map(mode, from, to)
-    vim.api.nvim_set_keymap(mode, from, to, { noremap = true })
+local function map(mode, from, to, opt)
+    vim.api.nvim_set_keymap(mode, from, to, opt)
 end
 
+local opts = { noremap=true, silent=true }
+
+-- #######
+-- # Vim #
+-- ######
+
 -- Sensible remaps
-map('n', 'Y', 'y$')
+map('n', 'Y', 'y$', opts)
 -- Keep it centered
-map('n', 'n', 'nzzzv')
-map('n', 'N', 'Nzzzv')
-map('n', 'J', 'mzJ`z')
+map('n', 'n', 'nzzzv', opts)
+map('n', 'N', 'Nzzzv', opts)
+map('n', 'J', 'mzJ`z', opts)
 -- Undo breakpoints
-map('i', ',', ',<c-g>u')
-map('i', '.', '.<c-g>u')
-map('i', '!', '!<c-g>u')
-map('i', '?', '?<c-g>u')
+map('i', ',', ',<c-g>u', opts)
+map('i', '.', '.<c-g>u', opts)
+map('i', '!', '!<c-g>u', opts)
+map('i', '?', '?<c-g>u', opts)
 -- Moving lines
-map('v', 'J', ":m '>+1<CR>gv=gv")
-map('v', 'K', ":m '<-2<CR>gv=gv")
-map('n', '<leader>k', ':m .-2<CR>==')
-map('n', '<leader>j', ':m .+1<CR>==')
+map('v', 'J', ":m '>+1<CR>gv=gv", opts)
+map('v', 'K', ":m '<-2<CR>gv=gv", opts)
+map('n', '<leader>k', ':m .-2<CR>==', opts)
+map('n', '<leader>j', ':m .+1<CR>==', opts)
 -- Best thing since sliced bread
-map('x', '<leader>p', '"_dP')
-
-
+map('x', '<leader>p', '"_dP', opts)
 -- Disable arrow keys in normal mode
-map('n', '<Up>',    '<NOP>')
-map('n', '<Down>',  '<NOP>')
-map('n', '<Left>',  '<NOP>')
-map('n', '<Right>', '<NOP>')
-
+map('n', '<Up>',    '<NOP>', opts)
+map('n', '<Down>',  '<NOP>', opts)
+map('n', '<Left>',  '<NOP>', opts)
 -- Disable arrow keys in insert mode
-map('i', '<Up>',    '<NOP>')
-map('i', '<Down>',  '<NOP>')
-map('i', '<Left>',  '<NOP>')
-map('i', '<Right>', '<NOP>')
+map('i', '<Up>',    '<NOP>', opts)
+map('i', '<Down>',  '<NOP>', opts)
+map('i', '<Left>',  '<NOP>', opts)
+map('i', '<Right>', '<NOP>', opts)
 
--- Sane pane switching
-map('n', '<C-h>', '<C-w>h')
-map('n', '<C-j>', '<C-w>j')
-map('n', '<C-k>', '<C-w>k')
-map('n', '<C-l>', '<C-w>l')
 
-map("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]])
+-- #######
+-- # LSP #
+-- #######
 
--- Telescope Keymaps
-map('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
-map('n', '<leader>ca', [[<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>]])
-map('n', '<C-p>',      [[<cmd>lua require('telescope.builtin').find_files()<cr>]])
-map('n', '<leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]])
-map('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>]])
-map('n', '<C-n>',      [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>]])
-map('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]])
-map('n', '<leader>ws', [[<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>]])
-map('n', '<leader>fs', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]])
-map('n', '<leader>fe', [[<cmd>lua require('telescope.builtin').file_browser()<cr>]])
-map('n', '<leader>fw', [[<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>]])
-map('n', '<leader>fp', [[<cmd>lua require('telescope').extensions.project.project({})<cr>]])
-map('n', '<leader>fz', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({winblend = 10, border = true, previewer = false, shorten_path = false}))<cr>]])
+map('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+map('n', '<leader>vdd', '<cmd>TroubleToggle lsp_document_diagnostics<CR>', opts)
+map('n', '<leader>vdw', '<cmd>TroubleToggle lsp_workspace_diagnostics<CR>', opts)
+map('n', '<leader>vh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+map('n', '<leader>vrn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+map('n', '<leader>vrr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+map('n', '<leader>vsd', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+map('n', '<leader>vsh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
--- Open dotfiles from anywhere
-map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prompt_title = "dotfiles", shorten_path = false, cwd = "~/.dotfiles", hidden = true })<cr>]])
+
+-- #############
+-- # Telescope #
+-- #############
+
+map('n', '<C-p>', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], opts)
+map('n', '<C-n>', [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>]], opts)
+
+map('n', '<leader>fb', [[<cmd>lua require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })<cr>]], opts)
+map('n', '<leader>fca', [[<cmd>lua require('telescope.builtin').lsp_code_actions()<cr>]], opts)
+map('n', '<leader>fd', [[<cmd>lua require('telescope.builtin').find_files({ prompt_title = "dotfiles", shorten_path = false, cwd = "~/.dotfiles", hidden = true })<cr>]], opts)
+map('n', '<leader>fe', [[<cmd>lua require('telescope.builtin').file_browser()<cr>]], opts)
+map('n', '<leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], opts)
+map('n', '<leader>fg', [[<cmd>lua require('telescope.builtin').live_grep()<cr>]], opts)
+map('n', '<leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], opts)
+map('n', '<leader>fp', [[<cmd>lua require('telescope').extensions.project.project({})<cr>]], opts)
+map('n', '<leader>fsw', [[<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>]], opts)
+map('n', '<leader>fsd', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>]], opts)
+map('n', '<leader>fw', [[<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>]], opts)
+map('n', '<leader>fz', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({winblend = 10, border = true, previewer = false, shorten_path = false}))<cr>]], opts)
+
+
+-- ###########
+-- # LuaSnip #
+-- ###########
+
+map("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+map("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+map("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+map("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+map("i", "<C-E>", "<Plug>luasnip-next-choice", {})
+map("s", "<C-E>", "<Plug>luasnip-next-choice", {})
+
+
+-- ###########
+-- # Harpoon #
+-- ###########
+
+map("n", "<leader>a", ":lua require('harpoon.mark').add_file()<CR>", opts)
+map("n", "<C-e>", ":lua require('harpoon.ui').toggle_quick_menu()<CR>", opts)
+
+map("n", "<C-h>", ":lua require('harpoon.ui').nav_file(1)<CR>", opts)
+map("n", "<C-j>", ":lua require('harpoon.ui').nav_file(2)<CR>", opts)
+map("n", "<C-k>", ":lua require('harpoon.ui').nav_file(3)<CR>", opts)
+map("n", "<C-l>", ":lua require('harpoon.ui').nav_file(4)<CR>", opts)
+map("n", "<leader>tf", ":lua require('harpoon.term').gotoTerminal(1)<CR>", opts)
+map("n", "<leader>td", ":lua require('harpoon.term').gotoTerminal(2)<CR>", opts)
+map("n", "<leader>cf", ":lua require('harpoon.term').sendCommand(1, 1)<CR>", opts)
+map("n", "<leader>cd", ":lua require('harpoon.term').sendCommand(1, 2)<CR>", opts)
+
+
+-- ########
+-- # Misc #
+-- ########
 
 -- EasyAlign
-map('n','ga', '<Plug>(EasyAlign)')
-
--- Vimspector
-map('n', '<leader>m', [[<cmd>MaximizerToggle!<cr>]])
--- map('n', '<leader>dd', [[<cmd>call vimspector#Launch()<cr>]])
--- map('n', '<leader>dc', [[<cmd>call GotoWindow(g:vimspector_session_windows.code)<cr>]])
--- map('n', '<leader>dt', [[<cmd>call GotoWindow(g:vimspector_session_windows.tagpage)<cr>]])
--- map('n', '<leader>dv', [[<cmd>call GotoWindow(g:vimspector_session_windows.variables)<cr>]])
--- map('n', '<leader>dw', [[<cmd>call GotoWindow(g:vimspector_session_windows.watches)<cr>]])
--- map('n', '<leader>ds', [[<cmd>call GotoWindow(g:vimspector_session_windows.stacktrace)<cr>]])
--- map('n', '<leader>do', [[<cmd>call GotoWindow(g:vimspector_session_windows.output)<cr>]])
-
--- map('n', '<leader>dl', [[<cmd>call vimspector#StepInto()<cr>]])
--- map('n', '<leader>dj', [[<cmd>call vimspector#StepOver()<cr>]])
--- map('n', '<leader>dk', [[<cmd>call vimspector#StepOut()<cr>]])
--- map('n', '<leader>d_', [[<cmd>call vimspector#Restart()<cr>]])
--- map('n', '<leader>d<space>', [[<cmd>call vimspector#Continue()<cr>]])
--- map('n', '<leader>drc', [[<cmd>call vimspector#RunToCursor()<cr>]])
--- map('n', '<leader>dbp', [[<cmd>call vimspector#ToggleBreakpoint()<cr>]])
--- map('n', '<leader>dcbp', [[<cmd>call vimspector#ToggleConditionalBreakpoint()<cr>]])
-
--- Snippets
--- vim.api.nvim_set_keymap('i', '<Tab>', [[luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>']], { noremap = false })
--- map('i', '<silent> <S-Tab>', [[<cmd>lua require'luasnip'.jump(-1)<Cr>]])
-
--- map('s', '<silent> <Tab>', [[<cmd>lua require('luasnip').jump(1)<Cr>]])
--- map('s', '<silent> <S-Tab>', [[<cmd>lua require('luasnip').jump(-1)<Cr>]])
-
--- vim.api.nvim_set_keymap('i', '<silent><expr> <C-E>', [[luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']], { noremap = false })
--- vim.api.nvim_set_keymap('s', '<silent><expr> <C-E>', [[luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>']], { noremap = false })
+map('n','ga', '<Plug>(EasyAlign)', opts)
+-- Maximizer
+map('n', '<leader>m', [[<cmd>MaximizerToggle!<cr>]], opts)
+-- Persistence
+map("n", "<leader>qs", [[<cmd>lua require("persistence").load()<cr>]], opts)
+map("n", "<leader>ql", [[<cmd>lua require("persistence").load({ last = true })<cr>]], opts)
+map("n", "<leader>qd", [[<cmd>lua require("persistence").stop()<cr>]], opts)
+-- Nvim Tree
+map("n", "<leader>n", [[<Cmd>NvimTreeToggle<CR>]], opts)
