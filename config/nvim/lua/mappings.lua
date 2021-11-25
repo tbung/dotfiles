@@ -100,8 +100,8 @@ map("n", "<C-k>", ":lua require('harpoon.ui').nav_file(3)<CR>", opts)
 map("n", "<C-l>", ":lua require('harpoon.ui').nav_file(4)<CR>", opts)
 map("n", "<leader>tf", ":lua require('harpoon.term').gotoTerminal(1)<CR>", opts)
 map("n", "<leader>td", ":lua require('harpoon.term').gotoTerminal(2)<CR>", opts)
-map("n", "<leader>cf", ":lua require('harpoon.term').sendCommand(1, 1)<CR>", opts)
-map("n", "<leader>cd", ":lua require('harpoon.term').sendCommand(1, 2)<CR>", opts)
+map("n", "<leader>cf", ":lua require('harpoon.term').sendCommand(1, 1, vim.fn.expand('%'));require('harpoon.term').gotoTerminal(1)<CR>", opts)
+map("n", "<leader>cd", ":lua require('harpoon.term').sendCommand(1, 2, vim.fn.expand('%'));require('harpoon.term').gotoTerminal(1)<CR>", opts)
 
 
 -- #######
