@@ -104,6 +104,13 @@ map("n", "<leader>cf", ":lua require('harpoon.term').sendCommand(1, 1)<CR>", opt
 map("n", "<leader>cd", ":lua require('harpoon.term').sendCommand(1, 2)<CR>", opts)
 
 
+-- #######
+-- # Git #
+-- #######
+map("n", "<leader>gg", ":lua git_toggle()<CR>", opts)
+map("n", "<leader>gp", ":lua PushCluster()<CR>", opts)
+
+
 -- ########
 -- # Misc #
 -- ########
