@@ -107,3 +107,12 @@ function git_toggle()
         vim.api.nvim_buf_delete(bufid, {})
     end
 end
+
+function ssh_run(server, command)
+    vim.cmd([[term ssh -t ]] .. server .. [[ 'bash -l -c ]] .. command .. [[']])
+end
+
+function cluster_run_python()
+    local file = vim.fn.expand('%')
+    ssh_run("odcf-worker01", "python " .. file)
+end
