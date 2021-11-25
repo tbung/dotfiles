@@ -35,6 +35,14 @@ return require('packer').startup(function(use)
     use 'folke/tokyonight.nvim'
 
     -- FZF
+    use 'nvim-lua/popup.nvim'
+    use 'nvim-lua/plenary.nvim'
+    use {
+        'ThePrimeagen/git-worktree.nvim',
+        config = function ()
+            require('git-worktree').setup()
+        end
+    }
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
@@ -43,12 +51,6 @@ return require('packer').startup(function(use)
             'nvim-telescope/telescope-project.nvim',
             'nvim-telescope/telescope-symbols.nvim',
             {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-            {
-                'ThePrimeagen/git-worktree.nvim',
-                config = function ()
-                    require('git-worktree').setup()
-                end
-            }
         },
         config = function ()
             require('config.telescope')

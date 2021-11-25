@@ -99,3 +99,28 @@ vim.cmd [[set shortmess+=c]]
 
 vim.wo.spell = true
 vim.o.spelllang = 'en,de'
+
+function StatusLine()
+    local statusline = table.concat({
+        "%<%f",
+        " %h%m%r",
+    })
+
+    local branch = git_worktree()
+
+    if branch ~= "" then
+        statusline = table.concat({
+            statusline,
+            " |  %-25.(" .. branch .. "%)",
+        })
+    end
+
+    statusline = table.concat({
+        statusline,
+        "%=%-14.(%l,%c%V%) ",
+        "%P"
+    })
+    return statusline
+end
+
+vim.o.statusline = "%!luaeval('StatusLine()')"
