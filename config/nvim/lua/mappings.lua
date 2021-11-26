@@ -102,6 +102,7 @@ map("n", "<leader>tf", ":lua require('harpoon.term').gotoTerminal(1)<CR>", opts)
 map("n", "<leader>td", ":lua require('harpoon.term').gotoTerminal(2)<CR>", opts)
 map("n", "<leader>cf", ":lua require('harpoon.term').sendCommand(1, 1, vim.fn.expand('%'));require('harpoon.term').gotoTerminal(1)<CR>", opts)
 map("n", "<leader>cd", ":lua require('harpoon.term').sendCommand(1, 2, vim.fn.expand('%'));require('harpoon.term').gotoTerminal(1)<CR>", opts)
+map("n", "<leader>cc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", opts)
 
 
 -- #######
