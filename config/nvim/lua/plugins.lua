@@ -9,27 +9,17 @@ if not pcall(require, 'packer') then
       execute 'packadd packer.nvim'
     end
 end
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-    -- use({ "wbthomason/packer.nvim", opt = true })
+    use "wbthomason/packer.nvim"
 
     use 'tpope/vim-surround'               -- Easy surrounding things with brackets
     use 'tpope/vim-fugitive'               -- In-vim git stuff
-    -- use 'tpope/vim-commentary'             -- Easy comment-out stuff
     use 'tpope/vim-repeat'                 -- Enable plugin motion repeat
     use 'tpope/vim-eunuch'                 -- Unix commands made easy
-    use 'tpope/vim-abolish'		   -- Smart replace words
-    -- use 'tpope/vim-obsession'
-    use 'tpope/vim-vinegar'
-
-    -- use 'justinmk/vim-sneak'               -- Fast moving around
-    use 'ggandor/lightspeed.nvim'
-
     use 'wellle/targets.vim'
-    use 'junegunn/vim-easy-align'          -- Align stuff easily
     use 'mbbill/undotree'
+    use 'ggandor/lightspeed.nvim'
 
     -- Colors
     use 'folke/tokyonight.nvim'
@@ -46,8 +36,6 @@ return require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope.nvim',
         requires = {
-            'nvim-lua/popup.nvim',
-            'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-project.nvim',
             'nvim-telescope/telescope-symbols.nvim',
             {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
@@ -85,7 +73,7 @@ return require('packer').startup(function(use)
             "nvim-treesitter/nvim-treesitter-textobjects",
             "RRethy/nvim-treesitter-textsubjects",
             'p00f/nvim-ts-rainbow',
-            'romgrk/nvim-treesitter-context',
+            -- 'romgrk/nvim-treesitter-context',
         },
         config = function ()
             require('config.treesitter')
@@ -104,7 +92,7 @@ return require('packer').startup(function(use)
                 char = "│",
                 use_treesitter = true,
                 buftype_exclude = {"terminal"},
-                filetype_exclude = {"dashboard"}
+                filetype_exclude = {"dashboard", "alpha"}
             })
         end,
     }
@@ -114,7 +102,8 @@ return require('packer').startup(function(use)
             require('config.autopairs')
         end,
     }
-    -- use 'puremourning/vimspector'
+    use 'junegunn/vim-easy-align'          -- Align stuff easily
+
     use 'szw/vim-maximizer'
     use 'mfussenegger/nvim-dap'
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
@@ -192,9 +181,6 @@ return require('packer').startup(function(use)
         "folke/zen-mode.nvim",
         config = function()
             require("zen-mode").setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
             }
         end
     }
@@ -203,9 +189,6 @@ return require('packer').startup(function(use)
         "folke/twilight.nvim",
         config = function()
             require("twilight").setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
             }
         end
     }
@@ -283,10 +266,11 @@ return require('packer').startup(function(use)
 
     use {
         'kyazdani42/nvim-tree.lua',
-        cmd = { "NvimTreeOpen", "NvimTreeToggle" },
         requires = 'kyazdani42/nvim-web-devicons',
         config = function()
+            vim.g.nvim_tree_quit_on_open = 1
             require'nvim-tree'.setup {
+                auto_close = true,
                 diagnostics = {
                     enable = true,
                 },
@@ -307,5 +291,19 @@ return require('packer').startup(function(use)
     }
 
     use 'sindrets/diffview.nvim'
+
+    use {
+        'glepnir/galaxyline.nvim',
+        branch = 'main',
+        config = function() require'config.statusline' end,
+        requires = 'kyazdani42/nvim-web-devicons'
+    }
+
+    use {
+        'goolord/alpha-nvim',
+        config = function ()
+            require'alpha'.setup(require'config.dashboard'.opts)
+        end
+    }
 
 end)
