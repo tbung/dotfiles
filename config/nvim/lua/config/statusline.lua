@@ -3,7 +3,7 @@ local colors = require('galaxyline.theme').default
 local condition = require('galaxyline.condition')
 local gls = gl.section
 
-gl.short_line_list = {'NvimTree','vista','dbui','packer'}
+gl.short_line_list = {'NvimTree','vista','dbui','packer','Trouble'}
 
 gls.left = {}
 
@@ -87,49 +87,75 @@ table.insert(
 )
 
 
--- table.insert(
---     gls.left,
---     {
---         DiagnosticError = {
---             provider = 'DiagnosticError',
---             icon = '  ',
---             highlight = {colors.red,colors.bg}
---         }
---     }
--- )
+table.insert(
+    gls.left,
+    {
+        DiagnosticSeparator = {
+            provider = function() return '   | ' end,
+            separator = ' ',
+            separator_highlight = {'NONE', colors.bg},
+            highlight = {colors.fg,colors.bg},
+        }
+    }
+)
 
--- table.insert(
---     gls.left,
---     {
---         DiagnosticWarn = {
---             provider = 'DiagnosticWarn',
---             icon = '  ',
---             highlight = {colors.yellow,colors.bg},
---         }
---     }
--- )
+table.insert(
+    gls.left,
+    {
+        DiagnosticError = {
+            provider = function ()
+                return #vim.diagnostic.get(0, {severity = "Error"})
+            end,
+            icon = ' ',
+            separator = ' ',
+            separator_highlight = {'NONE', colors.bg},
+            highlight = {colors.red,colors.bg}
+        }
+    }
+)
 
--- table.insert(
---     gls.left,
---     {
---         DiagnosticHint = {
---             provider = 'DiagnosticHint',
---             icon = '  ',
---             highlight = {colors.cyan,colors.bg},
---         }
---     }
--- )
+table.insert(
+    gls.left,
+    {
+        DiagnosticWarn = {
+            provider = function ()
+                return #vim.diagnostic.get(0, {severity = "Warn"})
+            end,
+            icon = '  ',
+            separator = ' ',
+            separator_highlight = {'NONE', colors.bg},
+            highlight = {colors.yellow,colors.bg},
+        }
+    }
+)
 
--- table.insert(
---     gls.left,
---     {
---         DiagnosticInfo = {
---             provider = 'DiagnosticInfo',
---             icon = '  ',
---             highlight = {colors.blue,colors.bg},
---         }
---     }
--- )
+table.insert(
+    gls.left,
+    {
+        DiagnosticHint = {
+            provider = function ()
+                return #vim.diagnostic.get(0, {severity = "Hint"})
+            end,
+            icon = '  ',
+            separator = ' ',
+            separator_highlight = {'NONE', colors.bg},
+            highlight = {colors.cyan,colors.bg},
+        }
+    }
+)
+
+table.insert(
+    gls.left,
+    {
+        DiagnosticInfo = {
+            provider = function ()
+                return #vim.diagnostic.get(0, {severity = "Info"})
+            end,
+            icon = '  ',
+            highlight = {colors.blue,colors.bg},
+        }
+    }
+)
 
 gls.mid = {}
 
