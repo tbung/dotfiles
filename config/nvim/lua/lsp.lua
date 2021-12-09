@@ -37,7 +37,10 @@ end
 
 require("null-ls").config({
     sources = {
-        require("null-ls").builtins.diagnostics.flake8.with({
+        -- require("null-ls").builtins.diagnostics.flake8.with({
+        --     extra_args = {"--max-line-length", "89"}
+        -- }),
+        require("null-ls").builtins.diagnostics.pylint.with({
             extra_args = {"--max-line-length", "89"}
         }),
         require("null-ls").builtins.formatting.black,

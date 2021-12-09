@@ -80,7 +80,7 @@ return require('packer').startup(function(use)
         end,
     }
     use {
-        'folke/trouble.nvim',
+        '~/Projects/trouble.nvim',
         config = function ()
             require('trouble').setup()
         end,
