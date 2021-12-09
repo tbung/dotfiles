@@ -41,7 +41,7 @@ require("null-ls").config({
         --     extra_args = {"--max-line-length", "89"}
         -- }),
         require("null-ls").builtins.diagnostics.pylint.with({
-            extra_args = {"--max-line-length", "89"}
+            extra_args = {"--max-line-length", "99"}
         }),
         require("null-ls").builtins.formatting.black,
         require("null-ls").builtins.formatting.isort,
