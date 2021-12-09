@@ -82,3 +82,10 @@ augroup highlight_yank
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
 augroup END
 ]]
+
+vim.cmd [[
+augroup terminal_settings
+    autocmd!
+    autocmd TermOpen * setlocal nospell
+augroup END
+]]
