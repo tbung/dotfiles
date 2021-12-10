@@ -87,12 +87,16 @@ table.insert(
 )
 
 
+function check_active_lsp()
+  return next(vim.lsp.buf_get_clients()) ~= nil
+end
+
 table.insert(
   gls.left,
   {
     DiagnosticSeparator = {
       provider = function() return '   | ' end,
-      condition = condition.check_active_lsp,
+      condition = check_active_lsp,
       separator = ' ',
       separator_highlight = {'NONE', colors.bg},
       highlight = {colors.fg,colors.bg},
@@ -107,7 +111,7 @@ table.insert(
       provider = function ()
         return #vim.diagnostic.get(0, {severity = "Error"})
       end,
-      condition = condition.check_active_lsp,
+      condition = check_active_lsp,
       icon = ' ',
       separator = ' ',
       separator_highlight = {'NONE', colors.bg},
@@ -123,7 +127,7 @@ table.insert(
       provider = function ()
         return #vim.diagnostic.get(0, {severity = "Warn"})
       end,
-      condition = condition.check_active_lsp,
+      condition = check_active_lsp,
       icon = '  ',
       separator = ' ',
       separator_highlight = {'NONE', colors.bg},
@@ -140,7 +144,7 @@ table.insert(
         return #vim.diagnostic.get(0, {severity = "Hint"})
       end,
       icon = '  ',
-      condition = condition.check_active_lsp,
+      condition = check_active_lsp,
       separator = ' ',
       separator_highlight = {'NONE', colors.bg},
       highlight = {colors.cyan,colors.bg},
@@ -156,7 +160,7 @@ table.insert(
         return #vim.diagnostic.get(0, {severity = "Info"})
       end,
       icon = '  ',
-      condition = condition.check_active_lsp,
+      condition = check_active_lsp,
       highlight = {colors.blue,colors.bg},
     }
   }

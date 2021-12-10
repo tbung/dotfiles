@@ -69,7 +69,7 @@ return require('packer').startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         requires = {
-            { "nvim-treesitter/playground", cmd = "TSHighlightCapturesUnderCursor" },
+            "nvim-treesitter/playground",
             "nvim-treesitter/nvim-treesitter-textobjects",
             "RRethy/nvim-treesitter-textsubjects",
             'p00f/nvim-ts-rainbow',
@@ -80,7 +80,7 @@ return require('packer').startup(function(use)
         end,
     }
     use {
-        '~/Projects/trouble.nvim',
+        'folke/trouble.nvim',
         config = function ()
             require('trouble').setup()
         end,
