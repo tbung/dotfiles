@@ -8,8 +8,6 @@ local opts = { noremap=true, silent=true }
 -- # Vim #
 -- ######
 
--- Sensible remaps
-map('n', 'Y', 'y$', opts)
 -- Keep it centered
 map('n', 'n', 'nzzzv', opts)
 map('n', 'N', 'Nzzzv', opts)
@@ -41,17 +39,17 @@ map('i', '<Right>', '<NOP>', opts)
 -- # LSP #
 -- #######
 
-map('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-map('n', '<leader>vdd', '<cmd>TroubleToggle lsp_document_diagnostics<CR>', opts)
-map('n', '<leader>vdw', '<cmd>TroubleToggle lsp_workspace_diagnostics<CR>', opts)
-map('n', '<leader>vh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+map('n', '<leader>vdd', '<cmd>TroubleToggle document_diagnostics<CR>', opts)
+map('n', '<leader>vdw', '<cmd>TroubleToggle workspace_diagnostics<CR>', opts)
+map('n', '<leader>vh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 map('n', '<leader>vrn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 map('n', '<leader>vrr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-map('n', '<leader>vsd', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+map('n', '<leader>vsd', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
 map('n', '<leader>vsh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
 
 -- #############
