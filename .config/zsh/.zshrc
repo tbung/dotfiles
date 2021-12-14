@@ -113,7 +113,7 @@ fi
 
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
-bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s "^f" "tmux-sessionizer\n"
 
 alias ls='ls --color=auto'
 alias cd..='cd ..'
