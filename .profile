@@ -5,6 +5,7 @@ export BROWSER=/usr/bin/brave
 export TERMINAL=/usr/bin/kitty
 export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
+export SHELL=/bin/zsh
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
 export QT_QPA_PLATFORMTHEME="gnome"
