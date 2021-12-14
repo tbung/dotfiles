@@ -132,7 +132,8 @@ return require('packer').startup(function(use)
     -- Writing
     use { 'godlygeek/tabular', ft = 'markdown' }
     use 'lervag/vimtex'                    -- Better latex support
-    use 'vimwiki/vimwiki'
+    use 'lervag/wiki.vim'
+    -- use 'vimwiki/vimwiki'
 
     -- Snippets
     use {
@@ -306,4 +307,14 @@ return require('packer').startup(function(use)
         end
     }
 
+    use {
+      'vim-pandoc/vim-pandoc-syntax',
+      config = function ()
+        vim.cmd [[
+          augroup pandoc_syntax
+            au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+          augroup END
+        ]]
+      end
+  }
 end)
