@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ln -vsf $(pwd) ${HOME}/.dotfiles
+
 ln -vsf $(pwd)/.profile ${HOME}/.profile
 
 for file in .config/*
