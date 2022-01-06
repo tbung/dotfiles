@@ -65,7 +65,7 @@ map("n", "<leader>cc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>",
 -- # Magma #
 -- #########
 
-map("n", "<leader>r", ":MagmaEvaluateOperator<CR>", opts)
+map("n", "<leader>r", "nvim_exec('MagmaEvaluateOperator', v:true)", vim.tbl_extend("force", opts, {expr = true}))
 map("n", "<leader>rr", ":MagmaEvaluateLine<CR>", opts)
 map("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", opts)
 map("n", "<leader>rc", ":MagmaReevaluateCell<CR>", opts)
