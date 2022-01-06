@@ -2,6 +2,7 @@ local gl = require('galaxyline')
 local colors = require('galaxyline.theme').default
 local condition = require('galaxyline.condition')
 local gls = gl.section
+local Path = require('plenary.path')
 
 gl.short_line_list = {'NvimTree','vista','dbui','packer','Trouble'}
 
@@ -23,7 +24,10 @@ table.insert(
   {
     FilePath = {
       provider = function()
-        local path = vim.fn.expand("%:h")
+        local path = Path:new(vim.fn.expand("%:p:h")):normalize()
+        path = path:gsub("//", "/")
+        path = path:gsub("/./", "/")
+        path = Path:new(path):shorten()
         if path ~= '' then
           path = path .. '/'
         end
