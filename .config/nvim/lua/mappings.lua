@@ -61,6 +61,18 @@ map("n", "<leader>cd", ":lua require('harpoon.term').sendCommand(1, 2, vim.fn.ex
 map("n", "<leader>cc", ":lua require('harpoon.cmd-ui').toggle_quick_menu()<CR>", opts)
 
 
+-- #########
+-- # Magma #
+-- #########
+
+map("n", "<leader>r", ":MagmaEvaluateOperator<CR>", opts)
+map("n", "<leader>rr", ":MagmaEvaluateLine<CR>", opts)
+map("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", opts)
+map("n", "<leader>rc", ":MagmaReevaluateCell<CR>", opts)
+map("n", "<leader>rd", ":MagmaDelete<CR>", opts)
+map("n", "<leader>ro", ":MagmaShowOutput<CR>", opts)
+
+
 -- #######
 -- # Git #
 -- #######

@@ -296,6 +296,11 @@ augroup END
       end
     }
 
+    use {
+      'dccsillag/magma-nvim',
+      run = ':UpdateRemotePlugins',
+    }
+
   end
 
 )
