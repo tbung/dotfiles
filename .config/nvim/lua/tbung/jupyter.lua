@@ -3,11 +3,11 @@ local M = {}
 local cell_delim = "^# %%"
 
 function M.cell_start()
-  return vim.fn.search(cell_delim, "bWn")
+  return vim.fn.search(cell_delim, "bcWn")
 end
 
 function M.cell_end()
-  return vim.fn.search(cell_delim, "wn") - 1
+  return vim.fn.search(cell_delim, "Wn") - 1
 end
 
 function M.select_cell(buf)
@@ -15,14 +15,26 @@ function M.select_cell(buf)
   local end_row = M.cell_end()
 
   vim.fn.setpos(".", { buf, start_row, 0, 0 })
-
-  -- Start visual selection in appropriate mode
-  local v_table = { charwise = "v", linewise = "V", blockwise = "<C-v>" }
-  ---- Call to `nvim_replace_termcodes()` is needed for sending appropriate
-  ---- command to enter blockwise mode
-  local mode_string = vim.api.nvim_replace_termcodes("V", true, true, true)
-  vim.cmd("normal! " .. mode_string)
+  vim.cmd("normal! V")
   vim.fn.setpos(".", { buf, end_row, 0, 0 })
+end
+
+function M.goto_previous_cell_start()
+  vim.fn.setpos(".", {0, M.cell_start() - 1, 0, 0})
+  vim.fn.setpos(".", {0, M.cell_start(), 0, 0})
+end
+
+function M.goto_previous_cell_end()
+  vim.fn.setpos(".", {0, M.cell_start() - 1, 0, 0})
+end
+
+function M.goto_next_cell_start()
+  vim.fn.setpos(".", {0, M.cell_end() + 1, 0, 0})
+end
+
+function M.goto_next_cell_end()
+  vim.fn.setpos(".", {0, M.cell_end() + 1, 0, 0})
+  vim.fn.setpos(".", {0, M.cell_end(), 0, 0})
 end
 
 return M
