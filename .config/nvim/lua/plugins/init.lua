@@ -60,7 +60,7 @@ return require('packer').startup(
           config = function ()
             require('git-worktree').setup()
           end
-        }
+        },
       },
       config = function ()
         require('plugins.telescope')
@@ -190,6 +190,31 @@ augroup END
         vim.g.wiki_link_extension = '.md'
         vim.g.wiki_link_target_type = 'md'
         vim.g['pandoc#syntax#conceal#urls'] = true
+      end
+    }
+
+    use {
+      'renerocksai/telekasten.nvim',
+      config = function ()
+        local home = vim.fn.expand("~/wiki")
+        require('telekasten').setup({
+          home = home,
+          take_over_my_home = true,
+          auto_set_filetype = false,
+          dailies      = home .. '/' .. 'journal',
+          extension    = ".md",
+          follow_creates_nonexisting = true,
+          dailies_create_nonexisting = true,
+          weeklies_create_nonexisting = true,
+          close_after_yanking = false,
+          insert_after_inserting = true,
+          tag_notation = "#tag",
+          command_palette_theme = "ivy",
+          show_tags_theme = "ivy",
+          subdirs_in_links = true,
+          template_handling = "smart",
+          new_note_location = "smart",
+        })
       end
     }
 
