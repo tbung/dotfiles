@@ -14,12 +14,6 @@ vim.cmd([[
 augroup packer_user_config
 autocmd!
 autocmd BufWritePost $XDG_CONFIG_HOME/nvim/lua/plugins/*.lua source <afile> | PackerCompile
-augroup end
-]])
-
-vim.cmd([[
-augroup packer_user_config
-autocmd!
 autocmd BufWritePost $HOME/Projects/dotfiles/.config/nvim/lua/plugins/*.lua source <afile> | PackerCompile
 augroup end
 ]])
