@@ -17,6 +17,13 @@ autocmd BufWritePost $XDG_CONFIG_HOME/nvim/lua/plugins/*.lua source <afile> | Pa
 augroup end
 ]])
 
+vim.cmd([[
+augroup packer_user_config
+autocmd!
+autocmd BufWritePost $HOME/Projects/dotfiles/.config/nvim/lua/plugins/*.lua source <afile> | PackerCompile
+augroup end
+]])
+
 vim.cmd([[packadd packer.nvim]])
 
 return require("packer").startup(function(use)
@@ -320,5 +327,26 @@ augroup END
   use({
     "dccsillag/magma-nvim",
     run = ":UpdateRemotePlugins",
+  })
+
+  use({
+    "petertriho/nvim-scrollbar",
+    config = function()
+      local colors = require("tokyonight.colors").setup()
+
+      require("scrollbar").setup({
+        handle = {
+          color = colors.bg_highlight,
+        },
+        marks = {
+          Search = { color = colors.orange },
+          Error = { color = colors.error },
+          Warn = { color = colors.warning },
+          Info = { color = colors.info },
+          Hint = { color = colors.hint },
+          Misc = { color = colors.purple },
+        },
+      })
+    end,
   })
 end)

@@ -81,13 +81,6 @@ _G.packer_plugins = {
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/alpha-nvim",
     url = "https://github.com/goolord/alpha-nvim"
   },
-  black = {
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/home/tillb/.local/share/nvim/site/pack/packer/opt/black",
-    url = "https://github.com/psf/black"
-  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -210,6 +203,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/nvim-notify",
     url = "https://github.com/rcarriga/nvim-notify"
+  },
+  ["nvim-scrollbar"] = {
+    config = { "\27LJ\1\2Û\2\0\0\6\0\29\0*4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\0\0%\2\3\0>\1\2\0027\1\2\0013\2\a\0003\3\5\0007\4\4\0:\4\6\3:\3\b\0023\3\v\0003\4\n\0007\5\t\0:\5\6\4:\4\f\0033\4\14\0007\5\r\0:\5\6\4:\4\15\0033\4\17\0007\5\16\0:\5\6\4:\4\18\0033\4\20\0007\5\19\0:\5\6\4:\4\21\0033\4\23\0007\5\22\0:\5\6\4:\4\24\0033\4\26\0007\5\25\0:\5\6\4:\4\27\3:\3\28\2>\1\2\1G\0\1\0\nmarks\tMisc\1\0\0\vpurple\tHint\1\0\0\thint\tInfo\1\0\0\tinfo\tWarn\1\0\0\fwarning\nError\1\0\0\nerror\vSearch\1\0\0\1\0\0\vorange\vhandle\1\0\0\ncolor\1\0\0\17bg_highlight\14scrollbar\nsetup\22tokyonight.colors\frequire\0" },
+    loaded = true,
+    path = "/home/tillb/.local/share/nvim/site/pack/packer/start/nvim-scrollbar",
+    url = "https://github.com/petertriho/nvim-scrollbar"
   },
   ["nvim-terminal.lua"] = {
     config = { "\27LJ\1\0026\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\rterminal\frequire\0" },
@@ -371,13 +370,6 @@ _G.packer_plugins = {
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/vim-pandoc-syntax",
     url = "https://github.com/vim-pandoc/vim-pandoc-syntax"
   },
-  ["vim-prettier"] = {
-    loaded = false,
-    needs_bufread = true,
-    only_cond = false,
-    path = "/home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier",
-    url = "https://github.com/prettier/vim-prettier"
-  },
   ["vim-repeat"] = {
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/vim-repeat",
@@ -448,22 +440,22 @@ if not vim.g.packer_custom_loader_enabled then
   vim.g.packer_custom_loader_enabled = true
 end
 
--- Config for: nvim-treesitter
-time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\1\0022\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
-time([[Config for nvim-treesitter]], false)
+-- Config for: git-worktree.nvim
+time([[Config for git-worktree.nvim]], true)
+try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\17git-worktree\frequire\0", "config", "git-worktree.nvim")
+time([[Config for git-worktree.nvim]], false)
 -- Config for: nvim-cmp
 time([[Config for nvim-cmp]], true)
 try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.cmp\frequire\0", "config", "nvim-cmp")
 time([[Config for nvim-cmp]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
-try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
-time([[Config for which-key.nvim]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\1\2°\1\0\0\3\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0003\2\4\0:\2\5\0013\2\6\0:\2\a\1>\0\2\1G\0\1\0\21filetype_exclude\1\3\0\0\14dashboard\nalpha\20buftype_exclude\1\2\0\0\rterminal\1\0\2\19use_treesitter\2\tchar\bâ”‚\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
-time([[Config for indent-blankline.nvim]], false)
+-- Config for: wilder.nvim
+time([[Config for wilder.nvim]], true)
+try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19plugins.wilder\frequire\0", "config", "wilder.nvim")
+time([[Config for wilder.nvim]], false)
+-- Config for: harpoon
+time([[Config for harpoon]], true)
+try_loadstring("\27LJ\1\2È\1\0\0\4\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\6\0003\2\3\0003\3\4\0:\3\5\2:\2\a\1>\0\2\1G\0\1\0\20global_settings\1\0\0\23excluded_filetypes\1\2\0\0\fharpoon\1\0\4\27tmux_autoclose_windows\1\19save_on_toggle\1\21enter_on_sendcmd\2\19save_on_change\2\nsetup\fharpoon\frequire\0", "config", "harpoon")
+time([[Config for harpoon]], false)
 -- Config for: alpha-nvim
 time([[Config for alpha-nvim]], true)
 try_loadstring("\27LJ\1\2Z\0\0\3\0\5\0\n4\0\0\0%\1\1\0>\0\2\0027\0\2\0004\1\0\0%\2\3\0>\1\2\0027\1\4\1>\0\2\1G\0\1\0\topts\22plugins.dashboard\nsetup\nalpha\frequire\0", "config", "alpha-nvim")
@@ -488,18 +480,22 @@ time([[Config for nvim-autopairs]], false)
 time([[Config for telekasten.nvim]], true)
 try_loadstring("\27LJ\1\2Ï\3\0\0\6\0\f\0\0184\0\0\0007\0\1\0007\0\2\0%\1\3\0>\0\2\0024\1\4\0%\2\5\0>\1\2\0027\1\6\0013\2\a\0:\0\b\2\16\3\0\0%\4\t\0%\5\n\0$\3\5\3:\3\v\2>\1\2\1G\0\1\0\fdailies\fjournal\6/\thome\1\0\14\31dailies_create_nonexisting\2\26command_palette_theme\bivy\22auto_set_filetype\1\24close_after_yanking\1\17tag_notation\t#tag\14extension\b.md\22take_over_my_home\2 weeklies_create_nonexisting\2\20show_tags_theme\bivy\31follow_creates_nonexisting\2\21subdirs_in_links\2\27insert_after_inserting\2\22template_handling\nsmart\22new_note_location\nsmart\nsetup\15telekasten\frequire\v~/wiki\vexpand\afn\bvim\0", "config", "telekasten.nvim")
 time([[Config for telekasten.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
 -- Config for: nvim-notify
 time([[Config for nvim-notify]], true)
 try_loadstring("\27LJ\1\2L\0\0\3\0\4\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\3\0004\1\0\0%\2\1\0>\1\2\2:\1\1\0G\0\1\0\bvim\nsetup\vnotify\frequire\0", "config", "nvim-notify")
 time([[Config for nvim-notify]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
+time([[Config for telescope.nvim]], false)
 -- Config for: nvim-tree.lua
 time([[Config for nvim-tree.lua]], true)
 try_loadstring("\27LJ\1\2³\1\0\0\3\0\v\0\0154\0\0\0007\0\1\0'\1\1\0:\1\2\0004\0\3\0%\1\4\0>\0\2\0027\0\5\0003\1\6\0003\2\a\0:\2\b\0013\2\t\0:\2\n\1>\0\2\1G\0\1\0\tview\1\0\1\16auto_resize\2\16diagnostics\1\0\1\venable\2\1\0\1\15auto_close\2\nsetup\14nvim-tree\frequire\27nvim_tree_quit_on_open\6g\bvim\0", "config", "nvim-tree.lua")
 time([[Config for nvim-tree.lua]], false)
+-- Config for: nvim-scrollbar
+time([[Config for nvim-scrollbar]], true)
+try_loadstring("\27LJ\1\2Û\2\0\0\6\0\29\0*4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\0\0%\2\3\0>\1\2\0027\1\2\0013\2\a\0003\3\5\0007\4\4\0:\4\6\3:\3\b\0023\3\v\0003\4\n\0007\5\t\0:\5\6\4:\4\f\0033\4\14\0007\5\r\0:\5\6\4:\4\15\0033\4\17\0007\5\16\0:\5\6\4:\4\18\0033\4\20\0007\5\19\0:\5\6\4:\4\21\0033\4\23\0007\5\22\0:\5\6\4:\4\24\0033\4\26\0007\5\25\0:\5\6\4:\4\27\3:\3\28\2>\1\2\1G\0\1\0\nmarks\tMisc\1\0\0\vpurple\tHint\1\0\0\thint\tInfo\1\0\0\tinfo\tWarn\1\0\0\fwarning\nError\1\0\0\nerror\vSearch\1\0\0\1\0\0\vorange\vhandle\1\0\0\ncolor\1\0\0\17bg_highlight\14scrollbar\nsetup\22tokyonight.colors\frequire\0", "config", "nvim-scrollbar")
+time([[Config for nvim-scrollbar]], false)
 -- Config for: jupytext.vim
 time([[Config for jupytext.vim]], true)
 try_loadstring("\27LJ\1\0029\0\0\2\0\4\0\0054\0\0\0007\0\1\0%\1\3\0:\1\2\0G\0\1\0\15py:percent\17jupytext_fmt\6g\bvim\0", "config", "jupytext.vim")
@@ -508,26 +504,26 @@ time([[Config for jupytext.vim]], false)
 time([[Config for nvim-terminal.lua]], true)
 try_loadstring("\27LJ\1\0026\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\rterminal\frequire\0", "config", "nvim-terminal.lua")
 time([[Config for nvim-terminal.lua]], false)
--- Config for: git-worktree.nvim
-time([[Config for git-worktree.nvim]], true)
-try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\17git-worktree\frequire\0", "config", "git-worktree.nvim")
-time([[Config for git-worktree.nvim]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
 -- Config for: spellsitter.nvim
 time([[Config for spellsitter.nvim]], true)
 try_loadstring("\27LJ\1\0029\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\16spellsitter\frequire\0", "config", "spellsitter.nvim")
 time([[Config for spellsitter.nvim]], false)
--- Config for: wiki.vim
-time([[Config for wiki.vim]], true)
-try_loadstring("\27LJ\1\2Ô\1\0\0\2\0\v\0\0214\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\1\0003\1\5\0:\1\4\0004\0\0\0007\0\1\0%\1\a\0:\1\6\0004\0\0\0007\0\1\0%\1\t\0:\1\b\0004\0\0\0007\0\1\0)\1\2\0:\1\n\0G\0\1\0\31pandoc#syntax#conceal#urls\amd\26wiki_link_target_type\b.md\24wiki_link_extension\1\2\0\0\amd\19wiki_filetypes\v~/wiki\14wiki_root\6g\bvim\0", "config", "wiki.vim")
-time([[Config for wiki.vim]], false)
--- Config for: harpoon
-time([[Config for harpoon]], true)
-try_loadstring("\27LJ\1\2È\1\0\0\4\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\6\0003\2\3\0003\3\4\0:\3\5\2:\2\a\1>\0\2\1G\0\1\0\20global_settings\1\0\0\23excluded_filetypes\1\2\0\0\fharpoon\1\0\4\27tmux_autoclose_windows\1\19save_on_toggle\1\21enter_on_sendcmd\2\19save_on_change\2\nsetup\fharpoon\frequire\0", "config", "harpoon")
-time([[Config for harpoon]], false)
 -- Config for: vim-pandoc-syntax
 time([[Config for vim-pandoc-syntax]], true)
 try_loadstring("\27LJ\1\2Š\1\0\0\2\0\3\0\0054\0\0\0007\0\1\0%\1\2\0>\0\2\1G\0\1\0kaugroup pandoc_syntax\nau! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc\naugroup END\n\bcmd\bvim\0", "config", "vim-pandoc-syntax")
 time([[Config for vim-pandoc-syntax]], false)
+-- Config for: wiki.vim
+time([[Config for wiki.vim]], true)
+try_loadstring("\27LJ\1\2Ô\1\0\0\2\0\v\0\0214\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\1\0003\1\5\0:\1\4\0004\0\0\0007\0\1\0%\1\a\0:\1\6\0004\0\0\0007\0\1\0%\1\t\0:\1\b\0004\0\0\0007\0\1\0)\1\2\0:\1\n\0G\0\1\0\31pandoc#syntax#conceal#urls\amd\26wiki_link_target_type\b.md\24wiki_link_extension\1\2\0\0\amd\19wiki_filetypes\v~/wiki\14wiki_root\6g\bvim\0", "config", "wiki.vim")
+time([[Config for wiki.vim]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\1\2°\1\0\0\3\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0003\2\4\0:\2\5\0013\2\6\0:\2\a\1>\0\2\1G\0\1\0\21filetype_exclude\1\3\0\0\14dashboard\nalpha\20buftype_exclude\1\2\0\0\rterminal\1\0\2\19use_treesitter\2\tchar\bâ”‚\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
+time([[Config for indent-blankline.nvim]], false)
 -- Config for: todo-comments.nvim
 time([[Config for todo-comments.nvim]], true)
 try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
@@ -544,19 +540,15 @@ time([[Config for Comment.nvim]], false)
 time([[Config for zen-mode.nvim]], true)
 try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rzen-mode\frequire\0", "config", "zen-mode.nvim")
 time([[Config for zen-mode.nvim]], false)
--- Config for: wilder.nvim
-time([[Config for wilder.nvim]], true)
-try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19plugins.wilder\frequire\0", "config", "wilder.nvim")
-time([[Config for wilder.nvim]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\1\0022\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType javascript ++once lua require("packer.load")({'vim-prettier'}, { ft = "javascript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType typescript ++once lua require("packer.load")({'vim-prettier'}, { ft = "typescript" }, _G.packer_plugins)]]
-vim.cmd [[au FileType python ++once lua require("packer.load")({'black'}, { ft = "python" }, _G.packer_plugins)]]
 vim.cmd [[au FileType glsl ++once lua require("packer.load")({'vim-glsl'}, { ft = "glsl" }, _G.packer_plugins)]]
-vim.cmd [[au FileType json ++once lua require("packer.load")({'vim-prettier'}, { ft = "json" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
@@ -564,54 +556,6 @@ vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'gitsigns.nvim', 'p
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/css.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/graphql.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/graphql.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/graphql.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/html.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/html.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/html.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/javascript.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/javascript.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/javascript.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/json.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/json.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/json.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/less.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/less.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/less.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/lua.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/lua.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/lua.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/markdown.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/markdown.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/markdown.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/php.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/php.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/php.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/ruby.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/ruby.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/ruby.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/scss.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/scss.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/scss.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/svelte.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/svelte.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/svelte.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/typescript.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/typescript.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/typescript.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/vue.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/vue.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/vue.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/xml.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/xml.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/xml.vim]], false)
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]], true)
-vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]]
-time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-prettier/ftdetect/yaml.vim]], false)
 time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-glsl/ftdetect/glsl.vim]], true)
 vim.cmd [[source /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-glsl/ftdetect/glsl.vim]]
 time([[Sourcing ftdetect script at: /home/tillb/.local/share/nvim/site/pack/packer/opt/vim-glsl/ftdetect/glsl.vim]], false)
