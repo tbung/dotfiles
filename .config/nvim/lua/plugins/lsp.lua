@@ -1,9 +1,10 @@
-local lsp = require('lspconfig')
+local lsp = require("lspconfig")
 
-require('lspkind').init()
+require("lspkind").init()
 
 local on_attach = function(client, bufnr)
-  vim.api.nvim_exec([[
+  vim.api.nvim_exec(
+    [[
 sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
 sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
 sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=
@@ -12,53 +13,58 @@ highlight DiagnosticUnderlineError gui=undercurl
 highlight DiagnosticUnderlineWarn gui=undercurl
 highlight DiagnosticUnderlineInfo gui=undercurl
 highlight DiagnosticUnderlineHint gui=undercurl
-]], false)
+]],
+    false
+  )
 
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local function buf_set_option(...)
+    vim.api.nvim_buf_set_option(bufnr, ...)
+  end
 
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 
-  require'lsp_signature'.on_attach()
+  require("lsp_signature").on_attach()
 end
 
 require("null-ls").setup({
   sources = {
     require("null-ls").builtins.diagnostics.pylint.with({
-      extra_args = {"--max-line-length", "99"}
+      extra_args = { "--max-line-length", "99" },
     }),
     require("null-ls").builtins.formatting.black.with({
-      args = {"-"}
+      args = { "-" },
     }),
     require("null-ls").builtins.formatting.isort,
+    require("null-ls").builtins.formatting.stylua,
   },
   on_attach = on_attach,
   autostart = true,
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 lsp.pyright.setup({
   on_attach = on_attach,
   settings = {
     python = {
-      pythonPath = "python"
-    }
+      pythonPath = "python",
+    },
   },
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 lsp.texlab.setup({
   on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 lsp.tsserver.setup({
   on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 lsp.ccls.setup({
   on_attach = on_attach,
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 lsp.sumneko_lua.setup({
@@ -67,24 +73,24 @@ lsp.sumneko_lua.setup({
   -- actually a wrapper script, see
   -- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#sumneko_lua
   -- for alternative with manual install
-  cmd = {"/usr/bin/lua-language-server"},
+  cmd = { "/usr/bin/lua-language-server" },
   settings = {
     Lua = {
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
+        version = "LuaJIT",
         -- Setup your lua path
-        path = vim.split(package.path, ';'),
+        path = vim.split(package.path, ";"),
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = { "vim" },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
         },
       },
       -- Do not send telemetry data containing a randomized but unique identifier
@@ -93,5 +99,5 @@ lsp.sumneko_lua.setup({
       },
     },
   },
-  capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })

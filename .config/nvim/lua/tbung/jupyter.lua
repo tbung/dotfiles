@@ -20,22 +20,21 @@ function M.select_cell(buf)
 end
 
 function M.goto_previous_cell_start()
-  vim.fn.setpos(".", {0, M.cell_start() - 1, 0, 0})
-  vim.fn.setpos(".", {0, M.cell_start(), 0, 0})
+  vim.fn.setpos(".", { 0, M.cell_start() - 1, 0, 0 })
+  vim.fn.setpos(".", { 0, M.cell_start(), 0, 0 })
 end
 
 function M.goto_previous_cell_end()
-  vim.fn.setpos(".", {0, M.cell_start() - 1, 0, 0})
+  vim.fn.setpos(".", { 0, M.cell_start() - 1, 0, 0 })
 end
 
 function M.goto_next_cell_start()
-  vim.fn.setpos(".", {0, M.cell_end() + 1, 0, 0})
+  vim.fn.setpos(".", { 0, M.cell_end() + 1, 0, 0 })
 end
 
 function M.goto_next_cell_end()
-  vim.fn.setpos(".", {0, M.cell_end() + 1, 0, 0})
-  vim.fn.setpos(".", {0, M.cell_end(), 0, 0})
+  vim.fn.setpos(".", { 0, M.cell_end() + 1, 0, 0 })
+  vim.fn.setpos(".", { 0, M.cell_end(), 0, 0 })
 end
 
 return M
-

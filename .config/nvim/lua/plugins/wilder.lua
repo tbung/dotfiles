@@ -1,3 +1,3 @@
-vim.cmd[[
+vim.cmd([[
     call wilder#setup({'modes': [':', '/', '?']})
-]]
+]])
