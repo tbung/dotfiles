@@ -153,3 +153,10 @@ vim.keymap.set("n", "<leader>qd", function()
 end, opts)
 -- Nvim Tree
 vim.keymap.set("n", "<leader>n", [[<Cmd>NvimTreeToggle<CR>]], opts)
+-- Dial
+vim.keymap.set("n", "<C-a>", "<Plug>(dial-increment)", opts)
+vim.keymap.set("n", "<C-x>", "<Plug>(dial-decrement)", opts)
+vim.keymap.set("v", "<C-a>", "<Plug>(dial-increment)", opts)
+vim.keymap.set("v", "<C-x>", "<Plug>(dial-decrement)", opts)
+vim.keymap.set("v", "g<C-a>", "<Plug>(dial-increment-additional)", opts)
+vim.keymap.set("v", "g<C-x>", "<Plug>(dial-decrement-additional)", opts)

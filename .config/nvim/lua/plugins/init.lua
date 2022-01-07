@@ -349,4 +349,11 @@ augroup END
       })
     end,
   })
+
+  use({
+    'monaqa/dial.nvim',
+    config = function()
+      require("plugins.dial")
+    end,
+  })
 end)
