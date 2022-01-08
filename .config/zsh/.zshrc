@@ -113,7 +113,12 @@ fi
 
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
-bindkey -s "^f" "tmux-sessionizer\n"
+function _tmux_sessionizer () {
+    BUFFER="tmux-sessionizer"
+    zle accept-line
+}
+zle -N _tmux_sessionizer
+bindkey '^f' _tmux_sessionizer
 
 alias ls='ls --color=auto'
 alias cd..='cd ..'
