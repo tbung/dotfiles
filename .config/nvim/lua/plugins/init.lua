@@ -70,9 +70,10 @@ return require("packer").startup(function(use)
   use({
     "neovim/nvim-lspconfig",
     requires = {
-      use("jose-elias-alvarez/null-ls.nvim"),
-      use("ray-x/lsp_signature.nvim"),
-      use("onsails/lspkind-nvim"),
+      "jose-elias-alvarez/null-ls.nvim",
+      "ray-x/lsp_signature.nvim",
+      "onsails/lspkind-nvim",
+      "williamboman/nvim-lsp-installer",
     },
     config = function()
       require("plugins.lsp")
@@ -93,6 +94,8 @@ return require("packer").startup(function(use)
           require("plugins.autopairs")
         end,
       },
+      "f3fora/cmp-spell",
+      "uga-rosa/cmp-dictionary",
     },
     config = function()
       require("plugins.cmp")
@@ -169,16 +172,16 @@ return require("packer").startup(function(use)
   use({ "tikhomirov/vim-glsl", ft = { "glsl" } })
   use("lervag/vimtex")
   use("HiPhish/info.vim")
-  use({
-    "vim-pandoc/vim-pandoc-syntax",
-    config = function()
-      vim.cmd([[
-augroup pandoc_syntax
-au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-augroup END
-]])
-    end,
-  })
+  --   use({
+  --     "vim-pandoc/vim-pandoc-syntax",
+  --     config = function()
+  --       vim.cmd([[
+  -- augroup pandoc_syntax
+  -- au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+  -- augroup END
+  -- ]])
+  --     end,
+  --   })
 
   use({
     "lervag/wiki.vim",
@@ -345,9 +348,26 @@ augroup END
   })
 
   use({
-    'monaqa/dial.nvim',
+    "monaqa/dial.nvim",
     config = function()
       require("plugins.dial")
     end,
+  })
+
+  use({
+    "brymer-meneses/grammar-guard.nvim",
+    requires = {
+      "neovim/nvim-lspconfig",
+      "williamboman/nvim-lsp-installer",
+    },
+  })
+  use({
+    "kkoomen/vim-doge",
+    run = function()
+      vim.api.nvim_exec([[call doge#install()]])
+    end,
+    config = function()
+      vim.g.doge_doc_standard_python = 'numpy'
+    end
   })
 end)

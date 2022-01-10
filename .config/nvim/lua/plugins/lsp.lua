@@ -36,6 +36,8 @@ require("null-ls").setup({
     }),
     require("null-ls").builtins.formatting.isort,
     require("null-ls").builtins.formatting.stylua,
+    require("null-ls").builtins.diagnostics.misspell,
+    require("null-ls").builtins.diagnostics.write_good,
   },
   on_attach = on_attach,
   autostart = true,
@@ -99,5 +101,20 @@ lsp.sumneko_lua.setup({
       },
     },
   },
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+})
+
+require("grammar-guard").init()
+lsp.grammar_guard.setup({
+  cmd = { vim.fn.stdpath("data") .. "/lsp_servers/ltex/ltex-ls/bin/ltex-ls" },
+  settings = {
+    ltex = {
+      enabled = { "latex", "tex", "bib", "markdown", "markdown.pandoc" },
+      dictionary = {
+        ['en-US'] = Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines(),
+      },
+    },
+  },
+  on_attach = on_attach,
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
