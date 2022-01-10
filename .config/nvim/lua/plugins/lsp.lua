@@ -37,8 +37,11 @@ require("null-ls").setup({
     }),
     require("null-ls").builtins.formatting.isort,
     require("null-ls").builtins.formatting.stylua,
+
     require("null-ls").builtins.diagnostics.misspell,
     require("null-ls").builtins.diagnostics.write_good,
+    require("null-ls").builtins.diagnostics.proselint,
+    require("null-ls").builtins.formatting.prettier,
   },
   on_attach = on_attach,
   autostart = true,
@@ -112,7 +115,7 @@ lsp.grammar_guard.setup({
     ltex = {
       enabled = { "latex", "tex", "bib", "markdown", "markdown.pandoc" },
       dictionary = {
-        ['en-US'] = Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines(),
+        ["en-US"] = Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines(),
       },
     },
   },
@@ -124,8 +127,12 @@ function update_ltex()
   local util = require("lspconfig.util")
   local bufnr = vim.api.nvim_get_current_buf()
   local client = util.get_active_client_by_name(bufnr, "grammar_guard")
-  client.config.settings.ltex.dictionary["en-US"] = vim.tbl_extend("force", client.config.settings.ltex.dictionary["en-US"], Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines())
-  client.notify('workspace/didChangeConfiguration', {
+  client.config.settings.ltex.dictionary["en-US"] = vim.tbl_extend(
+    "force",
+    client.config.settings.ltex.dictionary["en-US"],
+    Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines()
+  )
+  client.notify("workspace/didChangeConfiguration", {
     settings = client.config.settings,
   })
 end
