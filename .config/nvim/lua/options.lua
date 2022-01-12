@@ -5,6 +5,7 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.signcolumn = "yes"
 vim.opt.scrolloff = 4
+vim.opt.linebreak = true
 vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.showmode = false
