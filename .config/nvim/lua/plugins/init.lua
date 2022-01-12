@@ -15,6 +15,7 @@ augroup packer_user_config
 autocmd!
 autocmd BufWritePost $XDG_CONFIG_HOME/nvim/lua/plugins/*.lua source <afile> | PackerCompile
 autocmd BufWritePost $HOME/Projects/dotfiles/.config/nvim/lua/plugins/*.lua source <afile> | PackerCompile
+autocmd BufWritePost ~//.dotfiles/./.config/nvim/lua/plugins/*.lua source <afile> | PackerCompile  " needed until plenary's path normalize is fixed
 augroup end
 ]])
 
@@ -51,6 +52,7 @@ return require("packer").startup(function(use)
     requires = {
       "nvim-telescope/telescope-project.nvim",
       "nvim-telescope/telescope-symbols.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = "make",
@@ -87,6 +89,9 @@ return require("packer").startup(function(use)
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lua",
+      -- "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lsp-document-symbol",
+      "lukas-reineke/cmp-under-comparator",
       "saadparwaiz1/cmp_luasnip",
       {
         "windwp/nvim-autopairs",
@@ -101,6 +106,9 @@ return require("packer").startup(function(use)
       require("plugins.cmp")
     end,
   })
+
+  use("L3MON4D3/LuaSnip")
+  use("rafamadriz/friendly-snippets")
 
   use({
     "nvim-treesitter/nvim-treesitter",
@@ -172,16 +180,16 @@ return require("packer").startup(function(use)
   use({ "tikhomirov/vim-glsl", ft = { "glsl" } })
   use("lervag/vimtex")
   use("HiPhish/info.vim")
-  --   use({
-  --     "vim-pandoc/vim-pandoc-syntax",
-  --     config = function()
-  --       vim.cmd([[
-  -- augroup pandoc_syntax
-  -- au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-  -- augroup END
-  -- ]])
-  --     end,
-  --   })
+  use({
+    "vim-pandoc/vim-pandoc-syntax",
+    config = function()
+      vim.cmd([[
+  augroup pandoc_syntax
+  au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+  augroup END
+  ]])
+    end,
+  })
 
   use({
     "lervag/wiki.vim",
@@ -195,31 +203,6 @@ return require("packer").startup(function(use)
   })
 
   use({
-    "renerocksai/telekasten.nvim",
-    config = function()
-      local home = vim.fn.expand("~/wiki")
-      require("telekasten").setup({
-        home = home,
-        take_over_my_home = true,
-        auto_set_filetype = false,
-        dailies = home .. "/" .. "journal",
-        extension = ".md",
-        follow_creates_nonexisting = true,
-        dailies_create_nonexisting = true,
-        weeklies_create_nonexisting = true,
-        close_after_yanking = false,
-        insert_after_inserting = true,
-        tag_notation = "#tag",
-        command_palette_theme = "ivy",
-        show_tags_theme = "ivy",
-        subdirs_in_links = true,
-        template_handling = "smart",
-        new_note_location = "smart",
-      })
-    end,
-  })
-
-  use({
     "norcalli/nvim-terminal.lua",
     config = function()
       require("terminal").setup()
@@ -227,7 +210,8 @@ return require("packer").startup(function(use)
   })
 
   use({
-    "folke/which-key.nvim",
+    -- "folke/which-key.nvim",
+    "~/Projects/which-key.nvim",
     config = function()
       require("which-key").setup({})
     end,
@@ -367,7 +351,59 @@ return require("packer").startup(function(use)
       vim.api.nvim_exec([[call doge#install()]])
     end,
     config = function()
-      vim.g.doge_doc_standard_python = 'numpy'
-    end
+      vim.g.doge_doc_standard_python = "numpy"
+    end,
+  })
+
+  use({
+    "nvim-neorg/neorg",
+    config = function()
+      require("neorg").setup({
+        -- Tell Neorg what modules to load
+        load = {
+          ["core.defaults"] = {}, -- Load all the default modules
+          ["core.keybinds"] = { -- Configure core.keybinds
+            config = {
+              default_keybinds = true, -- Generate the default keybinds
+              neorg_leader = "<Leader>o", -- This is the default if unspecified
+            },
+          },
+          ["core.norg.concealer"] = {
+            config = {
+              markup_preset = "dimmed",
+            },
+          }, -- Allows for use of icons
+          ["core.norg.completion"] = {
+            config = {
+              engine = "nvim-cmp",
+            },
+          },
+          ["core.norg.dirman"] = { -- Manage your directories with Neorg
+            config = {
+              workspaces = {
+                my_workspace = "~/neorg",
+              },
+            },
+          },
+          ["core.presenter"] = {
+            config = { -- Note that this table is optional and doesn't need to be provided
+              zen_mode = "zen-mode",
+            },
+          },
+          ["core.norg.qol.toc"] = {
+            config = { -- Note that this table is optional and doesn't need to be provided
+              -- Configuration here
+            },
+          },
+          ["core.norg.journal"] = {
+            config = { -- Note that this table is optional and doesn't need to be provided
+              -- Configuration here
+            },
+          },
+          ["core.integrations.telescope"] = {},
+        },
+      })
+    end,
+    requires = "nvim-neorg/neorg-telescope",
   })
 end)

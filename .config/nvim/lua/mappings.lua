@@ -52,7 +52,7 @@ end, opts)
 vim.keymap.set("n", "<leader>ff", function()
   require("telescope.builtin").find_files()
 end, opts)
-vim.keymap.set("n", "<leader>fg", function()
+vim.keymap.set("n", "<leader>ft", function()
   require("telescope.builtin").live_grep()
 end, opts)
 vim.keymap.set("n", "<leader>fh", function()
@@ -67,8 +67,24 @@ end, opts)
 vim.keymap.set("n", "<leader>fsd", function()
   require("telescope.builtin").lsp_document_symbols()
 end, opts)
-vim.keymap.set("n", "<leader>fw", function()
+vim.keymap.set("n", "<leader>fgw", function()
   require("telescope").extensions.git_worktree.git_worktrees()
+end, opts)
+vim.keymap.set("n", "<leader>fww", function()
+  require("telescope.builtin").find_files({
+    prompt_title = "wiki",
+    shorten_path = false,
+    cwd = "~/wiki",
+    hidden = false,
+  })
+end, opts)
+vim.keymap.set("n", "<leader>fwj", function()
+  require("telescope.builtin").find_files({
+    prompt_title = "journal",
+    shorten_path = false,
+    cwd = "~/wiki/journal",
+    hidden = false,
+  })
 end, opts)
 vim.keymap.set("n", "<leader>fz", function()
   require("telescope.builtin").current_buffer_fuzzy_find(
