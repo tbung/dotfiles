@@ -14,7 +14,7 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.spell = true
-vim.opt.spelllang = "en,de"
+vim.opt.spelllang = "en"
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.cmd([[set shortmess+=c]])
 
