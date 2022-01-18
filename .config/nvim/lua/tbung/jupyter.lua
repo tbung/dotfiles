@@ -7,13 +7,18 @@ function M.cell_start()
 end
 
 function M.cell_end()
-  return vim.fn.search(cell_delim, "Wn") - 1
+  local pos = vim.fn.search(cell_delim, "Wn") - 1
+  if pos == -1 then
+    pos = vim.api.nvim_buf_line_count(0)
+  end
+  return pos
 end
 
 function M.select_cell(buf)
   local start_row = M.cell_start()
   local end_row = M.cell_end()
 
+  vim.cmd("normal! ")
   vim.fn.setpos(".", { buf, start_row, 0, 0 })
   vim.cmd("normal! V")
   vim.fn.setpos(".", { buf, end_row, 0, 0 })
