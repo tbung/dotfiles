@@ -306,8 +306,13 @@ return require("packer").startup(function(use)
   })
 
   use({
-    "dccsillag/magma-nvim",
+    "/home/tillb/Projects/magma-nvim",
     run = ":UpdateRemotePlugins",
+    config = function ()
+      vim.cmd([[
+let g:magma_automatically_open_output = 0
+      ]])
+    end
   })
 
   use({

@@ -15,15 +15,15 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<CR>"] = cmp.mapping.confirm({ select = false }),
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "luasnip" }, -- For luasnip users.
   }, {
-    { name = "neorg" },
     { name = "buffer" },
     { name = "nvim_lua" },
+    { name = 'path' },
     { name = "spell" },
     {
       name = "dictionary",

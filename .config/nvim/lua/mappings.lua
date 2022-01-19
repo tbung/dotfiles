@@ -148,6 +148,7 @@ vim.keymap.set("x", "<leader>r", ":<C-u>MagmaEvaluateVisual<CR>", opts)
 vim.keymap.set("n", "<leader>rc", ":MagmaReevaluateCell<CR>", opts)
 vim.keymap.set("n", "<leader>rd", ":MagmaDelete<CR>", opts)
 vim.keymap.set("n", "<leader>ro", ":MagmaShowOutput<CR>", opts)
+vim.keymap.set("n", "<leader>rh", ":MagmaHideOutput<CR>", opts)
 
 -- #######
 -- # Git #
