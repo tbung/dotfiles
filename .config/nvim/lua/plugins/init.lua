@@ -180,6 +180,7 @@ return require("packer").startup(function(use)
   use({ "tikhomirov/vim-glsl", ft = { "glsl" } })
   use("lervag/vimtex")
   use("HiPhish/info.vim")
+  use("fladson/vim-kitty")
   use({
     "vim-pandoc/vim-pandoc-syntax",
     config = function()
@@ -308,11 +309,11 @@ return require("packer").startup(function(use)
   use({
     "/home/tillb/Projects/magma-nvim",
     run = ":UpdateRemotePlugins",
-    config = function ()
+    config = function()
       vim.cmd([[
 let g:magma_automatically_open_output = 0
       ]])
-    end
+    end,
   })
 
   use({

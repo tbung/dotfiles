@@ -422,6 +422,11 @@ _G.packer_plugins = {
     path = "/home/tillb/.local/share/nvim/site/pack/packer/opt/vim-glsl",
     url = "https://github.com/tikhomirov/vim-glsl"
   },
+  ["vim-kitty"] = {
+    loaded = true,
+    path = "/home/tillb/.local/share/nvim/site/pack/packer/start/vim-kitty",
+    url = "https://github.com/fladson/vim-kitty"
+  },
   ["vim-maximizer"] = {
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/vim-maximizer",
@@ -535,10 +540,10 @@ time([[Config for trouble.nvim]], false)
 time([[Config for twilight.nvim]], true)
 try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rtwilight\frequire\0", "config", "twilight.nvim")
 time([[Config for twilight.nvim]], false)
--- Config for: vim-pandoc-syntax
-time([[Config for vim-pandoc-syntax]], true)
-try_loadstring("\27LJ\1\2’\1\0\0\2\0\3\0\0054\0\0\0007\0\1\0%\1\2\0>\0\2\1G\0\1\0s  augroup pandoc_syntax\n  au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc\n  augroup END\n  \bcmd\bvim\0", "config", "vim-pandoc-syntax")
-time([[Config for vim-pandoc-syntax]], false)
+-- Config for: jupytext.vim
+time([[Config for jupytext.vim]], true)
+try_loadstring("\27LJ\1\0029\0\0\2\0\4\0\0054\0\0\0007\0\1\0%\1\3\0:\1\2\0G\0\1\0\15py:percent\17jupytext_fmt\6g\bvim\0", "config", "jupytext.vim")
+time([[Config for jupytext.vim]], false)
 -- Config for: galaxyline.nvim
 time([[Config for galaxyline.nvim]], true)
 try_loadstring("\27LJ\1\0022\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\23plugins.statusline\frequire\0", "config", "galaxyline.nvim")
@@ -579,22 +584,22 @@ time([[Config for wiki.vim]], false)
 time([[Config for nvim-terminal.lua]], true)
 try_loadstring("\27LJ\1\0026\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\rterminal\frequire\0", "config", "nvim-terminal.lua")
 time([[Config for nvim-terminal.lua]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\1\2°\1\0\0\3\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0003\2\4\0:\2\5\0013\2\6\0:\2\a\1>\0\2\1G\0\1\0\21filetype_exclude\1\3\0\0\14dashboard\nalpha\20buftype_exclude\1\2\0\0\rterminal\1\0\2\19use_treesitter\2\tchar\bâ”‚\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
-time([[Config for indent-blankline.nvim]], false)
--- Config for: spellsitter.nvim
-time([[Config for spellsitter.nvim]], true)
-try_loadstring("\27LJ\1\0029\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\16spellsitter\frequire\0", "config", "spellsitter.nvim")
-time([[Config for spellsitter.nvim]], false)
 -- Config for: which-key.nvim
 time([[Config for which-key.nvim]], true)
 try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
 time([[Config for which-key.nvim]], false)
+-- Config for: spellsitter.nvim
+time([[Config for spellsitter.nvim]], true)
+try_loadstring("\27LJ\1\0029\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\16spellsitter\frequire\0", "config", "spellsitter.nvim")
+time([[Config for spellsitter.nvim]], false)
 -- Config for: nvim-cmp
 time([[Config for nvim-cmp]], true)
 try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.cmp\frequire\0", "config", "nvim-cmp")
 time([[Config for nvim-cmp]], false)
+-- Config for: vim-pandoc-syntax
+time([[Config for vim-pandoc-syntax]], true)
+try_loadstring("\27LJ\1\2’\1\0\0\2\0\3\0\0054\0\0\0007\0\1\0%\1\2\0>\0\2\1G\0\1\0s  augroup pandoc_syntax\n  au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc\n  augroup END\n  \bcmd\bvim\0", "config", "vim-pandoc-syntax")
+time([[Config for vim-pandoc-syntax]], false)
 -- Config for: vim-doge
 time([[Config for vim-doge]], true)
 try_loadstring("\27LJ\1\2@\0\0\2\0\4\0\0054\0\0\0007\0\1\0%\1\3\0:\1\2\0G\0\1\0\nnumpy\29doge_doc_standard_python\6g\bvim\0", "config", "vim-doge")
@@ -603,10 +608,10 @@ time([[Config for vim-doge]], false)
 time([[Config for todo-comments.nvim]], true)
 try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
 time([[Config for todo-comments.nvim]], false)
--- Config for: jupytext.vim
-time([[Config for jupytext.vim]], true)
-try_loadstring("\27LJ\1\0029\0\0\2\0\4\0\0054\0\0\0007\0\1\0%\1\3\0:\1\2\0G\0\1\0\15py:percent\17jupytext_fmt\6g\bvim\0", "config", "jupytext.vim")
-time([[Config for jupytext.vim]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.lsp\frequire\0", "config", "nvim-lspconfig")
+time([[Config for nvim-lspconfig]], false)
 -- Config for: nvim-notify
 time([[Config for nvim-notify]], true)
 try_loadstring("\27LJ\1\2L\0\0\3\0\4\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\3\0004\1\0\0%\2\1\0>\1\2\2:\1\1\0G\0\1\0\bvim\nsetup\vnotify\frequire\0", "config", "nvim-notify")
@@ -615,10 +620,10 @@ time([[Config for nvim-notify]], false)
 time([[Config for zen-mode.nvim]], true)
 try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rzen-mode\frequire\0", "config", "zen-mode.nvim")
 time([[Config for zen-mode.nvim]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.lsp\frequire\0", "config", "nvim-lspconfig")
-time([[Config for nvim-lspconfig]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\1\2°\1\0\0\3\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0003\2\4\0:\2\5\0013\2\6\0:\2\a\1>\0\2\1G\0\1\0\21filetype_exclude\1\3\0\0\14dashboard\nalpha\20buftype_exclude\1\2\0\0\rterminal\1\0\2\19use_treesitter\2\tchar\bâ”‚\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
+time([[Config for indent-blankline.nvim]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
