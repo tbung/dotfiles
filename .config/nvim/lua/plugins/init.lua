@@ -47,12 +47,12 @@ return require("packer").startup(function(use)
   use("nvim-lua/popup.nvim")
   use("nvim-lua/plenary.nvim")
 
+  use("nvim-telescope/telescope-file-browser.nvim")
   use({
     "nvim-telescope/telescope.nvim",
     requires = {
       "nvim-telescope/telescope-project.nvim",
       "nvim-telescope/telescope-symbols.nvim",
-      "nvim-telescope/telescope-file-browser.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         run = "make",
@@ -67,6 +67,12 @@ return require("packer").startup(function(use)
     config = function()
       require("plugins.telescope")
     end,
+  })
+
+  use({
+    "filipdutescu/renamer.nvim",
+    branch = "master",
+    requires = { { "nvim-lua/plenary.nvim" } },
   })
 
   use({
@@ -114,7 +120,7 @@ return require("packer").startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     requires = {
-      "nvim-treesitter/playground",
+      -- "nvim-treesitter/playground",
       "nvim-treesitter/nvim-treesitter-textobjects",
       "RRethy/nvim-treesitter-textsubjects",
       "p00f/nvim-ts-rainbow",
@@ -211,8 +217,7 @@ return require("packer").startup(function(use)
   })
 
   use({
-    -- "folke/which-key.nvim",
-    "~/Projects/which-key.nvim",
+    "folke/which-key.nvim",
     config = function()
       require("which-key").setup({})
     end,
@@ -232,12 +237,12 @@ return require("packer").startup(function(use)
     end,
   })
 
-  use({
-    "gelguy/wilder.nvim",
-    config = function()
-      require("plugins.wilder")
-    end,
-  })
+  -- use({
+  --   "gelguy/wilder.nvim",
+  --   config = function()
+  --     require("plugins.wilder")
+  --   end,
+  -- })
 
   use({
     "folke/persistence.nvim",
@@ -359,57 +364,5 @@ let g:magma_automatically_open_output = 0
     config = function()
       vim.g.doge_doc_standard_python = "numpy"
     end,
-  })
-
-  use({
-    "nvim-neorg/neorg",
-    config = function()
-      require("neorg").setup({
-        -- Tell Neorg what modules to load
-        load = {
-          ["core.defaults"] = {}, -- Load all the default modules
-          ["core.keybinds"] = { -- Configure core.keybinds
-            config = {
-              default_keybinds = true, -- Generate the default keybinds
-              neorg_leader = "<Leader>o", -- This is the default if unspecified
-            },
-          },
-          ["core.norg.concealer"] = {
-            config = {
-              markup_preset = "dimmed",
-            },
-          }, -- Allows for use of icons
-          ["core.norg.completion"] = {
-            config = {
-              engine = "nvim-cmp",
-            },
-          },
-          ["core.norg.dirman"] = { -- Manage your directories with Neorg
-            config = {
-              workspaces = {
-                my_workspace = "~/neorg",
-              },
-            },
-          },
-          ["core.presenter"] = {
-            config = { -- Note that this table is optional and doesn't need to be provided
-              zen_mode = "zen-mode",
-            },
-          },
-          ["core.norg.qol.toc"] = {
-            config = { -- Note that this table is optional and doesn't need to be provided
-              -- Configuration here
-            },
-          },
-          ["core.norg.journal"] = {
-            config = { -- Note that this table is optional and doesn't need to be provided
-              -- Configuration here
-            },
-          },
-          ["core.integrations.telescope"] = {},
-        },
-      })
-    end,
-    requires = "nvim-neorg/neorg-telescope",
   })
 end)
