@@ -217,17 +217,6 @@ _G.packer_plugins = {
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/magma-nvim",
     url = "/home/tillb/Projects/magma-nvim"
   },
-  neorg = {
-    config = { "\27LJ\1\2¥\4\0\0\6\0\30\0+4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\28\0003\2\3\0002\3\0\0:\3\4\0023\3\6\0003\4\5\0:\4\a\3:\3\b\0023\3\n\0003\4\t\0:\4\a\3:\3\v\0023\3\r\0003\4\f\0:\4\a\3:\3\14\0023\3\18\0003\4\16\0003\5\15\0:\5\17\4:\4\a\3:\3\19\0023\3\21\0003\4\20\0:\4\a\3:\3\22\0023\3\23\0002\4\0\0:\4\a\3:\3\24\0023\3\25\0002\4\0\0:\4\a\3:\3\26\0022\3\0\0:\3\27\2:\2\29\1>\0\2\1G\0\1\0\tload\1\0\0 core.integrations.telescope\22core.norg.journal\1\0\0\22core.norg.qol.toc\1\0\0\19core.presenter\1\0\0\1\0\1\rzen_mode\rzen-mode\21core.norg.dirman\1\0\0\15workspaces\1\0\0\1\0\1\17my_workspace\f~/neorg\25core.norg.completion\1\0\0\1\0\1\vengine\rnvim-cmp\24core.norg.concealer\1\0\0\1\0\1\18markup_preset\vdimmed\18core.keybinds\vconfig\1\0\0\1\0\2\17neorg_leader\14<Leader>o\21default_keybinds\2\18core.defaults\1\0\0\nsetup\nneorg\frequire\0" },
-    loaded = true,
-    path = "/home/tillb/.local/share/nvim/site/pack/packer/start/neorg",
-    url = "https://github.com/nvim-neorg/neorg"
-  },
-  ["neorg-telescope"] = {
-    loaded = true,
-    path = "/home/tillb/.local/share/nvim/site/pack/packer/start/neorg-telescope",
-    url = "https://github.com/nvim-neorg/neorg-telescope"
-  },
   ["null-ls.nvim"] = {
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
@@ -319,11 +308,6 @@ _G.packer_plugins = {
     path = "/home/tillb/.local/share/nvim/site/pack/packer/opt/persistence.nvim",
     url = "https://github.com/folke/persistence.nvim"
   },
-  playground = {
-    loaded = true,
-    path = "/home/tillb/.local/share/nvim/site/pack/packer/start/playground",
-    url = "https://github.com/nvim-treesitter/playground"
-  },
   ["plenary.nvim"] = {
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/plenary.nvim",
@@ -333,6 +317,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
+  },
+  ["renamer.nvim"] = {
+    loaded = true,
+    path = "/home/tillb/.local/share/nvim/site/pack/packer/start/renamer.nvim",
+    url = "https://github.com/filipdutescu/renamer.nvim"
   },
   ["spellsitter.nvim"] = {
     config = { "\27LJ\1\0029\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\16spellsitter\frequire\0" },
@@ -457,19 +446,13 @@ _G.packer_plugins = {
     config = { "\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14which-key\frequire\0" },
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/which-key.nvim",
-    url = "/home/tillb/Projects/which-key.nvim"
+    url = "https://github.com/folke/which-key.nvim"
   },
   ["wiki.vim"] = {
     config = { "\27LJ\1\2Ô\1\0\0\2\0\v\0\0214\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\1\0003\1\5\0:\1\4\0004\0\0\0007\0\1\0%\1\a\0:\1\6\0004\0\0\0007\0\1\0%\1\t\0:\1\b\0004\0\0\0007\0\1\0)\1\2\0:\1\n\0G\0\1\0\31pandoc#syntax#conceal#urls\amd\26wiki_link_target_type\b.md\24wiki_link_extension\1\2\0\0\amd\19wiki_filetypes\v~/wiki\14wiki_root\6g\bvim\0" },
     loaded = true,
     path = "/home/tillb/.local/share/nvim/site/pack/packer/start/wiki.vim",
     url = "https://github.com/lervag/wiki.vim"
-  },
-  ["wilder.nvim"] = {
-    config = { "\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19plugins.wilder\frequire\0" },
-    loaded = true,
-    path = "/home/tillb/.local/share/nvim/site/pack/packer/start/wilder.nvim",
-    url = "https://github.com/gelguy/wilder.nvim"
   },
   ["zen-mode.nvim"] = {
     config = { "\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rzen-mode\frequire\0" },
@@ -516,10 +499,10 @@ time([[Config for nvim-treesitter]], false)
 time([[Config for dial.nvim]], true)
 try_loadstring("\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17plugins.dial\frequire\0", "config", "dial.nvim")
 time([[Config for dial.nvim]], false)
--- Config for: wilder.nvim
-time([[Config for wilder.nvim]], true)
-try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19plugins.wilder\frequire\0", "config", "wilder.nvim")
-time([[Config for wilder.nvim]], false)
+-- Config for: which-key.nvim
+time([[Config for which-key.nvim]], true)
+try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
+time([[Config for which-key.nvim]], false)
 -- Config for: harpoon
 time([[Config for harpoon]], true)
 try_loadstring("\27LJ\1\2È\1\0\0\4\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\6\0003\2\3\0003\3\4\0:\3\5\2:\2\a\1>\0\2\1G\0\1\0\20global_settings\1\0\0\23excluded_filetypes\1\2\0\0\fharpoon\1\0\4\27tmux_autoclose_windows\1\19save_on_toggle\1\21enter_on_sendcmd\2\19save_on_change\2\nsetup\fharpoon\frequire\0", "config", "harpoon")
@@ -528,10 +511,6 @@ time([[Config for harpoon]], false)
 time([[Config for alpha-nvim]], true)
 try_loadstring("\27LJ\1\2Z\0\0\3\0\5\0\n4\0\0\0%\1\1\0>\0\2\0027\0\2\0004\1\0\0%\2\3\0>\1\2\0027\1\4\1>\0\2\1G\0\1\0\topts\22plugins.dashboard\nsetup\nalpha\frequire\0", "config", "alpha-nvim")
 time([[Config for alpha-nvim]], false)
--- Config for: Comment.nvim
-time([[Config for Comment.nvim]], true)
-try_loadstring("\27LJ\1\0025\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
-time([[Config for Comment.nvim]], false)
 -- Config for: trouble.nvim
 time([[Config for trouble.nvim]], true)
 try_loadstring("\27LJ\1\0025\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
@@ -540,30 +519,26 @@ time([[Config for trouble.nvim]], false)
 time([[Config for twilight.nvim]], true)
 try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rtwilight\frequire\0", "config", "twilight.nvim")
 time([[Config for twilight.nvim]], false)
--- Config for: jupytext.vim
-time([[Config for jupytext.vim]], true)
-try_loadstring("\27LJ\1\0029\0\0\2\0\4\0\0054\0\0\0007\0\1\0%\1\3\0:\1\2\0G\0\1\0\15py:percent\17jupytext_fmt\6g\bvim\0", "config", "jupytext.vim")
-time([[Config for jupytext.vim]], false)
 -- Config for: galaxyline.nvim
 time([[Config for galaxyline.nvim]], true)
 try_loadstring("\27LJ\1\0022\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\23plugins.statusline\frequire\0", "config", "galaxyline.nvim")
 time([[Config for galaxyline.nvim]], false)
--- Config for: neorg
-time([[Config for neorg]], true)
-try_loadstring("\27LJ\1\2¥\4\0\0\6\0\30\0+4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\28\0003\2\3\0002\3\0\0:\3\4\0023\3\6\0003\4\5\0:\4\a\3:\3\b\0023\3\n\0003\4\t\0:\4\a\3:\3\v\0023\3\r\0003\4\f\0:\4\a\3:\3\14\0023\3\18\0003\4\16\0003\5\15\0:\5\17\4:\4\a\3:\3\19\0023\3\21\0003\4\20\0:\4\a\3:\3\22\0023\3\23\0002\4\0\0:\4\a\3:\3\24\0023\3\25\0002\4\0\0:\4\a\3:\3\26\0022\3\0\0:\3\27\2:\2\29\1>\0\2\1G\0\1\0\tload\1\0\0 core.integrations.telescope\22core.norg.journal\1\0\0\22core.norg.qol.toc\1\0\0\19core.presenter\1\0\0\1\0\1\rzen_mode\rzen-mode\21core.norg.dirman\1\0\0\15workspaces\1\0\0\1\0\1\17my_workspace\f~/neorg\25core.norg.completion\1\0\0\1\0\1\vengine\rnvim-cmp\24core.norg.concealer\1\0\0\1\0\1\18markup_preset\vdimmed\18core.keybinds\vconfig\1\0\0\1\0\2\17neorg_leader\14<Leader>o\21default_keybinds\2\18core.defaults\1\0\0\nsetup\nneorg\frequire\0", "config", "neorg")
-time([[Config for neorg]], false)
+-- Config for: vim-pandoc-syntax
+time([[Config for vim-pandoc-syntax]], true)
+try_loadstring("\27LJ\1\2’\1\0\0\2\0\3\0\0054\0\0\0007\0\1\0%\1\2\0>\0\2\1G\0\1\0s  augroup pandoc_syntax\n  au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc\n  augroup END\n  \bcmd\bvim\0", "config", "vim-pandoc-syntax")
+time([[Config for vim-pandoc-syntax]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22plugins.autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
--- Config for: nvim-scrollbar
-time([[Config for nvim-scrollbar]], true)
-try_loadstring("\27LJ\1\2Û\2\0\0\6\0\29\0*4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\0\0%\2\3\0>\1\2\0027\1\2\0013\2\a\0003\3\5\0007\4\4\0:\4\6\3:\3\b\0023\3\v\0003\4\n\0007\5\t\0:\5\6\4:\4\f\0033\4\14\0007\5\r\0:\5\6\4:\4\15\0033\4\17\0007\5\16\0:\5\6\4:\4\18\0033\4\20\0007\5\19\0:\5\6\4:\4\21\0033\4\23\0007\5\22\0:\5\6\4:\4\24\0033\4\26\0007\5\25\0:\5\6\4:\4\27\3:\3\28\2>\1\2\1G\0\1\0\nmarks\tMisc\1\0\0\vpurple\tHint\1\0\0\thint\tInfo\1\0\0\tinfo\tWarn\1\0\0\fwarning\nError\1\0\0\nerror\vSearch\1\0\0\1\0\0\vorange\vhandle\1\0\0\ncolor\1\0\0\17bg_highlight\14scrollbar\nsetup\22tokyonight.colors\frequire\0", "config", "nvim-scrollbar")
-time([[Config for nvim-scrollbar]], false)
--- Config for: git-worktree.nvim
-time([[Config for git-worktree.nvim]], true)
-try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\17git-worktree\frequire\0", "config", "git-worktree.nvim")
-time([[Config for git-worktree.nvim]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+try_loadstring("\27LJ\1\0025\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
+time([[Config for Comment.nvim]], false)
+-- Config for: nvim-cmp
+time([[Config for nvim-cmp]], true)
+try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.cmp\frequire\0", "config", "nvim-cmp")
+time([[Config for nvim-cmp]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 try_loadstring("\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
@@ -576,30 +551,30 @@ time([[Config for magma-nvim]], false)
 time([[Config for nvim-tree.lua]], true)
 try_loadstring("\27LJ\1\2³\1\0\0\3\0\v\0\0154\0\0\0007\0\1\0'\1\1\0:\1\2\0004\0\3\0%\1\4\0>\0\2\0027\0\5\0003\1\6\0003\2\a\0:\2\b\0013\2\t\0:\2\n\1>\0\2\1G\0\1\0\tview\1\0\1\16auto_resize\2\16diagnostics\1\0\1\venable\2\1\0\1\15auto_close\2\nsetup\14nvim-tree\frequire\27nvim_tree_quit_on_open\6g\bvim\0", "config", "nvim-tree.lua")
 time([[Config for nvim-tree.lua]], false)
--- Config for: wiki.vim
-time([[Config for wiki.vim]], true)
-try_loadstring("\27LJ\1\2Ô\1\0\0\2\0\v\0\0214\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\1\0003\1\5\0:\1\4\0004\0\0\0007\0\1\0%\1\a\0:\1\6\0004\0\0\0007\0\1\0%\1\t\0:\1\b\0004\0\0\0007\0\1\0)\1\2\0:\1\n\0G\0\1\0\31pandoc#syntax#conceal#urls\amd\26wiki_link_target_type\b.md\24wiki_link_extension\1\2\0\0\amd\19wiki_filetypes\v~/wiki\14wiki_root\6g\bvim\0", "config", "wiki.vim")
-time([[Config for wiki.vim]], false)
+-- Config for: jupytext.vim
+time([[Config for jupytext.vim]], true)
+try_loadstring("\27LJ\1\0029\0\0\2\0\4\0\0054\0\0\0007\0\1\0%\1\3\0:\1\2\0G\0\1\0\15py:percent\17jupytext_fmt\6g\bvim\0", "config", "jupytext.vim")
+time([[Config for jupytext.vim]], false)
 -- Config for: nvim-terminal.lua
 time([[Config for nvim-terminal.lua]], true)
 try_loadstring("\27LJ\1\0026\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\rterminal\frequire\0", "config", "nvim-terminal.lua")
 time([[Config for nvim-terminal.lua]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
-try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\14which-key\frequire\0", "config", "which-key.nvim")
-time([[Config for which-key.nvim]], false)
+-- Config for: nvim-scrollbar
+time([[Config for nvim-scrollbar]], true)
+try_loadstring("\27LJ\1\2Û\2\0\0\6\0\29\0*4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0024\1\0\0%\2\3\0>\1\2\0027\1\2\0013\2\a\0003\3\5\0007\4\4\0:\4\6\3:\3\b\0023\3\v\0003\4\n\0007\5\t\0:\5\6\4:\4\f\0033\4\14\0007\5\r\0:\5\6\4:\4\15\0033\4\17\0007\5\16\0:\5\6\4:\4\18\0033\4\20\0007\5\19\0:\5\6\4:\4\21\0033\4\23\0007\5\22\0:\5\6\4:\4\24\0033\4\26\0007\5\25\0:\5\6\4:\4\27\3:\3\28\2>\1\2\1G\0\1\0\nmarks\tMisc\1\0\0\vpurple\tHint\1\0\0\thint\tInfo\1\0\0\tinfo\tWarn\1\0\0\fwarning\nError\1\0\0\nerror\vSearch\1\0\0\1\0\0\vorange\vhandle\1\0\0\ncolor\1\0\0\17bg_highlight\14scrollbar\nsetup\22tokyonight.colors\frequire\0", "config", "nvim-scrollbar")
+time([[Config for nvim-scrollbar]], false)
 -- Config for: spellsitter.nvim
 time([[Config for spellsitter.nvim]], true)
 try_loadstring("\27LJ\1\0029\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\16spellsitter\frequire\0", "config", "spellsitter.nvim")
 time([[Config for spellsitter.nvim]], false)
--- Config for: nvim-cmp
-time([[Config for nvim-cmp]], true)
-try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.cmp\frequire\0", "config", "nvim-cmp")
-time([[Config for nvim-cmp]], false)
--- Config for: vim-pandoc-syntax
-time([[Config for vim-pandoc-syntax]], true)
-try_loadstring("\27LJ\1\2’\1\0\0\2\0\3\0\0054\0\0\0007\0\1\0%\1\2\0>\0\2\1G\0\1\0s  augroup pandoc_syntax\n  au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc\n  augroup END\n  \bcmd\bvim\0", "config", "vim-pandoc-syntax")
-time([[Config for vim-pandoc-syntax]], false)
+-- Config for: git-worktree.nvim
+time([[Config for git-worktree.nvim]], true)
+try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\17git-worktree\frequire\0", "config", "git-worktree.nvim")
+time([[Config for git-worktree.nvim]], false)
+-- Config for: nvim-lspconfig
+time([[Config for nvim-lspconfig]], true)
+try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.lsp\frequire\0", "config", "nvim-lspconfig")
+time([[Config for nvim-lspconfig]], false)
 -- Config for: vim-doge
 time([[Config for vim-doge]], true)
 try_loadstring("\27LJ\1\2@\0\0\2\0\4\0\0054\0\0\0007\0\1\0%\1\3\0:\1\2\0G\0\1\0\nnumpy\29doge_doc_standard_python\6g\bvim\0", "config", "vim-doge")
@@ -608,10 +583,10 @@ time([[Config for vim-doge]], false)
 time([[Config for todo-comments.nvim]], true)
 try_loadstring("\27LJ\1\2;\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\18todo-comments\frequire\0", "config", "todo-comments.nvim")
 time([[Config for todo-comments.nvim]], false)
--- Config for: nvim-lspconfig
-time([[Config for nvim-lspconfig]], true)
-try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16plugins.lsp\frequire\0", "config", "nvim-lspconfig")
-time([[Config for nvim-lspconfig]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\1\2°\1\0\0\3\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0003\2\4\0:\2\5\0013\2\6\0:\2\a\1>\0\2\1G\0\1\0\21filetype_exclude\1\3\0\0\14dashboard\nalpha\20buftype_exclude\1\2\0\0\rterminal\1\0\2\19use_treesitter\2\tchar\bâ”‚\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
+time([[Config for indent-blankline.nvim]], false)
 -- Config for: nvim-notify
 time([[Config for nvim-notify]], true)
 try_loadstring("\27LJ\1\2L\0\0\3\0\4\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\0014\0\3\0004\1\0\0%\2\1\0>\1\2\2:\1\1\0G\0\1\0\bvim\nsetup\vnotify\frequire\0", "config", "nvim-notify")
@@ -620,10 +595,10 @@ time([[Config for nvim-notify]], false)
 time([[Config for zen-mode.nvim]], true)
 try_loadstring("\27LJ\1\2:\0\0\2\0\3\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0002\1\0\0>\0\2\1G\0\1\0\nsetup\rzen-mode\frequire\0", "config", "zen-mode.nvim")
 time([[Config for zen-mode.nvim]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\1\2°\1\0\0\3\0\b\0\v4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0003\2\4\0:\2\5\0013\2\6\0:\2\a\1>\0\2\1G\0\1\0\21filetype_exclude\1\3\0\0\14dashboard\nalpha\20buftype_exclude\1\2\0\0\rterminal\1\0\2\19use_treesitter\2\tchar\bâ”‚\nsetup\21indent_blankline\frequire\0", "config", "indent-blankline.nvim")
-time([[Config for indent-blankline.nvim]], false)
+-- Config for: wiki.vim
+time([[Config for wiki.vim]], true)
+try_loadstring("\27LJ\1\2Ô\1\0\0\2\0\v\0\0214\0\0\0007\0\1\0%\1\3\0:\1\2\0004\0\0\0007\0\1\0003\1\5\0:\1\4\0004\0\0\0007\0\1\0%\1\a\0:\1\6\0004\0\0\0007\0\1\0%\1\t\0:\1\b\0004\0\0\0007\0\1\0)\1\2\0:\1\n\0G\0\1\0\31pandoc#syntax#conceal#urls\amd\26wiki_link_target_type\b.md\24wiki_link_extension\1\2\0\0\amd\19wiki_filetypes\v~/wiki\14wiki_root\6g\bvim\0", "config", "wiki.vim")
+time([[Config for wiki.vim]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
