@@ -34,6 +34,7 @@ require("null-ls").setup({
   sources = {
     require("null-ls").builtins.diagnostics.pylint.with({
       extra_args = { "--max-line-length", "99" },
+      method = require("null-ls").methods.DIAGNOSTICS_ON_SAVE,
     }),
     require("null-ls").builtins.formatting.black.with({
       args = { "-" },
@@ -111,31 +112,31 @@ lsp.sumneko_lua.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
-require("grammar-guard").init()
-lsp.grammar_guard.setup({
-  cmd = { vim.fn.stdpath("data") .. "/lsp_servers/ltex/ltex-ls/bin/ltex-ls" },
-  settings = {
-    ltex = {
-      enabled = { "latex", "tex", "bib", "markdown", "markdown.pandoc" },
-      dictionary = {
-        ["en-US"] = Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines(),
-      },
-    },
-  },
-  on_attach = on_attach,
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-})
-
-function update_ltex()
-  local util = require("lspconfig.util")
-  local bufnr = vim.api.nvim_get_current_buf()
-  local client = util.get_active_client_by_name(bufnr, "grammar_guard")
-  client.config.settings.ltex.dictionary["en-US"] = vim.tbl_extend(
-    "force",
-    client.config.settings.ltex.dictionary["en-US"],
-    Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines()
-  )
-  client.notify("workspace/didChangeConfiguration", {
-    settings = client.config.settings,
-  })
-end
+-- require("grammar-guard").init()
+-- lsp.grammar_guard.setup({
+--   cmd = { vim.fn.stdpath("data") .. "/lsp_servers/ltex/ltex-ls/bin/ltex-ls" },
+--   settings = {
+--     ltex = {
+--       enabled = { "latex", "tex", "bib", "markdown", "markdown.pandoc" },
+--       dictionary = {
+--         ["en-US"] = Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines(),
+--       },
+--     },
+--   },
+--   on_attach = on_attach,
+--   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+-- })
+--
+-- function update_ltex()
+--   local util = require("lspconfig.util")
+--   local bufnr = vim.api.nvim_get_current_buf()
+--   local client = util.get_active_client_by_name(bufnr, "grammar_guard")
+--   client.config.settings.ltex.dictionary["en-US"] = vim.tbl_extend(
+--     "force",
+--     client.config.settings.ltex.dictionary["en-US"],
+--     Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines()
+--   )
+--   client.notify("workspace/didChangeConfiguration", {
+--     settings = client.config.settings,
+--   })
+-- end
