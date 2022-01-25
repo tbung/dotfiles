@@ -73,6 +73,9 @@ return require("packer").startup(function(use)
     "filipdutescu/renamer.nvim",
     branch = "master",
     requires = { { "nvim-lua/plenary.nvim" } },
+    config = function()
+      require("renamer").setup()
+    end,
   })
 
   use({
@@ -185,7 +188,6 @@ return require("packer").startup(function(use)
   })
   use({ "tikhomirov/vim-glsl", ft = { "glsl" } })
   use("lervag/vimtex")
-  use("HiPhish/info.vim")
   use("fladson/vim-kitty")
   use({
     "vim-pandoc/vim-pandoc-syntax",
@@ -236,13 +238,6 @@ return require("packer").startup(function(use)
       require("twilight").setup({})
     end,
   })
-
-  -- use({
-  --   "gelguy/wilder.nvim",
-  --   config = function()
-  --     require("plugins.wilder")
-  --   end,
-  -- })
 
   use({
     "folke/persistence.nvim",
@@ -316,7 +311,8 @@ return require("packer").startup(function(use)
     run = ":UpdateRemotePlugins",
     config = function()
       vim.cmd([[
-let g:magma_automatically_open_output = 0
+      let g:magma_automatically_open_output = 0
+      let g:magma_image_provider = "kitty"
       ]])
     end,
   })
@@ -363,6 +359,14 @@ let g:magma_automatically_open_output = 0
     end,
     config = function()
       vim.g.doge_doc_standard_python = "numpy"
+    end,
+  })
+
+  use({
+    "TimUntersberger/neogit",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("neogit").setup({})
     end,
   })
 end)

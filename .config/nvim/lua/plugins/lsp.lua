@@ -42,9 +42,15 @@ require("null-ls").setup({
     require("null-ls").builtins.formatting.isort,
     require("null-ls").builtins.formatting.stylua,
 
-    require("null-ls").builtins.diagnostics.misspell,
-    require("null-ls").builtins.diagnostics.write_good,
-    require("null-ls").builtins.diagnostics.proselint,
+    require("null-ls").builtins.diagnostics.misspell.with({
+        filetypes = { "tex", "markdown" },
+    }),
+    require("null-ls").builtins.diagnostics.write_good.with({
+        filetypes = { "tex", "markdown" },
+    }),
+    require("null-ls").builtins.diagnostics.proselint.with({
+        filetypes = { "tex", "markdown" },
+    }),
     require("null-ls").builtins.formatting.prettier,
   },
   on_attach = on_attach,
