@@ -11,23 +11,13 @@ if [[ -z $selected ]]; then
 fi
 
 selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected
-    exit 0
-fi
-
-if ! tmux has-session -t $selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected
-fi
-
 
 q1='[.[0].tabs | .[] | {id: (.id), title: .title}] | map(select(.title | startswith("'
 q2='"))) | .[0].id'
 id=$(kitty @ls | jq "$q1$selected_name$q2")
 
 if [[ $id == 'null' ]]; then
-    kitty @new-window --new-tab tmux attach-session -t $selected_name
+    kitty @new-window --new-tab --title $selected_name --cwd $selected
 else
     kitty @focus-tab -m "id:$id"
 fi
