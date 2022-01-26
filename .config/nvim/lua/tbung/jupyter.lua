@@ -42,4 +42,10 @@ function M.goto_next_cell_end()
   vim.fn.setpos(".", { 0, M.cell_end(), 0, 0 })
 end
 
+function M.launch()
+  local bufnr = vim.api.nvim_create_buf(true, true)
+  vim.api.nvim_win_set_buf(0, bufnr)
+  vim.fn.termopen("jupyter lab")
+end
+
 return M

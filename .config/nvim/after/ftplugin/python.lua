@@ -13,7 +13,13 @@ vim.keymap.set("n", "]J", function()
 end, opts)
 vim.keymap.set("x", "ij", function()
   require("tbung.jupyter").select_cell(0)
+  vim.cmd([[normal! zt]])
 end, opts)
 vim.keymap.set("o", "ij", function()
   require("tbung.jupyter").select_cell(0)
+  vim.cmd([[normal! zt]])
 end, opts)
+
+vim.cmd([[
+command! -nargs=0 JupyterLaunch lua require("tbung.jupyter").launch()
+]])
