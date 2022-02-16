@@ -68,7 +68,18 @@ return require("packer").startup({
       branch = "master",
       requires = { { "nvim-lua/plenary.nvim" } },
       config = function()
-        require("renamer").setup()
+        local renamer = require("renamer")
+        local strings = require("renamer.constants").strings
+        local lsp_utils = require("vim.lsp.util")
+        renamer.setup()
+        renamer._apply_workspace_edit = function(resp)
+          local params = vim.lsp.util.make_position_params()
+          local results_lsp, _ = vim.lsp.buf_request_sync(0, strings.lsp_req_rename, params)
+          local client_id = results_lsp and next(results_lsp) or nil
+          local client = vim.lsp.get_client_by_id(client_id)
+
+          lsp_utils.apply_workspace_edit(resp, client.offset_encoding)
+        end
       end,
     })
 
@@ -111,7 +122,7 @@ return require("packer").startup({
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       requires = {
-        -- "nvim-treesitter/playground",
+        "nvim-treesitter/playground",
         "nvim-treesitter/nvim-treesitter-textobjects",
         "RRethy/nvim-treesitter-textsubjects",
         "p00f/nvim-ts-rainbow",
@@ -300,7 +311,7 @@ return require("packer").startup({
       config = function()
         vim.cmd([[
       let g:magma_automatically_open_output = 0
-      let g:magma_image_provider = "kitty"
+      " let g:magma_image_provider = "kitty"
       ]])
       end,
     })
@@ -357,9 +368,30 @@ return require("packer").startup({
         })
       end,
     })
+
+    use({
+      "ThePrimeagen/refactoring.nvim",
+      requires = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" },
+      },
+      config = function()
+        -- load refactoring Telescope extension
+        require("telescope").load_extension("refactoring")
+
+        -- remap to open the Telescope refactoring menu in visual mode
+        vim.api.nvim_set_keymap(
+          "v",
+          "<leader>vrr",
+          "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+          { noremap = true }
+        )
+      end,
+    })
   end,
   config = {
     -- Move to lua dir so impatient.nvim can cache it
     compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
+    max_jobs = 8,
   },
 })
