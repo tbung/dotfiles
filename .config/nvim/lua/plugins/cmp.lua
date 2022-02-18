@@ -25,10 +25,10 @@ cmp.setup({
     { name = "nvim_lua" },
     { name = 'path' },
     { name = "spell" },
-    {
-      name = "dictionary",
-      keyword_length = 2,
-    },
+    -- {
+    --   name = "dictionary",
+    --   keyword_length = 2,
+    -- },
   }),
   sorting = {
     comparators = {
@@ -65,15 +65,15 @@ cmp.setup({
 -- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 -- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
-require("cmp_dictionary").setup({
-  dic = {
-    ["*"] = { "/usr/lib/aspell/en.dat", "/usr/lib/aspell/de_DE.dat" },
-  },
-  -- The following are default values, so you don't need to write them if you don't want to change them
-  exact = 2,
-  async = true,
-  capacity = 5,
-  debug = false,
-})
+-- require("cmp_dictionary").setup({
+--   dic = {
+--     ["*"] = { "/usr/lib/aspell/en.dat", "/usr/lib/aspell/de_DE.dat" },
+--   },
+--   -- The following are default values, so you don't need to write them if you don't want to change them
+--   exact = 2,
+--   async = true,
+--   capacity = 5,
+--   debug = false,
+-- })
 
 require("luasnip/loaders/from_vscode").lazy_load()

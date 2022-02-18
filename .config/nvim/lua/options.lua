@@ -6,6 +6,8 @@ vim.opt.softtabstop = 4
 vim.opt.signcolumn = "yes"
 vim.opt.scrolloff = 4
 vim.opt.linebreak = true
+vim.opt.breakindent = true
+vim.opt.showbreak = string.rep(" ", 3)
 vim.opt.swapfile = false
 vim.opt.undofile = true
 vim.opt.showmode = false
@@ -18,6 +20,7 @@ vim.opt.spelllang = "en"
 vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.cmd([[set shortmess+=c]])
 vim.opt.wildoptions = "tagfile"
+vim.opt.mouse = "n"
 vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0
 
@@ -40,7 +43,6 @@ augroup terminal_settings
     autocmd TermOpen * setlocal nospell nonumber norelativenumber signcolumn=no
 augroup END
 ]])
-
 
 vim.cmd([[
 augroup packer_user_config

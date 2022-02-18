@@ -15,8 +15,8 @@ highlight DiagnosticUnderlineWarn gui=undercurl
 highlight DiagnosticUnderlineInfo gui=undercurl
 highlight DiagnosticUnderlineHint gui=undercurl
 
-autocmd BufEnter *.md lua vim.diagnostic.config({virtual_text = false})
-autocmd BufLeave *.md lua vim.diagnostic.config({virtual_text = true})
+" autocmd BufEnter *.md lua vim.diagnostic.config({virtual_text = false})
+" autocmd BufLeave *.md lua vim.diagnostic.config({virtual_text = true})
 ]],
     false
   )

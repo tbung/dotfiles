@@ -7,6 +7,8 @@ export EDITOR=/usr/bin/nvim
 export VISUAL=/usr/bin/nvim
 export SHELL=/bin/zsh
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export GITLAB_HOST=gitlab.hzdr.de
+export ZK_NOTEBOOK_DIR="$HOME/wiki"
 
 export QT_QPA_PLATFORMTHEME="gnome"
 export CHROME_DEVEL_SANDBOX=/usr/lib/chromium/chrome-sandbox

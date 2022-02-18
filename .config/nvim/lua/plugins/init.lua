@@ -200,24 +200,9 @@ return require("packer").startup({
     use("lervag/vimtex")
     use("fladson/vim-kitty")
     use({
-      "vim-pandoc/vim-pandoc-syntax",
+      "HiPhish/info.vim",
       config = function()
-        vim.cmd([[
-  augroup pandoc_syntax
-  au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-  augroup END
-  ]])
-      end,
-    })
-
-    use({
-      "lervag/wiki.vim",
-      config = function()
-        vim.g.wiki_root = "~/wiki"
-        vim.g.wiki_filetypes = { "md" }
-        vim.g.wiki_link_extension = ".md"
-        vim.g.wiki_link_target_type = "md"
-        vim.g["pandoc#syntax#conceal#urls"] = true
+        vim.g.infoprg = "/opt/homebrew/opt/texinfo/bin/info"
       end,
     })
 
@@ -317,7 +302,7 @@ return require("packer").startup({
     })
 
     use({
-      "/home/tillb/Projects/magma-nvim",
+      "/Users/tillb/Projects/magma-nvim",
       run = ":UpdateRemotePlugins",
       config = function()
         vim.cmd([[
@@ -398,6 +383,57 @@ return require("packer").startup({
           { noremap = true }
         )
       end,
+    })
+
+    use({
+      "norcalli/nvim-colorizer.lua",
+      config = function()
+        require("colorizer").setup()
+      end,
+    })
+
+    use({
+      "j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup({})
+      end,
+    })
+
+    -- use({ "romgrk/hologram.nvim", commit = "1614bc1d0b5875f93180e7b13975e6f0fa51e988" })
+    use({ "edluffy/hologram.nvim" })
+
+    use({
+      "mickael-menu/zk-nvim",
+      config = function()
+        require("zk").setup({
+          -- can be "telescope", "fzf" or "select" (`vim.ui.select`)
+          -- it's recommended to use "telescope" or "fzf"
+          picker = "telescope",
+
+          lsp = {
+            -- `config` is passed to `vim.lsp.start_client(config)`
+            config = {
+              cmd = { "zk", "lsp" },
+              name = "zk",
+              -- on_attach = ...
+              -- etc, see `:h vim.lsp.start_client()`
+            },
+
+            -- automatically attach buffers in a zk notebook that match the given filetypes
+            auto_attach = {
+              enabled = true,
+              filetypes = { "markdown" },
+            },
+          },
+        })
+      end,
+    })
+
+    use({
+      "nvim-telescope/telescope-bibtex.nvim",
+      requires = {
+        { "nvim-telescope/telescope.nvim" },
+      },
     })
   end,
   config = {
