@@ -108,7 +108,7 @@ return require("packer").startup({
         "lukas-reineke/cmp-under-comparator",
         "saadparwaiz1/cmp_luasnip",
         "f3fora/cmp-spell",
-        "uga-rosa/cmp-dictionary",
+        -- "uga-rosa/cmp-dictionary",
       },
       config = function()
         require("plugins.cmp")
@@ -137,6 +137,17 @@ return require("packer").startup({
         require("plugins.treesitter")
       end,
     })
+
+    use({
+      "mfussenegger/nvim-dap",
+      config = function()
+        require("plugins.dap")
+      end,
+    })
+    use("rcarriga/nvim-dap-ui")
+    use("theHamsta/nvim-dap-virtual-text")
+    use("mfussenegger/nvim-dap-python")
+    use("nvim-telescope/telescope-dap.nvim")
 
     use({
       "folke/todo-comments.nvim",
