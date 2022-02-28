@@ -336,7 +336,7 @@ return require("packer").startup({
     use({
       "monaqa/dial.nvim",
       config = function()
-        require("plugins.dial")
+        -- require("plugins.dial")
       end,
     })
 
@@ -434,6 +434,14 @@ return require("packer").startup({
       requires = {
         { "nvim-telescope/telescope.nvim" },
       },
+    })
+
+    use({
+      "danymat/neogen",
+      config = function()
+        require("neogen").setup({})
+      end,
+      requires = "nvim-treesitter/nvim-treesitter",
     })
   end,
   config = {

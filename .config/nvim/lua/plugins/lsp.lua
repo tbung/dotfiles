@@ -118,6 +118,16 @@ lsp.sumneko_lua.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
+require'lspconfig'.cssls.setup {
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+}
+require'lspconfig'.html.setup {
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+}
+require'lspconfig'.jsonls.setup {
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+}
+
 -- require("grammar-guard").init()
 -- lsp.grammar_guard.setup({
 --   cmd = { vim.fn.stdpath("data") .. "/lsp_servers/ltex/ltex-ls/bin/ltex-ls" },
