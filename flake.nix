@@ -1,0 +1,48 @@
+{
+  description = "A very basic flake";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+  };
+
+  outputs = { self, nixpkgs, home-manager, darwin, neovim-nightly-overlay }@inputs:
+    {
+
+      darwinConfigurations."e230-mb001" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          inputs.home-manager.darwinModules.home-manager
+          {
+            nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
+          }
+          ./configuration.nix
+        ];
+      };
+
+      homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
+        # Specify the path to your home configuration here
+        configuration = import ./nix/linux.nix;
+
+        system = "x86_64-linux";
+        # Update the state version as needed.
+        # See the changelog here:
+        # https://nix-community.github.io/home-manager/release-notes.html#sec-release-21.05
+        stateVersion = "21.11";
+
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
+      };
+    };
+}
