@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/zsh
 
 if [[ $# -eq 1 ]]; then
     selected=$1
@@ -21,8 +21,3 @@ if [[ $id == 'null' ]]; then
 else
     kitty @focus-tab -m "id:$id"
 fi
-# if [[ -z $TMUX ]]; then
-#     tmux attach-session -t $selected_name
-# else
-#     tmux switch-client -t $selected_name
-# fi
