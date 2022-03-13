@@ -50,6 +50,7 @@ with pkgs;
     lsd
     zoxide
     delta
+    bat
 
     jq
     pandoc
