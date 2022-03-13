@@ -354,6 +354,7 @@ return require("packer").startup({
       requires = "nvim-lua/plenary.nvim",
       config = function()
         require("neogit").setup({
+          kind = "split",
           signs = {
             -- { CLOSED, OPENED }
             section = { "", "" },
