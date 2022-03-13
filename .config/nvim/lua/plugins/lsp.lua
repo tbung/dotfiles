@@ -89,7 +89,7 @@ lsp.sumneko_lua.setup({
   -- actually a wrapper script, see
   -- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#sumneko_lua
   -- for alternative with manual install
-  cmd = { "/usr/bin/lua-language-server" },
+  -- cmd = { "~/.local/share/nvim/lsp_servers/sumneko_lua" },
   settings = {
     Lua = {
       runtime = {
@@ -107,6 +107,7 @@ lsp.sumneko_lua.setup({
         library = {
           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
           [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+          [vim.fn.expand("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations")] = true,
         },
       },
       -- Do not send telemetry data containing a randomized but unique identifier
@@ -128,6 +129,9 @@ require'lspconfig'.jsonls.setup {
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 }
 
+require'lspconfig'.rnix.setup{
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+}
 -- require("grammar-guard").init()
 -- lsp.grammar_guard.setup({
 --   cmd = { vim.fn.stdpath("data") .. "/lsp_servers/ltex/ltex-ls/bin/ltex-ls" },
