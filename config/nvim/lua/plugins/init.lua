@@ -354,6 +354,7 @@ return require("packer").startup({
       requires = "nvim-lua/plenary.nvim",
       config = function()
         require("neogit").setup({
+          disable_commit_confirmation = true,
           kind = "split",
           signs = {
             -- { CLOSED, OPENED }
