@@ -30,25 +30,34 @@ vim.g.tokyonight_style = "night"
 vim.g.tokyonight_italic_functions = true
 vim.cmd("colorscheme tokyonight")
 
-vim.cmd([[
-augroup highlight_yank
-    autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
-augroup END
-]])
+local id = vim.api.nvim_create_augroup("highlight_yank", {})
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    require("vim.highlight").on_yank({ timeout = 40 })
+  end,
+  group = id,
+})
 
-vim.cmd([[
-augroup terminal_settings
-    autocmd!
-    autocmd TermOpen * setlocal nospell nonumber norelativenumber signcolumn=no
-augroup END
-]])
+id = vim.api.nvim_create_augroup("terminal_settings", {})
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    vim.opt_local.spell = false
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = "no"
+  end,
+  group = id,
+})
 
-vim.cmd([[
-augroup packer_user_config
-autocmd!
-autocmd BufWritePost $XDG_CONFIG_HOME/nvim/lua/plugins/*.lua source <afile> | PackerCompile
-autocmd BufWritePost $HOME/Projects/dotfiles/.config/nvim/lua/plugins/*.lua source <afile> | PackerCompile
-autocmd BufWritePost ~//.dotfiles/./.config/nvim/lua/plugins/*.lua source <afile> | PackerCompile  " needed until plenary's path normalize is fixed
-augroup end
-]])
+id = vim.api.nvim_create_augroup("packer_user_config", {})
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = {
+    "$XDG_CONFIG_HOME/nvim/lua/plugins/*.lua",
+    "$HOME/Projects/dotfiles/config/nvim/lua/plugins/*.lua",
+    "config/nvim/lua/plugins/*.lua",
+    -- only needed till plenary's path normalize is fixed
+    "~//.dotfiles/./config/nvim/lua/plugins/*.lua",
+  },
+  command = [[ source ~/.config/nvim/lua/plugins/init.lua | source <afile> | PackerCompile ]],
+  group = id,
+})
