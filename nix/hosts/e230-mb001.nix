@@ -18,12 +18,12 @@
   services.nix-daemon.enable = true;
 
   nix = {
-      package = pkgs.nixUnstable;
-      extraOptions = ''
-        system = aarch64-darwin
-        extra-platforms = aarch64-darwin x86_64-darwin
-        experimental-features = nix-command flakes
-      '';
+    package = pkgs.nixUnstable;
+    extraOptions = ''
+      system = aarch64-darwin
+      extra-platforms = aarch64-darwin x86_64-darwin
+      experimental-features = nix-command flakes
+    '';
   };
 
   # Create /etc/bashrc that loads the nix-darwin environment.
@@ -47,6 +47,9 @@
       noLock = true;
     };
     taps = [ "homebrew/cask" ];
+    brews = [
+      "openconnect"
+    ];
     casks = [
       "brave-browser"
       "firefox"

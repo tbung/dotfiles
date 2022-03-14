@@ -101,6 +101,15 @@ with pkgs;
       # Backspace should work as in vim
       bindkey -v '^?' backward-delete-char
       KEYTIMEOUT=1
+
+      function dkfz-vpn-up() {
+        echo "Starting the vpn ..."
+        sudo openconnect --background --user=t974t gate.dkfz-heidelberg.de
+      }
+
+      function dkfz-vpn-down() {
+        sudo kill -2 `pgrep openconnect`
+      }
     '';
 
     defaultKeymap = "viins";
