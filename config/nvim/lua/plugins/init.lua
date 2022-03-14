@@ -87,7 +87,7 @@ return require("packer").startup({
       "neovim/nvim-lspconfig",
       requires = {
         "jose-elias-alvarez/null-ls.nvim",
-        "ray-x/lsp_signature.nvim",
+        -- "ray-x/lsp_signature.nvim",
         "onsails/lspkind-nvim",
         "williamboman/nvim-lsp-installer",
       },
@@ -99,15 +99,17 @@ return require("packer").startup({
     use({
       "hrsh7th/nvim-cmp",
       requires = {
-        "hrsh7th/cmp-nvim-lsp",
+        "f3fora/cmp-spell",
         "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-nvim-lua",
-        -- "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-emoji",
+        "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-nvim-lsp-document-symbol",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        "hrsh7th/cmp-nvim-lua",
+        "hrsh7th/cmp-path",
         "lukas-reineke/cmp-under-comparator",
         "saadparwaiz1/cmp_luasnip",
-        "f3fora/cmp-spell",
       },
       config = function()
         require("plugins.cmp")

@@ -26,8 +26,6 @@ highlight DiagnosticUnderlineHint gui=undercurl
   end
 
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  require("lsp_signature").on_attach()
 end
 
 require("null-ls").setup({
@@ -43,13 +41,13 @@ require("null-ls").setup({
     require("null-ls").builtins.formatting.stylua,
 
     require("null-ls").builtins.diagnostics.misspell.with({
-        filetypes = { "tex", "markdown" },
+      filetypes = { "tex", "markdown" },
     }),
     require("null-ls").builtins.diagnostics.write_good.with({
-        filetypes = { "tex", "markdown" },
+      filetypes = { "tex", "markdown" },
     }),
     require("null-ls").builtins.diagnostics.proselint.with({
-        filetypes = { "tex", "markdown" },
+      filetypes = { "tex", "markdown" },
     }),
     require("null-ls").builtins.formatting.prettier,
   },
@@ -83,6 +81,29 @@ lsp.ccls.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
+local runtime_path = vim.split(package.path, ";")
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+local function get_lua_runtime()
+  local result = {}
+  for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+    local lua_path = path .. "/lua/"
+    if vim.fn.isdirectory(lua_path) then
+      result[lua_path] = true
+    end
+  end
+
+  -- This loads the `lua` files from nvim into the runtime.
+  result[vim.fn.expand("$VIMRUNTIME/lua")] = true
+
+  -- TODO: Figure out how to get these to work...
+  --  Maybe we need to ship these instead of putting them in `src`?...
+  result[vim.fn.expand("~/build/neovim/src/nvim/lua")] = true
+
+  return result
+end
+
 lsp.sumneko_lua.setup({
   on_attach = on_attach,
   -- This assume lls is install like it is on arch, where this bin is
@@ -96,20 +117,26 @@ lsp.sumneko_lua.setup({
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = "LuaJIT",
         -- Setup your lua path
-        path = vim.split(package.path, ";"),
+        -- path = runtime_path,
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
         globals = { "vim" },
       },
       workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = {
-          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-          [vim.fn.expand("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations")] = true,
-        },
+        library = get_lua_runtime(),
+        maxPreload = 10000,
+        preloadFileSize = 10000,
       },
+      -- workspace = {
+      --   -- Make the server aware of Neovim runtime files
+      --   library = vim.api.nvim_get_runtime_file("", true),
+      --   -- library = {
+      --   --   [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+      --   --   [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+      --   --   [vim.fn.expand("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations")] = true,
+      --   -- },
+      -- },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
         enable = false,
@@ -119,19 +146,19 @@ lsp.sumneko_lua.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
-require'lspconfig'.cssls.setup {
+require("lspconfig").cssls.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-}
-require'lspconfig'.html.setup {
+})
+require("lspconfig").html.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-}
-require'lspconfig'.jsonls.setup {
+})
+require("lspconfig").jsonls.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-}
+})
 
-require'lspconfig'.rnix.setup{
+require("lspconfig").rnix.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-}
+})
 -- require("grammar-guard").init()
 -- lsp.grammar_guard.setup({
 --   cmd = { vim.fn.stdpath("data") .. "/lsp_servers/ltex/ltex-ls/bin/ltex-ls" },
