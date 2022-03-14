@@ -357,6 +357,7 @@ return require("packer").startup({
       config = function()
         require("neogit").setup({
           disable_commit_confirmation = true,
+          disable_builtin_notifications = true,
           kind = "split",
           signs = {
             -- { CLOSED, OPENED }
