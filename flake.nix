@@ -32,14 +32,34 @@
       };
 
       homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
+        username = "t974t";
+        homeDirectory = "/home/t974t";
         # Specify the path to your home configuration here
-        configuration = import ./nix/linux.nix;
+        configuration = { pkgs, config, ... }:
+            {
+              imports = [
+                  {
+                      nixpkgs = {
+                          overlays = [ neovim-nightly-overlay.overlay ];
+                          config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+                              "obsidian"
+                                  "vscode"
+                                  "slack"
+                                  "zoom"
+                                  "spotify"
+                                  "spotify-unwrapped"
+                          ];
+                      };
+                  }
+                  ./nix/linux.nix
+              ];
+              };
 
         system = "x86_64-linux";
         # Update the state version as needed.
         # See the changelog here:
         # https://nix-community.github.io/home-manager/release-notes.html#sec-release-21.05
-        stateVersion = "21.11";
+        stateVersion = "22.05";
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
