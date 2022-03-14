@@ -36,24 +36,24 @@
         homeDirectory = "/home/t974t";
         # Specify the path to your home configuration here
         configuration = { pkgs, config, ... }:
-            {
-              imports = [
-                  {
-                      nixpkgs = {
-                          overlays = [ neovim-nightly-overlay.overlay ];
-                          config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-                              "obsidian"
-                                  "vscode"
-                                  "slack"
-                                  "zoom"
-                                  "spotify"
-                                  "spotify-unwrapped"
-                          ];
-                      };
-                  }
-                  ./nix/linux.nix
-              ];
-              };
+          {
+            imports = [
+              {
+                nixpkgs = {
+                  overlays = [ neovim-nightly-overlay.overlay ];
+                  config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+                    "obsidian"
+                    "vscode"
+                    "slack"
+                    "zoom"
+                    "spotify"
+                    "spotify-unwrapped"
+                  ];
+                };
+              }
+              ./nix/linux.nix
+            ];
+          };
 
         system = "x86_64-linux";
         # Update the state version as needed.
