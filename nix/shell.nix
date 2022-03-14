@@ -36,8 +36,6 @@ with pkgs;
       gps = "git push";
       gpl = "git pull";
 
-      tmux = "tmux -f $HOME/.config/tmux/tmux.conf";
-
       lsd = "lsd -lah";
     };
 

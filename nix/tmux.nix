@@ -7,7 +7,7 @@ with pkgs;
   programs.tmux = {
     enable = true;
 
-    shell = "zsh";
+    shell = "${pkgs.zsh.outPath}/bin/zsh";
     terminal = "xterm-kitty";
 
     baseIndex = 1;
@@ -15,7 +15,7 @@ with pkgs;
     escapeTime = 0;
     keyMode = "vi";
 
-    newSession = true;
+    # newSession = true;
 
     extraConfig = builtins.readFile ../config/tmux/tmux.conf;
   };
