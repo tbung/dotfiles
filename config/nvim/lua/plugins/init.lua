@@ -271,8 +271,8 @@ return require("packer").startup({
       "kyazdani42/nvim-tree.lua",
       requires = "kyazdani42/nvim-web-devicons",
       config = function()
-        vim.g.nvim_tree_quit_on_open = 1
         require("nvim-tree").setup({
+          quit_on_open = 1,
           auto_close = true,
           diagnostics = {
             enable = true,
