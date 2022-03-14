@@ -48,16 +48,15 @@
     };
     taps = [ "homebrew/cask" ];
     casks = [
-      # "brave-browser"
-      # "calibre"
-      # "firefox"
+      "brave-browser"
+      "firefox"
       "gimp"
       "hammerspoon"
       "inkscape"
       "kitty"
       "macfuse"
-      # "obsidian"
-      # "scroll-reverser"
+      "obsidian"
+      "scroll-reverser"
       "slack"
       "spotify"
       "visual-studio-code"
