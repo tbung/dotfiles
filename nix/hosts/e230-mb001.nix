@@ -36,7 +36,7 @@
 
   home-manager = {
     useGlobalPkgs = true;
-    users.tillb = import ./nix/macos.nix;
+    users.tillb = import ../macos.nix;
   };
 
   homebrew = {

@@ -27,7 +27,7 @@
           {
             nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
           }
-          ./configuration.nix
+          ./nix/hosts/e230-mb001.nix
         ];
       };
 
