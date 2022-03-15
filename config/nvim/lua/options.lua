@@ -52,11 +52,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
 id = vim.api.nvim_create_augroup("packer_user_config", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = {
-    "$XDG_CONFIG_HOME/nvim/lua/plugins/*.lua",
-    "$HOME/Projects/dotfiles/config/nvim/lua/plugins/*.lua",
+    vim.fn.expand("$XDG_CONFIG_HOME/nvim/lua/plugins/*.lua"),
+    vim.fn.expand("$HOME/Projects/dotfiles/config/nvim/lua/plugins/*.lua"),
     "config/nvim/lua/plugins/*.lua",
-    -- only needed till plenary's path normalize is fixed
-    "~//.dotfiles/./config/nvim/lua/plugins/*.lua",
   },
   command = [[ source ~/.config/nvim/lua/plugins/init.lua | source <afile> | PackerCompile ]],
   group = id,
