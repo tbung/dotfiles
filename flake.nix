@@ -64,5 +64,17 @@
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
       };
+
+      nixosConfigurations.deep-thought = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = inputs;
+        modules = [
+          {
+            nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
+          }
+          ./nix/hosts/deep-thought/configuration.nix
+        ];
+      };
+    
     };
 }
