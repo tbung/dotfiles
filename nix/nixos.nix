@@ -29,6 +29,7 @@
     cmake
     gnumake
 
+    papirus-icon-theme
     gnome.gnome-tweaks
 
     noto-fonts

@@ -85,8 +85,16 @@
       "zoom"
       "spotify"
       "spotify-unwrapped"
+      "nvidia-x11"
+      "nvidia-settings"
     ];
   };
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.enable = true;
+
+  # Optionally, you may need to select the appropriate driver version for your specific GPU.
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -96,6 +104,7 @@
     git
     firefox
     gnomeExtensions.appindicator
+    gnomeExtensions.blur-my-shell
   ];
 
   home-manager = {
