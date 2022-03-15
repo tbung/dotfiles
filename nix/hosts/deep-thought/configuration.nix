@@ -85,8 +85,13 @@
       "zoom"
       "spotify"
       "spotify-unwrapped"
+
       "nvidia-x11"
       "nvidia-settings"
+
+      "steam"
+      "steam-original"
+      "steam-runtime"
     ];
   };
 
@@ -106,6 +111,8 @@
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
   ];
+
+  programs.steam.enable = true;
 
   home-manager = {
     useGlobalPkgs = true;

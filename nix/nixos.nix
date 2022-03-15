@@ -48,6 +48,8 @@
     zoom-us
     zotero
     discord
+
+    neofetch
   ];
 
   home.sessionVariables = {
