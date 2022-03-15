@@ -34,6 +34,9 @@
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
 
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
+
   home-manager = {
     useGlobalPkgs = true;
     users.tillb = import ../macos.nix;
