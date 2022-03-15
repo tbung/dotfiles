@@ -54,3 +54,7 @@ home-manager switch --flake '.#linux'
 ```bash
 nix flake update
 ```
+
+## Notes
+
+If gnome doesn't show the user by itself, set `systemUser = false` in `/var/lib/AccountsService/users/<user>`.

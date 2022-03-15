@@ -15,6 +15,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.plymouth.enable = true;
 
   networking.hostName = "deep-thought"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -62,10 +63,18 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  environment.pathsToLink = [ "/share/zsh" ];
+  environment.shells = [ pkgs.zsh ];
+
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tillb = {
+    createHome = true;
+    description = "Till Bungert";
     isNormalUser = true;
+    isSystemUser = false;
     shell = pkgs.zsh;
+    useDefaultShell = false;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
 
@@ -110,6 +119,8 @@
     firefox
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
+    evolution
+    evolution-ews
   ];
 
   programs.steam.enable = true;
