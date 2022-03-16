@@ -129,6 +129,7 @@
     firefox
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
+    openconnect
     evolution
     evolution-ews
   ];
