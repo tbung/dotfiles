@@ -13,7 +13,20 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot = {
+  #   enable = true;
+  #   configurationLimit = 8;
+  #   consoleMode = "max";
+  # };
+
+  # Use the Grub2 boot loader.
+  boot.loader.grub = {
+    enable = true;
+    useOSProber = true;
+    device = "nodev";
+    efiSupport = true;
+    gfxmodeEfi = "2560x1440";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.plymouth.enable = true;
 
