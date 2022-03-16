@@ -197,7 +197,6 @@ return require("packer").startup({
         vim.g.jupytext_fmt = "py:percent"
       end,
     })
-    use({ "tikhomirov/vim-glsl", ft = { "glsl" } })
     use("lervag/vimtex")
     use("fladson/vim-kitty")
     use({
