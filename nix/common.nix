@@ -76,8 +76,8 @@ with pkgs;
     BROWSER = "brave";
     TERMINAL = "kitty";
 
-    EDITOR = "${pkgs.neovim-nightly}/nvim";
-    VISUAL = "${pkgs.neovim-nightly}/nvim";
+    EDITOR = "${pkgs.neovim-nightly}/bin/nvim";
+    VISUAL = "${pkgs.neovim-nightly}/bin/nvim";
     GITLAB_HOST = "gitlab.hzdr.de";
     ZK_NOTEBOOK_DIR = "$HOME/wiki";
   };
