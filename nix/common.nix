@@ -80,6 +80,8 @@ with pkgs;
     VISUAL = "${pkgs.neovim-nightly}/bin/nvim";
     GITLAB_HOST = "gitlab.hzdr.de";
     ZK_NOTEBOOK_DIR = "$HOME/wiki";
+
+    MANPAGER="nvim +Man!";
   };
 
   home.sessionPath = [
