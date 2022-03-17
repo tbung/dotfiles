@@ -20,6 +20,7 @@ with pkgs;
       # hide_window_decorations = true;
       window_padding_width = 10;
       allow_remote_control = true;
+      shell_integration = "enabled";
     };
 
     keybindings = {
