@@ -83,6 +83,12 @@
     cpu.intel.updateMicrocode = true;
   };
 
+  fileSystems."/media/alexandria" = {
+    device = "/dev/disk/by-label/alexandria";
+    fsType = "btrfs";
+    options = [ "compress=zstd" "noatime" "noautodefrag" ];
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
