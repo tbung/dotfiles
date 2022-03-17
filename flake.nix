@@ -75,6 +75,6 @@
           ./nix/hosts/deep-thought/configuration.nix
         ];
       };
-    
+
     };
 }

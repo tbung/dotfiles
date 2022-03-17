@@ -23,7 +23,14 @@
       system = aarch64-darwin
       extra-platforms = aarch64-darwin x86_64-darwin
       experimental-features = nix-command flakes
+      auto-optimise-store = true
     '';
+    binaryCaches = [
+      "https://nix-community.cachix.org"
+    ];
+    binaryCachePublicKeys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
   };
 
   # Create /etc/bashrc that loads the nix-darwin environment.
