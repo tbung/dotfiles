@@ -41,6 +41,7 @@
     gimp
     inkscape
     kitty
+    mpv
     obsidian
     slack
     spotify

@@ -68,6 +68,7 @@
       "inkscape"
       "kitty"
       "macfuse"
+      "mpv"
       "obsidian"
       "scroll-reverser"
       "slack"

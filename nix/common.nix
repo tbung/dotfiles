@@ -54,6 +54,7 @@ with pkgs;
 
     jq
     pandoc
+    ffmpeg-full
 
     zsh-powerlevel10k
     zsh-autosuggestions
