@@ -15,6 +15,8 @@ with pkgs;
     escapeTime = 0;
     keyMode = "vi";
 
+    prefix = "C-space";
+
     # newSession = true;
 
     extraConfig = builtins.readFile ../config/tmux/tmux.conf;

@@ -24,6 +24,7 @@ with pkgs;
     };
 
     keybindings = {
+      "ctrl+space>ctrl+space" = "send_text all \\x00";
       "ctrl+space>f" = "launch --type=overlay --copy-env kitty-sessionizer";
       "ctrl+space>s" = "launch --cwd=current";
       "ctrl+space>t" = "launch --type=tab";
