@@ -62,6 +62,7 @@
     ];
     casks = [
       "brave-browser"
+      "eurkey"
       "firefox"
       "gimp"
       "hammerspoon"
