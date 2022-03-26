@@ -35,28 +35,13 @@
 
     brave
     firefox
-    gimp
-    inkscape
     kitty
-    mpv
-    obsidian
-    slack
-    spotify
-    vscode
-    zoom-us
-    zotero
-    discord
 
     neofetch
   ];
 
   home.sessionVariables = {
     TERMINFO_DIRS = "${pkgs.kitty.terminfo.outPath}/share/terminfo";
-  };
-
-  programs.zsh.sessionVariables = {
-    GNOME_KEYRING_CONTROL = "/run/user/1000/keyring";
-    SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
   };
 
   programs.kitty = {
@@ -67,5 +52,21 @@
     };
   };
 
+  xdg.configFile."bspwm/bspwmrc".text = ''
+    #!/usr/bin/env sh
+
+    bspc monitor -d I II III IV V VI VII VIII IX X
+
+    bspc config border_width         2
+    bspc config window_gap          12
+
+    bspc config split_ratio          0.5
+    bspc config borderless_monocle   true
+    bspc config gapless_monocle      true
+
+    kitty &
+  '';
+
 }
+
 

@@ -157,6 +157,8 @@
     firefox
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
+    papirus-icon-theme
+    gnome.gnome-tweaks
     openconnect
     evolution
     evolution-ews
