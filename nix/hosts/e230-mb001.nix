@@ -59,9 +59,11 @@
     taps = [ "homebrew/cask" ];
     brews = [
       "openconnect"
+      "qemu"
     ];
     casks = [
       "brave-browser"
+      "docker"
       "eurkey"
       "firefox"
       "gimp"
@@ -74,6 +76,7 @@
       "scroll-reverser"
       "slack"
       "spotify"
+      "utm"
       "visual-studio-code"
       "zoom"
       "zotero"
