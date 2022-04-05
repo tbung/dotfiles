@@ -58,6 +58,7 @@
     };
     taps = [ "homebrew/cask" ];
     brews = [
+      "mosh"
       "openconnect"
       "qemu"
     ];
