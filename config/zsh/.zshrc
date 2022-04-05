@@ -25,16 +25,16 @@ bindkey '^f' _tmux_sessionizer
 
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE="/Users/tillb/mambaforge/bin/micromamba";
-export MAMBA_ROOT_PREFIX="/Users/tillb/mambaforge";
-__mamba_setup="$('/Users/tillb/mambaforge/bin/micromamba' shell hook --shell zsh --prefix '/Users/tillb/mambaforge' 2> /dev/null)"
+export MAMBA_ROOT_PREFIX="${HOME}/.mamba";
+export MAMBA_EXE="${MAMBA_ROOT_PREFIX}/bin/micromamba";
+__mamba_setup="$($MAMBA_ROOT_PREFIX'/bin/micromamba' shell hook --shell zsh --prefix $MAMBA_ROOT_PREFIX 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__mamba_setup"
 else
-    if [ -f "/Users/tillb/mambaforge/etc/profile.d/micromamba.sh" ]; then
-        . "/Users/tillb/mambaforge/etc/profile.d/micromamba.sh"
+    if [ -f "${MAMBA_ROOT_PREFIX}/etc/profile.d/micromamba.sh" ]; then
+        . "${MAMBA_ROOT_PREFIX}/etc/profile.d/micromamba.sh"
     else
-        export  PATH="/Users/tillb/mambaforge/bin:$PATH"  # extra space after export prevents interference from conda init
+        export  PATH="${MAMBA_ROOT_PREFIX}/bin:$PATH"  # extra space after export prevents interference from conda init
     fi
 fi
 unset __mamba_setup
