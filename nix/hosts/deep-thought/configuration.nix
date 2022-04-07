@@ -19,6 +19,8 @@
   #   consoleMode = "max";
   # };
 
+  boot.kernelParams = [ "intel_idle.max_cstate=1" "processor.max_cstate=1" ];
+
   # Use the Grub2 boot loader.
   boot.loader.grub = {
     enable = true;

@@ -17,7 +17,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  # home.stateVersion = "22.05";
+  home.stateVersion = "22.05";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -54,10 +54,10 @@
     TERMINFO_DIRS = "${pkgs.kitty.terminfo.outPath}/share/terminfo";
   };
 
-  programs.zsh.sessionVariables = {
-    GNOME_KEYRING_CONTROL = "/run/user/1000/keyring";
-    SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
-  };
+  # programs.zsh.sessionVariables = {
+  #   GNOME_KEYRING_CONTROL = "/run/user/1000/keyring";
+  #   SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
+  # };
 
   programs.kitty = {
     font.size = pkgs.lib.mkForce 14;
