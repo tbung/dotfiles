@@ -8,6 +8,7 @@
     ];
 
   boot.kernelParams = [ "intel_idle.max_cstate=1" "processor.max_cstate=1" ];
+  boot.binfmt.emulatedSystems = [ "armv6l-linux" ];
 
   # Use the Grub2 boot loader.
   boot.loader.grub = {
