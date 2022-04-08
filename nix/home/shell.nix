@@ -10,7 +10,7 @@ with pkgs;
     enableSyntaxHighlighting = true;
     enableCompletion = true;
     dotDir = ".config/zsh";
-    initExtraFirst = builtins.readFile ../config/zsh/.zshrc;
+    initExtraFirst = builtins.readFile ../../config/zsh/.zshrc;
     plugins = [
       {
         name = "powerlevel10k";
@@ -116,6 +116,6 @@ with pkgs;
   programs.zoxide.enable = true;
   programs.fzf.enable = true;
 
-  xdg.configFile."zsh/.p10k.zsh".source = ../config/zsh/.p10k.zsh;
+  xdg.configFile."zsh/.p10k.zsh".source = ../../config/zsh/.p10k.zsh;
 
 }

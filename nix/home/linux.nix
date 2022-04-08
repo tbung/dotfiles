@@ -23,7 +23,6 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    mosh
     brave
     firefox
     gimp

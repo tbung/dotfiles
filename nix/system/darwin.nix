@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
-
+{ inputs, config, pkgs, ... }:
 {
+  imports = [ ./common.nix ];
+
   users = {
     users.tillb = {
       name = "tillb";
@@ -46,12 +47,13 @@
 
   home-manager = {
     useGlobalPkgs = true;
-    users.tillb = import ../macos.nix;
+    users.tillb = import ../home/macos.nix;
   };
 
   homebrew = {
     enable = true;
     cleanup = "zap";
+    autoUpdate = true;
     global = {
       brewfile = true;
       noLock = true;

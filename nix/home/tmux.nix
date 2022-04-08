@@ -19,7 +19,7 @@ with pkgs;
 
     # newSession = true;
 
-    extraConfig = builtins.readFile ../config/tmux/tmux.conf;
+    extraConfig = builtins.readFile ../../config/tmux/tmux.conf;
   };
 
 }

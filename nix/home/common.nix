@@ -10,6 +10,10 @@ with pkgs;
     ./tmux.nix
   ];
 
+  home.stateVersion = "22.05";
+
+  programs.home-manager.enable = true;
+
   home.packages = [
     tmux
     htop
@@ -23,6 +27,7 @@ with pkgs;
       isort
     ]))
     nodejs
+    gcc
 
     rclone
 
@@ -77,8 +82,8 @@ with pkgs;
     BROWSER = "brave";
     TERMINAL = "kitty";
 
-    EDITOR = "${pkgs.neovim-nightly}/bin/nvim";
-    VISUAL = "${pkgs.neovim-nightly}/bin/nvim";
+    # EDITOR = "${pkgs.neovim-nightly}/bin/nvim";
+    # VISUAL = "${pkgs.neovim-nightly}/bin/nvim";
     GITLAB_HOST = "gitlab.hzdr.de";
     ZK_NOTEBOOK_DIR = "$HOME/wiki";
 
