@@ -34,6 +34,7 @@
 
       darwinConfigurations = {
 
+        # DKFZ MacBook
         e230-mb001 = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           inherit inputs;
@@ -47,50 +48,32 @@
 
       homeConfigurations = {
 
+        # DKFZ Workstation
         e230-pc33 = home-manager.lib.homeManagerConfiguration {
+          system = "x86_64-linux";
           username = "t974t";
           homeDirectory = "/home/t974t";
-          # Specify the path to your home configuration here
-          configuration = { pkgs, config, ... }:
-            {
-              imports = [
-                {
-                  nixpkgs = {
-                    overlays = [ neovim-nightly-overlay.overlay ];
-                    config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-                      "obsidian"
-                      "vscode"
-                      "slack"
-                      "zoom"
-                      "spotify"
-                      "spotify-unwrapped"
-                    ];
-                  };
-                }
-                ./nix/linux.nix
-              ];
-            };
-
-          system = "x86_64-linux";
-          # Update the state version as needed.
-          # See the changelog here:
-          # https://nix-community.github.io/home-manager/release-notes.html#sec-release-21.05
-          stateVersion = "22.05";
+          configuration = ./nix/home/anylinux.nix ;
         };
+
+        # Wireguard VPN Server
 
       };
 
       nixosConfigurations = {
+
+        # Main Workstation
         deep-thought = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = inputs;
+          specialArgs = { inherit inputs; };
           modules = [
-            {
-              nixpkgs.overlays = [ neovim-nightly-overlay.overlay ];
-            }
-            ./nix/hosts/deep-thought/configuration.nix
+            inputs.home-manager.nixosModule
+            ./nix/hosts/deep-thought
           ];
         };
+
+        # Home Hub
+
       };
 
     };

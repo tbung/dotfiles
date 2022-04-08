@@ -1,23 +1,11 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, home-manager, ... }:
+{ inputs, config, pkgs, home-manager, ... }:
 
 {
   imports =
     [
-      # Include the results of the hardware scan.
+      ../../system/common.nix
       ./hardware-configuration.nix
-      home-manager.nixosModule
     ];
-
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot = {
-  #   enable = true;
-  #   configurationLimit = 8;
-  #   consoleMode = "max";
-  # };
 
   boot.kernelParams = [ "intel_idle.max_cstate=1" "processor.max_cstate=1" ];
 
@@ -125,25 +113,6 @@
     };
   };
 
-  nixpkgs.config = {
-    allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-      "discord"
-      "obsidian"
-      "vscode"
-      "slack"
-      "zoom"
-      "spotify"
-      "spotify-unwrapped"
-
-      "nvidia-x11"
-      "nvidia-settings"
-
-      "steam"
-      "steam-original"
-      "steam-runtime"
-    ];
-  };
-
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
 
@@ -170,7 +139,7 @@
 
   home-manager = {
     useGlobalPkgs = true;
-    users.tillb = import ../../nixos.nix;
+    users.tillb = import ../../home/nixos.nix;
   };
 
   # Some programs need SUID wrappers, can be configured further or are

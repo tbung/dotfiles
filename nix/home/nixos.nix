@@ -54,11 +54,6 @@
     TERMINFO_DIRS = "${pkgs.kitty.terminfo.outPath}/share/terminfo";
   };
 
-  # programs.zsh.sessionVariables = {
-  #   GNOME_KEYRING_CONTROL = "/run/user/1000/keyring";
-  #   SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
-  # };
-
   programs.kitty = {
     font.size = pkgs.lib.mkForce 14;
 
