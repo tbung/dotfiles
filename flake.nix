@@ -75,6 +75,14 @@
         };
 
         # Home Hub
+        borg-queen = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
+            inputs.home-manager.nixosModule
+            ./nix/hosts/borg-queen/configuration.nix
+          ];
+        };
 
       };
 
