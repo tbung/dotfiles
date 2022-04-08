@@ -44,7 +44,7 @@ with pkgs;
     ccls
     rnix-lsp
     proselint
-    # texlive.combined.scheme-full
+    texlive.combined.scheme-full
 
     (nerdfonts.override { fonts = [ "VictorMono" ]; })
 

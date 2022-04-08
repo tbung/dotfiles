@@ -53,7 +53,9 @@
           system = "x86_64-linux";
           username = "t974t";
           homeDirectory = "/home/t974t";
-          configuration = ./nix/home/anylinux.nix ;
+          extraSpecialArgs = { inherit inputs; };
+          configuration = import ./nix/home/anylinux.nix;
+          stateVersion = "22.05";
         };
 
         # Wireguard VPN Server
