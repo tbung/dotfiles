@@ -18,13 +18,23 @@ with pkgs;
     tmux
     htop
     rsync
+    coreutils-full
 
     git
     git-lfs
 
     (python310.withPackages (pypkgs: with pypkgs; [
       pynvim
+      python-lsp-server
       isort
+      rope
+      pylint
+      mccabe
+      mypy
+      pylsp-mypy
+      pyls-isort
+      black
+      python-lsp-black
     ]))
     nodejs
     gcc
@@ -39,7 +49,6 @@ with pkgs;
     nodePackages.pyright
     nodePackages.prettier
     nodePackages.vscode-langservers-extracted
-    black
     stylua
     ccls
     rnix-lsp

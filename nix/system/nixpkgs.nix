@@ -1,6 +1,22 @@
 { inputs, config, lib, pkgs, ... }:
 {
-  nixpkgs.overlays = [ inputs.neovim-nightly-overlay.overlay ];
+  nixpkgs.overlays = [
+    inputs.neovim-nightly-overlay.overlay
+    (final: prev: rec {
+      python310 = prev.python310.override {
+        packageOverrides = final: prev: {
+          pylsp-mypy = prev.pylsp-mypy.overrideAttrs (old:
+          {
+            disabledTests = [
+              "test_multiple_workspaces"
+              "test_option_overrides_dmypy"
+            ];
+          });
+        };
+      };
+      python310Packages = python310.pkgs;
+    })
+  ];
   nixpkgs.config = {
     allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
       "discord"
