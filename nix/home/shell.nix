@@ -108,6 +108,21 @@ with pkgs;
       function dkfz-vpn-down() {
         sudo kill -2 `pgrep openconnect`
       }
+
+      if [ -n "$TMUX" ]; then
+        function refresh {
+          [[ -n "$(tmux show-environment | grep '^SSH_AUTH_SOCK')" ]] && export "$(tmux show-environment | grep '^SSH_AUTH_SOCK')"
+          [[ -n "$(tmux show-environment | grep '^SSH_CLIENT')" ]] && export "$(tmux show-environment | grep '^SSH_CLIENT')"
+          [[ -n "$(tmux show-environment | grep '^SSH_CONNECTION')" ]] && export "$(tmux show-environment | grep '^SSH_CONNECTION')"
+          [[ -n "$(tmux show-environment | grep '^DISPLAY')" ]] && export "$(tmux show-environment | grep '^DISPLAY')"
+        }
+      else
+        function refresh { }
+      fi
+
+      function preexec {
+        refresh
+      }
     '';
 
     defaultKeymap = "viins";
