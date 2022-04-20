@@ -60,3 +60,5 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   command = [[ source ~/.config/nvim/lua/plugins/init.lua | source <afile> | PackerCompile ]],
   group = id,
 })
+
+vim.api.nvim_create_user_command("UpdateEnv", function() require("tbung").update_ssh_env_from_tmux() end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
