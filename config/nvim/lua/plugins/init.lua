@@ -272,7 +272,6 @@ return require("packer").startup({
       config = function()
         require("nvim-tree").setup({
           quit_on_open = 1,
-          auto_close = true,
           diagnostics = {
             enable = true,
           },
