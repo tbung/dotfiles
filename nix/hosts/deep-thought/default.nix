@@ -129,8 +129,9 @@
     firefox
     gnomeExtensions.appindicator
     gnomeExtensions.blur-my-shell
-    papirus-icon-theme
+    gnomeExtensions.hide-top-bar
     gnome.gnome-tweaks
+    papirus-icon-theme
     openconnect
     evolution
     evolution-ews

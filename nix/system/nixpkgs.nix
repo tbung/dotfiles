@@ -18,20 +18,21 @@
     })
   ];
   nixpkgs.config = {
-    allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
-      "discord"
-      "nvidia-settings"
-      "nvidia-x11"
-      "obsidian"
-      "slack"
-      "spotify"
-      "spotify-unwrapped"
-      "steam"
-      "steam-original"
-      "steam-runtime"
-      "vscode"
-      "zoom"
-    ];
+    allowUnfree = true;
+    # allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    #   "discord"
+    #   "nvidia-settings"
+    #   "nvidia-x11"
+    #   "obsidian"
+    #   "slack"
+    #   "spotify"
+    #   "spotify-unwrapped"
+    #   "steam"
+    #   "steam-original"
+    #   "steam-runtime"
+    #   "vscode"
+    #   "zoom"
+    # ];
   };
 
   # nix = {

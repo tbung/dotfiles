@@ -42,7 +42,6 @@
     obsidian
     slack
     spotify
-    vscode
     zoom-us
     zotero
     discord
@@ -60,6 +59,22 @@
     settings = {
       hide_window_decorations = true;
     };
+  };
+
+  programs.vscode = {
+    enable = true;
+
+    extensions = with pkgs.vscode-extensions; [
+      ms-vsliveshare.vsliveshare
+      ms-python.python
+      ms-vscode-remote.remote-ssh
+    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+      name = "tokyo-night";
+      publisher = "enkia";
+      version = "0.8.4";
+      sha256 = "878984f95bffa3633190d6f7913f602de0cd08643902fc91e67b22ddc1144b95";
+    }];
+
   };
 
 }
