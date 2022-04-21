@@ -6,7 +6,7 @@ cmp.setup({
       require("luasnip").lsp_expand(args.body)
     end,
   },
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -16,7 +16,7 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ["<CR>"] = cmp.mapping.confirm({ select = false }),
-  },
+  }),
   sources = cmp.config.sources({
     { name = "nvim_lsp_signature_help" },
   }, {
@@ -49,6 +49,7 @@ cmp.setup.cmdline("/", {
     { name = "nvim_lsp_document_symbol" },
     { name = "buffer" },
   },
+  mapping = cmp.mapping.preset.cmdline({})
 })
 cmp.setup.cmdline(":", {
   sources = cmp.config.sources({
@@ -56,6 +57,7 @@ cmp.setup.cmdline(":", {
   }, {
     { name = "cmdline" },
   }),
+  mapping = cmp.mapping.preset.cmdline({})
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
