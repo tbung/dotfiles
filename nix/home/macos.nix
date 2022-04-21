@@ -9,7 +9,6 @@
   home.homeDirectory = "/Users/tillb";
 
   home.packages = with pkgs; [
-    coreutils
   ];
 
   home.sessionPath = [
