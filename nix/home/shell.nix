@@ -130,6 +130,12 @@ with pkgs;
 
   programs.zoxide.enable = true;
   programs.fzf.enable = true;
+  programs.direnv = {
+    enable = true;
+    config = {
+      global.load_dotenv = true;
+    };
+  };
 
   xdg.configFile."zsh/.p10k.zsh".source = ../../config/zsh/.p10k.zsh;
 
