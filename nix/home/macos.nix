@@ -18,7 +18,7 @@
   # Kitty is installed via homebrew
   programs.kitty = {
     package = pkgs.runCommand "kitty-0.0.0" { } "mkdir $out";
-    font.size = pkgs.lib.mkForce 16;
+    font.size = pkgs.lib.mkForce 18;
   };
 
   # On macos, only the builtin ssh uses the keychain
