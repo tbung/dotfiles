@@ -483,6 +483,8 @@ return require("packer").startup({
         })
       end,
     })
+
+    use("simrat39/symbols-outline.nvim")
   end,
   config = {
     -- Move to lua dir so impatient.nvim can cache it
