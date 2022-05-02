@@ -4,7 +4,7 @@ local condition = require("galaxyline.condition")
 local gls = gl.section
 local Path = require("plenary.path")
 
-gl.short_line_list = { "NvimTree", "vista", "dbui", "packer", "Trouble" }
+gl.short_line_list = { "NvimTree", "vista", "dbui", "packer", "Trouble", "starter" }
 
 gls.left = {}
 

@@ -184,7 +184,7 @@ return require("packer").startup({
           char = "│",
           use_treesitter = true,
           buftype_exclude = { "terminal" },
-          filetype_exclude = { "dashboard", "alpha" },
+          filetype_exclude = { "dashboard", "alpha", "starter" },
         })
       end,
     })
@@ -271,12 +271,13 @@ return require("packer").startup({
       requires = "kyazdani42/nvim-web-devicons",
       config = function()
         require("nvim-tree").setup({
-          quit_on_open = 1,
+          actions = {
+            open_file = {
+              quit_on_open = true,
+            },
+          },
           diagnostics = {
             enable = true,
-          },
-          view = {
-            auto_resize = true,
           },
         })
       end,
@@ -291,13 +292,6 @@ return require("packer").startup({
         require("plugins.statusline")
       end,
       requires = "kyazdani42/nvim-web-devicons",
-    })
-
-    use({
-      "goolord/alpha-nvim",
-      config = function()
-        require("alpha").setup(require("plugins.dashboard").opts)
-      end,
     })
 
     use({
@@ -485,6 +479,13 @@ return require("packer").startup({
     })
 
     use("simrat39/symbols-outline.nvim")
+
+    use({
+      "echasnovski/mini.nvim",
+      config = function()
+        require("mini.starter").setup()
+      end
+    })
   end,
   config = {
     -- Move to lua dir so impatient.nvim can cache it
