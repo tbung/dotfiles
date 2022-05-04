@@ -86,7 +86,10 @@ return require("packer").startup({
     use({
       "neovim/nvim-lspconfig",
       requires = {
-        "jose-elias-alvarez/null-ls.nvim",
+        {
+          "jose-elias-alvarez/null-ls.nvim",
+          commit = "bd9dfc6015241334c140fb065445ba9443e6de14",
+        },
         -- "ray-x/lsp_signature.nvim",
         "onsails/lspkind-nvim",
         "williamboman/nvim-lsp-installer",

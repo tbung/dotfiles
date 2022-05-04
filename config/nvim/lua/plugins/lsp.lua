@@ -53,7 +53,7 @@ require("null-ls").setup({
   },
   on_attach = on_attach,
   autostart = true,
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  -- capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
 
 lsp.pyright.setup({
