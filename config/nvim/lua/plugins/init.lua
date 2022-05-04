@@ -290,10 +290,12 @@ return require("packer").startup({
     use("sindrets/diffview.nvim")
 
     use({
-      "glepnir/galaxyline.nvim",
-      branch = "main",
+      "feline-nvim/feline.nvim",
       config = function()
-        require("plugins.statusline")
+        -- require("plugins.statusline")
+        require("feline").setup({
+          components = require('catppuccin.core.integrations.feline'),
+        })
       end,
       requires = "kyazdani42/nvim-web-devicons",
     })
