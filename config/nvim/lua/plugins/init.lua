@@ -36,6 +36,7 @@ return require("packer").startup({
 
     -- Colors
     use("folke/tokyonight.nvim")
+    use({ "catppuccin/nvim", as = "catppuccin" })
 
     -- Required by almost all modern plugins
     use("nvim-lua/popup.nvim")
@@ -487,7 +488,7 @@ return require("packer").startup({
       "echasnovski/mini.nvim",
       config = function()
         require("mini.starter").setup()
-      end
+      end,
     })
   end,
   config = {

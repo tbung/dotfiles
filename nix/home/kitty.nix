@@ -8,7 +8,8 @@ with pkgs;
 
   programs.kitty = {
     enable = true;
-    theme = "Tokyo Night";
+    # theme = "Tokyo Night";
+    theme = "Catppuccin";
     font = {
       name = "VictorMono Nerd Font";
       size = 15;
