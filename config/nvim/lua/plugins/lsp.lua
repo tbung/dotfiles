@@ -106,18 +106,11 @@ end
 
 lsp.sumneko_lua.setup({
   on_attach = on_attach,
-  -- This assume lls is install like it is on arch, where this bin is
-  -- actually a wrapper script, see
-  -- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#sumneko_lua
-  -- for alternative with manual install
-  -- cmd = { "~/.local/share/nvim/lsp_servers/sumneko_lua" },
   settings = {
     Lua = {
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
         version = "LuaJIT",
-        -- Setup your lua path
-        -- path = runtime_path,
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
@@ -128,15 +121,6 @@ lsp.sumneko_lua.setup({
         maxPreload = 10000,
         preloadFileSize = 10000,
       },
-      -- workspace = {
-      --   -- Make the server aware of Neovim runtime files
-      --   library = vim.api.nvim_get_runtime_file("", true),
-      --   -- library = {
-      --   --   [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-      --   --   [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-      --   --   [vim.fn.expand("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations")] = true,
-      --   -- },
-      -- },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
         enable = false,
@@ -159,31 +143,7 @@ require("lspconfig").jsonls.setup({
 require("lspconfig").rnix.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
--- require("grammar-guard").init()
--- lsp.grammar_guard.setup({
---   cmd = { vim.fn.stdpath("data") .. "/lsp_servers/ltex/ltex-ls/bin/ltex-ls" },
---   settings = {
---     ltex = {
---       enabled = { "latex", "tex", "bib", "markdown", "markdown.pandoc" },
---       dictionary = {
---         ["en-US"] = Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines(),
---       },
---     },
---   },
---   on_attach = on_attach,
---   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
--- })
---
--- function update_ltex()
---   local util = require("lspconfig.util")
---   local bufnr = vim.api.nvim_get_current_buf()
---   local client = util.get_active_client_by_name(bufnr, "grammar_guard")
---   client.config.settings.ltex.dictionary["en-US"] = vim.tbl_extend(
---     "force",
---     client.config.settings.ltex.dictionary["en-US"],
---     Path:new(vim.fn.stdpath("config") .. "/spell/en.utf-8.add"):readlines()
---   )
---   client.notify("workspace/didChangeConfiguration", {
---     settings = client.config.settings,
---   })
--- end
+
+require("lspconfig").rust_analyzer.setup({
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+})
