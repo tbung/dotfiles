@@ -25,6 +25,8 @@
       extra-platforms = aarch64-darwin x86_64-darwin
       experimental-features = nix-command flakes
       auto-optimise-store = true
+      keep-derivations = true
+      keep-outputs = true
     '';
     binaryCaches = [
       "https://nix-community.cachix.org"
