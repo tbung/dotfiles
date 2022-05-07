@@ -25,16 +25,7 @@ with pkgs;
 
     (python310.withPackages (pypkgs: with pypkgs; [
       pynvim
-      python-lsp-server
-      isort
-      rope
-      pylint
-      mccabe
-      mypy
-      pylsp-mypy
-      pyls-isort
-      black
-      python-lsp-black
+      ipython
     ]))
     nodejs
     gcc
@@ -76,13 +67,13 @@ with pkgs;
     fzf
     zk
 
-    (weechat.override
-      {
-        configure = { availablePlugins, ... }: {
-          scripts = with pkgs.weechatScripts;
-            [ weechat-matrix ];
-        };
-      })
+    # (weechat.override
+    #   {
+    #     configure = { availablePlugins, ... }: {
+    #       scripts = with pkgs.weechatScripts;
+    #         [ weechat-matrix ];
+    #     };
+    #   })
   ];
 
 
