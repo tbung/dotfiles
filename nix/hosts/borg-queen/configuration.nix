@@ -44,8 +44,9 @@
   networking.networkmanager.enable = true;
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  sound.enable = false;
+  hardware.pulseaudio.enable = false;
+  hardware.bluetooth.enable = false;
 
   users.users.tillb = {
     createHome = true;
@@ -92,12 +93,7 @@
     };
   };
 
-  users.extraUsers.kodi.isNormalUser = true;
-  services.cage.user = "kodi";
-  services.cage.program = "${(pkgs.kodi-wayland.passthru.withPackages (kodiPkgs: with kodiPkgs; [
-    netflix
-  ]))}/bin/kodi-standalone";
-  services.cage.enable = true;
+  services.tlp.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

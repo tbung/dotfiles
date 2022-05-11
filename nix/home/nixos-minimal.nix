@@ -19,31 +19,21 @@ with pkgs;
     rsync
 
     git
-    git-lfs
 
     (python310.withPackages (pypkgs: with pypkgs; [
       pynvim
-      isort
     ]))
-    nodejs
     gcc
 
-    rclone
-
     gh
-    glab
 
-    neovim-nightly
     rnix-lsp
 
     # modern unix tools
     ripgrep
     fd
-    mdcat
     lsd
     zoxide
-    delta
-    bat
 
     zsh-powerlevel10k
     zsh-autosuggestions
