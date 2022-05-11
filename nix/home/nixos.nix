@@ -65,7 +65,7 @@
     enable = true;
 
     extensions = with pkgs.vscode-extensions; [
-      ms-vsliveshare.vsliveshare
+      # ms-vsliveshare.vsliveshare
       ms-python.python
       ms-vscode-remote.remote-ssh
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
