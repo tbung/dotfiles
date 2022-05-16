@@ -67,6 +67,7 @@
       "qemu"
     ];
     casks = [
+      "bitwarden"
       "brave-browser"
       "docker"
       "eurkey"
