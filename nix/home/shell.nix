@@ -137,6 +137,7 @@ with pkgs;
       global.load_dotenv = true;
     };
   };
+  programs.bash.enable = true;
 
   xdg.configFile."zsh/.p10k.zsh".source = ../../config/zsh/.p10k.zsh;
 

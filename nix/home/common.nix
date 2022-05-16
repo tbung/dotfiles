@@ -40,9 +40,11 @@ with pkgs;
     nodePackages.pyright
     nodePackages.prettier
     nodePackages.vscode-langservers-extracted
+    nodePackages.bash-language-server
     stylua
     ccls
     rnix-lsp
+    shfmt
     proselint
     texlive.combined.scheme-full
 
