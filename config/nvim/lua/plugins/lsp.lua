@@ -39,16 +39,21 @@ require("null-ls").setup({
     }),
     require("null-ls").builtins.formatting.isort,
     require("null-ls").builtins.formatting.stylua,
+    require("null-ls").builtins.formatting.shfmt.with({
+      extra_args = { "-i", "4" },
+    }),
 
-    require("null-ls").builtins.diagnostics.misspell.with({
+    -- require("null-ls").builtins.diagnostics.write_good.with({
+    --   filetypes = { "tex", "markdown" },
+    -- }),
+    -- require("null-ls").builtins.diagnostics.proselint.with({
+    --   filetypes = { "tex", "markdown" },
+    -- }),
+
+    require("null-ls").builtins.diagnostics.vale.with({
       filetypes = { "tex", "markdown" },
     }),
-    require("null-ls").builtins.diagnostics.write_good.with({
-      filetypes = { "tex", "markdown" },
-    }),
-    require("null-ls").builtins.diagnostics.proselint.with({
-      filetypes = { "tex", "markdown" },
-    }),
+
     require("null-ls").builtins.formatting.prettier,
   },
   on_attach = on_attach,
@@ -145,5 +150,9 @@ require("lspconfig").rnix.setup({
 })
 
 require("lspconfig").rust_analyzer.setup({
+  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+})
+
+require("lspconfig").bashls.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
