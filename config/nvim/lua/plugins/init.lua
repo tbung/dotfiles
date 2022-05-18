@@ -42,32 +42,41 @@ return require("packer").startup({
     use("nvim-lua/popup.nvim")
     use("nvim-lua/plenary.nvim")
 
-    use("nvim-telescope/telescope-file-browser.nvim")
     use({
       "nvim-telescope/telescope.nvim",
-      requires = {
-        "nvim-telescope/telescope-project.nvim",
-        "nvim-telescope/telescope-symbols.nvim",
-        {
-          "nvim-telescope/telescope-fzf-native.nvim",
-          run = "make",
-        },
-        {
-          "ThePrimeagen/git-worktree.nvim",
-          config = function()
-            require("git-worktree").setup()
-          end,
-        },
-      },
       config = function()
         require("plugins.telescope")
+      end,
+    })
+    use({
+      "nvim-telescope/telescope-file-browser.nvim",
+      requires = "nvim-telescope/telescope.nvim",
+    })
+    use({
+      "nvim-telescope/telescope-project.nvim",
+      requires = "nvim-telescope/telescope.nvim",
+    })
+    use({
+      "nvim-telescope/telescope-symbols.nvim",
+      requires = "nvim-telescope/telescope.nvim",
+    })
+    use({
+      "nvim-telescope/telescope-fzf-native.nvim",
+      requires = "nvim-telescope/telescope.nvim",
+      run = "make",
+    })
+    use({
+      "ThePrimeagen/git-worktree.nvim",
+      requires = "nvim-telescope/telescope.nvim",
+      config = function()
+        require("git-worktree").setup()
       end,
     })
 
     use({
       "filipdutescu/renamer.nvim",
       branch = "master",
-      requires = { { "nvim-lua/plenary.nvim" } },
+      requires = "nvim-lua/plenary.nvim",
       config = function()
         local renamer = require("renamer")
         local strings = require("renamer.constants").strings
@@ -294,7 +303,7 @@ return require("packer").startup({
       config = function()
         -- require("plugins.statusline")
         require("feline").setup({
-          components = require('catppuccin.core.integrations.feline'),
+          components = require("catppuccin.core.integrations.feline"),
         })
       end,
       requires = "kyazdani42/nvim-web-devicons",
@@ -447,7 +456,7 @@ return require("packer").startup({
     })
 
     use({
-      "chentau/marks.nvim",
+      "chentoast/marks.nvim",
       config = function()
         require("marks").setup({
           -- whether to map keybinds or not. default true
