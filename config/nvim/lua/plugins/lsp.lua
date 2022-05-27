@@ -156,3 +156,19 @@ require("lspconfig").rust_analyzer.setup({
 require("lspconfig").bashls.setup({
   capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
 })
+
+require("lspconfig").arduino_language_server.setup({
+  cmd = {
+    -- Required
+    "arduino-language-server",
+    "-cli-config",
+    "/home/tillb/.arduino15/arduino-cli.yaml",
+    -- Optional
+    "-cli",
+    "arduino-cli",
+    "-clangd",
+    "clangd",
+    "-fqbn",
+    "arduino:samd:mkr1000",
+  },
+})
