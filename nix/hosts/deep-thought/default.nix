@@ -8,7 +8,7 @@
     ];
 
   boot.kernelParams = [ "intel_idle.max_cstate=1" "processor.max_cstate=1" ];
-  boot.binfmt.emulatedSystems = [ "armv6l-linux" ];
+  # boot.binfmt.emulatedSystems = [ "armv6l-linux" ];
 
   # Use the Grub2 boot loader.
   boot.loader.grub = {
@@ -95,7 +95,7 @@
     isSystemUser = false;
     shell = pkgs.zsh;
     useDefaultShell = false;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "dialout" ]; # Enable ‘sudo’ for the user.
   };
 
   nix = {
