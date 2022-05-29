@@ -17,6 +17,7 @@
     device = "nodev";
     efiSupport = true;
     gfxmodeEfi = "2560x1440";
+    configurationLimit = 10;
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.plymouth.enable = true;
@@ -157,7 +158,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
