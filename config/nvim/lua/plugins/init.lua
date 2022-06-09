@@ -42,6 +42,9 @@ return require("packer").startup({
     use("nvim-lua/popup.nvim")
     use("nvim-lua/plenary.nvim")
 
+    -- #############
+    -- # Telescope #
+    -- #############
     use({
       "nvim-telescope/telescope.nvim",
       config = function()
@@ -73,42 +76,30 @@ return require("packer").startup({
       end,
     })
 
+    -- #######
+    -- # LSP #
+    -- #######
+    use({
+      "neovim/nvim-lspconfig",
+      config = function()
+        require("plugins.lsp")
+      end,
+    })
+    use("jose-elias-alvarez/null-ls.nvim")
+    use("onsails/lspkind-nvim")
+    use("williamboman/nvim-lsp-installer")
     use({
       "filipdutescu/renamer.nvim",
       branch = "master",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        local renamer = require("renamer")
-        local strings = require("renamer.constants").strings
-        local lsp_utils = require("vim.lsp.util")
-        renamer.setup()
-        renamer._apply_workspace_edit = function(resp)
-          local params = vim.lsp.util.make_position_params()
-          local results_lsp, _ = vim.lsp.buf_request_sync(0, strings.lsp_req_rename, params)
-          local client_id = results_lsp and next(results_lsp) or nil
-          local client = vim.lsp.get_client_by_id(client_id)
-
-          lsp_utils.apply_workspace_edit(resp, client.offset_encoding)
-        end
+        require("renamer").setup({})
       end,
     })
 
-    use({
-      "neovim/nvim-lspconfig",
-      requires = {
-        {
-          "jose-elias-alvarez/null-ls.nvim",
-          commit = "bd9dfc6015241334c140fb065445ba9443e6de14",
-        },
-        -- "ray-x/lsp_signature.nvim",
-        "onsails/lspkind-nvim",
-        "williamboman/nvim-lsp-installer",
-      },
-      config = function()
-        require("plugins.lsp")
-      end,
-    })
-
+    -- ##############
+    -- # Completion #
+    -- ##############
     use({
       "hrsh7th/nvim-cmp",
       requires = {
@@ -197,7 +188,7 @@ return require("packer").startup({
           char = "│",
           use_treesitter = true,
           buftype_exclude = { "terminal" },
-          filetype_exclude = { "dashboard", "alpha", "starter" },
+          filetype_exclude = { "dashboard", "alpha", "starter", "neo-tree" },
         })
       end,
     })
@@ -337,7 +328,7 @@ return require("packer").startup({
     use({
       "petertriho/nvim-scrollbar",
       config = function()
-        local colors = require("tokyonight.colors").setup()
+        local colors = require("tokyonight.colors").setup({})
 
         require("scrollbar").setup({
           handle = {
@@ -359,16 +350,6 @@ return require("packer").startup({
       "monaqa/dial.nvim",
       config = function()
         require("plugins.dial")
-      end,
-    })
-
-    use({
-      "kkoomen/vim-doge",
-      run = function()
-        vim.api.nvim_exec([[call doge#install()]])
-      end,
-      config = function()
-        vim.g.doge_doc_standard_python = "numpy"
       end,
     })
 
@@ -424,9 +405,6 @@ return require("packer").startup({
       end,
     })
 
-    -- use({ "romgrk/hologram.nvim", commit = "1614bc1d0b5875f93180e7b13975e6f0fa51e988" })
-    use({ "edluffy/hologram.nvim" })
-
     use({
       "mickael-menu/zk-nvim",
       config = function()
@@ -473,36 +451,10 @@ return require("packer").startup({
       "chentoast/marks.nvim",
       config = function()
         require("marks").setup({
-          -- whether to map keybinds or not. default true
           default_mappings = true,
-          -- which builtin marks to show. default {}
           -- builtin_marks = { ".", "<", ">", "^" },
           builtin_marks = {},
-          -- whether movements cycle back to the beginning/end of buffer. default true
           cyclic = true,
-          -- whether the shada file is updated after modifying uppercase marks. default false
-          force_write_shada = false,
-          -- how often (in ms) to redraw signs/recompute mark positions.
-          -- higher values will have better performance but may cause visual lag,
-          -- while lower values may cause performance penalties. default 150.
-          refresh_interval = 250,
-          -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
-          -- marks, and bookmarks.
-          -- can be either a table with all/none of the keys, or a single number, in which case
-          -- the priority applies to all marks.
-          -- default 10.
-          sign_priority = { lower = 10, upper = 15, builtin = 8, bookmark = 20 },
-          -- disables mark tracking for specific filetypes. default {}
-          excluded_filetypes = {},
-          -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
-          -- sign/virttext. Bookmarks can be used to group together positions and quickly move
-          -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
-          -- default virt_text is "".
-          bookmark_0 = {
-            sign = "⚑",
-            virt_text = "hello world",
-          },
-          mappings = {},
         })
       end,
     })
@@ -512,7 +464,9 @@ return require("packer").startup({
     use({
       "echasnovski/mini.nvim",
       config = function()
-        require("mini.starter").setup()
+        require("mini.starter").setup({})
+      end,
+    })
       end,
     })
   end,
