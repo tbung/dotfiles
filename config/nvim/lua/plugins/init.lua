@@ -511,6 +511,10 @@ return require("packer").startup({
       },
       config = function()
         require("neotest").setup({
+          output = {
+            enabled = true,
+            open_on_run = "yes",
+          },
           adapters = {
             require("neotest-python")({
               runner = "pytest",
@@ -520,6 +524,7 @@ return require("packer").startup({
         })
       end,
     })
+    use({ "yioneko/nvim-yati", requires = "nvim-treesitter/nvim-treesitter" })
   end,
   config = {
     -- Move to lua dir so impatient.nvim can cache it

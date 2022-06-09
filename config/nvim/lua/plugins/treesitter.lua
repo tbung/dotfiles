@@ -1,4 +1,4 @@
-local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
 require("nvim-treesitter.configs").setup({
   ensure_installed = "all",
@@ -7,11 +7,12 @@ require("nvim-treesitter.configs").setup({
   },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = { "markdown" }
+    additional_vim_regex_highlighting = { "markdown" },
   },
-  indent = {
-    enable = true,
-  },
+  -- indent = {
+  --   enable = true,
+  -- },
+  yati = { enable = true },
   textobjects = {
     select = {
       enable = true,
