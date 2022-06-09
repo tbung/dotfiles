@@ -310,6 +310,7 @@ return require("packer").startup({
         require("feline").setup({
           components = require("catppuccin.core.integrations.feline"),
         })
+        require("feline").winbar.setup()
       end,
       requires = "kyazdani42/nvim-web-devicons",
     })
