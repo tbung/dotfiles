@@ -280,17 +280,31 @@ return require("packer").startup({
     })
 
     use({
-      "kyazdani42/nvim-tree.lua",
-      requires = "kyazdani42/nvim-web-devicons",
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v2.x",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+      },
       config = function()
-        require("nvim-tree").setup({
-          actions = {
-            open_file = {
-              quit_on_open = true,
-            },
+        -- Unless you are still migrating, remove the deprecated commands from v1.x
+        vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+        require("neo-tree").setup({
+          close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+          window = {
+            width = 30,
           },
-          diagnostics = {
-            enable = true,
+          filesystem = {
+            follow_current_file = true, -- This will find and focus the file in the active buffer every
+            -- time the current file is changed while the tree is open.
+            use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
+            -- instead of relying on nvim autocmd events.
+          },
+          buffers = {
+            follow_current_file = true, -- This will find and focus the file in the active buffer every
+            -- time the current file is changed while the tree is open.
           },
         })
       end,

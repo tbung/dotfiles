@@ -199,7 +199,7 @@ vim.keymap.set("n", "<leader>qd", function()
   require("persistence").stop()
 end, opts)
 -- Nvim Tree
-vim.keymap.set("n", "<leader>n", [[<Cmd>NvimTreeToggle<CR>]], opts)
+vim.keymap.set("n", "<leader>n", [[<Cmd>Neotree toggle<CR>]], opts)
 -- Dial
 vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), opts)
 vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), opts)
