@@ -8,7 +8,14 @@ vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 vim.keymap.set("n", "<leader>vdd", "<cmd>TroubleToggle document_diagnostics<CR>", opts)
 vim.keymap.set("n", "<leader>vdw", "<cmd>TroubleToggle workspace_diagnostics<CR>", opts)
-vim.keymap.set("n", "<leader>vf", vim.lsp.buf.formatting, opts)
+vim.keymap.set("n", "<leader>vf", function()
+  vim.lsp.buf.format({
+    filter = function(client)
+      -- always use stylua to format
+      return client.name ~= "sumneko_lua"
+    end,
+  })
+end, opts)
 vim.keymap.set("n", "<leader>vh", vim.lsp.buf.hover, opts)
 -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
 vim.keymap.set("n", "<leader>vrn", require("renamer").rename, opts)
