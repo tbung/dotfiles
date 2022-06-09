@@ -179,6 +179,43 @@ vim.keymap.set("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
 -- #######
 vim.keymap.set("n", "<leader>gg", [[<cmd>Neogit<cr>]], opts)
 
+-- #######
+-- # DAP #
+-- #######
+
+vim.keymap.set("n", "<leader>dc", function()
+  require("dap").continue()
+end, vim.tbl_extend("keep", opts, { desc = "Continue debugging" }))
+
+vim.keymap.set("n", "<leader>du", function()
+  require("dapui").toggle()
+end, vim.tbl_extend("keep", opts, { desc = "Toggle DAP UI" }))
+
+vim.keymap.set("n", "<leader>dbb", function()
+  require("dap").toggle_breakpoint()
+end, vim.tbl_extend("keep", opts, { desc = "Toggle breakpoint" }))
+
+vim.keymap.set("n", "<leader>dss", function()
+  require("dap").step_over()
+end, vim.tbl_extend("keep", opts, { desc = "Step over" }))
+
+vim.keymap.set("n", "<leader>dsi", function()
+  require("dap").step_into()
+end, vim.tbl_extend("keep", opts, { desc = "Step into" }))
+
+vim.keymap.set("n", "<leader>dso", function()
+  require("dap").step_out()
+end, vim.tbl_extend("keep", opts, { desc = "Step out" }))
+
+vim.keymap.set("n", "<leader>dkk", function()
+  require("dap").terminate()
+end, vim.tbl_extend("keep", opts, { desc = "Terminate debug process" }))
+
+-- vim.keymap.set("n", "<leader>dt", function () require("dap-python").test_method() end, opts)
+vim.keymap.set("n", "<leader>dt", function()
+  require("neotest").run.run({ strategy = "dap" })
+end, vim.tbl_extend("keep", opts, { desc = "Run nearest test" }))
+
 -- ########
 -- # Misc #
 -- ########

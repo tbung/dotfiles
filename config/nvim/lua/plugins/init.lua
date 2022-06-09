@@ -395,6 +395,31 @@ return require("packer").startup({
           "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
           { noremap = true }
         )
+
+        -- You can also use below = true here to to change the position of the printf
+        -- statement (or set two remaps for either one). This remap must be made in normal mode.
+        vim.api.nvim_set_keymap(
+          "n",
+          "<leader>vrp",
+          ":lua require('refactoring').debug.printf({below = false})<CR>",
+          { noremap = true }
+        )
+
+        -- Print var: this remap should be made in visual mode
+        vim.api.nvim_set_keymap(
+          "v",
+          "<leader>vrv",
+          ":lua require('refactoring').debug.print_var({})<CR>",
+          { noremap = true }
+        )
+
+        -- Cleanup function: this remap should be made in normal mode
+        vim.api.nvim_set_keymap(
+          "n",
+          "<leader>vrc",
+          ":lua require('refactoring').debug.cleanup({})<CR>",
+          { noremap = true }
+        )
       end,
     })
 
@@ -474,6 +499,25 @@ return require("packer").startup({
         require("mini.starter").setup({})
       end,
     })
+
+    use("rcarriga/neotest-python")
+    use({
+      "rcarriga/neotest",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "antoinemadec/FixCursorHold.nvim",
+        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      },
+      config = function()
+        require("neotest").setup({
+          adapters = {
+            require("neotest-python")({
+              runner = "pytest",
+              -- dap = { justMyCode = false, console = "integratedTerminal" },
+            }),
+          },
+        })
       end,
     })
   end,

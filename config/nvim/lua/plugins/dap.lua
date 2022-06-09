@@ -1,4 +1,4 @@
-require("nvim-dap-virtual-text").setup {
+require("nvim-dap-virtual-text").setup({
   enabled = true,
 
   -- DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, DapVirtualTextForceRefresh
@@ -16,7 +16,24 @@ require("nvim-dap-virtual-text").setup {
   -- experimental features:
   virt_text_pos = "eol", -- position of virtual text, see `:h nvim_buf_set_extmark()`
   all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
-}
+})
 
-require('dap-python').setup('~/mambaforge/envs/debugpy/bin/python')
-require('dap-python').test_runner = "pytest"
+-- local function get_python_path()
+--   local conda_env = os.getenv("CONDA_PREFIX")
+--
+--   if conda_env then
+--     return conda_env .. "/bin/python"
+--   end
+--
+--   return nil
+-- end
+--
+-- require("dap-python").setup("~/.mamba/envs/debugpy/bin/python", { pythonPath = get_python_path() })
+require("dap-python").setup()
+require("dap-python").test_runner = "pytest"
+
+require("dapui").setup()
+
+vim.fn.sign_define('DapBreakpoint', {text='Ⓑ', texthl='Error', linehl='', numhl=''})
+vim.fn.sign_define('DapBreakpointCondition', {text='Ⓑ', texthl='Warning', linehl='', numhl=''})
+vim.fn.sign_define('DapBreakpointRejected', {text='Ⓑ', texthl='Hint', linehl='', numhl=''})
