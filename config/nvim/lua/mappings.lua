@@ -24,10 +24,6 @@ vim.keymap.set("n", "<leader>vsd", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "<leader>vsh", vim.lsp.buf.signature_help, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "zg", "zg:lua update_ltex()<cr>", opts)
-vim.keymap.set("n", "zw", "zw:lua update_ltex()<cr>", opts)
-vim.keymap.set("v", "zg", "zg:lua update_ltex()<cr>", opts)
-vim.keymap.set("v", "zw", "zw:lua update_ltex()<cr>", opts)
 
 -- #############
 -- # Telescope #
@@ -181,8 +177,7 @@ vim.keymap.set("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
 -- #######
 -- # Git #
 -- #######
--- vim.keymap.set("n", "<leader>gg", function() git_toggle() end, opts)
--- vim.keymap.set("n", "<leader>gp", function() PushCluster() end, opts)
+vim.keymap.set("n", "<leader>gg", [[<cmd>Neogit<cr>]], opts)
 
 -- ########
 -- # Misc #
