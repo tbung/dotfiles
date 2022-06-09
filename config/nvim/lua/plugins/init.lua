@@ -220,7 +220,13 @@ return require("packer").startup({
     use({
       "folke/which-key.nvim",
       config = function()
-        require("which-key").setup({})
+        require("which-key").setup({
+          plugins = {
+            spelling = {
+              enabled = true,
+            },
+          },
+        })
       end,
     })
 
