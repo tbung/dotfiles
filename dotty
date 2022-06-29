@@ -1,0 +1,128 @@
+#!/bin/bash
+
+DOTFILES_DIR=$HOME/.dotfiles
+
+action=$1
+
+usage() {
+    case "$1" in
+    commands)
+        echo "Usage: dotty [install|links|uninstall|compile|clean] OPTIONS"
+        ;;
+    compile)
+        echo "Usage: dotty compile OVERRIDES_FILE"
+        ;;
+    esac
+}
+
+if [ "$action" != "install" ] &&
+    [ "$action" != "links" ] &&
+    [ "$action" != "uninstall" ] &&
+    [ "$action" != "compile" ] &&
+    [ "$action" != "clean" ]; then
+    usage commands
+    exit 1
+fi
+
+function link_dotfiles() {
+    echo "Linking dotfiles repo"
+    ln -sfn $(pwd) $DOTFILES_DIR
+    echo
+}
+
+function link_subdirs() {
+    echo "Linking subdirs in .$1"
+    for item in $1/*; do
+        target=$DOTFILES_DIR/$item
+        linkname=$HOME/.$item
+
+        ln -svfn $target $linkname
+    done
+    echo
+}
+
+function link_home() {
+    echo "Linking files in home"
+    for item in $(ls -A home); do
+        if [ "$item" == *.template ] || [ "$item" == *.rendered ]; then
+            continue
+        fi
+
+        target=$DOTFILES_DIR/home/$item
+        linkname=$HOME/$(basename $item)
+
+        ln -svfn $target $linkname
+    done
+    echo
+}
+
+function list_links() {
+    for file in $(fd --hidden -t l . ~ 2>/dev/null); do
+        if readlink $file | grep $DOTFILES_DIR >/dev/null; then
+            echo $file
+        fi
+    done
+}
+
+function compile() {
+    # prepare sed command
+    sedcmd=''
+    while IFS='=' read -r key value; do
+        printf -v sc 's/{{ %s }}/%s/;' $key "${value//\//\\/}"
+        sedcmd+="$sc"
+    done <"$1"
+
+    # replace template strings in all template files
+    for file in $(fd --hidden -t f '.*\.template$' .); do
+        echo "Compiling $file"
+
+        rendered_name=$(echo "$file" | sed -e 's/^\(.*\)\.template/\1.rendered/')
+        out_name=$(echo "$file" | sed -e 's/^\(.*\)\.template/\1/')
+
+        sed -e "$sedcmd" <"$file" >"$rendered_name"
+        ln -sf $(basename $rendered_name) $out_name
+    done
+}
+
+function install() {
+    link_dotfiles
+    link_subdirs config
+    link_subdirs local
+    link_home
+}
+
+function uninstall() {
+    for link in $(list_links); do
+        echo "Removing link $link"
+        \rm $link
+    done
+}
+
+function clean() {
+    for file in $(fd --hidden -t f '.*\.rendered$' .); do
+        echo "Removing $file"
+        \rm $file
+    done
+}
+
+case "$action" in
+compile)
+    if [ $# -lt 2 ]; then
+        usage compile
+        exit 1
+    fi
+    compile $2
+    ;;
+install)
+    install
+    ;;
+uninstall)
+    uninstall
+    ;;
+clean)
+    clean
+    ;;
+links)
+    list_links
+    ;;
+esac
