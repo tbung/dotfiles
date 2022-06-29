@@ -1,0 +1,23 @@
+[core]
+	editor = "nvim"
+	pager = "less"
+	sshCommand = "/usr/bin/ssh"
+
+[credential]
+	helper = "cache"
+
+[init]
+	defaultBranch = "main"
+
+[merge]
+	tool = "vimdiff"
+
+[mergetool]
+	keepBackup = false
+
+[mergetool "vimdiff"]
+	cmd = "nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'"
+
+[user]
+	email = "tillbungert@gmail.com"
+	name = "Till Bungert"

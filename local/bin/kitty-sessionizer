@@ -3,9 +3,7 @@
 # set -x
 
 # TODO: If only the initial window is open, replace it (How?)
-if [[ -d $HOME/.nix-profile ]]; then
-    PATH="$HOME/.nix-profile/bin:$PATH"
-fi
+source $HOME/.profile
 
 function get_ssh_hosts() {
     rg -IN 'Host ([0-9a-zA-Z\-]+)' -r 'ssh $1' ~/.ssh/config
