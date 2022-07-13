@@ -197,6 +197,16 @@ return require("packer").startup({
       end,
     })
 
+    use({
+      "SmiteshP/nvim-navic",
+      requires = "neovim/nvim-lspconfig",
+      config = function()
+        require("nvim-navic").setup({
+          separator = " ⟩ ",
+        })
+      end,
+    })
+
     use("szw/vim-maximizer")
 
     use({
@@ -316,11 +326,37 @@ return require("packer").startup({
     use({
       "feline-nvim/feline.nvim",
       config = function()
+        local navic = require("nvim-navic")
+
+        local components = require("feline.default_components").winbar.icons
+
+        table.insert(components.active[1], {
+          provider = function()
+            return navic.get_location()
+          end,
+          enabled = function()
+            return navic.is_available()
+          end,
+          hl = {
+            fg = "skyblue",
+            bg = "NONE",
+            style = "NONE",
+          },
+          left_sep = {
+            str = " ⟩ ",
+            hl = {
+              fg = "skyblue",
+              bg = "NONE",
+            },
+          },
+        })
+
         -- require("plugins.statusline")
         require("feline").setup({
           components = require("catppuccin.core.integrations.feline"),
         })
-        require("feline").winbar.setup()
+        -- require("feline").winbar.setup()
+        require("feline").winbar.setup({ components = components })
       end,
       requires = "kyazdani42/nvim-web-devicons",
     })

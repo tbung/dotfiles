@@ -1,9 +1,11 @@
 local lsp = require("lspconfig")
 local Path = require("plenary.path")
+local navic = require("nvim-navic")
 
 require("lspkind").init()
 
 local on_attach = function(client, bufnr)
+  navic.attach(client, bufnr)
   vim.api.nvim_exec(
     [[
 sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
@@ -28,11 +30,16 @@ highlight DiagnosticUnderlineHint gui=undercurl
   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
+
 require("null-ls").setup({
   sources = {
     require("null-ls").builtins.diagnostics.pylint.with({
-      extra_args = { "--max-line-length", "99" },
-      method = require("null-ls").methods.DIAGNOSTICS_ON_SAVE,
+      -- method = require("null-ls").methods.DIAGNOSTICS_ON_SAVE,
     }),
     require("null-ls").builtins.formatting.black.with({
       args = { "-" },
@@ -43,22 +50,15 @@ require("null-ls").setup({
       extra_args = { "-i", "4" },
     }),
 
-    -- require("null-ls").builtins.diagnostics.write_good.with({
-    --   filetypes = { "tex", "markdown" },
-    -- }),
-    -- require("null-ls").builtins.diagnostics.proselint.with({
-    --   filetypes = { "tex", "markdown" },
-    -- }),
-
     require("null-ls").builtins.diagnostics.vale.with({
-      filetypes = { "tex", "markdown" },
+      filetypes = { "markdown" },
     }),
 
     require("null-ls").builtins.formatting.prettier,
   },
   on_attach = on_attach,
   autostart = true,
-  -- capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  -- capabilities = capabilities,
 })
 
 lsp.pyright.setup({
@@ -68,22 +68,22 @@ lsp.pyright.setup({
       pythonPath = "python",
     },
   },
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  capabilities = capabilities,
 })
 
 lsp.texlab.setup({
   on_attach = on_attach,
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  capabilities = capabilities,
 })
 
 lsp.tsserver.setup({
   on_attach = on_attach,
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  capabilities = capabilities,
 })
 
 lsp.ccls.setup({
   on_attach = on_attach,
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  capabilities = capabilities,
 })
 
 local runtime_path = vim.split(package.path, ";")
@@ -132,32 +132,40 @@ lsp.sumneko_lua.setup({
       },
     },
   },
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  capabilities = capabilities,
 })
 
 require("lspconfig").cssls.setup({
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 require("lspconfig").html.setup({
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 require("lspconfig").jsonls.setup({
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").rnix.setup({
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").rust_analyzer.setup({
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").bashls.setup({
-  capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
 
 require("lspconfig").arduino_language_server.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
   cmd = {
     -- Required
     "arduino-language-server",
@@ -171,4 +179,9 @@ require("lspconfig").arduino_language_server.setup({
     "-fqbn",
     "arduino:samd:mkr1000",
   },
+})
+
+require("lspconfig").gopls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
