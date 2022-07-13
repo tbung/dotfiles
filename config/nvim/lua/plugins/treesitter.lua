@@ -1,3 +1,12 @@
+local ft_to_lang = require("nvim-treesitter.parsers").ft_to_lang
+require("nvim-treesitter.parsers").ft_to_lang = function(ft)
+  if ft == "zsh" then
+    return "bash"
+  else
+    return ft_to_lang(ft)
+  end
+end
+
 local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
 require("nvim-treesitter.configs").setup({
