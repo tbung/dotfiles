@@ -22,8 +22,7 @@ vim.cmd([[set shortmess+=c]])
 vim.opt.wildoptions = "tagfile"
 vim.opt.mouse = "a"
 vim.opt.laststatus = 3
-vim.g.do_filetype_lua = 1
-vim.g.did_load_filetypes = 0
+-- vim.opt.cmdheight = 0
 
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
@@ -62,4 +61,6 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   group = id,
 })
 
-vim.api.nvim_create_user_command("UpdateEnv", function() require("tbung").update_ssh_env_from_tmux() end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
+vim.api.nvim_create_user_command("UpdateEnv", function()
+  require("tbung").update_ssh_env_from_tmux()
+end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
