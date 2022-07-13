@@ -135,7 +135,9 @@ return require("packer").startup({
         {
           "lewis6991/spellsitter.nvim",
           config = function()
-            require("spellsitter").setup()
+            require("spellsitter").setup({
+              enable = { "python", "lua", "c", "cpp", "go", "rust", "yaml" },
+            })
           end,
         },
       },
