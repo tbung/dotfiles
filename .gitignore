@@ -1,4 +1,5 @@
 config/nvim/sessions
 config/kitty/themes/*
 config/zsh/plugins/*
-result
+*.rendered
+config/kitty/kitty.conf

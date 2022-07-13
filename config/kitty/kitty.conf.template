@@ -2,7 +2,7 @@
 # See https://sw.kovidgoyal.net/kitty/conf.html
 
 font_family VictorMono Nerd Font
-font_size 18
+font_size {{ kitty_fontsize }}
 
 
 include themes/mocha.conf
@@ -13,6 +13,7 @@ enable_audio_bell no
 enabled_layouts tall,grid,splits
 shell_integration enabled
 window_padding_width 10
+macos_option_as_alt both
 
 
 map ctrl+space>1 goto_tab 1
