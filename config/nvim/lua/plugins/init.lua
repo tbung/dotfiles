@@ -156,12 +156,13 @@ return require("packer").startup({
     use("theHamsta/nvim-dap-virtual-text")
     use("mfussenegger/nvim-dap-python")
     use("nvim-telescope/telescope-dap.nvim")
+    use("jbyuki/one-small-step-for-vimkind")
 
     use({
       "folke/todo-comments.nvim",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require("todo-comments").setup()
+        require("todo-comments").setup({})
       end,
     })
 
