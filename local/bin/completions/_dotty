@@ -1,0 +1,16 @@
+#compdef _dotty dotty
+
+function _dotty {
+    function _commands {
+        local -a commands
+        commands=(
+            'install:Link files in $DOTFILES_REPO_DIR to $HOME'
+            'links:List links to dotfiles'
+            'uninstall:Remove links to dotfiles'
+            'compile:Compile templates with overrides'
+            'clean:Remove compiled templates'
+        )
+        _describe 'command' commands
+    }
+    _arguments "1: :_commands"
+}
