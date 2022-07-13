@@ -1,0 +1,1 @@
+profile_additional=export PATH="$PATH${PATH:+:}/dkfz/cluster/gpu/data/OE0612/t974t/.local/bin"
