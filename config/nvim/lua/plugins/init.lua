@@ -518,7 +518,7 @@ return require("packer").startup({
           adapters = {
             require("neotest-python")({
               runner = "pytest",
-              -- dap = { justMyCode = false, console = "integratedTerminal" },
+              dap = { justMyCode = false, console = "integratedTerminal" },
             }),
           },
         })
