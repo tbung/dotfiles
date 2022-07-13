@@ -372,6 +372,9 @@ return require("packer").startup({
           disable_commit_confirmation = true,
           disable_builtin_notifications = true,
           kind = "split",
+          integrations = {
+            diffview = true,
+          },
           signs = {
             -- { CLOSED, OPENED }
             section = { "", "" },
