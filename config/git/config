@@ -2,6 +2,7 @@
 	editor = "nvim"
 	pager = "less"
 	sshCommand = "/usr/bin/ssh"
+	excludesfile = ~/.config/git/ignore
 
 [credential]
 	helper = "cache"
