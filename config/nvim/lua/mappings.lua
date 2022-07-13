@@ -22,6 +22,7 @@ vim.keymap.set("n", "<leader>vrn", require("renamer").rename, opts)
 vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
 vim.keymap.set("n", "<leader>vsd", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "<leader>vsh", vim.lsp.buf.signature_help, opts)
+vim.keymap.set("n", "<leader>va", vim.lsp.buf.code_action, opts)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
@@ -212,9 +213,12 @@ vim.keymap.set("n", "<leader>dkk", function()
 end, vim.tbl_extend("keep", opts, { desc = "Terminate debug process" }))
 
 -- vim.keymap.set("n", "<leader>dt", function () require("dap-python").test_method() end, opts)
-vim.keymap.set("n", "<leader>dt", function()
+vim.keymap.set("n", "<leader>dtt", function()
   require("neotest").run.run({ strategy = "dap" })
 end, vim.tbl_extend("keep", opts, { desc = "Run nearest test" }))
+vim.keymap.set("n", "<leader>dts", function()
+  require("neotest").summary.toggle()
+end, vim.tbl_extend("keep", opts, { desc = "Open test summary" }))
 
 -- ########
 -- # Misc #
