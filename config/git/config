@@ -22,3 +22,5 @@
 [user]
 	email = "tillbungert@gmail.com"
 	name = "Till Bungert"
+[safe]
+	directory = ~/Projects/neovim
