@@ -126,23 +126,26 @@ return require("packer").startup({
 
     use({
       "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate",
-      requires = {
-        "nvim-treesitter/playground",
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        "RRethy/nvim-treesitter-textsubjects",
-        "p00f/nvim-ts-rainbow",
-        {
-          "lewis6991/spellsitter.nvim",
-          config = function()
-            require("spellsitter").setup({
-              enable = { "python", "lua", "c", "cpp", "go", "rust", "yaml" },
-            })
-          end,
-        },
-      },
+      run = function()
+        require("nvim-treesitter.install").update({ with_sync = true })
+      end,
       config = function()
         require("plugins.treesitter")
+      end,
+    })
+
+    use({ "nvim-treesitter/nvim-treesitter-textobjects", module_pattern = "nvim-treesitter.*" })
+    use({ "RRethy/nvim-treesitter-textsubjects", module_pattern = "nvim-treesitter.*" })
+    use({ "p00f/nvim-ts-rainbow", module_pattern = "nvim-treesitter.*" })
+    use({ "nvim-treesitter/playground", module_pattern = "nvim-treesitter.*" })
+    use({ "yioneko/nvim-yati", module_pattern = "nvim-treesitter.*" })
+
+    use({
+      "lewis6991/spellsitter.nvim",
+      config = function()
+        require("spellsitter").setup({
+          enable = { "python", "lua", "c", "cpp", "go", "rust", "yaml" },
+        })
       end,
     })
 
@@ -567,7 +570,6 @@ return require("packer").startup({
         })
       end,
     })
-    use({ "yioneko/nvim-yati", requires = "nvim-treesitter/nvim-treesitter" })
   end,
   config = {
     -- Move to lua dir so impatient.nvim can cache it
