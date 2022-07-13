@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Requirements:
+# - ripgrep
+# - jq
+
 # set -x
 
 # TODO: If only the initial window is open, replace it (How?)
