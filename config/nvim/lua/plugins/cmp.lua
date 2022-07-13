@@ -24,6 +24,7 @@ cmp.setup({
   }, {
     { name = "nvim_lua" },
     { name = "nvim_lsp" },
+    { name = "omni" },
   }, {
     { name = "luasnip" }, -- For luasnip users.
     { name = "emoji" },
@@ -49,7 +50,7 @@ cmp.setup.cmdline("/", {
     { name = "nvim_lsp_document_symbol" },
     { name = "buffer" },
   },
-  mapping = cmp.mapping.preset.cmdline({})
+  mapping = cmp.mapping.preset.cmdline({}),
 })
 cmp.setup.cmdline(":", {
   sources = cmp.config.sources({
@@ -57,7 +58,7 @@ cmp.setup.cmdline(":", {
   }, {
     { name = "cmdline" },
   }),
-  mapping = cmp.mapping.preset.cmdline({})
+  mapping = cmp.mapping.preset.cmdline({}),
 })
 
 require("luasnip/loaders/from_vscode").lazy_load()
