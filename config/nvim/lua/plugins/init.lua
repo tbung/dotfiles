@@ -80,14 +80,15 @@ return require("packer").startup({
     -- # LSP #
     -- #######
     use({
-      "neovim/nvim-lspconfig",
+      "williamboman/nvim-lsp-installer",
+      requires = "neovim/nvim-lspconfig",
       config = function()
+        require("nvim-lsp-installer").setup({})
         require("plugins.lsp")
       end,
     })
     use("jose-elias-alvarez/null-ls.nvim")
     use("onsails/lspkind-nvim")
-    use("williamboman/nvim-lsp-installer")
     use({
       "filipdutescu/renamer.nvim",
       branch = "master",
