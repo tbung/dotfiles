@@ -59,7 +59,7 @@ require("nvim-treesitter.configs").setup({
     },
   },
   rainbow = {
-    enable = false,
+    enable = true,
     extended_mode = false, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
     max_file_lines = nil, -- Do not enable for files with more than 1000 lines, int
   },
