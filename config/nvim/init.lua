@@ -5,7 +5,10 @@ end
 
 require("options")
 
-require("packer_compiled")
-
-require("mappings")
-require("globals")
+local ok, _ = pcall(require, "packer_compiled")
+if not ok then
+  print("Plugins not installed")
+else
+  require("mappings")
+  require("globals")
+end

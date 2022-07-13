@@ -29,7 +29,8 @@ vim.opt.background = "dark"
 vim.g.tokyonight_style = "night"
 vim.g.tokyonight_italic_functions = true
 -- vim.cmd("colorscheme tokyonight")
-vim.cmd("colorscheme catppuccin")
+
+local ok, _ = pcall(vim.cmd, "colorscheme catppuccin")
 
 local id = vim.api.nvim_create_augroup("highlight_yank", {})
 vim.api.nvim_create_autocmd("TextYankPost", {
