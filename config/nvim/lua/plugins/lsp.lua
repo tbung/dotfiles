@@ -5,7 +5,9 @@ local navic = require("nvim-navic")
 require("lspkind").init()
 
 local on_attach = function(client, bufnr)
-  navic.attach(client, bufnr)
+  if client.name ~= "null-ls" then
+    navic.attach(client, bufnr)
+  end
   vim.api.nvim_exec(
     [[
 sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
