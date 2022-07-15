@@ -42,10 +42,47 @@ end
 
 --- Sum over yanked numbers, separated by line
 M.sum_yanked = function()
-  tbl = vim.split(vim.fn.getreg('"0'), "\n")
-  tbl = vim.tbl_map(function(x) return tonumber(x) end, tbl)
-  tbl = vim.tbl_filter(function(x) return x ~= nil end, tbl)
+  local tbl = vim.split(vim.fn.getreg('"0'), "\n")
+  tbl = vim.tbl_map(function(x)
+    return tonumber(x)
+  end, tbl)
+  tbl = vim.tbl_filter(function(x)
+    return x ~= nil
+  end, tbl)
   return M.sum(tbl)
+end
+
+local is_floating = function(win_id)
+  win_id = win_id or vim.api.nvim_get_current_win()
+  local cfg = vim.api.nvim_win_get_config(win_id)
+  if cfg.relative > "" or cfg.external then
+    return true
+  end
+  return false
+end
+
+M.close_only_sidebars = function()
+  local sidebars = { "neo-tree", "neotest-summary" }
+  local windows = vim.fn.getwininfo()
+  windows = vim.tbl_filter(function(win)
+    return not is_floating(win.winid)
+  end, windows)
+  local only_sidebars = true
+  -- local blocking_fts = {}
+
+  for _, window in ipairs(windows) do
+    local bufnr = window.bufnr
+    local ft = vim.api.nvim_buf_get_option(bufnr, "ft")
+    only_sidebars = vim.tbl_contains(sidebars, ft) and only_sidebars
+    -- if not vim.tbl_contains(sidebars, ft) then
+    --   blocking_fts[i] = ft
+    -- end
+  end
+  -- vim.notify(vim.inspect(blocking_fts))
+
+  if only_sidebars then
+    vim.cmd([[qa!]])
+  end
 end
 
 return M

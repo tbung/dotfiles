@@ -32,15 +32,13 @@ vim.g.tokyonight_italic_functions = true
 
 local ok, _ = pcall(vim.cmd, "colorscheme catppuccin")
 
-local id = vim.api.nvim_create_augroup("highlight_yank", {})
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     require("vim.highlight").on_yank({ timeout = 40 })
   end,
-  group = id,
+  group = vim.api.nvim_create_augroup("highlight_yank", {}),
 })
 
-id = vim.api.nvim_create_augroup("terminal_settings", {})
 vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
     vim.opt_local.spell = false
@@ -48,10 +46,9 @@ vim.api.nvim_create_autocmd("TermOpen", {
     vim.opt_local.relativenumber = false
     vim.opt_local.signcolumn = "no"
   end,
-  group = id,
+  group = vim.api.nvim_create_augroup("terminal_settings", {}),
 })
 
-id = vim.api.nvim_create_augroup("packer_user_config", {})
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = {
     vim.fn.expand("$XDG_CONFIG_HOME/nvim/lua/plugins/*.lua"),
@@ -59,7 +56,14 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     "config/nvim/lua/plugins/*.lua",
   },
   command = [[ source ~/.config/nvim/lua/plugins/init.lua | source <afile> | PackerCompile ]],
-  group = id,
+  group = vim.api.nvim_create_augroup("packer_user_config", {}),
+})
+
+vim.api.nvim_create_autocmd({ "WinClosed", "WinEnter" }, {
+  callback = function()
+    require("tbung").close_only_sidebars()
+  end,
+  group = vim.api.nvim_create_augroup("autoclose_sidebars", {}),
 })
 
 vim.api.nvim_create_user_command("UpdateEnv", function()
