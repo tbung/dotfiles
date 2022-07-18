@@ -3,6 +3,12 @@ function P(arg)
 end
 
 function R(arg)
-  require("plenary.reload").reload_module(arg)
+  local ok, plenary_reload = pcall(require, "plenary.reload")
+  if ok then
+    reload = plenary_reload.reload_module
+  else
+    reload = require
+  end
+  reload(arg)
   return require(arg)
 end
