@@ -166,7 +166,7 @@ return require("packer").startup({
       "folke/todo-comments.nvim",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require("todo-comments").setup({})
+        require("plugins.todo-comments")
       end,
     })
 
@@ -355,9 +355,12 @@ return require("packer").startup({
           },
         })
 
+        local ctp_feline = require("catppuccin.groups.integrations.feline")
+        ctp_feline.setup({})
+
         -- require("plugins.statusline")
         require("feline").setup({
-          components = require("catppuccin.core.integrations.feline"),
+          components = ctp_feline.get(),
         })
         -- require("feline").winbar.setup()
         require("feline").winbar.setup({ components = components })
