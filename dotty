@@ -75,7 +75,7 @@ function compile() {
 
     pushd $DOTFILES_REPO_DIR
     # replace template strings in all template files
-    for file in $(fd --hidden -t f '.*\.template$' .); do
+    for file in $(find . -type f -name '*\.template'); do
         echo "Compiling $file"
 
         rendered_name=$(echo "$file" | sed -e 's/^\(.*\)\.template/\1.rendered/')
