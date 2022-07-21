@@ -18,19 +18,13 @@ vim.opt.splitright = true
 vim.opt.spell = true
 vim.opt.spelllang = "en"
 vim.opt.completeopt = "menuone,noinsert,noselect"
-vim.cmd([[set shortmess+=c]])
+vim.opt.shortmess = vim.opt.shortmess + "c"
 vim.opt.wildoptions = "tagfile"
 vim.opt.mouse = "a"
 vim.opt.laststatus = 3
 -- vim.opt.cmdheight = 0
-
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_italic_functions = true
--- vim.cmd("colorscheme tokyonight")
-
-local ok, _ = pcall(vim.cmd, "colorscheme catppuccin")
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()

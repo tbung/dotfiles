@@ -34,8 +34,8 @@ end
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
 }
 
 require("null-ls").setup({
@@ -52,9 +52,9 @@ require("null-ls").setup({
       extra_args = { "-i", "4" },
     }),
 
-    require("null-ls").builtins.diagnostics.vale.with({
-      filetypes = { "markdown" },
-    }),
+    -- require("null-ls").builtins.diagnostics.vale.with({
+    --   filetypes = { "markdown" },
+    -- }),
 
     require("null-ls").builtins.formatting.prettier,
   },
@@ -155,10 +155,10 @@ require("lspconfig").rnix.setup({
   capabilities = capabilities,
 })
 
-require("lspconfig").rust_analyzer.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
+-- require("lspconfig").rust_analyzer.setup({
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+-- })
 
 require("lspconfig").bashls.setup({
   on_attach = on_attach,
@@ -186,4 +186,34 @@ require("lspconfig").arduino_language_server.setup({
 require("lspconfig").gopls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
+})
+
+require("zk").setup({
+  -- can be "telescope", "fzf" or "select" (`vim.ui.select`)
+  -- it's recommended to use "telescope" or "fzf"
+  picker = "telescope",
+
+  lsp = {
+    -- `config` is passed to `vim.lsp.start_client(config)`
+    config = {
+      cmd = { "zk", "lsp" },
+      name = "zk",
+      on_attach = on_attach,
+      capabilities = capabilities,
+      -- etc, see `:h vim.lsp.start_client()`
+    },
+
+    -- automatically attach buffers in a zk notebook that match the given filetypes
+    auto_attach = {
+      enabled = true,
+      filetypes = { "markdown" },
+    },
+  },
+})
+
+require("rust-tools").setup({
+  server = {
+      on_attach = on_attach,
+      capabilities = capabilities,
+  }
 })

@@ -35,8 +35,16 @@ return require("packer").startup({
     })
 
     -- Colors
-    use("folke/tokyonight.nvim")
-    use({ "catppuccin/nvim", as = "catppuccin" })
+    -- use("folke/tokyonight.nvim")
+    use({
+      "catppuccin/nvim",
+      as = "catppuccin",
+      config = function()
+        vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+        require("catppuccin").setup()
+        vim.cmd("colorscheme catppuccin")
+      end,
+    })
 
     -- Required by almost all modern plugins
     use("nvim-lua/popup.nvim")
@@ -96,6 +104,9 @@ return require("packer").startup({
       config = function()
         require("renamer").setup({})
       end,
+    })
+    use({
+      "simrat39/rust-tools.nvim",
     })
 
     -- ##############
@@ -329,6 +340,7 @@ return require("packer").startup({
 
     use({
       "feline-nvim/feline.nvim",
+      after = "catppuccin",
       config = function()
         local navic = require("nvim-navic")
 
@@ -382,7 +394,8 @@ return require("packer").startup({
     use({
       "petertriho/nvim-scrollbar",
       config = function()
-        local colors = require("tokyonight.colors").setup({})
+        -- local colors = require("tokyonight.colors").setup({})
+        local colors = require("catppuccin.palettes").get_palette()
 
         require("scrollbar").setup({
           handle = {
@@ -489,29 +502,6 @@ return require("packer").startup({
 
     use({
       "mickael-menu/zk-nvim",
-      config = function()
-        require("zk").setup({
-          -- can be "telescope", "fzf" or "select" (`vim.ui.select`)
-          -- it's recommended to use "telescope" or "fzf"
-          picker = "telescope",
-
-          lsp = {
-            -- `config` is passed to `vim.lsp.start_client(config)`
-            config = {
-              cmd = { "zk", "lsp" },
-              name = "zk",
-              -- on_attach = ...
-              -- etc, see `:h vim.lsp.start_client()`
-            },
-
-            -- automatically attach buffers in a zk notebook that match the given filetypes
-            auto_attach = {
-              enabled = true,
-              filetypes = { "markdown" },
-            },
-          },
-        })
-      end,
     })
 
     use({
