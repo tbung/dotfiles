@@ -30,19 +30,25 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 -- # Telescope #
 -- #############
 
-vim.keymap.set("n", "<C-p>", function()
-  require("telescope.builtin").find_files({ hidden = true })
-end, opts)
+-- vim.keymap.set("n", "<C-p>", function()
+--   require("telescope.builtin").find_files({ hidden = true })
+-- end, opts)
 vim.keymap.set("n", "<C-n>", function()
   require("telescope.builtin").buffers({ sort_lastused = true, ignore_current_buffer = true })
 end, opts)
 
+vim.keymap.set("n", "<leader>fa", function()
+  require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
+end, vim.tbl_extend("keep", opts, { desc = "Find all files" }))
+
 vim.keymap.set("n", "<leader>fb", function()
   require("telescope.builtin").buffers({ sort_lastused = true, ignore_current_buffer = true })
-end, opts)
+end, vim.tbl_extend("keep", opts, { desc = "Find buffers" }))
+
 vim.keymap.set("n", "<leader>fca", function()
   require("telescope.builtin").lsp_code_actions()
 end, opts)
+
 vim.keymap.set("n", "<leader>fd", function()
   require("telescope.builtin").find_files({
     prompt_title = "dotfiles",
@@ -51,30 +57,39 @@ vim.keymap.set("n", "<leader>fd", function()
     hidden = true,
   })
 end, opts)
+
 vim.keymap.set("n", "<leader>fe", function()
   require("telescope").extensions.file_browser.file_browser()
 end, opts)
+
 vim.keymap.set("n", "<leader>ff", function()
-  require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
-end, opts)
+  require("telescope.builtin").find_files({ hidden = true })
+end, vim.tbl_extend("keep", opts, { desc = "Find files (ignoring based on .gitignore)" }))
+
 vim.keymap.set("n", "<leader>ft", function()
   require("telescope.builtin").live_grep({ hidden = true, no_ignore = true })
 end, opts)
+
 vim.keymap.set("n", "<leader>fh", function()
   require("telescope.builtin").help_tags()
 end, opts)
+
 vim.keymap.set("n", "<leader>fp", function()
   require("telescope").extensions.project.project({})
 end, opts)
+
 vim.keymap.set("n", "<leader>fsw", function()
   require("telescope.builtin").lsp_workspace_symbols()
 end, opts)
+
 vim.keymap.set("n", "<leader>fsd", function()
   require("telescope.builtin").lsp_document_symbols()
 end, opts)
+
 vim.keymap.set("n", "<leader>fgw", function()
   require("telescope").extensions.git_worktree.git_worktrees()
 end, opts)
+
 vim.keymap.set("n", "<leader>fww", function()
   require("telescope.builtin").find_files({
     prompt_title = "wiki",
@@ -83,6 +98,7 @@ vim.keymap.set("n", "<leader>fww", function()
     hidden = false,
   })
 end, opts)
+
 vim.keymap.set("n", "<leader>fwj", function()
   require("telescope.builtin").find_files({
     prompt_title = "journal",
@@ -91,6 +107,7 @@ vim.keymap.set("n", "<leader>fwj", function()
     hidden = false,
   })
 end, opts)
+
 vim.keymap.set("n", "<leader>fz", function()
   require("telescope.builtin").current_buffer_fuzzy_find(
     require("telescope.themes").get_dropdown({ winblend = 10, border = true, previewer = false, shorten_path = false })
