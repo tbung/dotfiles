@@ -38,6 +38,9 @@ repos=(
 # now load your plugins
 plugin-load $repos
 
+# use ctrl+n to accept next word from zsh-autosuggestions
+bindkey "^n" forward-word
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
