@@ -149,7 +149,7 @@ return require("packer").startup({
     use({ "nvim-treesitter/nvim-treesitter-textobjects", module_pattern = "nvim-treesitter.*" })
     use({ "RRethy/nvim-treesitter-textsubjects", module_pattern = "nvim-treesitter.*" })
     use({ "p00f/nvim-ts-rainbow", module_pattern = "nvim-treesitter.*" })
-    use({ "nvim-treesitter/playground", module_pattern = "nvim-treesitter.*" })
+    use({ "nvim-treesitter/playground" })
     use({ "yioneko/nvim-yati", module_pattern = "nvim-treesitter.*" })
 
     use({
