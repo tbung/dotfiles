@@ -4,6 +4,13 @@ if [[ -z "$TMUX"  && -z "$VIM" && "$TERM_PROGRAM" != "vscode" ]] && [[ -n "$SSH_
   tmux new-session -A -s main
 fi
 
+eval "$(direnv hook zsh)"
+[[ -v DIRENV_DIR ]] && direnv reload
+
+function prompt_my_tmux() {
+    p10k segment -t $'%B%{\e[3m%}tmux%{\e[0m%}%b' -f 'blue' -c "$TMUX"
+}
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -159,7 +166,6 @@ function preexec {
 }
 
 eval "$(zoxide init zsh)"
-eval "$(direnv hook zsh)"
 
 
 
