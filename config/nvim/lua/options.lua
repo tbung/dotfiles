@@ -63,3 +63,7 @@ vim.api.nvim_create_autocmd({ "WinClosed", "WinEnter" }, {
 vim.api.nvim_create_user_command("UpdateEnv", function()
   require("tbung").update_ssh_env_from_tmux()
 end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
+
+vim.api.nvim_create_user_command("InitPacker", function()
+  require("plugins")
+end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
