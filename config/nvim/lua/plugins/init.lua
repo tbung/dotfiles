@@ -20,7 +20,6 @@ return require("packer").startup({
     use("lewis6991/impatient.nvim")
 
     -- Stuff that should just be builtin
-    use("tpope/vim-surround")
     use("tpope/vim-fugitive")
     use("tpope/vim-repeat")
     use("tpope/vim-eunuch")
@@ -31,6 +30,12 @@ return require("packer").startup({
       "numToStr/Comment.nvim",
       config = function()
         require("Comment").setup()
+      end,
+    })
+    use({
+      "kylechui/nvim-surround",
+      config = function()
+        require("nvim-surround").setup({})
       end,
     })
 
