@@ -279,12 +279,11 @@ return require("packer").startup({
     })
 
     use({
-      "folke/persistence.nvim",
-      event = "BufReadPre", -- this will only start session saving when an actual file was opened
-      module = "persistence",
+      "jedrzejboczar/possession.nvim",
+      requires = { "nvim-lua/plenary.nvim" },
       config = function()
-        require("persistence").setup()
-      end,
+        require("possession").setup({})
+      end
     })
 
     use({
