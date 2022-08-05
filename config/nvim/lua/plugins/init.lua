@@ -93,7 +93,7 @@ return require("packer").startup({
     -- #######
     use({
       "williamboman/mason-lspconfig.nvim",
-      requires = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" },
+      requires = { "neovim/nvim-lspconfig", "williamboman/mason.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },
       config = function()
         require("mason").setup()
         require("mason-lspconfig").setup({
@@ -107,6 +107,16 @@ return require("packer").startup({
             "marksman",
           },
         })
+
+        require("mason-tool-installer").setup({
+          ensure_installed = {
+            "stylua",
+            "prettier",
+            "shellcheck",
+            "shfmt",
+          },
+        })
+
         require("plugins.lsp")
       end,
     })
@@ -161,11 +171,11 @@ return require("packer").startup({
       end,
     })
 
-    use({ "nvim-treesitter/nvim-treesitter-textobjects", module_pattern = "nvim-treesitter.*" })
-    use({ "RRethy/nvim-treesitter-textsubjects", module_pattern = "nvim-treesitter.*" })
-    use({ "p00f/nvim-ts-rainbow", module_pattern = "nvim-treesitter.*" })
-    use({ "nvim-treesitter/playground" })
-    use({ "yioneko/nvim-yati", module_pattern = "nvim-treesitter.*" })
+    use({ "nvim-treesitter/nvim-treesitter-textobjects", requires = "nvim-treesitter/nvim-treesitter" })
+    use({ "RRethy/nvim-treesitter-textsubjects", requires = "nvim-treesitter/nvim-treesitter" })
+    use({ "p00f/nvim-ts-rainbow", requires = "nvim-treesitter/nvim-treesitter" })
+    use({ "nvim-treesitter/playground", requires = "nvim-treesitter/nvim-treesitter" })
+    use({ "yioneko/nvim-yati", requires = "nvim-treesitter/nvim-treesitter" })
 
     use({
       "lewis6991/spellsitter.nvim",
