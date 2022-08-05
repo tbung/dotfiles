@@ -40,7 +40,6 @@ return require("packer").startup({
     })
 
     -- Colors
-    -- use("folke/tokyonight.nvim")
     use({
       "catppuccin/nvim",
       as = "catppuccin",
@@ -93,10 +92,21 @@ return require("packer").startup({
     -- # LSP #
     -- #######
     use({
-      "williamboman/nvim-lsp-installer",
-      requires = "neovim/nvim-lspconfig",
+      "williamboman/mason-lspconfig.nvim",
+      requires = { "neovim/nvim-lspconfig", "williamboman/mason.nvim" },
       config = function()
-        require("nvim-lsp-installer").setup({})
+        require("mason").setup()
+        require("mason-lspconfig").setup({
+          ensure_installed = {
+            "sumneko_lua",
+            "rust_analyzer",
+            "pyright",
+            "clangd",
+            "arduino_language_server",
+            "bashls",
+            "marksman",
+          },
+        })
         require("plugins.lsp")
       end,
     })
@@ -283,7 +293,7 @@ return require("packer").startup({
       requires = { "nvim-lua/plenary.nvim" },
       config = function()
         require("possession").setup({})
-      end
+      end,
     })
 
     use({
