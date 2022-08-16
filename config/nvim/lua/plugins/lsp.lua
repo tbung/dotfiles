@@ -48,6 +48,9 @@ require("null-ls").setup({
     }),
     require("null-ls").builtins.formatting.isort,
     require("null-ls").builtins.formatting.stylua,
+    require("null-ls").builtins.formatting.clang_format.with({
+      extra_filetypes = { "arduino" },
+    }),
     require("null-ls").builtins.formatting.shfmt.with({
       extra_args = { "-i", "4" },
     }),
@@ -176,13 +179,12 @@ require("lspconfig").arduino_language_server.setup({
   cmd = {
     -- Required
     "arduino-language-server",
-    "-cli-config",
-    "/home/tillb/.arduino15/arduino-cli.yaml",
-    -- Optional
+    "-clangd",
+    "/usr/bin/clangd",
     "-cli",
     "arduino-cli",
-    "-clangd",
-    "clangd",
+    "-cli-config",
+    "/home/tillb/.arduino15/arduino-cli.yaml",
     "-fqbn",
     "arduino:samd:mkr1000",
   },
