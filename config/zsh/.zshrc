@@ -4,7 +4,7 @@ if [[ -z "$TMUX"  && -z "$VIM" && "$TERM_PROGRAM" != "vscode" ]] && [[ -n "$SSH_
   tmux new-session -A -s main
 fi
 
-eval "$(direnv hook zsh)"
+(( ${+commands[direnv]} )) && eval "$(direnv hook zsh)"
 [[ -v DIRENV_DIR ]] && direnv reload
 
 function prompt_my_tmux() {
@@ -165,7 +165,7 @@ function preexec {
   refresh
 }
 
-eval "$(zoxide init zsh)"
+(( ${+commands[zoxide]} )) && eval "$(zoxide init zsh)"
 
 
 
