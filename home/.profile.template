@@ -15,10 +15,10 @@ if [[ $(uname -s) == "Darwin" ]]; then
 fi
 
 export PATH="$PATH${PATH:+:}$HOME/.cargo/bin:$HOME/.local/bin"
-source "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+command -v pyenv >/dev/null && eval "$(pyenv init -)"
 
 {{ profile_additional }}
