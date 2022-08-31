@@ -25,7 +25,12 @@ return require("packer").startup({
     use("tpope/vim-eunuch")
     use("wellle/targets.vim")
     use("mbbill/undotree")
-    use("ggandor/lightspeed.nvim")
+    use({
+      "ggandor/leap.nvim",
+      config = function()
+        require("leap").set_default_keymaps()
+      end,
+    })
     use({
       "numToStr/Comment.nvim",
       config = function()
@@ -105,6 +110,7 @@ return require("packer").startup({
             "arduino_language_server",
             "bashls",
             "marksman",
+            "gopls",
           },
         })
 
@@ -114,6 +120,7 @@ return require("packer").startup({
             "prettier",
             "shellcheck",
             "shfmt",
+            "delve",
           },
         })
 
@@ -121,6 +128,7 @@ return require("packer").startup({
       end,
     })
     use("jose-elias-alvarez/null-ls.nvim")
+
     use("onsails/lspkind-nvim")
     use({
       "filipdutescu/renamer.nvim",
@@ -560,7 +568,12 @@ return require("packer").startup({
     use({
       "echasnovski/mini.nvim",
       config = function()
-        require("mini.starter").setup({})
+        require("mini.starter").setup({
+          items = {
+            require("mini.starter").sections.recent_files(5, true, false),
+            require("mini.starter").sections.builtin_actions(),
+          }
+        })
       end,
     })
 
@@ -585,6 +598,24 @@ return require("packer").startup({
               dap = { justMyCode = false, console = "integratedTerminal" },
             }),
           },
+        })
+      end,
+    })
+
+    use({
+      "kevinhwang91/nvim-ufo",
+      requires = "kevinhwang91/promise-async",
+      config = function()
+        vim.o.foldcolumn = "0"
+        vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+        vim.o.foldlevelstart = 99
+        vim.o.foldenable = true
+        vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+        vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+        require("ufo").setup({
+          provider_selector = function(bufnr, filetype, buftype)
+            return { "treesitter", "indent" }
+          end,
         })
       end,
     })
