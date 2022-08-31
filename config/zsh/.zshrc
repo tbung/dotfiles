@@ -8,7 +8,7 @@ fi
 [[ -v DIRENV_DIR ]] && direnv reload
 
 function prompt_my_tmux() {
-    p10k segment -t $'%B%{\e[3m%}tmux%{\e[0m%}%b' -f 'blue' -c "$TMUX"
+    p10k segment -t $'%BTMUX%b' -f 'red' -c "$TMUX"
 }
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
