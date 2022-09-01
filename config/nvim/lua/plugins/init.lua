@@ -48,9 +48,12 @@ return require("packer").startup({
     use({
       "catppuccin/nvim",
       as = "catppuccin",
+      run = ":CatppuccinCompile",
       config = function()
         vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-        require("catppuccin").setup()
+        require("catppuccin").setup({
+          compile = { enabled = true },
+        })
         vim.cmd("colorscheme catppuccin")
       end,
     })
@@ -572,7 +575,7 @@ return require("packer").startup({
           items = {
             require("mini.starter").sections.recent_files(5, true, false),
             require("mini.starter").sections.builtin_actions(),
-          }
+          },
         })
       end,
     })
