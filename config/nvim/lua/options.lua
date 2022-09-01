@@ -26,6 +26,12 @@ vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
+vim.filetype.add({
+  extension = {
+    h = "c",
+  },
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     require("vim.highlight").on_yank({ timeout = 40 })
