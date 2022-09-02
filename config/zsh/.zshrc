@@ -48,8 +48,6 @@ plugin-load $repos
 # use ctrl+n to accept next word from zsh-autosuggestions
 bindkey "^n" forward-word
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 # Python conda
 [[ -d ~/miniconda3 ]] && source $HOME/miniconda3/etc/profile.d/conda.sh
@@ -79,6 +77,19 @@ fpath+="$HOME/.local/bin/completions"
 
 # Use viins keymap as the default.
 bindkey -v
+
+# FZF
+# Go install
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# brew install
+[ -f $(brew --prefix)/opt/fzf/shell/key-bindings.zsh ] && source $(brew --prefix)/opt/fzf/shell/key-bindings.zsh
+[ -f $(brew --prefix)/opt/fzf/shell/completion.zsh ] && source $(brew --prefix)/opt/fzf/shell/completion.zsh
+# apt install
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+# pacman install
+[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 
 [[ -d $HOME/.cache/zsh ]] || mkdir -p $HOME/.cache/zsh
 
