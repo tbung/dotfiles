@@ -195,15 +195,6 @@ return require("packer").startup({
     use({ "yioneko/nvim-yati", requires = "nvim-treesitter/nvim-treesitter" })
 
     use({
-      "lewis6991/spellsitter.nvim",
-      config = function()
-        require("spellsitter").setup({
-          enable = { "python", "lua", "c", "cpp", "go", "rust", "yaml", "arduino" },
-        })
-      end,
-    })
-
-    use({
       "mfussenegger/nvim-dap",
       config = function()
         require("plugins.dap")
