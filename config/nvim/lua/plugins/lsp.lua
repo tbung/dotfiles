@@ -218,9 +218,17 @@ require("zk").setup({
   },
 })
 
+-- Update this path
+local extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension/"
+local codelldb_path = extension_path .. "adapter/codelldb"
+local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
 require("rust-tools").setup({
   server = {
-      on_attach = on_attach,
-      capabilities = capabilities,
-  }
+    on_attach = on_attach,
+    capabilities = capabilities,
+  },
+  dap = {
+    adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+  },
 })

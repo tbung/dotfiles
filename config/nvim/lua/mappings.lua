@@ -1,5 +1,7 @@
 local opts = { noremap = true, silent = true }
 
+vim.keymap.set("x", "<leader>p", [["_dP]], opts)
+
 -- #######
 -- # LSP #
 -- #######
@@ -18,7 +20,10 @@ vim.keymap.set("n", "<leader>vf", function()
 end, opts)
 vim.keymap.set("n", "<leader>vh", vim.lsp.buf.hover, opts)
 -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-vim.keymap.set("n", "<leader>vrn", require("renamer").rename, opts)
+-- vim.keymap.set("n", "<leader>vrn", require("renamer").rename, opts)
+vim.keymap.set("n", "<leader>vrn", function()
+  return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true })
 vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
 vim.keymap.set("n", "<leader>vsd", vim.diagnostic.open_float, opts)
 vim.keymap.set("n", "<leader>vsh", vim.lsp.buf.signature_help, opts)
