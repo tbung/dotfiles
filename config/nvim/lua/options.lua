@@ -70,6 +70,10 @@ vim.api.nvim_create_user_command("UpdateEnv", function()
   require("tbung").update_ssh_env_from_tmux()
 end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
 
+vim.api.nvim_create_user_command("Scratch", function(args)
+  require("tbung").create_scratch_buf(args.fargs[1])
+end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true, nargs = 1, complete = "filetype" })
+
 vim.api.nvim_create_user_command("InitPacker", function()
   require("plugins")
 end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })

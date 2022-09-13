@@ -64,4 +64,13 @@ M.close_only_sidebars = function()
   end
 end
 
+M.create_scratch_buf = function(ft)
+  local buf = vim.api.nvim_create_buf(true, false)
+  vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
+  vim.api.nvim_buf_set_name(buf, "Scratch")
+  vim.api.nvim_win_set_buf(0, buf)
+  vim.api.nvim_buf_set_option(buf, "filetype", ft)
+  vim.cmd[[LspStart]]
+end
+
 return M
