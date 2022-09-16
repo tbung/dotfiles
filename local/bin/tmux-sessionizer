@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+# Requirements:
+# - ripgrep
+# - jq
+
+# set -x
+
+# TODO: If only the initial window is open, replace it (How?)
+source $HOME/.profile
+
+function get_ssh_hosts() {
+    rg -IN 'Host ([0-9a-zA-Z\-]+)' -r 'ssh $1' ~/.ssh/config
+}
+
+function ssh_command_to_hostname() {
+    echo "$1" | rg -IN 'ssh ([0-9a-zA-Z\-]+)' -r '$1'
+}
+
+function get_kitty_tab_id_by_name() {
+    tmux list-windows | rg "$1" | cut -d' ' -f 1 | tr -d ":"
+}
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=$( (
+        # All project directories
+        find ${HOME}/Projects -mindepth 1 -maxdepth 1 -type d
+
+        # The wiki directory
+        echo "${HOME}/wiki"
+
+        # ssh hosts
+        # echo "$(get_ssh_hosts)"
+    ) | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+cwd=$selected
+
+if [[ $selected_name = $'ssh '* ]]; then
+    selected_name=$(ssh_command_to_hostname "${selected_name}")
+    cwd=$HOME
+    cmd=($SHELL -c "$selected ; read")
+fi
+
+id=$(get_kitty_tab_id_by_name "${selected_name}")
+
+if [[ -z "$id" ]]; then
+    # kitty @new-window --new-tab --title $selected_name --cwd $cwd "${cmd[@]}"
+    tmux new-window -a -n $selected_name -c $cwd "${cmd[@]}"
+else
+    # kitty @focus-tab -m "id:$id"
+    tmux switch-client -tmain:$id
+fi
+
+# set +x
