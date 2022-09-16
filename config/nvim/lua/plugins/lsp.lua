@@ -25,6 +25,8 @@ highlight DiagnosticUnderlineHint gui=undercurl
     false
   )
 
+  require("tint").refresh()
+
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
@@ -227,6 +229,9 @@ require("rust-tools").setup({
   server = {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = {
+      ["rust-analyzer"] = { checkOnSave = { command = "clippy" } },
+    },
   },
   dap = {
     adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),

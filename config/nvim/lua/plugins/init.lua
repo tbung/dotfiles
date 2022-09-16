@@ -665,7 +665,7 @@ return require("packer").startup({
             -- How the repl window will be displayed
             -- See below for more information
             repl_open_cmd = require("iron.view").right(function()
-              return vim.o.columns / 3
+              return math.floor(vim.o.columns / 3)
             end),
           },
           -- Iron doesn't set keymaps by default anymore.
