@@ -1,16 +1,15 @@
-; Inject bash into raw multi-line string literals
-; if they are assigned to something and there's a
-; comment in front specifying it's bash
+; Inject bash into raw string literals
+; if they are assigned to something that starts
+; with `BASH_`
+; HACK: also works for `r"""` cause `""` is an empty string
 (
- ((comment) @_cmt
- ) .
  (expression_statement
    (assignment
-     left: (identifier)
+     left: (identifier) @_id
      right: (string) @bash
      )
    )
- (#eq? @_cmt "# lang: bash")
- (#lua-match? @bash "^r\"\"\"")
- (#offset! @bash 0 4 0 -3)
+ (#match? @_id "(BASH_|bash_).*")
+ (#lua-match? @bash "^r\"")
+ (#offset! @bash 0 2 0 -1)
 )
