@@ -681,7 +681,7 @@ return require("packer").startup({
             },
             -- How the repl window will be displayed
             -- See below for more information
-            repl_open_cmd = require("iron.view").split(),
+            repl_open_cmd = require("iron.view").split.vertical(),
           },
           -- Iron doesn't set keymaps by default anymore.
           -- You can set them here or manually add keymaps to the functions in iron.core
