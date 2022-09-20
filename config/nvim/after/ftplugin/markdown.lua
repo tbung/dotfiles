@@ -1,6 +1,7 @@
 vim.opt_local.conceallevel = 2
 vim.api.nvim_set_hl(0, "@unchecked", { fg = require("catppuccin.palettes").get_palette().red })
 vim.api.nvim_set_hl(0, "@checked", { fg = require("catppuccin.palettes").get_palette().green })
+vim.api.nvim_set_hl(0, "@text.strike", { strikethrough = true })
 
 local function toggle_checkbox()
   local row = vim.api.nvim_win_get_cursor(0)
@@ -27,7 +28,14 @@ if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
 
   -- Create a new note after asking for its title.
   -- This overrides the global `<leader>zn` mapping to create the note in the same directory as the current buffer.
-  map("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
+  -- map("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
+  vim.keymap.set("n", "<leader>zn", function()
+    vim.ui.input({ prompt = "Title:", relative = "editor" }, function(s)
+      if s ~= nil then
+        require("zk").new({ dir = vim.fn.expand('%:p:h'), title = s })
+      end
+    end)
+  end, opts)
   -- Create a new note in the same directory as the current buffer, using the current selection for title.
   map("v", "<leader>znt", ":'<,'>ZkNewFromTitleSelection { dir = vim.fn.expand('%:p:h') }<CR>", opts)
   -- Create a new note in the same directory as the current buffer, using the current selection for note content and asking for its title.
