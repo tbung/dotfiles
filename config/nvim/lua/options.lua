@@ -26,6 +26,11 @@ vim.opt.laststatus = 3
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
+vim.opt.textwidth = 100
+
+-- TODO: Maybe only set this if the line is too long -> autocmd
+vim.opt.colorcolumn = "+1"
+
 vim.filetype.add({
   extension = {
     h = "c",
