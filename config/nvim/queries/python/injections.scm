@@ -1,3 +1,4 @@
+; extends
 ; Inject bash into raw string literals
 ; if they are assigned to something that starts
 ; with `BASH_`
