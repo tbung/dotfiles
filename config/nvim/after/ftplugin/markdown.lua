@@ -30,7 +30,7 @@ if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
   -- This overrides the global `<leader>zn` mapping to create the note in the same directory as the current buffer.
   -- map("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
   vim.keymap.set("n", "<leader>zn", function()
-    vim.ui.input({ prompt = "Title:", relative = "editor" }, function(s)
+    vim.ui.input({ prompt = "Title:", dressing = { relative = "editor" } }, function(s)
       if s ~= nil then
         require("zk").new({ dir = vim.fn.expand('%:p:h'), title = s })
       end

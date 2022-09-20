@@ -636,7 +636,24 @@ return require("packer").startup({
       end,
     })
 
-    use({ "stevearc/dressing.nvim" })
+    use({
+      "stevearc/dressing.nvim",
+      config = function()
+        require("dressing").setup({
+          input = {
+            get_config = function(opts)
+              if opts.dressing ~= nil then
+                return {
+                  relative = opts.relative,
+                }
+              end
+
+              return nil
+            end,
+          },
+        })
+      end,
+    })
 
     use({
       "vigoux/notifier.nvim",
@@ -664,7 +681,7 @@ return require("packer").startup({
             },
             -- How the repl window will be displayed
             -- See below for more information
-            repl_open_cmd = require("iron.view").split("40%"),
+            repl_open_cmd = require("iron.view").split(),
           },
           -- Iron doesn't set keymaps by default anymore.
           -- You can set them here or manually add keymaps to the functions in iron.core
