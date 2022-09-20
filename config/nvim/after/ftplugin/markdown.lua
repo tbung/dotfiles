@@ -1,4 +1,20 @@
 vim.opt_local.conceallevel = 2
+vim.api.nvim_set_hl(0, "@unchecked", { fg = require("catppuccin.palettes").get_palette().red })
+vim.api.nvim_set_hl(0, "@checked", { fg = require("catppuccin.palettes").get_palette().green })
+
+local function toggle_checkbox()
+  local row = vim.api.nvim_win_get_cursor(0)
+  row = row[1] - 1
+  local text = vim.api.nvim_buf_get_text(0, row, 0, row, 5, {})
+  if text[1] == "- [ ]" then
+    vim.api.nvim_buf_set_text(0, row, 0, row, 5, { "- [x]" })
+  elseif text[1] == "- [x]" then
+    vim.api.nvim_buf_set_text(0, row, 0, row, 5, { "- [ ]" })
+  end
+end
+
+vim.keymap.set("n", "<leader><space>", toggle_checkbox, { buffer = true })
+
 -- Add the key mappings only for Markdown files in a zk notebook.
 if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
   local function map(...)

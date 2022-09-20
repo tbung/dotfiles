@@ -185,7 +185,14 @@ vim.keymap.set("n", "<leader>rh", ":MagmaHideOutput<CR>", opts)
 -- ######
 
 -- Create a new note after asking for its title.
-vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", opts)
+-- vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", opts)
+vim.keymap.set("n", "<leader>zn", function()
+  vim.ui.input("Title:", function(s)
+    if s ~= nil then
+      require("zk").new({ title = s })
+    end
+  end)
+end, opts)
 
 -- Create today's journal entry
 vim.keymap.set("n", "<leader>zj", "<Cmd>ZkNew { group='daily', dir='journal' }<CR>", opts)
@@ -196,7 +203,14 @@ vim.keymap.set("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", 
 vim.keymap.set("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
 
 -- Search for the notes matching a given query.
-vim.keymap.set("n", "<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = vim.fn.input('Search: ') }<CR>", opts)
+-- vim.keymap.set("n", "<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = vim.fn.input('Search: ') }<CR>", opts)
+vim.keymap.set("n", "<leader>zf", function()
+  vim.ui.input("Search:", function(s)
+    if s ~= nil then
+      require("zk").list({ sort = { "modified" }, match = s })
+    end
+  end)
+end, opts)
 -- Search for the notes matching the current visual selection.
 vim.keymap.set("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
 
