@@ -1,39 +1,53 @@
 # Taps
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
+tap "homeport/tap"
+tap "zegervdv/zathura"
 
 # Brews
+brew "girara", args: ['HEAD']
+brew "zathura", args: ['HEAD']
+brew "zathura-pdf-poppler"
+# mkdir -p $(brew --prefix zathura)/lib/zathura
+# ln -s $(brew --prefix zathura-pdf-poppler)/libpdf-poppler.dylib $(brew --prefix zathura)/lib/zathura/libpdf-poppler.dylib
+
+brew "arduino-cli"
 brew "aria2"
 brew "automake"
+brew "bitwarden-cli"
 brew "cmake"
 brew "coreutils"
 brew "curl"
 brew "delve"
 brew "direnv"
+brew "dyff"
 brew "fzf"
 brew "gcc"
-brew "x86_64-elf-gcc"
 brew "gettext"
 brew "gh"
-brew "glab"
 brew "git-lfs"
+brew "glab"
+brew "gnupg"
 brew "go"
-brew "gopls"
 brew "jq"
-brew "llvm"
 brew "libtool"
+brew "llvm"
 brew "lsyncd"
-brew "lua-language-server"
 brew "mas"
 brew "ninja"
+brew "nnn"
 brew "node"
 brew "openconnect"
+brew "pass"
+brew "pass-otp"
+brew "pinentry-mac"
+brew "pipx"
 brew "pkg-config"
 brew "pv"
+brew "pyenv"
 brew "qemu"
-brew "rust-analyzer"
-brew "shfmt"
-brew "stylua"
+brew "texlive"
+brew "vpn-slice"
 brew "zk"
 
 # Casks
@@ -43,11 +57,13 @@ cask "brave-browser"
 cask "docker"
 cask "eurkey"
 cask "firefox"
+cask "font-dejavu"
+cask "font-fira-code-nerd-font"
+cask "font-victor-mono-nerd-font"
 cask "gimp"
 cask "hammerspoon"
 cask "inkscape"
 cask "kitty"
-cask "macfuse"
 cask "mpv"
 cask "obsidian"
 cask "scroll-reverser"
@@ -55,13 +71,6 @@ cask "slack"
 cask "spotify"
 cask "utm"
 cask "visual-studio-code"
+cask "xquartz"
 cask "zoom"
 cask "zotero"
-cask "font-dejavu"
-
-# Mac App Store apps
-mas "GarageBand", id: 682658836
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "iMovie", id: 408981434
