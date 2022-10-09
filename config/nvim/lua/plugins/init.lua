@@ -263,7 +263,12 @@ return require("packer").startup({
         vim.g.jupytext_fmt = "py:percent"
       end,
     })
-    use("lervag/vimtex")
+    use({
+      "lervag/vimtex",
+      config = function()
+        vim.g.vimtex_view_general_viewer = "zathura"
+      end,
+    })
     use("fladson/vim-kitty")
     use({
       "HiPhish/info.vim",
@@ -380,7 +385,10 @@ return require("packer").startup({
 
         table.insert(components.active[1], {
           provider = function()
-            return navic.get_location()
+            local loc = navic.get_location()
+            -- `[\\%]` in latex fucks this up
+            loc = string.gsub(loc, "\\%%", "percent")
+            return loc
           end,
           enabled = function()
             return navic.is_available()

@@ -84,6 +84,16 @@ lsp.pyright.setup({
 lsp.texlab.setup({
   on_attach = on_attach,
   capabilities = capabilities,
+  settings = {
+    texlab = {
+      build = {
+        onSave = true,
+      },
+      chktex = {
+        onOpenAndSave = true,
+      },
+    },
+  },
 })
 
 lsp.tsserver.setup({
@@ -91,7 +101,7 @@ lsp.tsserver.setup({
   capabilities = capabilities,
 })
 
-lsp.ccls.setup({
+lsp.clangd.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
