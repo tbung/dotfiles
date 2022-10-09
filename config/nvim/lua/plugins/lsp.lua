@@ -76,6 +76,9 @@ lsp.pyright.setup({
     },
   },
   capabilities = capabilities,
+  root_dir = function (fname)
+    return vim.fn.getcwd()
+  end
 })
 
 lsp.texlab.setup({

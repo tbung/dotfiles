@@ -31,6 +31,10 @@ vim.opt.textwidth = 100
 -- TODO: Maybe only set this if the line is too long -> autocmd
 vim.opt.colorcolumn = "+1"
 
+if vim.fn.executable("rg") then
+  vim.opt.grepprg = [[rg --no-ignore --no-heading --color never -n $*]]
+end
+
 vim.filetype.add({
   extension = {
     h = "c",
@@ -75,9 +79,18 @@ vim.api.nvim_create_user_command("UpdateEnv", function()
   require("tbung").update_ssh_env_from_tmux()
 end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
 
-vim.api.nvim_create_user_command("Scratch", function(args)
-  require("tbung").create_scratch_buf(args.fargs[1])
-end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true, nargs = 1, complete = "filetype" })
+vim.api.nvim_create_user_command(
+  "Scratch",
+  function(args)
+    require("tbung").create_scratch_buf(args.fargs[1])
+  end,
+  {
+    desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding",
+    force = true,
+    nargs = 1,
+    complete = "filetype",
+  }
+)
 
 vim.api.nvim_create_user_command("InitPacker", function()
   require("plugins")
