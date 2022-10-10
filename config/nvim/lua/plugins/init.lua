@@ -733,6 +733,19 @@ return require("packer").startup({
         require("neoscroll.config").set_mappings(t)
       end,
     })
+
+    use({
+      "smjonas/live-command.nvim",
+      config = function()
+        require("live-command").setup({
+          commands = {
+            Norm = { cmd = "norm" },
+            G = { cmd = "g" },
+          },
+          enable_highlighting = true,
+        })
+      end,
+    })
   end,
   config = {
     -- Move to lua dir so impatient.nvim can cache it
