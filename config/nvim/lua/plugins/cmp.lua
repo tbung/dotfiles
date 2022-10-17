@@ -28,6 +28,7 @@ cmp.setup({
   }, {
     { name = "luasnip" }, -- For luasnip users.
     { name = "emoji" },
+    { name = "latex_symbols" },
   }, {
     { name = "buffer" },
   }),
