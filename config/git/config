@@ -24,3 +24,10 @@
 	name = "Till Bungert"
 [safe]
 	directory = ~/Projects/neovim
+[alias]
+	co = checkout
+	cm = commit
+	st = status
+	ps = push
+	pl = pull
+	a = add
