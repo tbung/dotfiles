@@ -25,12 +25,12 @@ return require("packer").startup({
     use("tpope/vim-eunuch")
     use("wellle/targets.vim")
     use("mbbill/undotree")
-    use({
-      "ggandor/leap.nvim",
-      config = function()
-        require("leap").set_default_keymaps()
-      end,
-    })
+    -- use({
+    --   "ggandor/leap.nvim",
+    --   config = function()
+    --     require("leap").set_default_keymaps()
+    --   end,
+    -- })
     use({
       "numToStr/Comment.nvim",
       config = function()
@@ -50,8 +50,7 @@ return require("packer").startup({
       as = "catppuccin",
       config = function()
         vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-        require("catppuccin").setup({
-        })
+        require("catppuccin").setup({})
         vim.cmd("colorscheme catppuccin")
       end,
     })
@@ -743,6 +742,15 @@ return require("packer").startup({
             Gg = { cmd = "g" },
           },
           enable_highlighting = true,
+        })
+      end,
+    })
+
+    use({
+      "jinh0/eyeliner.nvim",
+      config = function()
+        require("eyeliner").setup({
+          highlight_on_key = true,
         })
       end,
     })
