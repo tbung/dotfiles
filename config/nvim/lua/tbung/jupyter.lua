@@ -18,10 +18,18 @@ function M.select_cell(buf)
   local start_row = M.cell_start()
   local end_row = M.cell_end()
 
+  local mode = vim.api.nvim_get_mode().mode
+
+  if not vim.tbl_contains({ "v", "V" }, mode) then
+    mode = "V"
+  end
+
   vim.cmd("normal! ")
   vim.fn.setpos(".", { buf, start_row, 0, 0 })
-  vim.cmd("normal! V")
+  vim.cmd("normal! " .. mode)
   vim.fn.setpos(".", { buf, end_row, 0, 0 })
+  vim.cmd("normal! $")
+
 end
 
 function M.goto_previous_cell_start()

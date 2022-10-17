@@ -14,3 +14,15 @@
  (#lua-match? @bash "^r\"")
  (#offset! @bash 0 2 0 -1)
 )
+
+(
+ (expression_statement
+   (assignment
+     left: (identifier) @_id
+     right: (string) @latex
+     )
+   )
+ (#match? @_id "(LATEX_|latex_).*")
+ (#lua-match? @latex "^r\"")
+ (#offset! @latex 0 2 0 -1)
+)
