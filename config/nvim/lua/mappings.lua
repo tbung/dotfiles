@@ -1,6 +1,8 @@
 local opts = { noremap = true, silent = true }
 
 vim.keymap.set("x", "<leader>p", [["_dP]], opts)
+vim.keymap.set("n", "]q", function() vim.cmd("cnext") end, opts)
+vim.keymap.set("n", "[q", function() vim.cmd("cprev") end, opts)
 
 -- #######
 -- # LSP #
