@@ -1,4 +1,3 @@
-local Path = require("plenary.path")
 
 M = {}
 
@@ -67,6 +66,11 @@ M.close_only_sidebars = function()
 end
 
 M.create_scratch_buf = function(ft)
+  local ok, Path = pcall(require, "plenary.path")
+  if not ok then
+    vim.notify("Scratch needs plenary installed", vim.log.levels.ERROR)
+  end
+
   local tempdir = Path.new(vim.fn.tempname()):parent()
   local path = tempdir / "Scratch"
   vim.cmd([[edit ]] .. path.filename)
