@@ -79,19 +79,32 @@ vim.api.nvim_create_user_command("UpdateEnv", function()
   require("tbung").update_ssh_env_from_tmux()
 end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
 
-vim.api.nvim_create_user_command(
-  "Scratch",
-  function(args)
-    require("tbung").create_scratch_buf(args.fargs[1])
-  end,
-  {
-    desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding",
-    force = true,
-    nargs = 1,
-    complete = "filetype",
-  }
-)
+vim.api.nvim_create_user_command("Scratch", function(args)
+  require("tbung").create_scratch_buf(args.fargs[1])
+end, {
+  desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding",
+  force = true,
+  nargs = 1,
+  complete = "filetype",
+})
 
-vim.api.nvim_create_user_command("InitPacker", function()
-  require("plugins")
-end, { desc = "Update SSH environment variables from tmux to enable agent and X11 forwarding", force = true })
+vim.api.nvim_create_user_command("PackerInstall", function()
+  R("plugins")
+  require("packer").install()
+end, {})
+vim.api.nvim_create_user_command("PackerUpdate", function()
+  R("plugins")
+  require("packer").update()
+end, {})
+vim.api.nvim_create_user_command("PackerSync", function()
+  R("plugins")
+  require("packer").sync()
+end, {})
+vim.api.nvim_create_user_command("PackerClean", function()
+  R("plugins")
+  require("packer").clean()
+end, {})
+vim.api.nvim_create_user_command("PackerCompile", function()
+  R("plugins")
+  require("packer").compile()
+end, {})
