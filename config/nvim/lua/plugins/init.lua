@@ -25,12 +25,6 @@ return require("packer").startup({
     use("tpope/vim-eunuch")
     use("wellle/targets.vim")
     use("mbbill/undotree")
-    -- use({
-    --   "ggandor/leap.nvim",
-    --   config = function()
-    --     require("leap").set_default_keymaps()
-    --   end,
-    -- })
     use({
       "numToStr/Comment.nvim",
       config = function()
@@ -41,6 +35,14 @@ return require("packer").startup({
       "kylechui/nvim-surround",
       config = function()
         require("nvim-surround").setup({})
+      end,
+    })
+    use({
+      "jinh0/eyeliner.nvim",
+      config = function()
+        require("eyeliner").setup({
+          highlight_on_key = true,
+        })
       end,
     })
 
@@ -111,6 +113,7 @@ return require("packer").startup({
             "bashls",
             "marksman",
             "gopls",
+            "texlab",
           },
         })
 
@@ -130,14 +133,6 @@ return require("packer").startup({
     use("jose-elias-alvarez/null-ls.nvim")
 
     use("onsails/lspkind-nvim")
-    -- use({
-    --   "filipdutescu/renamer.nvim",
-    --   branch = "master",
-    --   requires = "nvim-lua/plenary.nvim",
-    --   config = function()
-    --     require("renamer").setup({})
-    --   end,
-    -- })
     use({
       "smjonas/inc-rename.nvim",
       config = function()
@@ -310,14 +305,6 @@ return require("packer").startup({
     })
 
     use({
-      "jedrzejboczar/possession.nvim",
-      requires = { "nvim-lua/plenary.nvim" },
-      config = function()
-        require("possession").setup({})
-      end,
-    })
-
-    use({
       "ThePrimeagen/harpoon",
       config = function()
         require("harpoon").setup({
@@ -331,14 +318,6 @@ return require("packer").startup({
         })
       end,
     })
-
-    -- use({
-    --   "rcarriga/nvim-notify",
-    --   config = function()
-    --     require("notify").setup()
-    --     vim.notify = require("notify")
-    --   end,
-    -- })
 
     use({
       "nvim-neo-tree/neo-tree.nvim",
@@ -416,17 +395,6 @@ return require("packer").startup({
         require("feline").winbar.setup({ components = components })
       end,
       requires = "kyazdani42/nvim-web-devicons",
-    })
-
-    use({
-      vim.fn.expand("~/Projects/magma-nvim"),
-      run = ":UpdateRemotePlugins",
-      config = function()
-        vim.cmd([[
-      let g:magma_automatically_open_output = 0
-      let g:magma_image_provider = "kitty"
-      ]])
-      end,
     })
 
     use({
@@ -530,13 +498,6 @@ return require("packer").startup({
         require("colorizer").setup()
       end,
     })
-
-    -- use({
-    --   "j-hui/fidget.nvim",
-    --   config = function()
-    --     require("fidget").setup({})
-    --   end,
-    -- })
 
     use({
       "mickael-menu/zk-nvim",
@@ -742,15 +703,6 @@ return require("packer").startup({
             Gg = { cmd = "g" },
           },
           enable_highlighting = true,
-        })
-      end,
-    })
-
-    use({
-      "jinh0/eyeliner.nvim",
-      config = function()
-        require("eyeliner").setup({
-          highlight_on_key = true,
         })
       end,
     })
