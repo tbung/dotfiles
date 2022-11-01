@@ -236,7 +236,15 @@ require("zk").setup({
 -- Update this path
 local extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension/"
 local codelldb_path = extension_path .. "adapter/codelldb"
-local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+local liblldb_path
+
+local os = vim.loop.os_uname().sysname
+
+if os == "Darwin" then
+  liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+elseif os == "Linux" then
+  liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+end
 
 require("rust-tools").setup({
   server = {
