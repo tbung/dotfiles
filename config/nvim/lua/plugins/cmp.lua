@@ -24,7 +24,7 @@ cmp.setup({
   }, {
     { name = "nvim_lua" },
     { name = "nvim_lsp" },
-    { name = "omni" },
+    -- { name = "omni" },
   }, {
     { name = "luasnip" }, -- For luasnip users.
     { name = "emoji" },
