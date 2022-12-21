@@ -92,6 +92,9 @@ lsp.texlab.setup({
       chktex = {
         onOpenAndSave = true,
       },
+      latexindent = {
+        modifyLineBreaks = true,
+      },
     },
   },
 })
@@ -145,6 +148,7 @@ lsp.sumneko_lua.setup({
         library = get_lua_runtime(),
         maxPreload = 10000,
         preloadFileSize = 10000,
+        checkThirdParty = false,
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
