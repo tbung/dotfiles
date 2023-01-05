@@ -1,0 +1,8 @@
+vim.keymap.set("n", "<leader>gg", [[<cmd>G<cr>]], {})
+vim.keymap.set("x", "<leader>p", [["_dP]], {})
+vim.keymap.set("n", "]q", function() vim.cmd("cnext") end, {})
+vim.keymap.set("n", "[q", function() vim.cmd("cprev") end, {})
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
