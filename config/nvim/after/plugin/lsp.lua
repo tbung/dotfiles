@@ -34,6 +34,21 @@ lsp.set_preferences({
   set_lsp_keymaps = false,
 })
 
+lsp.configure("arduino_language_server", {
+  cmd = {
+    -- Required
+    "arduino-language-server",
+    "-clangd",
+    "/usr/bin/clangd",
+    "-cli",
+    "arduino-cli",
+    "-cli-config",
+    "/home/tillb/.arduino15/arduino-cli.yaml",
+    "-fqbn",
+    "arduino:avr:uno",
+  },
+})
+
 lsp.setup()
 
 vim.diagnostic.config({
