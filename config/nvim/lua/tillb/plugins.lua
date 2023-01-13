@@ -156,6 +156,12 @@ local plugins = {
       require("which-key").setup({})
     end,
   },
+
+  {
+    "danymat/neogen",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true,
+  },
 }
 
 require("lazy").setup(plugins)
