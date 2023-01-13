@@ -25,6 +25,10 @@ require("mason-tool-installer").setup({
 null_ls.setup({
   on_attach = null_opts.on_attach,
   sources = {
+    null_ls.builtins.diagnostics.pylint.with({
+      extra_args = { "--init-hook", 'import warnings; warnings.filterwarnings("ignore")' },
+      timeout = 10000,
+    }),
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
