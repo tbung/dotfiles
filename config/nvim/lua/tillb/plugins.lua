@@ -34,34 +34,24 @@ local plugins = {
   "tpope/vim-fugitive",
   {
     "lewis6991/gitsigns.nvim",
-    config = function()
-      require("gitsigns").setup({
-        attach_to_untracked = true,
-      })
-    end,
+    opts = {
+      attach_to_untracked = true,
+    },
   },
   "tpope/vim-repeat",
   "tpope/vim-eunuch",
   "wellle/targets.vim",
   {
     "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-    end,
+    config = true,
   },
   {
     "kylechui/nvim-surround",
-    config = function()
-      require("nvim-surround").setup({})
-    end,
+    config = true,
   },
   {
     "jinh0/eyeliner.nvim",
-    config = function()
-      require("eyeliner").setup({
-        highlight_on_key = true,
-      })
-    end,
+    opts = { highlight_on_key = true },
   },
 
   {
@@ -98,9 +88,7 @@ local plugins = {
 
   {
     "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require("indent_blankline").setup({})
-    end,
+    config = true,
   },
 
   {
@@ -127,9 +115,7 @@ local plugins = {
 
   {
     "vigoux/notifier.nvim",
-    config = function()
-      require("notifier").setup({})
-    end,
+    config = true,
   },
 
   {
@@ -141,9 +127,7 @@ local plugins = {
   {
     "folke/todo-comments.nvim",
     dependencies = "nvim-lua/plenary.nvim",
-    config = function()
-      require("todo-comments").setup({})
-    end,
+    config = true,
   },
 
   {
@@ -152,9 +136,7 @@ local plugins = {
 
   {
     "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup({})
-    end,
+    config = true,
   },
 
   {
