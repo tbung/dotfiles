@@ -20,6 +20,10 @@ local plugins = {
     tag = "0.1.0",
     dependencies = { { "nvim-lua/plenary.nvim" } },
   },
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    dependencies = "nvim-telescope/telescope.nvim",
+  },
 
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
@@ -95,9 +99,9 @@ local plugins = {
     "hkupty/iron.nvim",
   },
 
-  {
-    "karb94/neoscroll.nvim",
-  },
+  -- {
+  --   "karb94/neoscroll.nvim",
+  -- },
 
   {
     "echasnovski/mini.nvim",
@@ -143,6 +147,20 @@ local plugins = {
     "danymat/neogen",
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = true,
+  },
+
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = true,
+  },
+
+  {
+    "nvim-treesitter/playground",
+    dependencies = "nvim-treesitter/nvim-treesitter",
   },
 }
 
