@@ -26,10 +26,12 @@ null_ls.setup({
   on_attach = null_opts.on_attach,
   sources = {
     null_ls.builtins.diagnostics.pylint.with({
+      method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
       extra_args = { "--init-hook", 'import warnings; warnings.filterwarnings("ignore")' },
       timeout = 10000,
     }),
     null_ls.builtins.formatting.stylua,
+    null_ls.builtins.code_actions.refactoring,
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
   },
@@ -116,5 +118,6 @@ vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "<leader>vsd", vim.diagnostic.open_float, {})
 vim.keymap.set("n", "<leader>vsh", vim.lsp.buf.signature_help, {})
 vim.keymap.set("n", "<leader>va", vim.lsp.buf.code_action, {})
+vim.keymap.set("v", "<leader>va", vim.lsp.buf.code_action, {})
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
