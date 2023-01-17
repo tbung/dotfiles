@@ -62,27 +62,27 @@ dap.adapters.codelldb = {
     -- CHANGE THIS to your path!
     command = codelldb_path,
     args = { "--port", "${port}" },
-
   },
 }
 
 dap.configurations.c = {
   {
-    name = "Launch file",
+    name = "Launch file with args",
     type = "codelldb",
     request = "launch",
     program = function()
       return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
     args = function()
-      args = vim.fn.input("args: ")
-      P(args)
-      return {args}
+      return vim.fn.input("args: ")
     end,
     cwd = "${workspaceFolder}",
     stopOnEntry = false,
   },
 }
+
+require("dap.ext.vscode").load_launchjs()
+require("dap.ext.vscode").load_launchjs(vim.fn.getcwd() .. "/launch.json", {})
 
 require("dap-python").setup()
 require("dap-python").test_runner = "pytest"
