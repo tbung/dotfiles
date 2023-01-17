@@ -53,6 +53,16 @@ lsp.configure("arduino_language_server", {
   },
 })
 
+lsp.configure("texlab", {
+  settings = {
+    texlab = {
+      build = {
+        onSave = true,
+      },
+    },
+  },
+})
+
 lsp.setup()
 
 vim.diagnostic.config({
