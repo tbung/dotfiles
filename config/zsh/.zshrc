@@ -1,9 +1,5 @@
 #!/bin/zsh
 
-if [[ -z "$TMUX"  && -z "$VIM" && "$TERM_PROGRAM" != "vscode" && (( ${+commands[tmux]} )) ]] && [[ -n "$SSH_TTY" ]]; then
-  tmux new-session -A -s main
-fi
-
 (( ${+commands[direnv]} )) && eval "$(direnv hook zsh)"
 [[ -v DIRENV_DIR ]] && direnv reload
 
@@ -159,24 +155,9 @@ function dkfz-vpn-down() {
   sudo kill -2 `pgrep openconnect`
 }
 
-if [ -n "$TMUX" ]; then
-  function refresh {
-    [[ -n "$(tmux show-environment | grep '^SSH_AUTH_SOCK')" ]] && export "$(tmux show-environment | grep '^SSH_AUTH_SOCK')"
-    [[ -n "$(tmux show-environment | grep '^SSH_CLIENT')" ]] && export "$(tmux show-environment | grep '^SSH_CLIENT')"
-    [[ -n "$(tmux show-environment | grep '^SSH_CONNECTION')" ]] && export "$(tmux show-environment | grep '^SSH_CONNECTION')"
-    [[ -n "$(tmux show-environment | grep '^DISPLAY')" ]] && export "$(tmux show-environment | grep '^DISPLAY')"
-  }
-else
-  function refresh { }
-fi
-
-function preexec {
-  refresh
-}
+export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 
 (( ${+commands[zoxide]} )) && eval "$(zoxide init zsh)"
-
-
 
 # Aliases
 alias :q='exit'
@@ -210,3 +191,10 @@ hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
 export GPG_TTY=$(tty)
 
 DISABLE_AUTO_TITLE="true"
+if ! pgrep -u "$USER" ssh-agent >/dev/null; then
+    ssh-agent >! "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+
+if [[ ! -f "SSH_AUTH_SOCK" ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
