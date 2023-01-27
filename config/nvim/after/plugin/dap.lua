@@ -1,3 +1,11 @@
+-- FIX: https://github.com/mfussenegger/nvim-dap/pull/839
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "dap-repl",
+  callback = function(args)
+    vim.api.nvim_buf_set_option(args.buf, "buflisted", false)
+  end,
+})
+
 local dap = require("dap")
 
 require("nvim-dap-virtual-text").setup({

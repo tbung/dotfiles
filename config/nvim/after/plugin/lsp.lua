@@ -1,3 +1,4 @@
+require("neodev").setup()
 local lsp = require("lsp-zero")
 
 lsp.preset("recommended")
@@ -60,6 +61,9 @@ lsp.configure("texlab", {
     texlab = {
       build = {
         onSave = true,
+      },
+      latexindent = {
+        modifyLineBreaks = true,
       },
     },
   },

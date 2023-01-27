@@ -162,6 +162,7 @@ local plugins = {
     "nvim-treesitter/playground",
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
+  "folke/neodev.nvim",
 }
 
 require("lazy").setup(plugins)
