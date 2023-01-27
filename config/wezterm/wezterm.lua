@@ -4,9 +4,11 @@ local scheme = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local pane = tab.active_pane
   local home_dir = wezterm.home_dir
-  if pane.domain_name == "dkfz-workstation" then
+
+  if pane.domain_name == "dkfz-workstation" or pane.domain_name == "E290-PC05" then
     home_dir = "/home/t974t"
   end
+
   local title = string.gsub(pane.current_working_dir, home_dir, "~")
   title = string.gsub(title, "~/Projects", "~p")
   title = string.gsub(title, "file://", "")
@@ -39,8 +41,24 @@ wezterm.on("update-right-status", function(window, pane)
   }))
 end)
 
+wezterm.on("window-focus-changed", function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+  local font_size
+  if wezterm.gui.screens().active.name == "Built-in Retina Display" then
+    font_size = 14
+  else
+    font_size = 17
+  end
+
+  if overrides.font_size and overrides.font_size == font_size then
+    return
+  end
+
+  overrides.font_size = font_size
+  window:set_config_overrides(overrides)
+end)
+
 return {
-  -- basics
   color_scheme = "Catppuccin Mocha",
   font = wezterm.font("VictorMono Nerd Font"),
   font_size = 17,
@@ -51,18 +69,31 @@ return {
 
   term = "wezterm",
 
-  -- remotes
-  unix_domains = {
-    {
-      name = "dkfz-workstation",
-      local_echo_threshold_ms = 150,
-      proxy_command = { "ssh", "-T", "-A", "dkfz-workstation", "wezterm", "cli", "proxy" },
-    },
-  },
+  -- TODO: This is for ssh agent forwarding if we want that
+  --
+  -- unix_domains = {
+  --   {
+  --     name = "dkfz-workstation",
+  --     local_echo_threshold_ms = 150,
+  --     proxy_command = { "/usr/bin/ssh", "-T", "dkfz-workstation", "wezterm", "cli", "proxy" },
+  --   },
+  --
+  --   -- {
+  --   --   name = "e290-pc05",
+  --   --   local_echo_threshold_ms = 150,
+  --   --   proxy_command = { "/usr/bin/ssh", "-T", "t974t@e290-pc05", "wezterm", "cli", "proxy" },
+  --   -- },
+  -- },
 
   ssh_domains = {
     {
-      -- This name identifies the domain
+      name = "dkfz-workstation",
+      remote_address = "dkfz-workstation",
+      username = "t974t",
+      assume_shell = "Posix",
+      local_echo_threshold_ms = 150,
+    },
+    {
       name = "dkfz-worker01",
       remote_address = "dkfz-worker",
       username = "t974t",
@@ -76,6 +107,15 @@ return {
       username = "t974t",
       local_echo_threshold_ms = 150,
       remote_wezterm_path = "/dkfz/cluster/gpu/data/OE0612/t974t/.local/bin/wezterm",
+    },
+
+    {
+      name = "E290-PC05",
+      remote_address = "e290-pc05",
+      username = "t974t",
+      assume_shell = "Posix",
+      local_echo_threshold_ms = 150,
+      remote_wezterm_path = "/home/t974t/.local/bin/wezterm",
     },
   },
 
