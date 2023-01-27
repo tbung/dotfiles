@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [[ -z "$TMUX"  && -z "$VIM" && "$TERM_PROGRAM" != "vscode" ]] && [[ -n "$SSH_TTY" ]]; then
+if [[ -z "$TMUX"  && -z "$VIM" && "$TERM_PROGRAM" != "vscode" && (( ${+commands[tmux]} )) ]] && [[ -n "$SSH_TTY" ]]; then
   tmux new-session -A -s main
 fi
 
@@ -27,7 +27,7 @@ ZPLUGINDIR=${ZPLUGINDIR:-${ZDOTDIR:-$HOME/.config/zsh}/plugins}
 if [[ ! -d $ZPLUGINDIR/zsh_unplugged ]]; then
   git clone --quiet https://github.com/mattmc3/zsh_unplugged $ZPLUGINDIR/zsh_unplugged
 fi
-source $ZPLUGINDIR/zsh_unplugged/zsh_unplugged.plugin.zsh
+source $ZPLUGINDIR/zsh_unplugged/zsh_unplugged.zsh
 
 # make list of the Zsh plugins you use
 repos=(
@@ -193,8 +193,8 @@ alias gps='git push'
 alias gs='git status'
 alias ls='ls --color=auto'
 alias lsd='lsd -lah'
-alias vim='nvim'
-alias wiki='nvim ~/wiki/index.md'
+(( ${+commands[nvim]} )) && alias vim='nvim'
+alias wiki='vim ~/wiki/index.md'
 alias wttr='curl wttr.in/heidelberg'
 
 # Global Aliases
@@ -207,3 +207,7 @@ hash -d c="$XDG_CONFIG_HOME"
 hash -d d="$HOME/Data"
 hash -d e="$HOME/Experiments"
 hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
+
+export GPG_TTY=$(tty)
+
+DISABLE_AUTO_TITLE="true"
