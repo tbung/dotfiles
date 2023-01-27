@@ -69,10 +69,6 @@ typeset -U path cdpath fpath manpath
 
 
 
-for profile in ${(z)NIX_PROFILES}; do
-  fpath+=($profile/share/zsh/site-functions $profile/share/zsh/$ZSH_VERSION/functions $profile/share/zsh/vendor-completions)
-done
-
 fpath+="$HOME/.local/bin/completions"
 
 # Use viins keymap as the default.
@@ -96,14 +92,16 @@ bindkey -v
 
 path+="$HOME/.config/zsh/plugins/powerlevel10k"
 fpath+="$HOME/.config/zsh/plugins/powerlevel10k"
+(( ${+commands[brew]} )) && fpath+="$(brew --prefix)/share/zsh/site-functions"
 
 
 # Oh-My-Zsh/Prezto calls compinit during initialization,
 # calling it twice causes slight start up slowdown
 # as all $fpath entries will be traversed again.
 autoload -Uz compinit
-compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
+compinit -d $HOME/.cache/zsh/zcompdump-$ZSH_VERSION
 zstyle ':completion:*' menu select
+zstyle ':completion:*' cache-path $HOME/.cache/zsh/zcompcache
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 setopt COMPLETE_ALIASES
 
@@ -208,6 +206,7 @@ hash -d d="$HOME/Data"
 hash -d e="$HOME/Experiments"
 hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
 
+# TODO: ssh agent: start here or forward?
 export GPG_TTY=$(tty)
 
 DISABLE_AUTO_TITLE="true"
