@@ -17,7 +17,3 @@ eval "$(direnv hook bash)"
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-if [[ -z "$TMUX"  && -z "$VIM" && "$TERM_PROGRAM" != "vscode" ]] && [[ -n "$SSH_TTY" ]]; then
-  tmux new-session -A -s main
-fi
