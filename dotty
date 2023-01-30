@@ -93,6 +93,7 @@ function install() {
     link_dotfiles
     link_subdirs config
     link_subdirs local
+    link_subdirs ssh
     ln -svfn ../../dotty $HOME/.local/bin/dotty
     link_home
     popd
