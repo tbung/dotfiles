@@ -69,30 +69,23 @@ return {
 
   term = "wezterm",
 
-  -- TODO: This is for ssh agent forwarding if we want that
-  --
-  -- unix_domains = {
-  --   {
-  --     name = "dkfz-workstation",
-  --     local_echo_threshold_ms = 150,
-  --     proxy_command = { "/usr/bin/ssh", "-T", "dkfz-workstation", "wezterm", "cli", "proxy" },
-  --   },
-  --
-  --   -- {
-  --   --   name = "e290-pc05",
-  --   --   local_echo_threshold_ms = 150,
-  --   --   proxy_command = { "/usr/bin/ssh", "-T", "t974t@e290-pc05", "wezterm", "cli", "proxy" },
-  --   -- },
-  -- },
-
-  ssh_domains = {
+  -- NOTE: This is for ssh agent forwarding
+  unix_domains = {
     {
       name = "dkfz-workstation",
-      remote_address = "dkfz-workstation",
-      username = "t974t",
-      assume_shell = "Posix",
       local_echo_threshold_ms = 150,
+      proxy_command = { "/usr/bin/ssh", "-T", "dkfz-workstation", "wezterm", "cli", "proxy" },
     },
+
+    {
+      name = "e290-pc05",
+      local_echo_threshold_ms = 150,
+      proxy_command = { "/usr/bin/ssh", "-T", "t974t@e290-pc05", "wezterm", "cli", "proxy" },
+    },
+  },
+
+  -- TODO: Move these to unix_domains as well
+  ssh_domains = {
     {
       name = "dkfz-worker01",
       remote_address = "dkfz-worker",
@@ -107,15 +100,6 @@ return {
       username = "t974t",
       local_echo_threshold_ms = 150,
       remote_wezterm_path = "/dkfz/cluster/gpu/data/OE0612/t974t/.local/bin/wezterm",
-    },
-
-    {
-      name = "E290-PC05",
-      remote_address = "e290-pc05",
-      username = "t974t",
-      assume_shell = "Posix",
-      local_echo_threshold_ms = 150,
-      remote_wezterm_path = "/home/t974t/.local/bin/wezterm",
     },
   },
 
