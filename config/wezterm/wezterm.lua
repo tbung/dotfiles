@@ -42,6 +42,10 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 wezterm.on("window-focus-changed", function(window, pane)
+  if not window:is_focused() then
+    return
+  end
+
   local overrides = window:get_config_overrides() or {}
   local font_size
   if wezterm.gui.screens().active.name == "Built-in Retina Display" then
