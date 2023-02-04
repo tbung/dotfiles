@@ -171,6 +171,7 @@ local plugins = {
 
   {
     "mickael-menu/zk-nvim",
+    name = "zk",
     config = true,
   },
 
