@@ -41,18 +41,27 @@ wezterm.on("update-right-status", function(window, pane)
   }))
 end)
 
+local function get_font_size()
+  local res, screens = pcall(wezterm.gui.screens)
+  local active_screen = nil
+  if res then
+    active_screen = screens.active.name
+  end
+  if active_screen == "Built-in Retina Display" or wezterm.hostname() == "deep-thought" then
+    return 14
+  else
+    return 17
+  end
+end
+
 wezterm.on("window-focus-changed", function(window, pane)
   if not window:is_focused() then
     return
   end
 
   local overrides = window:get_config_overrides() or {}
-  local font_size
-  if wezterm.gui.screens().active.name == "Built-in Retina Display" then
-    font_size = 14
-  else
-    font_size = 17
-  end
+
+  local font_size = get_font_size()
 
   if overrides.font_size and overrides.font_size == font_size then
     return
@@ -65,7 +74,7 @@ end)
 return {
   color_scheme = "Catppuccin Mocha",
   font = wezterm.font("VictorMono Nerd Font"),
-  font_size = 17,
+  font_size = get_font_size(),
 
   use_fancy_tab_bar = false,
   tab_bar_at_bottom = true,
