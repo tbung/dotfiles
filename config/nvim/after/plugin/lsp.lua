@@ -68,7 +68,7 @@ lsp.configure("texlab", {
 })
 
 lsp.configure("clangd", {
-  cmd = { "clangd", "--background-index", "--clang-tidy" }
+  cmd = { "clangd", "--background-index", "--clang-tidy" },
 })
 
 lsp.setup()
@@ -119,7 +119,10 @@ vim.keymap.set("n", "<leader>vf", function()
   })
 end, {})
 vim.keymap.set("n", "<leader>vh", vim.lsp.buf.hover, {})
-vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, {})
+-- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, {})
+vim.keymap.set("n", "<leader>vrn", function()
+  return ":IncRename " .. vim.fn.expand("<cword>")
+end, { expr = true })
 vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, {})
 vim.keymap.set("n", "<leader>vsd", vim.diagnostic.open_float, {})
 vim.keymap.set("n", "<leader>vsh", vim.lsp.buf.signature_help, {})

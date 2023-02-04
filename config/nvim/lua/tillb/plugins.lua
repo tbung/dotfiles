@@ -162,7 +162,22 @@ local plugins = {
     "nvim-treesitter/playground",
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+  },
+
   "folke/neodev.nvim",
+
+  {
+    "mickael-menu/zk-nvim",
+    config = true,
+  },
+
+  {
+    "smjonas/inc-rename.nvim",
+    config = true,
+  },
 }
 
 require("lazy").setup(plugins)
