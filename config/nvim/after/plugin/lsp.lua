@@ -51,8 +51,6 @@ lsp.configure("arduino_language_server", {
     "arduino-cli",
     "-cli-config",
     "/home/tillb/.arduino15/arduino-cli.yaml",
-    "-fqbn",
-    "arduino:avr:uno",
   },
 })
 
@@ -67,6 +65,10 @@ lsp.configure("texlab", {
       },
     },
   },
+})
+
+lsp.configure("clangd", {
+  cmd = { "clangd", "--background-index", "--clang-tidy" }
 })
 
 lsp.setup()

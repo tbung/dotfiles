@@ -89,8 +89,8 @@ dap.configurations.c = {
   },
 }
 
-require("dap.ext.vscode").load_launchjs()
-require("dap.ext.vscode").load_launchjs(vim.fn.getcwd() .. "/launch.json", {})
+require("dap.ext.vscode").load_launchjs(nil, { codelldb = {'c', 'cpp'} })
+require("dap.ext.vscode").load_launchjs(vim.fn.getcwd() .. "/launch.json", { codelldb = {'c', 'cpp'} })
 
 require("dap-python").setup()
 require("dap-python").test_runner = "pytest"
