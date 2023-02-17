@@ -179,6 +179,18 @@ local plugins = {
     "smjonas/inc-rename.nvim",
     config = true,
   },
+
+  {
+    "toppair/peek.nvim",
+    build = "deno task --quiet build:fast",
+    config = true,
+  },
+
+  {
+    "simrat39/symbols-outline.nvim",
+    dev = true,
+    config = true,
+  },
 }
 
-require("lazy").setup(plugins)
+require("lazy").setup(plugins, { dev = { path = "~/Projects" } })

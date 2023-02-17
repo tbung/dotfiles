@@ -6,7 +6,7 @@ lsp.ensure_installed({
   "arduino_language_server",
   "clangd",
   "pyright",
-  "sumneko_lua",
+  "lua_ls",
   "texlab",
 })
 
@@ -57,7 +57,9 @@ lsp.configure("arduino_language_server", {
 lsp.configure("texlab", {
   settings = {
     texlab = {
+      auxDirectory = "./build",
       build = {
+        args = {"-pdf", "-output-directory=./build", "-interaction=nonstopmode", "-synctex=1", "%f"},
         onSave = true,
       },
       latexindent = {
