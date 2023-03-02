@@ -1,6 +1,7 @@
 require("tillb.options")
 require("tillb.keymap")
 require("tillb.plugins")
+require("tillb.statusline")
 
 function P(arg)
   print(vim.inspect(arg))
