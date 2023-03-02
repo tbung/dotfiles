@@ -59,11 +59,15 @@ lsp.configure("texlab", {
     texlab = {
       auxDirectory = "./build",
       build = {
-        args = {"-pdf", "-output-directory=./build", "-interaction=nonstopmode", "-synctex=1", "%f"},
+        args = { "-pdf", "-output-directory=./build", "-interaction=nonstopmode", "-synctex=1", "%f" },
         onSave = true,
       },
       latexindent = {
         modifyLineBreaks = true,
+      },
+      forwardSearch = {
+        executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
+        args = { "-b", "%l", "%p", "%f" },
       },
     },
   },
