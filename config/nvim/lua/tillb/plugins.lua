@@ -25,7 +25,10 @@ local plugins = {
     dependencies = "nvim-telescope/telescope.nvim",
   },
 
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+  },
 
   {
     "catppuccin/nvim",
@@ -99,10 +102,6 @@ local plugins = {
     "hkupty/iron.nvim",
   },
 
-  -- {
-  --   "karb94/neoscroll.nvim",
-  -- },
-
   {
     "echasnovski/mini.nvim",
   },
@@ -120,12 +119,6 @@ local plugins = {
   {
     "vigoux/notifier.nvim",
     config = true,
-  },
-
-  {
-    "feline-nvim/feline.nvim",
-    after = "catppuccin",
-    dependencies = "kyazdani42/nvim-web-devicons",
   },
 
   {
@@ -183,12 +176,6 @@ local plugins = {
   {
     "toppair/peek.nvim",
     build = "deno task --quiet build:fast",
-    config = true,
-  },
-
-  {
-    "simrat39/symbols-outline.nvim",
-    dev = true,
     config = true,
   },
 }
