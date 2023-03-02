@@ -68,6 +68,7 @@ local assets = {
 local mode_colors = {
   ["n"] = { "NORMAL", C.lavender },
   ["no"] = { "N-PENDING", C.lavender },
+  ["nt"] = { "NORMAL", C.lavender },
   ["i"] = { "INSERT", C.green },
   ["ic"] = { "INSERT", C.green },
   ["t"] = { "TERMINAL", C.green },
