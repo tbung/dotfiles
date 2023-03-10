@@ -1,0 +1,5 @@
+vim.keymap.set("n", "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>")
+vim.keymap.set("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>")
+vim.keymap.set("n", "<leader>zt", "<Cmd>ZkTags<CR>")
+vim.keymap.set("n", "<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>")
+vim.keymap.set("v", "<leader>zf", ":'<,'>ZkMatch<CR>")
