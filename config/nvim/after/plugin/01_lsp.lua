@@ -31,10 +31,28 @@ null_ls.setup({
       extra_args = { "--init-hook", 'import warnings; warnings.filterwarnings("ignore")' },
       timeout = 10000,
     }),
+    null_ls.builtins.diagnostics.mypy.with({
+      -- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+      -- args = {
+      --   "--hide-error-codes",
+      --   "--hide-error-context",
+      --   "--no-color-output",
+      --   "--show-column-numbers",
+      --   "--show-error-codes",
+      --   "--no-error-summary",
+      --   "--no-pretty",
+      --   "--shadow-file",
+      --   params.bufname,
+      --   params.temp_path,
+      --   params.bufname,
+      -- },
+      timeout = 10000,
+    }),
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.code_actions.refactoring,
     null_ls.builtins.formatting.black,
     null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.prettier,
   },
 })
 lsp.set_preferences({
