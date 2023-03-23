@@ -1,4 +1,4 @@
-export BROWSER="brave"
+export BROWSER="firefox"
 export EDITOR="nvim"
 export GITLAB_HOST="gitlab.hzdr.de"
 export MANPAGER="nvim +Man!"
