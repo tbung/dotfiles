@@ -155,7 +155,9 @@ function dkfz-vpn-down() {
   sudo kill -2 `pgrep openconnect`
 }
 
-export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+fi
 
 (( ${+commands[zoxide]} )) && eval "$(zoxide init zsh)"
 
@@ -187,7 +189,6 @@ hash -d d="$HOME/Data"
 hash -d e="$HOME/Experiments"
 hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
 
-# TODO: ssh agent: start here or forward?
 export GPG_TTY=$(tty)
 
 DISABLE_AUTO_TITLE="true"
