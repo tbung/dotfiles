@@ -30,6 +30,9 @@ null_ls.setup({
       method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
       extra_args = { "--init-hook", 'import warnings; warnings.filterwarnings("ignore")' },
       timeout = 10000,
+      condition = function(utils)
+        return vim.fn.executable("pylint") > 0
+      end,
     }),
     null_ls.builtins.diagnostics.mypy.with({
       -- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
@@ -47,6 +50,9 @@ null_ls.setup({
       --   params.bufname,
       -- },
       timeout = 10000,
+      condition = function(utils)
+        return vim.fn.executable("mypy") > 0
+      end,
     }),
     null_ls.builtins.formatting.stylua,
     null_ls.builtins.code_actions.refactoring,
