@@ -178,6 +178,10 @@ local plugins = {
     build = "deno task --quiet build:fast",
     config = true,
   },
+
+  {
+    "chrisgrieser/nvim-spider",
+  },
 }
 
 require("lazy").setup(plugins, { dev = { path = "~/Projects" } })
