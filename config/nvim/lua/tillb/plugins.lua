@@ -50,6 +50,7 @@ local plugins = {
   "wellle/targets.vim",
   {
     "numToStr/Comment.nvim",
+    dev = true,
     config = true,
   },
   {
@@ -155,10 +156,10 @@ local plugins = {
     "nvim-treesitter/playground",
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   dependencies = "nvim-treesitter/nvim-treesitter",
+  -- },
 
   "folke/neodev.nvim",
 
@@ -184,4 +185,4 @@ local plugins = {
   },
 }
 
-require("lazy").setup(plugins, { dev = { path = "~/Projects" } })
+require("lazy").setup(plugins, { dev = { path = "~/Projects", fallback = true } })
