@@ -50,7 +50,7 @@ local function get_font_size()
   if active_screen == "Built-in Retina Display" or wezterm.hostname() == "deep-thought" then
     return 14
   else
-    return 17
+    return 18
   end
 end
 
@@ -95,10 +95,16 @@ return {
       local_echo_threshold_ms = 150,
       proxy_command = { "/usr/bin/ssh", "-T", "t974t@e290-pc05", "wezterm", "cli", "proxy" },
     },
+
   },
 
   -- TODO: Move these to unix_domains as well
   ssh_domains = {
+    {
+      name = "deep-thought",
+      remote_address = "deep-thought.home",
+      local_echo_threshold_ms = 150,
+    },
     {
       name = "dkfz-worker01",
       remote_address = "dkfz-worker",
