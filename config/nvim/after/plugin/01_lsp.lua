@@ -35,7 +35,7 @@ null_ls.setup({
       end,
     }),
     null_ls.builtins.diagnostics.mypy.with({
-      -- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+      method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
       -- args = {
       --   "--hide-error-codes",
       --   "--hide-error-context",

@@ -1,9 +1,8 @@
 -- This is your opts table
-require("telescope").setup {
+require("telescope").setup({
   extensions = {
     ["ui-select"] = {
-      require("telescope.themes").get_dropdown {
-      }
+      require("telescope.themes").get_dropdown({}),
 
       -- pseudo code / specification for writing custom displays, like the one
       -- for "codeactions"
@@ -18,10 +17,11 @@ require("telescope").setup {
       --      do the following
       --   codeactions = false,
       -- }
-    }
-  }
-}
+    },
+  },
+})
 require("telescope").load_extension("ui-select")
+require("telescope").load_extension("file_browser")
 
 local builtin = require("telescope.builtin")
 
@@ -29,6 +29,9 @@ vim.keymap.set("n", "<leader>ff", function()
   require("telescope.builtin").find_files({ hidden = true })
 end, { desc = "Find files (ignoring based on .gitignore)" })
 vim.keymap.set("n", "<leader>fg", builtin.git_files, {})
+vim.keymap.set("n", "<leader>fe", function()
+  require("telescope").extensions.file_browser.file_browser()
+end, {})
 
 vim.keymap.set("n", "<leader>ft", function()
   require("telescope.builtin").live_grep({ hidden = true, no_ignore = true })

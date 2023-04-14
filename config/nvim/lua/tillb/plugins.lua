@@ -24,6 +24,10 @@ local plugins = {
     "nvim-telescope/telescope-ui-select.nvim",
     dependencies = "nvim-telescope/telescope.nvim",
   },
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = "nvim-telescope/telescope.nvim",
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -50,7 +54,6 @@ local plugins = {
   "wellle/targets.vim",
   {
     "numToStr/Comment.nvim",
-    dev = true,
     config = true,
   },
   {
@@ -156,10 +159,10 @@ local plugins = {
     "nvim-treesitter/playground",
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-textobjects",
-  --   dependencies = "nvim-treesitter/nvim-treesitter",
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+  },
 
   "folke/neodev.nvim",
 
@@ -182,6 +185,10 @@ local plugins = {
 
   {
     "chrisgrieser/nvim-spider",
+  },
+
+  {
+    "sindrets/diffview.nvim",
   },
 }
 
