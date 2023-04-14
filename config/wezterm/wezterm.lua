@@ -75,12 +75,14 @@ return {
   color_scheme = "Catppuccin Mocha",
   font = wezterm.font("VictorMono Nerd Font"),
   font_size = get_font_size(),
-
   use_fancy_tab_bar = false,
   tab_bar_at_bottom = true,
   tab_max_width = 32,
-
   term = "wezterm",
+
+  command_palette_bg_color = "#11111b",
+  command_palette_fg_color = "#cdd6f4",
+  command_palette_font_size = 18,
 
   -- NOTE: This is for ssh agent forwarding
   unix_domains = {
@@ -89,42 +91,15 @@ return {
       local_echo_threshold_ms = 150,
       proxy_command = { "/usr/bin/ssh", "-T", "dkfz-workstation", "wezterm", "cli", "proxy" },
     },
-
-    {
-      name = "e290-pc05",
-      local_echo_threshold_ms = 150,
-      proxy_command = { "/usr/bin/ssh", "-T", "t974t@e290-pc05", "wezterm", "cli", "proxy" },
-    },
-
   },
 
-  -- TODO: Move these to unix_domains as well
-  ssh_domains = {
-    {
-      name = "deep-thought",
-      remote_address = "deep-thought.home",
-      local_echo_threshold_ms = 150,
-    },
-    {
-      name = "dkfz-worker01",
-      remote_address = "dkfz-worker",
-      username = "t974t",
-      assume_shell = "Posix",
-      local_echo_threshold_ms = 150,
-    },
-
-    {
-      name = "dkfz-worker02",
-      remote_address = "dkfz-worker2",
-      username = "t974t",
-      local_echo_threshold_ms = 150,
-      remote_wezterm_path = "/dkfz/cluster/gpu/data/OE0612/t974t/.local/bin/wezterm",
-    },
-  },
-
-  -- keys
   leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 },
   keys = {
+    {
+      key = " ",
+      mods = "LEADER",
+      action = wezterm.action.ActivateCommandPalette,
+    },
     {
       key = "s",
       mods = "LEADER",
@@ -155,6 +130,7 @@ return {
       mods = "LEADER",
       action = wezterm.action.SpawnCommandInNewWindow({ domain = "DefaultDomain", cwd = "~" }),
     },
+
     {
       key = "n",
       mods = "LEADER",
@@ -164,6 +140,27 @@ return {
       key = "p",
       mods = "LEADER",
       action = wezterm.action.ActivateTabRelative(-1),
+    },
+
+    {
+      key = "h",
+      mods = "LEADER",
+      action = wezterm.action.ActivatePaneDirection("Left"),
+    },
+    {
+      key = "j",
+      mods = "LEADER",
+      action = wezterm.action.ActivatePaneDirection("Down"),
+    },
+    {
+      key = "k",
+      mods = "LEADER",
+      action = wezterm.action.ActivatePaneDirection("Up"),
+    },
+    {
+      key = "l",
+      mods = "LEADER",
+      action = wezterm.action.ActivatePaneDirection("Right"),
     },
   },
 }
