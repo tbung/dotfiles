@@ -32,6 +32,10 @@ vim.opt.showmode = false
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
+if vim.fn.executable("rg") == 1 then
+  vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
+end
+
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
     require("vim.highlight").on_yank({ timeout = 40 })
