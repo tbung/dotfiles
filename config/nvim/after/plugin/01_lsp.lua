@@ -103,12 +103,12 @@ lsp.configure("clangd", {
 
 lsp.setup()
 
-local cmp = require('cmp')
+local cmp = require("cmp")
 
 cmp.setup({
   mapping = {
-    ['<CR>'] = cmp.mapping.confirm({select = false}),
-  }
+    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+  },
 })
 
 vim.diagnostic.config({
@@ -141,10 +141,10 @@ vim.api.nvim_set_hl(
   { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineHint", true).special }
 )
 
-vim.cmd([[sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=]])
-vim.cmd([[sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=]])
-vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
-vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
+vim.cmd([[sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=]])
+vim.cmd([[sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=]])
+vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
+vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
 
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
