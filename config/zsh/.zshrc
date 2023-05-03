@@ -185,6 +185,7 @@ alias wttr='curl wttr.in/heidelberg'
 hash -d p="$HOME/Projects"
 hash -d z="$ZDOTDIR"
 hash -d c="$XDG_CONFIG_HOME"
+hash -d nvim="$XDG_CONFIG_HOME/nvim"
 hash -d d="$HOME/Data"
 hash -d e="$HOME/Experiments"
 hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
