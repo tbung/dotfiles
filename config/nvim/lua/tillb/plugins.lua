@@ -51,6 +51,7 @@ local plugins = {
   },
   "tpope/vim-repeat",
   "tpope/vim-eunuch",
+  "tpope/vim-vinegar",
   "wellle/targets.vim",
   {
     "numToStr/Comment.nvim",
@@ -110,15 +111,7 @@ local plugins = {
     "echasnovski/mini.nvim",
   },
 
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
-    },
-  },
+  "nvim-tree/nvim-web-devicons",
 
   {
     "vigoux/notifier.nvim",
@@ -189,6 +182,12 @@ local plugins = {
 
   {
     "sindrets/diffview.nvim",
+  },
+
+  {
+    "stevearc/oil.nvim",
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 }
 
