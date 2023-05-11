@@ -2,11 +2,11 @@
 
 Dotfiles for my terminal-based workflow.
 
-![kitty nvim](screenshots/kitty_nvim.png)
+![terminal nvim](screenshots/terminal_nvim.png)
 
 ## The Setup
 
-Neovim in Zsh in Tmux in Kitty.
+Neovim in Zsh in WezTerm.
 
 I also like using modern alternatives to common command-line tools like `ripgrep`,
 `fd-find`, `lsd` and such.
