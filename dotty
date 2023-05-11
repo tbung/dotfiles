@@ -8,10 +8,7 @@ action=$1
 usage() {
     case "$1" in
     commands)
-        echo "Usage: dotty [install|links|uninstall|compile|clean] OPTIONS"
-        ;;
-    compile)
-        echo "Usage: dotty compile OVERRIDES_FILE"
+        echo "Usage: dotty [install|links|uninstall|clean] OPTIONS"
         ;;
     esac
 }
@@ -19,7 +16,6 @@ usage() {
 if [ "$action" != "install" ] &&
     [ "$action" != "links" ] &&
     [ "$action" != "uninstall" ] &&
-    [ "$action" != "compile" ] &&
     [ "$action" != "clean" ]; then
     usage commands
     exit 1
@@ -66,28 +62,6 @@ function list_links() {
     done
 }
 
-function compile() {
-    # prepare sed command
-    sedcmd=''
-    while IFS='=' read -r key value; do
-        printf -v sc 's/{{ %s }}/%s/;' $key "${value//\//\\/}"
-        sedcmd+="$sc"
-    done <"$1"
-
-    pushd $DOTFILES_REPO_DIR
-    # replace template strings in all template files
-    for file in $(find . -type f -name '*\.template'); do
-        echo "Compiling $file"
-
-        rendered_name=$(echo "$file" | sed -e 's/^\(.*\)\.template/\1.rendered/')
-        out_name=$(echo "$file" | sed -e 's/^\(.*\)\.template/\1/')
-
-        sed -e "$sedcmd" <"$file" >"$rendered_name"
-        ln -sf $(basename $rendered_name) $out_name
-    done
-    popd
-}
-
 function install() {
     pushd $DOTFILES_REPO_DIR
     link_dotfiles
@@ -116,13 +90,6 @@ function clean() {
 }
 
 case "$action" in
-compile)
-    if [ $# -lt 2 ]; then
-        usage compile
-        exit 1
-    fi
-    compile $2
-    ;;
 install)
     install
     ;;
