@@ -33,6 +33,14 @@ local plugins = {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
   },
+  {
+    "nvim-treesitter/playground",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+  },
 
   {
     "catppuccin/nvim",
@@ -49,21 +57,17 @@ local plugins = {
       attach_to_untracked = true,
     },
   },
-  "tpope/vim-repeat",
+  -- "tpope/vim-repeat",
   "tpope/vim-eunuch",
-  "tpope/vim-vinegar",
-  "wellle/targets.vim",
+
   {
     "numToStr/Comment.nvim",
     config = true,
   },
-  {
-    "kylechui/nvim-surround",
-    config = true,
-  },
+
   {
     "jinh0/eyeliner.nvim",
-    opts = { highlight_on_key = true },
+    opts = { highlight_on_key = true, dim = true },
   },
 
   {
@@ -90,9 +94,7 @@ local plugins = {
   "jose-elias-alvarez/null-ls.nvim",
   { "WhoIsSethDaniel/mason-tool-installer.nvim" },
 
-  {
-    "mfussenegger/nvim-dap",
-  },
+  "mfussenegger/nvim-dap",
   "rcarriga/nvim-dap-ui",
   "theHamsta/nvim-dap-virtual-text",
   "mfussenegger/nvim-dap-python",
@@ -103,13 +105,9 @@ local plugins = {
     config = true,
   },
 
-  {
-    "hkupty/iron.nvim",
-  },
+  "hkupty/iron.nvim",
 
-  {
-    "echasnovski/mini.nvim",
-  },
+  "echasnovski/mini.nvim",
 
   "nvim-tree/nvim-web-devicons",
 
@@ -124,9 +122,7 @@ local plugins = {
     config = true,
   },
 
-  {
-    "ThePrimeagen/harpoon",
-  },
+  "ThePrimeagen/harpoon",
 
   {
     "folke/which-key.nvim",
@@ -148,15 +144,6 @@ local plugins = {
     config = true,
   },
 
-  {
-    "nvim-treesitter/playground",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-  },
-
   "folke/neodev.nvim",
 
   {
@@ -170,23 +157,12 @@ local plugins = {
     config = true,
   },
 
-  {
-    "toppair/peek.nvim",
-    build = "deno task --quiet build:fast",
-    config = true,
-  },
-
-  {
-    "chrisgrieser/nvim-spider",
-  },
-
-  {
-    "sindrets/diffview.nvim",
-  },
+  "chrisgrieser/nvim-spider",
+  "sindrets/diffview.nvim",
 
   {
     "stevearc/oil.nvim",
-    opts = {},
+    config = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 }

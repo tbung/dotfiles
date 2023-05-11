@@ -4,3 +4,6 @@ require("mini.starter").setup({
     require("mini.starter").sections.builtin_actions(),
   },
 })
+
+require("mini.ai").setup()
+require("mini.surround").setup()
