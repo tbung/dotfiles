@@ -1,10 +1,12 @@
 return {
   "VonHeikemen/lsp-zero.nvim",
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     -- LSP Support
     { "neovim/nvim-lspconfig" },
     { "williamboman/mason.nvim" },
     { "williamboman/mason-lspconfig.nvim" },
+    "folke/neodev.nvim",
 
     -- Autocompletion
     { "hrsh7th/nvim-cmp" },

@@ -1,27 +1,51 @@
 return {
-  "mbbill/undotree",
-  "tpope/vim-fugitive",
+  {
+    "tpope/vim-fugitive",
+    cmd = "G",
+  },
   {
     "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       attach_to_untracked = true,
     },
   },
-  "tpope/vim-eunuch",
+  {
+    "tpope/vim-eunuch",
+    event = "InsertEnter",
+    cmd = {
+      "Remove",
+      "Move",
+      "Rename",
+      "Chmod",
+      "Mkdir",
+      "SudoEdit",
+      "SudoWrite",
+    },
+  },
   {
     "numToStr/Comment.nvim",
+    event = "VeryLazy",
     config = true,
   },
   {
     "jinh0/eyeliner.nvim",
+    keys = { "f", "F", "t", "T" },
     opts = { highlight_on_key = true, dim = true },
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    event = { "BufReadPost", "BufNewFile" },
     config = true,
   },
   {
     "hkupty/iron.nvim",
+    keys = {
+      "<leader>sc",
+      { "<leader>sc", mode = "v" },
+      "<leader>sf",
+      "<leader>sl",
+    },
     config = function()
       local iron = require("iron.core")
 
@@ -53,7 +77,7 @@ return {
   },
 
   {
-    "echasnovski/mini.nvim",
+    "echasnovski/mini.starter",
     config = function()
       require("mini.starter").setup({
         items = {
@@ -61,71 +85,77 @@ return {
           require("mini.starter").sections.builtin_actions(),
         },
       })
-
-      require("mini.ai").setup()
-      require("mini.surround").setup()
     end,
   },
-
-  "nvim-tree/nvim-web-devicons",
+  {
+    "echasnovski/mini.ai",
+    event = "VeryLazy",
+    config = function()
+      require("mini.ai").setup()
+    end
+  },
+  {
+    "echasnovski/mini.surround",
+    event = "VeryLazy",
+    config = function()
+      require("mini.surround").setup()
+    end
+  },
 
   {
+    "nvim-tree/nvim-web-devicons",
+  },
+  {
     "vigoux/notifier.nvim",
+    event = "VeryLazy",
     config = true,
   },
 
   {
     "folke/todo-comments.nvim",
+    event = { "BufReadPost", "BufNewFile" },
     dependencies = "nvim-lua/plenary.nvim",
     config = true,
   },
 
   {
     "ThePrimeagen/harpoon",
-    config = function()
-      require("harpoon").setup({
-        global_settings = {
-          save_on_toggle = false,
-          save_on_change = true,
-          enter_on_sendcmd = true,
-          tmux_autoclose_windows = false,
-          excluded_filetypes = { "harpoon" },
-        },
-      })
-
-      vim.keymap.set("n", "<leader>tf", function()
-        require("harpoon.term").gotoTerminal(1)
-      end, {})
-      vim.keymap.set("n", "<leader>td", function()
-        require("harpoon.term").gotoTerminal(2)
-      end, {})
-      vim.keymap.set("n", "<leader>tg", function()
-        require("harpoon.term").gotoTerminal(3)
-      end, {})
-    end,
+    keys = {
+      {
+        "<leader>tf",
+        function()
+          require("harpoon.term").gotoTerminal(1)
+        end,
+      },
+      {
+        "<leader>td",
+        function()
+          require("harpoon.term").gotoTerminal(2)
+        end,
+      },
+      {
+        "<leader>tg",
+        function()
+          require("harpoon.term").gotoTerminal(3)
+        end,
+      },
+    },
+    opts = {
+      global_settings = {
+        save_on_toggle = false,
+        save_on_change = true,
+        enter_on_sendcmd = true,
+        tmux_autoclose_windows = false,
+        excluded_filetypes = { "harpoon" },
+      },
+    },
   },
 
   {
     "folke/which-key.nvim",
+    event = "VeryLazy",
     config = true,
   },
-
-  {
-    "danymat/neogen",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true,
-  },
-
-  {
-    "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = true,
-  },
-
-  "folke/neodev.nvim",
 
   {
     "mickael-menu/zk-nvim",
@@ -141,11 +171,13 @@ return {
 
   {
     "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
     config = true,
   },
 
   {
     "chrisgrieser/nvim-spider",
+    event = "VeryLazy",
     config = function()
       vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
       vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
@@ -153,10 +185,14 @@ return {
       vim.keymap.set({ "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", { desc = "Spider-ge" })
     end,
   },
-  "sindrets/diffview.nvim",
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+  },
 
   {
     "stevearc/oil.nvim",
+    event = "VeryLazy",
     config = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },

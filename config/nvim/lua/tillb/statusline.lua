@@ -45,7 +45,9 @@ function StatusDiagnostics()
     local count = #vim.diagnostic.get(0, { severity = severity })
     if count > 0 then
       local sign = vim.fn.sign_getdefined("DiagnosticSign" .. severity)[1]
-      str = str .. " %#DiagnosticStatus" .. severity .. "#" .. sign.text .. count .. "%#StatusLine#"
+      if sign ~= nil then
+        str = str .. " %#DiagnosticStatus" .. severity .. "#" .. sign.text .. count .. "%#StatusLine#"
+      end
     end
   end
   return str

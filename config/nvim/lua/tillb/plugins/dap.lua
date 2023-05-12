@@ -6,6 +6,15 @@ return {
     "mfussenegger/nvim-dap-python",
     "nvim-telescope/telescope-dap.nvim",
   },
+  keys = {
+    {"<leader>dc", function() require("dap").continue() end, desc = "Continue debugging" },
+    {"<leader>du", function() require("dapui").toggle() end, desc = "Toggle DAP UI" },
+    {"<leader>dbb", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
+    {"<leader>dss", function() require("dap").step_over() end, desc = "Step over" },
+    {"<leader>dsi", function() require("dap").step_into() end, desc = "Step into" },
+    {"<leader>dso", function() require("dap").step_out() end, desc = "Step out" },
+    {"<leader>dkk", function() require("dap").terminate() end, desc = "Terminate debug process" },
+  },
   config = function()
     -- FIX: https://github.com/mfussenegger/nvim-dap/pull/839
     vim.api.nvim_create_autocmd("FileType", {
@@ -61,8 +70,8 @@ return {
       callback({ type = "server", host = config.host, port = config.port })
     end
 
-    -- local extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension/"
-    -- local codelldb_path = extension_path .. "adapter/codelldb"
+    local extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension/"
+    local codelldb_path = extension_path .. "adapter/codelldb"
     -- local liblldb_path
     --
     -- local os = vim.loop.os_uname().sysname
@@ -72,15 +81,15 @@ return {
     -- elseif os == "Linux" then
     --   liblldb_path = extension_path .. "lldb/lib/liblldb.so"
     -- end
-    -- dap.adapters.codelldb = {
-    --   type = "server",
-    --   port = "${port}",
-    --   executable = {
-    --     -- CHANGE THIS to your path!
-    --     command = codelldb_path,
-    --     args = { "--port", "${port}" },
-    --   },
-    -- }
+    dap.adapters.codelldb = {
+      type = "server",
+      port = "${port}",
+      executable = {
+        -- CHANGE THIS to your path!
+        command = codelldb_path,
+        args = { "--port", "${port}" },
+      },
+    }
 
     dap.configurations.c = {
       {
@@ -110,32 +119,5 @@ return {
     vim.fn.sign_define("DapBreakpointCondition", { text = "Ⓑ", texthl = "Warning", linehl = "", numhl = "" })
     vim.fn.sign_define("DapBreakpointRejected", { text = "Ⓑ", texthl = "Hint", linehl = "", numhl = "" })
 
-    vim.keymap.set("n", "<leader>dc", function()
-      require("dap").continue()
-    end, { desc = "Continue debugging" })
-
-    vim.keymap.set("n", "<leader>du", function()
-      require("dapui").toggle()
-    end, { desc = "Toggle DAP UI" })
-
-    vim.keymap.set("n", "<leader>dbb", function()
-      require("dap").toggle_breakpoint()
-    end, { desc = "Toggle breakpoint" })
-
-    vim.keymap.set("n", "<leader>dss", function()
-      require("dap").step_over()
-    end, { desc = "Step over" })
-
-    vim.keymap.set("n", "<leader>dsi", function()
-      require("dap").step_into()
-    end, { desc = "Step into" })
-
-    vim.keymap.set("n", "<leader>dso", function()
-      require("dap").step_out()
-    end, { desc = "Step out" })
-
-    vim.keymap.set("n", "<leader>dkk", function()
-      require("dap").terminate()
-    end, { desc = "Terminate debug process" })
   end,
 }
