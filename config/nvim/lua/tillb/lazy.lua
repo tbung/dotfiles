@@ -14,5 +14,20 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
-require("lazy").setup("tillb.plugins", { dev = { path = "~/Projects", fallback = true } })
+require("lazy").setup("tillb.plugins", {
+  dev = { path = "~/Projects", fallback = true },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+})

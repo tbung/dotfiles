@@ -9,7 +9,6 @@ return {
       integrations = {
         cmp = true,
         gitsigns = true,
-        neotree = true,
         telescope = true,
         mini = true,
         dap = {
