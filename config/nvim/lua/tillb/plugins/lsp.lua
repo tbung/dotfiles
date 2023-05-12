@@ -25,6 +25,10 @@ return {
 
       local overrides = {
         ["arduino_language_server"] = {
+          capabilities = {
+            textDocument = { semanticTokens = vim.NIL },
+            workspace = { semanticTokens = vim.NIL },
+          },
           cmd = {
             "arduino-language-server",
             "-clangd",
