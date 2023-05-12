@@ -1,6 +1,6 @@
 require("tillb.options")
 require("tillb.keymap")
-require("tillb.plugins")
+require("tillb.lazy")
 require("tillb.statusline")
 
 function P(arg)
