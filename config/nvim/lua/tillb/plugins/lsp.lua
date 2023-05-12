@@ -88,6 +88,41 @@ return {
       end
 
       require("mason-lspconfig").setup_handlers({ setup })
+
+      vim.diagnostic.config({
+        virtual_text = true,
+        signs = true,
+        update_in_insert = false,
+        underline = true,
+        severity_sort = true,
+        float = true,
+      })
+
+      vim.api.nvim_set_hl(
+        0,
+        "DiagnosticUnderlineError",
+        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineError", true).special }
+      )
+      vim.api.nvim_set_hl(
+        0,
+        "DiagnosticUnderlineWarn",
+        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineWarn", true).special }
+      )
+      vim.api.nvim_set_hl(
+        0,
+        "DiagnosticUnderlineInfo",
+        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineInfo", true).special }
+      )
+      vim.api.nvim_set_hl(
+        0,
+        "DiagnosticUnderlineHint",
+        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineHint", true).special }
+      )
+
+      vim.cmd([[sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=]])
+      vim.cmd([[sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=]])
+      vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
+      vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
     end,
   },
   {

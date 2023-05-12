@@ -1,20 +1,39 @@
-require("tillb.options")
-require("tillb.keymap")
-require("tillb.lazy")
-require("tillb.statusline")
+-- local M = {}
+-- M.setup = function()
+local execute = vim.api.nvim_command
+local fn = vim.fn
 
-function P(arg)
-  print(vim.inspect(arg))
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-function R(arg)
-  local ok, plenary_reload = pcall(require, "plenary.reload")
-  local reload
-  if ok then
-    reload = plenary_reload.reload_module
-  else
-    reload = require
-  end
-  reload(arg)
-  return require(arg)
-end
+require("lazy").setup("tillb.plugins", {
+  dev = { path = "~/Projects", fallback = true },
+  defaults = { lazy = true },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+})
+-- end
+--
+-- return M

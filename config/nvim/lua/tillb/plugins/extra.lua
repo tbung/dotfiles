@@ -35,9 +35,9 @@ return {
           exit = "<leader>sq",
           -- clear = "<space>cl",
         },
-        highlight = {
-          bg = require("catppuccin.palettes").get_palette().surface0,
-        },
+        -- highlight = {
+        --   bg = require("catppuccin.palettes").get_palette().surface0,
+        -- },
       })
     end,
   },

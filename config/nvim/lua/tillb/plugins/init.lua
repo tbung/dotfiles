@@ -1,3 +1,6 @@
+require("tillb.options")
+require("tillb.keymap")
+
 return {
   {
     "tpope/vim-fugitive",
@@ -32,11 +35,22 @@ return {
     "echasnovski/mini.starter",
     event = "VimEnter",
     config = function()
-      require("mini.starter").setup({
+      local starter = require("mini.starter")
+      starter.setup({
         items = {
-          require("mini.starter").sections.recent_files(5, true, false),
-          require("mini.starter").sections.builtin_actions(),
+          starter.sections.recent_files(5, true, false),
+          starter.sections.builtin_actions(),
         },
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyVimStarted",
+        callback = function()
+          local stats = require("lazy").stats()
+          local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+          starter.config.footer = "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+          pcall(starter.refresh)
+        end,
       })
     end,
   },
@@ -75,18 +89,18 @@ return {
   {
     "chrisgrieser/nvim-spider",
     keys = {
-      { "n", "w",  "<cmd>lua require('spider').motion('w')<CR>",  desc = "Spider-w" },
-      { "n", "e",  "<cmd>lua require('spider').motion('e')<CR>",  desc = "Spider-e" },
-      { "n", "b",  "<cmd>lua require('spider').motion('b')<CR>",  desc = "Spider-b" },
-      { "n", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
-      { "o", "w",  "<cmd>lua require('spider').motion('w')<CR>",  desc = "Spider-w" },
-      { "o", "e",  "<cmd>lua require('spider').motion('e')<CR>",  desc = "Spider-e" },
-      { "o", "b",  "<cmd>lua require('spider').motion('b')<CR>",  desc = "Spider-b" },
-      { "o", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
-      { "x", "w",  "<cmd>lua require('spider').motion('w')<CR>",  desc = "Spider-w" },
-      { "x", "e",  "<cmd>lua require('spider').motion('e')<CR>",  desc = "Spider-e" },
-      { "x", "b",  "<cmd>lua require('spider').motion('b')<CR>",  desc = "Spider-b" },
-      { "x", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
+      { mode = "n", "w",  "<cmd>lua require('spider').motion('w')<CR>",  desc = "Spider-w" },
+      { mode = "n", "e",  "<cmd>lua require('spider').motion('e')<CR>",  desc = "Spider-e" },
+      { mode = "n", "b",  "<cmd>lua require('spider').motion('b')<CR>",  desc = "Spider-b" },
+      { mode = "n", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
+      { mode = "o", "w",  "<cmd>lua require('spider').motion('w')<CR>",  desc = "Spider-w" },
+      { mode = "o", "e",  "<cmd>lua require('spider').motion('e')<CR>",  desc = "Spider-e" },
+      { mode = "o", "b",  "<cmd>lua require('spider').motion('b')<CR>",  desc = "Spider-b" },
+      { mode = "o", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
+      { mode = "x", "w",  "<cmd>lua require('spider').motion('w')<CR>",  desc = "Spider-w" },
+      { mode = "x", "e",  "<cmd>lua require('spider').motion('e')<CR>",  desc = "Spider-e" },
+      { mode = "x", "b",  "<cmd>lua require('spider').motion('b')<CR>",  desc = "Spider-b" },
+      { mode = "x", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
     },
   },
 }
