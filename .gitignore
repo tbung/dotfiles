@@ -1,6 +1,4 @@
 config/kitty/themes/*
 config/zsh/plugins/*
-*.rendered
-config/kitty/kitty.conf
 home/.pyenv/*
 !home/.pyenv/pyenv.d/install/shared.bash
