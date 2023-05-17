@@ -23,6 +23,7 @@ return {
       require("telescope").load_extension("file_browser")
     end,
     cmd = "Telescope",
+    event = { "BufReadPost", "BufNewFile" },
     keys = {
       {
         "<leader>ff",
