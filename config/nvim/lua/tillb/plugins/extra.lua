@@ -132,4 +132,23 @@ return {
     config = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
+  {
+    "folke/trouble.nvim",
+    cmd = { "Trouble" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = true,
+  },
+  {
+    "NvChad/nvim-colorizer.lua",
+    config = true,
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      filetypes = {
+        "python",
+        "css",
+        "javascript",
+        html = { mode = "foreground" },
+      },
+    },
+  },
 }
