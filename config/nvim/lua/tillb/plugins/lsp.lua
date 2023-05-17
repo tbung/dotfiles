@@ -74,6 +74,11 @@ return {
             },
           },
         },
+        ruff_lsp = {
+          on_attach = function(client)
+            client.server_capabilities.hoverProvider = false
+          end,
+        },
       }
 
       local capabilities = vim.tbl_deep_extend(
@@ -147,13 +152,6 @@ return {
       local null_ls = require("null-ls")
       return {
         sources = {
-          null_ls.builtins.diagnostics.pylint.with({
-            method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-            timeout = 10000,
-            condition = function(utils)
-              return vim.fn.executable("pylint") > 0
-            end,
-          }),
           null_ls.builtins.diagnostics.mypy.with({
             method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
             timeout = 10000,
