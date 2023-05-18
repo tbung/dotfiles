@@ -34,7 +34,7 @@ repos=(
   zsh-users/zsh-completions
 
   # plugins you want loaded last
-  zsh-users/zsh-syntax-highlighting
+  zdharma-continuum/fast-syntax-highlighting
   zsh-users/zsh-autosuggestions
 )
 
