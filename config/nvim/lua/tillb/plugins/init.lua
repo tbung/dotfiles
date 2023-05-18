@@ -41,6 +41,7 @@ return {
           starter.sections.recent_files(5, true, false),
           starter.sections.builtin_actions(),
         },
+        silent = true,
       })
 
       vim.api.nvim_create_autocmd("User", {
