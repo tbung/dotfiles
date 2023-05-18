@@ -1,3 +1,32 @@
+local cmp_kinds = {
+  Text = '  ',
+  Method = '  ',
+  Function = '  ',
+  Constructor = '  ',
+  Field = '  ',
+  Variable = '  ',
+  Class = '  ',
+  Interface = '  ',
+  Module = '  ',
+  Property = '  ',
+  Unit = '  ',
+  Value = '  ',
+  Enum = '  ',
+  Keyword = '  ',
+  Snippet = '  ',
+  Color = '  ',
+  File = '  ',
+  Reference = '  ',
+  Folder = '  ',
+  EnumMember = '  ',
+  Constant = '  ',
+  Struct = '  ',
+  Event = '  ',
+  Operator = '  ',
+  TypeParameter = '  ',
+  Copilot = '  '
+}
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -191,6 +220,7 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "saadparwaiz1/cmp_luasnip",
+      "zbirenbaum/copilot-cmp",
     },
     opts = function()
       local cmp = require("cmp")
@@ -210,6 +240,7 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = false }),
         }),
         sources = cmp.config.sources({
+          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "buffer" },
@@ -218,14 +249,17 @@ return {
         formatting = {
           fields = { "abbr", "menu", "kind" },
           format = function(entry, item)
-            local short_name = {
-              nvim_lsp = "LSP",
-              nvim_lua = "nvim",
-            }
-
-            local menu_name = short_name[entry.source.name] or entry.source.name
-
-            item.menu = string.format("[%s]", menu_name)
+            -- local short_name = {
+            --   nvim_lsp = "LSP",
+            --   nvim_lua = "nvim",
+            --   copilot = " ",
+            -- }
+            --
+            -- local menu_name = short_name[entry.source.name] or entry.source.name
+            --
+            -- item.menu = string.format("[%s]", menu_name)
+            -- return item
+            item.kind = (cmp_kinds[item.kind] or '') .. item.kind
             return item
           end,
         },
