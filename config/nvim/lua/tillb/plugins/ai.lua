@@ -18,7 +18,7 @@ return {
   },
   {
     "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
+    cmd = "ChatGPT",
     config = function()
       require("chatgpt").setup()
     end,

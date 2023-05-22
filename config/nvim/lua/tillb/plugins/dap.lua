@@ -31,15 +31,15 @@ return {
 
     -- local extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension/"
     -- local codelldb_path = extension_path .. "adapter/codelldb"
-    -- dap.adapters.codelldb = {
-    --   type = "server",
-    --   port = "${port}",
-    --   executable = {
-    --     -- CHANGE THIS to your path!
-    --     command = codelldb_path,
-    --     args = { "--port", "${port}" },
-    --   },
-    -- }
+    dap.adapters.codelldb = {
+      type = "server",
+      port = "${port}",
+      executable = {
+      --   -- CHANGE THIS to your path!
+        command = "codelldb",
+        args = { "--port", "${port}" },
+      },
+    }
 
     dap.configurations.c = {
       {
