@@ -57,13 +57,13 @@ local C = require("catppuccin.palettes").get_palette()
 
 local assets = {
   mode_icon = "",
-  dir = "",
-  file = "",
+  dir = "",
+  file = "",
   lsp = {
-    server = "",
+    server = "",
   },
   git = {
-    branch = "",
+    branch = "",
   },
 }
 
