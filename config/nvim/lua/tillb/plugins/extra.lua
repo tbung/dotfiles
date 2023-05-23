@@ -146,9 +146,13 @@ return {
       filetypes = {
         "python",
         "css",
+        "scss",
         "javascript",
         html = { mode = "foreground" },
       },
+      user_default_options = {
+        rgb_fn = true,
+      }
     },
   },
 }
