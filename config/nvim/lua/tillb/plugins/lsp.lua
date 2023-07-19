@@ -1,30 +1,30 @@
 local cmp_kinds = {
-  Text = '  ',
-  Method = '  ',
-  Function = '  ',
-  Constructor = '  ',
-  Field = '  ',
-  Variable = '  ',
-  Class = '  ',
-  Interface = '  ',
-  Module = '  ',
-  Property = '  ',
-  Unit = '  ',
-  Value = '  ',
-  Enum = '  ',
-  Keyword = '  ',
-  Snippet = '  ',
-  Color = '  ',
-  File = '  ',
-  Reference = '  ',
-  Folder = '  ',
-  EnumMember = '  ',
-  Constant = '  ',
-  Struct = '  ',
-  Event = '  ',
-  Operator = '  ',
-  TypeParameter = '  ',
-  Copilot = '  '
+  Text = "  ",
+  Method = "  ",
+  Function = "  ",
+  Constructor = "  ",
+  Field = "  ",
+  Variable = "  ",
+  Class = "  ",
+  Interface = "  ",
+  Module = "  ",
+  Property = "  ",
+  Unit = "  ",
+  Value = "  ",
+  Enum = "  ",
+  Keyword = "  ",
+  Snippet = "  ",
+  Color = "  ",
+  File = "  ",
+  Reference = "  ",
+  Folder = "  ",
+  EnumMember = "  ",
+  Constant = "  ",
+  Struct = "  ",
+  Event = "  ",
+  Operator = "  ",
+  TypeParameter = "  ",
+  Copilot = "  ",
 }
 
 return {
@@ -36,7 +36,7 @@ return {
       "folke/neodev.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
     },
     config = function()
       require("neodev").setup()
@@ -51,8 +51,30 @@ return {
           -- "texlab",
         },
       })
+      require("mason-tool-installer").setup({
+        ensure_installed = {},
+      })
 
       local overrides = {
+        efm = {
+          init_options = { documentFormatting = true },
+          filetypes = { "python", "lua" },
+          settings = {
+            languages = {
+              lua = {
+                {
+                  formatCommand = "stylua --search-parent-directories --stdin-filepath ${INPUT} -",
+                  formatStdin = true,
+                },
+              },
+              python = {
+                { formatCommand = "isort --quiet -", formatStdin = true },
+                { formatCommand = "black --quiet -", formatStdin = true },
+              },
+            },
+          },
+        },
+
         ["arduino_language_server"] = {
           capabilities = {
             textDocument = { semanticTokens = vim.NIL },
@@ -161,40 +183,7 @@ return {
       vim.cmd([[sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=]])
       vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
       vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
-    end,
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-    },
-    opts = function()
-      require("mason-tool-installer").setup({
-        ensure_installed = {
-          -- "black",
-          -- "codelldb",
-          -- "isort",
-          -- "stylua",
-        },
-      })
-      local null_ls = require("null-ls")
-      return {
-        sources = {
-          null_ls.builtins.diagnostics.mypy.with({
-            method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-            timeout = 10000,
-            condition = function(utils)
-              return vim.fn.executable("mypy") > 0
-            end,
-          }),
-          null_ls.builtins.formatting.stylua,
-          null_ls.builtins.code_actions.refactoring,
-          null_ls.builtins.formatting.black,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.formatting.prettier,
-        },
-      }
+      vim.lsp.set_log_level("debug")
     end,
   },
   {
@@ -259,7 +248,7 @@ return {
             --
             -- item.menu = string.format("[%s]", menu_name)
             -- return item
-            item.kind = (cmp_kinds[item.kind] or '') .. item.kind
+            item.kind = (cmp_kinds[item.kind] or "") .. item.kind
             return item
           end,
         },

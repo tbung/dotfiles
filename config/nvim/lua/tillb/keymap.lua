@@ -13,7 +13,7 @@ vim.keymap.set("n", "<leader>vf", function()
   vim.lsp.buf.format({
     filter = function(client)
       -- always use stylua to format
-      return client.name ~= "sumneko_lua"
+      return client.name ~= "lua_ls"
     end,
   })
 end, {})
