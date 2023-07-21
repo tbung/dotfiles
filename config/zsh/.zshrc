@@ -175,7 +175,7 @@ alias gs='git status'
 alias ls='ls --color=auto'
 alias lsd='lsd -lah'
 (( ${+commands[nvim]} )) && alias vim='nvim'
-alias wiki='vim ~/wiki/index.md'
+alias wiki='zk edit -i'
 alias wttr='curl wttr.in/heidelberg'
 
 # Global Aliases
