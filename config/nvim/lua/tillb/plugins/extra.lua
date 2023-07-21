@@ -89,7 +89,14 @@ return {
     name = "zk",
     config = true,
     keys = {
-      { "<leader>zn", "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>" },
+      { "<leader>zn", function()
+        vim.ui.input({ prompt = "Title: ", default = nil }, function(input)
+          if input ~= nil then
+            require("zk.commands").get("ZkNew")({ title = input })
+          end
+        end)
+      end
+      },
       { "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>" },
       { "<leader>zt", "<Cmd>ZkTags<CR>" },
       { "<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>" },
