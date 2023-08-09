@@ -50,20 +50,7 @@ bindkey "^n" forward-word
 [[ -d ~/mambaforge ]] && source $HOME/mambaforge/etc/profile.d/conda.sh
 [[ -d ~/mambaforge ]] && source $HOME/mambaforge/etc/profile.d/mamba.sh
 
-
-function _tmux_sessionizer () {
-    BUFFER="tmux-sessionizer"
-    zle accept-line
-}
-zle -N _tmux_sessionizer
-bindkey '^f' _tmux_sessionizer
-
-
-
-
 typeset -U path cdpath fpath manpath
-
-
 
 fpath+="$HOME/.local/bin/completions"
 
@@ -90,10 +77,6 @@ path+="$HOME/.config/zsh/plugins/powerlevel10k"
 fpath+="$HOME/.config/zsh/plugins/powerlevel10k"
 (( ${+commands[brew]} )) && fpath+="$(brew --prefix)/share/zsh/site-functions"
 
-
-# Oh-My-Zsh/Prezto calls compinit during initialization,
-# calling it twice causes slight start up slowdown
-# as all $fpath entries will be traversed again.
 autoload -Uz compinit
 compinit -d $HOME/.cache/zsh/zcompdump-$ZSH_VERSION
 zstyle ':completion:*' menu select
@@ -146,15 +129,6 @@ bindkey -M vicmd 'v' edit-command-line
 bindkey -v '^?' backward-delete-char
 KEYTIMEOUT=1
 
-function dkfz-vpn-up() {
-  echo "Starting the vpn ..."
-  sudo openconnect --background --user=t974t gate.dkfz-heidelberg.de
-}
-
-function dkfz-vpn-down() {
-  sudo kill -2 `pgrep openconnect`
-}
-
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 fi
@@ -189,6 +163,30 @@ hash -d nvim="$XDG_CONFIG_HOME/nvim"
 hash -d d="$HOME/Data"
 hash -d e="$HOME/Experiments"
 hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
+
+# Functions + Widgets
+function open-project () {
+    find ${HOME}/Projects -mindepth 1 -maxdepth 1 -type d | fzf
+}
+function _open-project () {
+    local dir=$(open-project)
+    if [[ -z "$dir" ]]; then
+        zle redisplay
+        return 0
+    fi
+    
+    zle push-line
+    BUFFER="cd $dir"
+    zle accept-line
+    local ret=$?
+    unset dir
+    zle reset-prompt
+    return $ret
+}
+zle -N _open-project
+ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=_open-project
+bindkey '^f' _open-project
+
 
 export GPG_TTY=$(tty)
 
