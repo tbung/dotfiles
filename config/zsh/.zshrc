@@ -130,7 +130,13 @@ bindkey -v '^?' backward-delete-char
 KEYTIMEOUT=1
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+    if ! pgrep -u "$USER" ssh-agent >/dev/null;then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+    fi
+
+    if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+        source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+    fi
 fi
 
 (( ${+commands[zoxide]} )) && eval "$(zoxide init zsh)"
