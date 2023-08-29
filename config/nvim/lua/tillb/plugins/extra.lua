@@ -89,13 +89,15 @@ return {
     name = "zk",
     config = true,
     keys = {
-      { "<leader>zn", function()
-        vim.ui.input({ prompt = "Title: ", default = nil }, function(input)
-          if input ~= nil then
-            require("zk.commands").get("ZkNew")({ title = input })
-          end
-        end)
-      end
+      {
+        "<leader>zn",
+        function()
+          vim.ui.input({ prompt = "Title: ", default = nil }, function(input)
+            if input ~= nil then
+              require("zk.commands").get("ZkNew")({ title = input })
+            end
+          end)
+        end,
       },
       { "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>" },
       { "<leader>zt", "<Cmd>ZkTags<CR>" },
@@ -159,7 +161,7 @@ return {
       },
       user_default_options = {
         rgb_fn = true,
-      }
+      },
     },
   },
 }

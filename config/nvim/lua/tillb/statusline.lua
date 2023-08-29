@@ -1,6 +1,6 @@
-local bg = vim.api.nvim_get_hl_by_name("StatusLine", true).background
-local bg_win = vim.api.nvim_get_hl_by_name("WinBar", true).background
-local hlwin = vim.api.nvim_get_hl_by_name("WinBar", true)
+local bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
+local bg_win = vim.api.nvim_get_hl(0, { name = "WinBar" }).bg
+local hlwin = vim.api.nvim_get_hl(0, { name = "WinBar" })
 hlwin.bold = true
 vim.api.nvim_set_hl(0, "WinBar", hlwin)
 
@@ -34,7 +34,7 @@ local severities = {
 }
 
 for _, severity in ipairs(severities) do
-  local fg = vim.api.nvim_get_hl_by_name("DiagnosticSign" .. severity, true).foreground
+  local fg = vim.api.nvim_get_hl(0, { name = "DiagnosticSign" .. severity }).fg
   vim.api.nvim_set_hl(0, "DiagnosticStatus" .. severity, { fg = fg, bg = bg })
 end
 
@@ -53,7 +53,9 @@ function StatusDiagnostics()
   return str
 end
 
-local C = require("catppuccin.palettes").get_palette()
+local C_fallback = {}
+setmetatable(C_fallback, {__index = function() return "#b4befe" end})
+local C = require("catppuccin.palettes").get_palette() or C_fallback
 
 local assets = {
   mode_icon = "",
@@ -71,6 +73,7 @@ local mode_colors = {
   ["n"] = { "NORMAL", C.lavender },
   ["no"] = { "N-PENDING", C.lavender },
   ["nt"] = { "NORMAL", C.lavender },
+  ["niI"] = { "I-NORMAL", C.lavender },
   ["i"] = { "INSERT", C.green },
   ["ic"] = { "INSERT", C.green },
   ["t"] = { "TERMINAL", C.green },
@@ -93,15 +96,20 @@ local mode_colors = {
 
 function StatusMode()
   local mode = vim.api.nvim_get_mode()
-  local name = mode_colors[mode.mode][1]
-  local color = mode_colors[mode.mode][2]
+
+  if mode_colors[mode.mode] == nil then
+    print('Unhandled mode "' .. mode .. '" encountered in statusline')
+  end
+
+  local name = (mode_colors[mode.mode] or { "NORMAL", C.lavender })[1]
+  local color = (mode_colors[mode.mode] or { "NORMAL", C.lavender })[2]
   vim.api.nvim_set_hl(0, "StatusMode", { fg = C.surface0, bg = color, bold = true })
 
   return "%#StatusMode# " .. assets.mode_icon .. " " .. name .. " %#StatusLine#"
 end
 
 function StatusLsp()
-  local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
   local names = vim.tbl_map(function(item)
     return item.name
   end, clients)
