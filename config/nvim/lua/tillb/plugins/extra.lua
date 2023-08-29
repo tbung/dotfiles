@@ -131,10 +131,11 @@ return {
     event = "VeryLazy",
     keys = {
       {
-        "-",
+        "<leader>-",
         function()
           require("oil").open()
         end,
+        mode = "n",
         desc = "Open parent directory",
       },
     },
