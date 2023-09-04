@@ -163,8 +163,8 @@ alias wttr='curl wttr.in/heidelberg'
 
 # Named Directory Hashes
 hash -d p="$HOME/Projects"
-hash -d z="$ZDOTDIR"
 hash -d c="$XDG_CONFIG_HOME"
+hash -d zsh="$ZDOTDIR"
 hash -d nvim="$XDG_CONFIG_HOME/nvim"
 hash -d d="$HOME/Data"
 hash -d e="$HOME/Experiments"
@@ -172,7 +172,11 @@ hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
 
 # Functions + Widgets
 function open-project () {
-    find ${HOME}/Projects -mindepth 1 -maxdepth 1 -type d | fzf
+    if (( ${+commands[fd]} )); then
+        fd --hidden --prune .git$ ${HOME}/Projects -x dirname | fzf
+    else
+        printf '%s\n' ${HOME}/Projects/**/.git | xargs dirname | fzf
+    fi
 }
 function _open-project () {
     local dir=$(open-project)
