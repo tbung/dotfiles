@@ -6,7 +6,7 @@ vim.api.nvim_set_hl(0, "WinBar", hlwin)
 
 function StatusFileIcon()
   local file_comp = "%#StatusLine#%t %h%m%r"
-  local ft = vim.api.nvim_buf_get_option(0, "filetype")
+  local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
   local icon, color = require("nvim-web-devicons").get_icon_color_by_filetype(ft, {})
   if icon ~= nil then
     vim.api.nvim_set_hl(0, "StatusLineIcon", { fg = color, bg = bg })
@@ -17,7 +17,7 @@ end
 
 function WinbarFileIcon()
   local file_comp = "%#WinBar#%f %h%m%r"
-  local ft = vim.api.nvim_buf_get_option(0, "filetype")
+  local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
   local icon, color = require("nvim-web-devicons").get_icon_color_by_filetype(ft, {})
   if icon ~= nil then
     vim.api.nvim_set_hl(0, "WinBarIcon", { fg = color, bg = bg_win })
