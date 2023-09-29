@@ -58,7 +58,7 @@ return {
       local overrides = {
         efm = {
           init_options = { documentFormatting = true },
-          filetypes = { "python", "lua" },
+          filetypes = { "python", "lua", "markdown" },
           settings = {
             languages = {
               lua = {
@@ -70,6 +70,9 @@ return {
               python = {
                 { formatCommand = "isort --quiet -", formatStdin = true },
                 { formatCommand = "black --quiet -", formatStdin = true },
+              },
+              markdown = {
+                { formatCommand = "prettier --parser markdown", formatStdin = true },
               },
             },
           },
@@ -238,16 +241,6 @@ return {
         formatting = {
           fields = { "abbr", "menu", "kind" },
           format = function(entry, item)
-            -- local short_name = {
-            --   nvim_lsp = "LSP",
-            --   nvim_lua = "nvim",
-            --   copilot = " ",
-            -- }
-            --
-            -- local menu_name = short_name[entry.source.name] or entry.source.name
-            --
-            -- item.menu = string.format("[%s]", menu_name)
-            -- return item
             item.kind = (cmp_kinds[item.kind] or "") .. item.kind
             return item
           end,

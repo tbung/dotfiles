@@ -2,6 +2,9 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = { "BufReadPost", "BufNewFile" },
+    -- catppuccin is not updated yet
+    tag = "v2.20.8",
+    -- main = "ibl",
     config = true,
   },
   {
