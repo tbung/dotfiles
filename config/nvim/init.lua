@@ -1,6 +1,5 @@
 require("tillb")
 require("tillb.statusline")
-require("tillb.fold")
 
 function P(arg)
   print(vim.inspect(arg))

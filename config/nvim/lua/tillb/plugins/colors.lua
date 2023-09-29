@@ -11,6 +11,7 @@ return {
         gitsigns = true,
         telescope = true,
         mini = true,
+        markdown = true,
         dap = {
           enabled = true,
           enable_ui = true,
@@ -23,5 +24,10 @@ return {
     })
 
     vim.cmd.colorscheme("catppuccin")
+
+    local bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
+    local hl = vim.api.nvim_get_hl(0, { name = "Folded" })
+    hl.bg = bg
+    vim.api.nvim_set_hl(0, "Folded", hl)
   end,
 }
