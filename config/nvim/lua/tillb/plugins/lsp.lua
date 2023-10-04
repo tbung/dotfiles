@@ -58,7 +58,7 @@ return {
       local overrides = {
         efm = {
           init_options = { documentFormatting = true },
-          filetypes = { "python", "lua", "markdown" },
+          filetypes = { "python", "lua", "markdown", "sh" },
           settings = {
             languages = {
               lua = {
@@ -73,6 +73,9 @@ return {
               },
               markdown = {
                 { formatCommand = "prettier --parser markdown", formatStdin = true },
+              },
+              sh = {
+                { formatCommand = "shfmt -ci -s -bn", formatStdin = true },
               },
             },
           },

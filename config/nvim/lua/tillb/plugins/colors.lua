@@ -6,6 +6,14 @@ return {
   config = function()
     require("catppuccin").setup({
       flavour = "mocha", -- latte, frappe, macchiato, mocha
+
+      custom_highlights = function(colors)
+        return {
+          Folded = { bg = colors.mantle },
+          WinBar = { style = { "bold" } },
+        }
+      end,
+
       integrations = {
         cmp = true,
         gitsigns = true,
@@ -24,10 +32,5 @@ return {
     })
 
     vim.cmd.colorscheme("catppuccin")
-
-    local bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
-    local hl = vim.api.nvim_get_hl(0, { name = "Folded" })
-    hl.bg = bg
-    vim.api.nvim_set_hl(0, "Folded", hl)
   end,
 }

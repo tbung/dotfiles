@@ -29,11 +29,16 @@ vim.opt.splitright = true
 vim.opt.laststatus = 3
 vim.opt.showmode = false
 
+vim.opt.foldenable = true
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-if vim.treesitter.foldtext then
-  vim.opt.foldtext='v:lua.vim.treesitter.foldtext()'
-end
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+vim.opt.fillchars = {
+  foldclose = "",
+  foldopen = "",
+}
+
+vim.opt.statuscolumn = [[%!v:lua.require'tillb.signcol'.column()]]
 
 if vim.fn.executable("rg") == 1 then
   vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"

@@ -1,8 +1,5 @@
 local bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
 local bg_win = vim.api.nvim_get_hl(0, { name = "WinBar" }).bg
-local hlwin = vim.api.nvim_get_hl(0, { name = "WinBar" })
-hlwin.bold = true
-vim.api.nvim_set_hl(0, "WinBar", hlwin)
 
 function StatusFileIcon()
   local file_comp = "%#StatusLine#%t %h%m%r"
