@@ -1,18 +1,55 @@
 local wezterm = require("wezterm")
 local scheme = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 
+local function basename(s)
+  if s == nil or s == "" then
+    return nil
+  end
+  return string.gsub(s, "(.*[/\\])(.*)", "%2")
+end
+
+local function escape(pattern)
+  if pattern == nil or pattern == "" then
+    return nil
+  end
+  return pattern:gsub("%W", "%%%1")
+end
+
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local pane = tab.active_pane
   local home_dir = wezterm.home_dir
 
-  if pane.domain_name == "dkfz-workstation" or pane.domain_name == "E290-PC05" then
+  if pane.domain_name:find("dkfz-work", 1, true) ~= nil then
     home_dir = "/home/t974t"
   end
 
-  local title = string.gsub(pane.current_working_dir, home_dir, "~")
+  local proc, host, domain
+
+  if pane.domain_name:find("SSH:", 1, true) == 1 then
+    proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.user_vars.WEZTERM_SHELL) or pane.title
+    host = escape(pane.user_vars.WEZTERM_HOST) or ""
+    domain = pane.domain_name .. ": "
+  elseif pane.foreground_process_name ~= "" then
+    proc = basename(pane.foreground_process_name) or pane.title
+    host = ""
+    domain = ""
+  else
+    proc = pane.title
+    host = ""
+    if pane.domain_name:find("MUX", 1, true) ~= nil then
+      domain = string.gsub(pane.domain_name, "SSHMUX:", "") .. ": "
+    else
+      domain = ""
+    end
+  end
+
+  local title = string.gsub(pane.current_working_dir, host, "")
+  title = string.gsub(title, home_dir, "~")
   title = string.gsub(title, "~/Projects", "~p")
   title = string.gsub(title, "file://", "")
-  title = pane.title .. " - " .. title
+  title = string.gsub(title, "/$", "")
+
+  title = domain .. proc .. " - " .. title
   title = wezterm.truncate_right(title, max_width - 4)
   title = title
   return wezterm.format({
@@ -71,30 +108,37 @@ wezterm.on("window-focus-changed", function(window, pane)
   window:set_config_overrides(overrides)
 end)
 
+wezterm.on("update-status", function(window, pane)
+  local meta = pane:get_metadata() or {}
+  if meta.is_tardy then
+    local secs = meta.since_last_response_ms / 1000.0
+    window:set_right_status(string.format("tardy: %5.1fs⏳", secs))
+  end
+end)
+
+local ssh_domains = wezterm.default_ssh_domains()
 return {
   color_scheme = "Catppuccin Mocha",
   font = wezterm.font("VictorMono Nerd Font"),
   font_size = get_font_size(),
   use_fancy_tab_bar = false,
   tab_bar_at_bottom = true,
-  tab_max_width = 32,
+  tab_max_width = 48,
   term = "wezterm",
 
   command_palette_bg_color = "#11111b",
   command_palette_fg_color = "#cdd6f4",
   command_palette_font_size = 18,
 
-  -- NOTE: This is for ssh agent forwarding
-  unix_domains = {
-    {
-      name = "dkfz-workstation",
-      local_echo_threshold_ms = 150,
-      proxy_command = { "/usr/bin/ssh", "-T", "dkfz-workstation", "wezterm", "cli", "proxy" },
-    },
-  },
+  ssh_domains = ssh_domains,
 
   leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 },
   keys = {
+    {
+      key = " ",
+      mods = "LEADER|CTRL",
+      action = wezterm.action.SendKey({ key = " ", mods = "CTRL" }),
+    },
     {
       key = " ",
       mods = "LEADER",
@@ -140,6 +184,16 @@ return {
       key = "p",
       mods = "LEADER",
       action = wezterm.action.ActivateTabRelative(-1),
+    },
+    {
+      key = "N",
+      mods = "LEADER",
+      action = wezterm.action.MoveTabRelative(1),
+    },
+    {
+      key = "P",
+      mods = "LEADER",
+      action = wezterm.action.MoveTabRelative(-1),
     },
 
     {
