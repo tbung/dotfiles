@@ -162,13 +162,14 @@ alias wttr='curl wttr.in/heidelberg'
 
 
 # Named Directory Hashes
-hash -d p="$HOME/Projects"
 hash -d c="$XDG_CONFIG_HOME"
-hash -d zsh="$ZDOTDIR"
-hash -d nvim="$XDG_CONFIG_HOME/nvim"
+hash -d dot="$HOME/.dotfiles"
 hash -d d="$HOME/Data"
 hash -d e="$HOME/Experiments"
 hash -d np="$HOME/NetworkDrives/E130-Personal/Bungert"
+hash -d nvim="$XDG_CONFIG_HOME/nvim"
+hash -d p="$HOME/Projects"
+hash -d zsh="$ZDOTDIR"
 
 # Functions + Widgets
 function open-project () {
