@@ -120,6 +120,9 @@ setopt GLOB_STAR_SHORT
 # Sort numbers numerically, not lexicographically.
 setopt NUMERIC_GLOB_SORT
 
+# No beeps
+unsetopt LIST_BEEP
+
 # Edit command in vim
 zle -N edit-command-line
 autoload -Uz edit-command-line
@@ -131,7 +134,7 @@ KEYTIMEOUT=1
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     if ! pgrep -u "$USER" ssh-agent >/dev/null;then
-    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+    ssh-agent -t 1h >! "$XDG_RUNTIME_DIR/ssh-agent.env"
     fi
 
     if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
