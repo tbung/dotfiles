@@ -9,14 +9,17 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-vim.keymap.set("n", "<leader>vf", function()
-  vim.lsp.buf.format({
-    filter = function(client)
-      -- always use stylua to format
-      return client.name ~= "lua_ls"
-    end,
-  })
-end, {})
+-- vim.keymap.set("n", "<leader>vf", function()
+--   vim.lsp.buf.format({
+--     filter = function(client)
+--       local excludes = {
+--         "lua_ls",
+--         "pylsp",
+--       }
+--       return not vim.tbl_contains({client.name, excludes})
+--     end,
+--   })
+-- end, {})
 vim.keymap.set("n", "<leader>vh", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, {})
 vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, {})

@@ -37,6 +37,10 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
+      {
+        "microsoft/python-type-stubs",
+        -- cond = false,
+      },
     },
     config = function()
       require("neodev").setup()
@@ -56,31 +60,6 @@ return {
       })
 
       local overrides = {
-        efm = {
-          init_options = { documentFormatting = true },
-          filetypes = { "python", "lua", "markdown", "sh" },
-          settings = {
-            languages = {
-              lua = {
-                {
-                  formatCommand = "stylua --search-parent-directories --stdin-filepath ${INPUT} -",
-                  formatStdin = true,
-                },
-              },
-              python = {
-                { formatCommand = "isort --quiet -", formatStdin = true },
-                { formatCommand = "black --quiet -", formatStdin = true },
-              },
-              markdown = {
-                { formatCommand = "prettier --parser markdown", formatStdin = true },
-              },
-              sh = {
-                { formatCommand = "shfmt -ci -s -bn", formatStdin = true },
-              },
-            },
-          },
-        },
-
         ["arduino_language_server"] = {
           capabilities = {
             textDocument = { semanticTokens = vim.NIL },
@@ -136,6 +115,16 @@ return {
             client.server_capabilities.hoverProvider = false
           end,
         },
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs",
+                diagnosticMode = "workspace",
+              },
+            },
+          },
+        },
       }
 
       local capabilities = vim.tbl_deep_extend(
@@ -146,7 +135,7 @@ return {
       )
 
       local function setup(server_name) -- default handler (optional)
-        local server_opts = vim.tbl_deep_extend("force", {
+        local server_opts = vim.tbl_deep_extend("error", {
           capabilities = vim.deepcopy(capabilities),
         }, overrides[server_name] or {})
 
@@ -189,7 +178,81 @@ return {
       vim.cmd([[sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=]])
       vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
       vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
-      vim.lsp.set_log_level("debug")
+
+      -- vim.lsp.set_log_level("TRACE")
+
+      local FSWATCH_EVENTS = {
+        Created = 1,
+        Updated = 2,
+        Removed = 3,
+        -- Renamed
+        OwnerModified = 2,
+        AttributeModified = 2,
+        MovedFrom = 1,
+        MovedTo = 3,
+        -- IsFile
+        -- IsDir
+        -- IsSymLink
+        -- Link
+        -- Overflow
+      }
+
+      --- @param data string
+      --- @param opts table
+      --- @param callback fun(path: string, event: integer)
+      local function fswatch_output_handler(data, opts, callback)
+        local d = vim.split(data, "%s+")
+        local cpath = d[1]
+
+        for i = 2, #d do
+          if d[i] == "IsDir" or d[i] == "IsSymLink" or d[i] == "PlatformSpecific" then
+            return
+          end
+        end
+
+        if opts.include_pattern and opts.include_pattern:match(cpath) == nil then
+          return
+        end
+
+        if opts.exclude_pattern and opts.exclude_pattern:match(cpath) ~= nil then
+          return
+        end
+
+        for i = 2, #d do
+          local e = FSWATCH_EVENTS[d[i]]
+          if e then
+            callback(cpath, e)
+          end
+        end
+      end
+
+      local function fswatch(path, opts, callback)
+        local obj = vim.system({
+          "fswatch",
+          "--recursive",
+          "--event-flags",
+          "--exclude",
+          "/.git/",
+          path,
+        }, {
+          stdout = function(_, data)
+            if not data then
+              return
+            end
+            for line in vim.gsplit(data, "\n", { plain = true, trimempty = true }) do
+              fswatch_output_handler(line, opts, callback)
+            end
+          end,
+        })
+
+        return function()
+          obj:kill(2)
+        end
+      end
+
+      if vim.fn.executable("fswatch") == 1 then
+        require("vim.lsp._watchfiles")._watchfunc = fswatch
+      end
     end,
   },
   {
@@ -250,5 +313,29 @@ return {
         },
       }
     end,
+  },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    keys = {
+      {
+        "<leader>vf",
+        function()
+          require("conform").format({ async = true, lsp_fallback = "always" })
+        end,
+        mode = "",
+        desc = "Format buffer",
+      },
+    },
+    -- Everything in opts will be passed to setup()
+    opts = {
+      -- Define your formatters
+      formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "isort" },
+        bash = { "shfmt" },
+      },
+    },
   },
 }
