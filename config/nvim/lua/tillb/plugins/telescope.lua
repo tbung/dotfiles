@@ -16,18 +16,31 @@ return {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({}),
           },
+          file_browser = {
+            sorting_strategy = "ascending",
+          },
         },
       })
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("file_browser")
 
       -- HACK: Telescope opens files while still in insert mode which breaks folding (and maybe other stuff too)
-      vim.api.nvim_create_autocmd("BufRead", {
+      -- vim.api.nvim_create_autocmd("BufRead", {
+      --   callback = function()
+      --     vim.api.nvim_create_autocmd("BufWinEnter", {
+      --       once = true,
+      --       command = "normal! zx",
+      --     })
+      --   end,
+      -- })
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        pattern = "term://*",
         callback = function()
-          vim.api.nvim_create_autocmd("BufWinEnter", {
+          vim.api.nvim_create_autocmd("TermEnter", {
             once = true,
-            command = "normal! zx",
+            command = "stopinsert",
           })
+          vim.cmd("startinsert")
         end,
       })
     end,
@@ -37,7 +50,7 @@ return {
       {
         "<leader>ff",
         function()
-          require("telescope.builtin").find_files({ hidden = true })
+          require("telescope.builtin").find_files({ hidden = true, no_ignore = false })
         end,
         desc = "Find files (ignoring based on .gitignore)",
       },

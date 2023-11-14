@@ -2,9 +2,18 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    -- catppuccin is not updated yet
-    tag = "v2.20.8",
-    -- main = "ibl",
+    main = "ibl",
+    opts = {
+      scope = {
+        show_start = false,
+        show_end = false,
+      }
+    },
+  },
+  {
+    "chentoast/marks.nvim",
+    enable = false,
+    event = { "BufReadPost", "BufNewFile" },
     config = true,
   },
   {
@@ -167,5 +176,12 @@ return {
         rgb_fn = true,
       },
     },
+  },
+  {
+    "goerz/jupytext.vim",
+    lazy = false,
+    config = function()
+      vim.g.jupytext_fmt = 'py:percent'
+    end
   },
 }

@@ -38,7 +38,7 @@ return {
       local starter = require("mini.starter")
       starter.setup({
         items = {
-          starter.sections.recent_files(5, true, false),
+          starter.sections.recent_files(5, true, true),
           starter.sections.builtin_actions(),
         },
         silent = true,
@@ -58,23 +58,22 @@ return {
   {
     "echasnovski/mini.ai",
     event = "VeryLazy",
-    config = function()
-      require("mini.ai").setup()
-    end,
+    config = true,
   },
   {
     "echasnovski/mini.surround",
     event = "VeryLazy",
-    config = function()
-      require("mini.surround").setup()
-    end,
+    config = true,
   },
   {
     "echasnovski/mini.comment",
     event = "VeryLazy",
-    config = function()
-      require("mini.comment").setup()
-    end,
+    config = true,
+    opts = {
+      options = {
+        ignore_blank_line = true,
+      },
+    },
   },
   {
     "vigoux/notifier.nvim",
