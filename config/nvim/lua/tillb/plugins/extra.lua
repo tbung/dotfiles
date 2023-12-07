@@ -31,6 +31,7 @@ return {
         config = {
           scratch_repl = true,
           repl_definition = {
+            python = require("iron.fts.python").ipython,
             sh = {
               command = { "zsh" },
             },

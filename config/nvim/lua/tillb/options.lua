@@ -1,3 +1,6 @@
+-- HACK: disable termsync while it's broken in wezterm mux
+vim.opt.termsync = false
+
 vim.opt.number = true
 vim.opt.relativenumber = true
 

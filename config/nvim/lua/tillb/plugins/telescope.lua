@@ -63,7 +63,7 @@ return {
       {
         "<leader>fe",
         function()
-          require("telescope").extensions.file_browser.file_browser()
+          require("telescope").extensions.file_browser.file_browser({ hidden = true, no_ignore = true })
         end,
       },
       {

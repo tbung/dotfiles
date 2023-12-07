@@ -120,7 +120,7 @@ return {
             python = {
               analysis = {
                 stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs",
-                diagnosticMode = "workspace",
+                -- diagnosticMode = "workspace",
               },
             },
           },
@@ -179,7 +179,10 @@ return {
       vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
       vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
 
-      -- vim.lsp.set_log_level("TRACE")
+      -- vim.lsp.set_log_level("debug")
+      -- if vim.fn.has("nvim-0.5.1") == 1 then
+      --   require("vim.lsp.log").set_format_func(vim.inspect)
+      -- end
 
       local FSWATCH_EVENTS = {
         Created = 1,
@@ -322,7 +325,13 @@ return {
       {
         "<leader>vf",
         function()
-          require("conform").format({ async = true, lsp_fallback = "always" })
+          require("conform").format({
+            async = true,
+            lsp_fallback = "always",
+            filter = function(client)
+              return client.name ~= "ruff_lsp"
+            end,
+          })
         end,
         mode = "",
         desc = "Format buffer",
@@ -333,8 +342,15 @@ return {
       -- Define your formatters
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort" },
+        python = { "isort", "black" },
         bash = { "shfmt" },
+        sh = { "shfmt" },
+      },
+
+      formatters = {
+        black = {
+          prepend_args = { "--safe" },
+        },
       },
     },
   },
