@@ -7,7 +7,7 @@ return {
       scope = {
         show_start = false,
         show_end = false,
-      }
+      },
     },
   },
   {
@@ -57,38 +57,6 @@ return {
   {
     "nvim-tree/nvim-web-devicons",
     lazy = true,
-  },
-  {
-    "ThePrimeagen/harpoon",
-    keys = {
-      {
-        "<leader>tf",
-        function()
-          require("harpoon.term").gotoTerminal(1)
-        end,
-      },
-      {
-        "<leader>td",
-        function()
-          require("harpoon.term").gotoTerminal(2)
-        end,
-      },
-      {
-        "<leader>tg",
-        function()
-          require("harpoon.term").gotoTerminal(3)
-        end,
-      },
-    },
-    opts = {
-      global_settings = {
-        save_on_toggle = false,
-        save_on_change = true,
-        enter_on_sendcmd = true,
-        tmux_autoclose_windows = false,
-        excluded_filetypes = { "harpoon" },
-      },
-    },
   },
 
   {

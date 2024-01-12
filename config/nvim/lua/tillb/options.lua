@@ -63,3 +63,11 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
   group = vim.api.nvim_create_augroup("terminal_settings", {}),
 })
+
+vim.api.nvim_create_user_command("EditMakeprg", function()
+  require("tillb.terminal").edit_makeprg()
+end, {})
+
+vim.api.nvim_create_user_command("TMake", function()
+  require("tillb.terminal").terminal_make()
+end, {})
