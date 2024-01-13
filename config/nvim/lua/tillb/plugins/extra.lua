@@ -58,11 +58,55 @@ return {
     "nvim-tree/nvim-web-devicons",
     lazy = true,
   },
-
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    config = true,
+    "echasnovski/mini.clue",
+    event = "VimEnter",
+    config = function()
+      local miniclue = require("mini.clue")
+      miniclue.setup({
+        triggers = {
+          -- Leader triggers
+          { mode = "n", keys = "<Leader>" },
+          { mode = "x", keys = "<Leader>" },
+
+          -- `g` key
+          { mode = "n", keys = "g" },
+          { mode = "x", keys = "g" },
+
+          -- Marks
+          { mode = "n", keys = "'" },
+          { mode = "x", keys = "'" },
+
+          -- Registers
+          { mode = "n", keys = '"' },
+          { mode = "x", keys = '"' },
+          { mode = "i", keys = "<C-r>" },
+          { mode = "c", keys = "<C-r>" },
+
+          -- Window commands
+          { mode = "n", keys = "<C-w>" },
+
+          -- `z` key
+          { mode = "n", keys = "z" },
+          { mode = "x", keys = "z" },
+        },
+
+        clues = {
+          miniclue.gen_clues.g(),
+          miniclue.gen_clues.marks(),
+          miniclue.gen_clues.registers(),
+          miniclue.gen_clues.windows(),
+          miniclue.gen_clues.z(),
+        },
+
+        window = {
+          config = {
+            width = "auto",
+            border = "none",
+          }
+        }
+      })
+    end,
   },
 
   {
@@ -150,7 +194,7 @@ return {
     "goerz/jupytext.vim",
     lazy = false,
     config = function()
-      vim.g.jupytext_fmt = 'py:percent'
-    end
+      vim.g.jupytext_fmt = "py:percent"
+    end,
   },
 }
