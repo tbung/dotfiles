@@ -84,6 +84,11 @@ return {
     opts = { highlight_on_key = true, dim = true },
   },
   {
+    "echasnovski/mini.sessions",
+    event = "VimEnter",
+    config = true,
+  },
+  {
     "echasnovski/mini.starter",
     event = "VimEnter",
     config = function()
@@ -92,6 +97,7 @@ return {
         items = {
           starter.sections.recent_files(5, true, true),
           starter.sections.builtin_actions(),
+          starter.sections.sessions(5, true),
         },
         silent = true,
       })
