@@ -1,3 +1,6 @@
 .envrc
 .direnv/
 .DS_Store
+Session.vim
+.nvim.lua
+.nvimrc
