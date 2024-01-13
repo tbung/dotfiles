@@ -114,11 +114,6 @@ return {
     end,
   },
   {
-    "echasnovski/mini.ai",
-    event = "VeryLazy",
-    config = true,
-  },
-  {
     "echasnovski/mini.surround",
     event = "VeryLazy",
     config = true,
@@ -134,9 +129,7 @@ return {
     },
   },
   {
-    -- "vigoux/notifier.nvim",
     "j-hui/fidget.nvim",
-    -- event = "VeryLazy",
     lazy = false,
     config = true,
   },

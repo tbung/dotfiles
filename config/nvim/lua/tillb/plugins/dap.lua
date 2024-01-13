@@ -29,33 +29,15 @@ return {
       all_frames = false,
     })
 
-    -- local extension_path = require("mason-registry").get_package("codelldb"):get_install_path() .. "/extension/"
-    -- local codelldb_path = extension_path .. "adapter/codelldb"
     dap.adapters.codelldb = {
       type = "server",
       port = "${port}",
       executable = {
-      --   -- CHANGE THIS to your path!
         command = "codelldb",
         args = { "--port", "${port}" },
       },
     }
 
-    dap.configurations.c = {
-      {
-        name = "Launch file with args",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        args = function()
-          return vim.fn.input("args: ")
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-      },
-    }
     require("dap.ext.vscode").load_launchjs(nil, { codelldb = { "c", "cpp" } })
     require("dap.ext.vscode").load_launchjs(vim.fn.getcwd() .. "/launch.json", { codelldb = { "c", "cpp" } })
 
@@ -64,9 +46,9 @@ return {
 
     require("dapui").setup()
 
-    vim.fn.sign_define("DapBreakpoint", { text = "Ⓑ", texthl = "Error", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapBreakpointCondition", { text = "Ⓑ", texthl = "Warning", linehl = "", numhl = "" })
-    vim.fn.sign_define("DapBreakpointRejected", { text = "Ⓑ", texthl = "Hint", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "Error", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "Warning", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "Hint", linehl = "", numhl = "" })
 
   end,
 }

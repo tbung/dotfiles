@@ -36,28 +36,13 @@ return {
       "folke/neodev.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-      {
-        "microsoft/python-type-stubs",
-        -- cond = false,
-      },
+      "microsoft/python-type-stubs",
     },
     config = function()
       require("neodev").setup()
 
       require("mason").setup()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          -- "arduino_language_server",
-          -- "clangd",
-          -- "pyright",
-          -- "lua_ls",
-          -- "texlab",
-        },
-      })
-      require("mason-tool-installer").setup({
-        ensure_installed = {},
-      })
+      require("mason-lspconfig").setup()
 
       local overrides = {
         ["arduino_language_server"] = {
@@ -88,15 +73,21 @@ return {
                 modifyLineBreaks = true,
               },
               forwardSearch = {
+                -- TODO: this is currently macos specific, make it os agnostic
                 executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
                 args = { "-b", "%l", "%p", "%f" },
               },
             },
           },
         },
-
         clangd = {
-          cmd = { "clangd", "--background-index", "--clang-tidy" },
+          cmd = {
+            "clangd",
+            "--background-index",
+            -- TODO: these should be project local
+            -- "--query-driver=/home/tillb/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/**/bin/xtensa-esp32-elf-*",
+            -- "--query-driver=/home/tillb/.espressif/tools/riscv32-esp-elf/esp-12.2.0_20230208/**/bin/riscv32-esp-elf-*",
+          },
         },
         lua_ls = {
           settings = {
@@ -110,6 +101,7 @@ return {
             },
           },
         },
+        -- TODO: ruff_lsp and black currently don't like jupytext, need to find fix for that
         ruff_lsp = {
           on_attach = function(client)
             client.server_capabilities.hoverProvider = false
@@ -120,7 +112,6 @@ return {
             python = {
               analysis = {
                 stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs",
-                -- diagnosticMode = "workspace",
               },
             },
           },
@@ -134,7 +125,7 @@ return {
         require("cmp_nvim_lsp").default_capabilities()
       )
 
-      local function setup(server_name) -- default handler (optional)
+      local function setup(server_name)
         local server_opts = vim.tbl_deep_extend("error", {
           capabilities = vim.deepcopy(capabilities),
         }, overrides[server_name] or {})
@@ -143,6 +134,9 @@ return {
       end
 
       require("mason-lspconfig").setup_handlers({ setup })
+
+      -- Not installed via mason so need to setup manually
+      setup("clangd")
 
       vim.diagnostic.config({
         virtual_text = true,
@@ -179,10 +173,7 @@ return {
       vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
       vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
 
-      -- vim.lsp.set_log_level("debug")
-      -- if vim.fn.has("nvim-0.5.1") == 1 then
-      --   require("vim.lsp.log").set_format_func(vim.inspect)
-      -- end
+      -- HACK: this is a workaround from https://github.com/neovim/neovim/issues/23291#issuecomment-1687088266
 
       local FSWATCH_EVENTS = {
         Created = 1,
@@ -280,12 +271,14 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      "hrsh7th/cmp-emoji",
       "saadparwaiz1/cmp_luasnip",
       "zbirenbaum/copilot-cmp",
     },
-    opts = function()
+    config = function()
       local cmp = require("cmp")
-      return {
+
+      cmp.setup({
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
@@ -314,7 +307,18 @@ return {
             return item
           end,
         },
-      }
+      })
+
+      cmp.setup.filetype("markdown", {
+        sources = cmp.config.sources({
+          { name = "copilot" },
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "buffer" },
+          { name = "path" },
+          { name = "emoji" },
+        }),
+      })
     end,
   },
   {
@@ -337,9 +341,7 @@ return {
         desc = "Format buffer",
       },
     },
-    -- Everything in opts will be passed to setup()
     opts = {
-      -- Define your formatters
       formatters_by_ft = {
         lua = { "stylua" },
         python = { "isort", "black" },
