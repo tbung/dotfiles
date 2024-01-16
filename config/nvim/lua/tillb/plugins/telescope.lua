@@ -23,15 +23,6 @@ return {
       })
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("file_browser")
-
-      -- HACK: Telescope opens files while still in insert mode which breaks folding (and maybe other stuff too)
-      vim.api.nvim_create_autocmd("WinLeave", {
-        callback = function()
-          if vim.bo.ft == "TelescopePrompt" and vim.fn.mode() == "i" then
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes([[<C-\><C-n>]], true, false, true), "i", false)
-          end
-        end,
-      })
     end,
     cmd = "Telescope",
     event = { "BufReadPost", "BufNewFile" },
