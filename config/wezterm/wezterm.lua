@@ -1,6 +1,28 @@
 local wezterm = require("wezterm")
 local scheme = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 
+local default_font_size = 16
+
+local function get_font_size(window)
+  if not window then
+    return default_font_size
+  end
+
+  local num_lines = 56
+
+  local dimensions = window:get_dimensions()
+  if dimensions.is_full_screen then
+    return dimensions.pixel_height / 3 / num_lines
+  end
+
+  if window:is_focused() then
+    local screen = wezterm.gui.screens().active
+    return screen.height / 3 / num_lines
+  end
+
+  return default_font_size
+end
+
 local function basename(s)
   if s == nil or s == "" then
     return nil
@@ -15,6 +37,19 @@ local function escape(pattern)
   return pattern:gsub("%W", "%%%1")
 end
 
+local function ssh_domains()
+  local _ssh_domains = wezterm.default_ssh_domains()
+  for i, dom in ipairs(_ssh_domains) do
+    if dom.name == "SSH:dkfz-worker" then
+      dom.default_prog = { "/dkfz/cluster/gpu/data/OE0612/t974t/.local/bin/zsh", "-l" }
+    end
+    if dom.name == "SSHMUX:dkfz-worker" then
+      table.remove(_ssh_domains, i)
+    end
+  end
+  return _ssh_domains
+end
+
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local pane = tab.active_pane
   local home_dir = wezterm.home_dir
@@ -23,30 +58,33 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     home_dir = "/home/t974t"
   end
 
-  local proc, host, domain
+  local proc, _, domain
+  local domain_name = pane.domain_name
+  if domain_name == "SSH:dkfz-worker" then
+    domain_name = "SSH:cluster"
+  end
+  if domain_name == "SSHMUX:dkfz-workstation" then
+    domain_name = "SSHMUX:dkfz"
+  end
 
   if pane.domain_name:find("SSH:", 1, true) == 1 then
     proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.user_vars.WEZTERM_SHELL) or pane.title
-    host = escape(pane.user_vars.WEZTERM_HOST) or ""
-    domain = pane.domain_name .. ": "
+    domain = domain_name .. ": "
   elseif pane.foreground_process_name ~= "" then
     proc = basename(pane.foreground_process_name) or pane.title
-    host = ""
     domain = ""
   else
     proc = pane.title
-    host = ""
-    if pane.domain_name:find("MUX", 1, true) ~= nil then
-      domain = string.gsub(pane.domain_name, "SSHMUX:", "") .. ": "
+    if domain_name:find("MUX", 1, true) ~= nil then
+      domain = string.gsub(domain_name, "SSHMUX:", "") .. ": "
     else
       domain = ""
     end
   end
 
-  local title = string.gsub(pane.current_working_dir, host, "")
+  local title = pane.current_working_dir.path
   title = string.gsub(title, home_dir, "~")
   title = string.gsub(title, "~/Projects", "~p")
-  title = string.gsub(title, "file://", "")
   title = string.gsub(title, "/$", "")
 
   title = domain .. proc .. " - " .. title
@@ -78,45 +116,30 @@ wezterm.on("update-right-status", function(window, pane)
   }))
 end)
 
-local function get_font_size()
-  local res, screens = pcall(wezterm.gui.screens)
-  local active_screen = nil
-  if res then
-    active_screen = screens.active.name
-  end
-  if active_screen == "Built-in Retina Display" or wezterm.hostname() == "deep-thought" then
-    return 14
-  else
-    return 18
-  end
-end
-
-wezterm.on("window-focus-changed", function(window, pane)
-  if not window:is_focused() then
-    return
-  end
-
-  local overrides = window:get_config_overrides() or {}
-
-  local font_size = get_font_size()
-
-  if overrides.font_size and overrides.font_size == font_size then
-    return
-  end
-
-  overrides.font_size = font_size
-  window:set_config_overrides(overrides)
-end)
-
 wezterm.on("update-status", function(window, pane)
   local meta = pane:get_metadata() or {}
   if meta.is_tardy then
     local secs = meta.since_last_response_ms / 1000.0
     window:set_right_status(string.format("tardy: %5.1fs⏳", secs))
   end
+
+  -- update font size to match screen size
+  if not window:is_focused() then
+    return
+  end
+  local overrides = window:get_config_overrides() or {}
+
+  local font_size = get_font_size(window)
+
+  if overrides.font_size and overrides.font_size == font_size then
+    return
+  end
+
+  overrides.font_size = font_size
+  overrides.command_palette_font_size = font_size
+  window:set_config_overrides(overrides)
 end)
 
-local ssh_domains = wezterm.default_ssh_domains()
 return {
   color_scheme = "Catppuccin Mocha",
   font = wezterm.font("VictorMono Nerd Font"),
@@ -125,14 +148,19 @@ return {
   tab_bar_at_bottom = true,
   tab_max_width = 48,
   term = "wezterm",
+  native_macos_fullscreen_mode = true,
+  front_end = "WebGpu",
 
   command_palette_bg_color = "#11111b",
   command_palette_fg_color = "#cdd6f4",
-  command_palette_font_size = 18,
+  command_palette_font_size = get_font_size(),
 
-  ssh_domains = ssh_domains,
+  ssh_domains = ssh_domains(),
+  send_composed_key_when_left_alt_is_pressed = true,
 
-  leader = { key = " ", mods = "CTRL", timeout_milliseconds = 1000 },
+  -- TODO: Add custom lua function keys, for example for launcher stuff and balancing split panes
+  -- via `action = wezterm.action_callback(function(window, pane) ... end)`
+  leader = { key = " ", mods = "CTRL", timeout_milliseconds = 3000 },
   keys = {
     {
       key = " ",
