@@ -11,16 +11,8 @@ local function get_font_size(window)
   local num_lines = 56
 
   local dimensions = window:get_dimensions()
-  if dimensions.is_full_screen then
-    return dimensions.pixel_height / 3 / num_lines
-  end
-
-  if window:is_focused() then
-    local screen = wezterm.gui.screens().active
-    return screen.height / 3 / num_lines
-  end
-
-  return default_font_size
+  local screen = wezterm.gui.screens().active
+  return screen.height / num_lines * 48 / dimensions.dpi
 end
 
 local function basename(s)
