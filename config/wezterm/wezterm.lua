@@ -3,6 +3,8 @@ local scheme = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 
 local default_font_size = 16
 
+local screen = nil
+
 local function get_font_size(window)
   if not window then
     return default_font_size
@@ -11,7 +13,9 @@ local function get_font_size(window)
   local num_lines = 56
 
   local dimensions = window:get_dimensions()
-  local screen = wezterm.gui.screens().active
+  if screen == nil and window:is_focused() then
+    screen = wezterm.gui.screens().active
+  end
   return screen.height / num_lines * 48 / dimensions.dpi
 end
 
@@ -74,12 +78,17 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     end
   end
 
-  local title = pane.current_working_dir.path
-  title = string.gsub(title, home_dir, "~")
-  title = string.gsub(title, "~/Projects", "~p")
-  title = string.gsub(title, "/$", "")
+  local title
+  if pane.current_working_dir ~= nil then
+    title = pane.current_working_dir.path
+    title = string.gsub(title, home_dir, "~")
+    title = string.gsub(title, "~/Projects", "~p")
+    title = string.gsub(title, "/$", "")
 
-  title = domain .. proc .. " - " .. title
+    title = domain .. proc .. " - " .. title
+  else
+    title = pane.title
+  end
   title = wezterm.truncate_right(title, max_width - 4)
   title = title
   return wezterm.format({
@@ -132,9 +141,15 @@ wezterm.on("update-status", function(window, pane)
   window:set_config_overrides(overrides)
 end)
 
+wezterm.on("window-resized", function(window, pane)
+  if window:is_focused() then
+    screen = wezterm.gui.screens().active
+  end
+end)
+
 return {
   color_scheme = "Catppuccin Mocha",
-  font = wezterm.font("VictorMono Nerd Font"),
+  font = wezterm.font_with_fallback({ "VictorMono Nerd Font", "VictorMono NF" }),
   font_size = get_font_size(),
   use_fancy_tab_bar = false,
   tab_bar_at_bottom = true,
