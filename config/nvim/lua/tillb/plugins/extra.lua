@@ -17,41 +17,18 @@ return {
     config = true,
   },
   {
-    "hkupty/iron.nvim",
-    keys = {
-      "<leader>sc",
-      { "<leader>sc", mode = "v" },
-      "<leader>sf",
-      "<leader>sl",
-    },
+    "jpalardy/vim-slime",
+    ft = { "python", "sh" },
+    -- lazy = false,
     config = function()
-      local iron = require("iron.core")
+      vim.g.slime_target = "wezterm"
+      vim.g.slime_default_config = { pane_direction = "right" }
+      vim.g.slime_no_mappings = 1
+      vim.g.slime_bracketed_paste = 1
 
-      iron.setup({
-        config = {
-          scratch_repl = true,
-          repl_definition = {
-            python = require("iron.fts.python").ipython,
-            sh = {
-              command = { "zsh" },
-            },
-          },
-          repl_open_cmd = require("iron.view").split.vertical(),
-        },
-        keymaps = {
-          send_motion = "<leader>sc",
-          visual_send = "<leader>sc",
-          send_file = "<leader>sf",
-          send_line = "<leader>sl",
-          -- cr = "<space>s<cr>",
-          interrupt = "<leader>s<space>",
-          exit = "<leader>sq",
-          -- clear = "<space>cl",
-        },
-        -- highlight = {
-        --   bg = require("catppuccin.palettes").get_palette().surface0,
-        -- },
-      })
+      vim.keymap.set("v", "<leader>sc", "<Plug>SlimeRegionSend")
+      vim.keymap.set("n", "<leader>sc", "<Plug>SlimeMotionSend")
+      vim.keymap.set("n", "<leader>sl", "<Plug>SlimeLineSend")
     end,
   },
   {
@@ -103,8 +80,8 @@ return {
           config = {
             width = "auto",
             border = "none",
-          }
-        }
+          },
+        },
       })
     end,
   },
