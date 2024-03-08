@@ -47,6 +47,28 @@ vim.opt.fillchars = {
 
 vim.opt.statuscolumn = [[%!v:lua.require'tillb.signcol'.column()]]
 
+local tty = false
+for _, ui in ipairs(vim.api.nvim_list_uis()) do
+  if ui.chan == 1 and ui.stdout_tty then
+    tty = true
+    break
+  end
+end
+
+if tty and (vim.g.clipboard == nil or vim.o.clipboard == "") and os.getenv("SSH_TTY") then
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = function() end,
+      ["*"] = function() end,
+    },
+  }
+end
+
 if vim.fn.executable("rg") == 1 then
   vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
 end
