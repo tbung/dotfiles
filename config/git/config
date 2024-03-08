@@ -31,3 +31,4 @@
 	ps = push
 	pl = pull
 	a = add
+    l = log --oneline --graph --all
