@@ -71,6 +71,7 @@ end
 
 if vim.fn.executable("rg") == 1 then
   vim.opt.grepprg = "rg --vimgrep --no-heading --smart-case"
+  vim.opt.grepformat:prepend({ [[%f:%l:%c:%m]] })
 end
 
 vim.api.nvim_create_autocmd("TextYankPost", {
