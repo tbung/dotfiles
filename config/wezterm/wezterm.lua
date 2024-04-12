@@ -293,6 +293,12 @@ local keys = {
     mods = "LEADER",
     action = wezterm.action.ActivatePaneDirection("Right"),
   },
+
+  {
+    key = "[",
+    mods = "LEADER",
+    action = wezterm.action.ActivateCopyMode,
+  },
 }
 
 for i = 1, 9 do
