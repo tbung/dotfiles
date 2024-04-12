@@ -12,7 +12,6 @@ return {
   },
   {
     "chentoast/marks.nvim",
-    enable = false,
     event = { "BufReadPost", "BufNewFile" },
     config = true,
   },

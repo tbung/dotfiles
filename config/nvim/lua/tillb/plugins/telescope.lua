@@ -2,13 +2,10 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      {
-        "nvim-telescope/telescope-ui-select.nvim",
-      },
-      {
-        "nvim-telescope/telescope-file-browser.nvim",
-      },
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      "debugloop/telescope-undo.nvim",
     },
     config = function()
       require("telescope").setup({
@@ -19,10 +16,12 @@ return {
           file_browser = {
             sorting_strategy = "ascending",
           },
+          undo = {},
         },
       })
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("file_browser")
+      require("telescope").load_extension("undo")
     end,
     cmd = "Telescope",
     event = { "BufReadPost", "BufNewFile" },
@@ -80,6 +79,12 @@ return {
         "<leader>fsd",
         function()
           require("telescope.builtin").lsp_document_symbols()
+        end,
+      },
+      {
+        "<leader>fu",
+        function()
+          require("telescope").extensions.undo.undo()
         end,
       },
     },
