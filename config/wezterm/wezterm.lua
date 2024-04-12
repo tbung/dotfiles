@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 local scheme = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
 
 local default_font_size = 16
@@ -65,14 +66,16 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
   if pane.domain_name:find("SSH:", 1, true) == 1 then
     proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.user_vars.WEZTERM_SHELL) or pane.title
-    domain = domain_name .. ": "
+    -- domain = "(" .. domain_name .. ") "
+    domain = ""
   elseif pane.foreground_process_name ~= "" then
     proc = basename(pane.foreground_process_name) or pane.title
     domain = ""
   else
     proc = pane.title
     if domain_name:find("MUX", 1, true) ~= nil then
-      domain = string.gsub(domain_name, "SSHMUX:", "") .. ": "
+      -- domain = "(" .. string.gsub(domain_name, "SSHMUX:", "") .. ") "
+      domain = ""
     else
       domain = ""
     end
@@ -90,7 +93,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     title = pane.title
   end
   title = wezterm.truncate_right(title, max_width - 4)
-  title = title
+  title = (tab.tab_index + 1) .. ": " .. title
   return wezterm.format({
     { Background = { Color = scheme.tab_bar.background } },
     { Text = " " },
@@ -113,7 +116,7 @@ wezterm.on("update-right-status", function(window, pane)
   window:set_right_status(wezterm.format({
     { Foreground = { AnsiColor = "Blue" } },
     { Attribute = { Intensity = "Bold" } },
-    { Text = pane:get_domain_name() },
+    { Text = window:active_workspace() .. " @ " .. pane:get_domain_name() },
   }))
 end)
 
@@ -147,6 +150,159 @@ wezterm.on("window-resized", function(window, pane)
   end
 end)
 
+local keys = {
+  {
+    key = "a",
+    mods = "LEADER",
+    action = wezterm.action_callback(function(window, pane)
+      local success, stdout, stderr = wezterm.run_child_process({
+        "ssh",
+        "dkfz-workstation",
+        "zsh",
+        "-lc",
+        [["fd -t d -d 1 . /home/t974t/Projects"]],
+      })
+
+      if not success then
+        return
+      end
+
+      -- wezterm.log_info(tostring(success))
+      -- wezterm.log_info(wezterm.split_by_newlines(stdout))
+
+      local choices = {}
+      for _, value in ipairs(wezterm.split_by_newlines(stdout)) do
+        table.insert(choices, { label = value:gsub([[.*/]], ""), id = value })
+      end
+
+      window:perform_action(
+        act.InputSelector({
+          action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+            if not id and not label then
+              wezterm.log_info("cancelled")
+            else
+              wezterm.log_info("id = " .. id)
+              wezterm.log_info("label = " .. label)
+              inner_window:perform_action(
+                act.SwitchToWorkspace({
+                  name = label,
+                  spawn = {
+                    label = "Workspace: " .. label,
+                    cwd = id,
+                    domain = { DomainName = "SSHMUX:dkfz-workstation" },
+                  },
+                }),
+                inner_pane
+              )
+            end
+          end),
+          title = "Choose Workspace",
+          choices = choices,
+          fuzzy = true,
+          fuzzy_description = "Fuzzy find and/or make a workspace > ",
+        }),
+        pane
+      )
+    end),
+  },
+
+  {
+    key = " ",
+    mods = "LEADER|CTRL",
+    action = wezterm.action.SendKey({ key = " ", mods = "CTRL" }),
+  },
+  {
+    key = " ",
+    mods = "LEADER",
+    action = wezterm.action.ActivateCommandPalette,
+  },
+  {
+    key = "s",
+    mods = "LEADER",
+    action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+  },
+  {
+    key = "v",
+    mods = "LEADER",
+    action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+  },
+  {
+    key = "f",
+    mods = "LEADER",
+    action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|DOMAINS" }),
+  },
+  {
+    key = "w",
+    mods = "LEADER",
+    action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }),
+  },
+  {
+    key = "t",
+    mods = "LEADER",
+    action = wezterm.action.SpawnCommandInNewTab({ domain = "CurrentPaneDomain", cwd = "~" }),
+  },
+  {
+    key = "T",
+    mods = "LEADER",
+    action = wezterm.action.SpawnTab("CurrentPaneDomain"),
+  },
+  {
+    key = "Enter",
+    mods = "LEADER",
+    action = wezterm.action.SpawnCommandInNewWindow({ domain = "DefaultDomain", cwd = "~" }),
+  },
+
+  {
+    key = "n",
+    mods = "LEADER",
+    action = wezterm.action.ActivateTabRelative(1),
+  },
+  {
+    key = "p",
+    mods = "LEADER",
+    action = wezterm.action.ActivateTabRelative(-1),
+  },
+  {
+    key = "N",
+    mods = "LEADER",
+    action = wezterm.action.MoveTabRelative(1),
+  },
+  {
+    key = "P",
+    mods = "LEADER",
+    action = wezterm.action.MoveTabRelative(-1),
+  },
+
+  {
+    key = "h",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection("Left"),
+  },
+  {
+    key = "j",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection("Down"),
+  },
+  {
+    key = "k",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection("Up"),
+  },
+  {
+    key = "l",
+    mods = "LEADER",
+    action = wezterm.action.ActivatePaneDirection("Right"),
+  },
+}
+
+for i = 1, 9 do
+  table.insert(keys, {
+    key = tostring(i),
+    mods = "LEADER",
+    action = wezterm.action.ActivateTab(i - 1),
+  })
+end
+
 return {
   color_scheme = "Catppuccin Mocha",
   font = wezterm.font_with_fallback({ "VictorMono Nerd Font", "VictorMono NF" }),
@@ -168,88 +324,5 @@ return {
   -- TODO: Add custom lua function keys, for example for launcher stuff and balancing split panes
   -- via `action = wezterm.action_callback(function(window, pane) ... end)`
   leader = { key = " ", mods = "CTRL", timeout_milliseconds = 3000 },
-  keys = {
-    {
-      key = " ",
-      mods = "LEADER|CTRL",
-      action = wezterm.action.SendKey({ key = " ", mods = "CTRL" }),
-    },
-    {
-      key = " ",
-      mods = "LEADER",
-      action = wezterm.action.ActivateCommandPalette,
-    },
-    {
-      key = "s",
-      mods = "LEADER",
-      action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
-    },
-    {
-      key = "v",
-      mods = "LEADER",
-      action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
-    },
-    {
-      key = "f",
-      mods = "LEADER",
-      action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|TABS|DOMAINS|LAUNCH_MENU_ITEMS" }),
-    },
-    {
-      key = "t",
-      mods = "LEADER",
-      action = wezterm.action.SpawnCommandInNewTab({ domain = "CurrentPaneDomain", cwd = "~" }),
-    },
-    {
-      key = "T",
-      mods = "LEADER",
-      action = wezterm.action.SpawnTab("CurrentPaneDomain"),
-    },
-    {
-      key = "Enter",
-      mods = "LEADER",
-      action = wezterm.action.SpawnCommandInNewWindow({ domain = "DefaultDomain", cwd = "~" }),
-    },
-
-    {
-      key = "n",
-      mods = "LEADER",
-      action = wezterm.action.ActivateTabRelative(1),
-    },
-    {
-      key = "p",
-      mods = "LEADER",
-      action = wezterm.action.ActivateTabRelative(-1),
-    },
-    {
-      key = "N",
-      mods = "LEADER",
-      action = wezterm.action.MoveTabRelative(1),
-    },
-    {
-      key = "P",
-      mods = "LEADER",
-      action = wezterm.action.MoveTabRelative(-1),
-    },
-
-    {
-      key = "h",
-      mods = "LEADER",
-      action = wezterm.action.ActivatePaneDirection("Left"),
-    },
-    {
-      key = "j",
-      mods = "LEADER",
-      action = wezterm.action.ActivatePaneDirection("Down"),
-    },
-    {
-      key = "k",
-      mods = "LEADER",
-      action = wezterm.action.ActivatePaneDirection("Up"),
-    },
-    {
-      key = "l",
-      mods = "LEADER",
-      action = wezterm.action.ActivatePaneDirection("Right"),
-    },
-  },
+  keys = keys,
 }
