@@ -36,6 +36,7 @@ repos=(
   # plugins you want loaded last
   zdharma-continuum/fast-syntax-highlighting
   zsh-users/zsh-autosuggestions
+  # jeffreytse/zsh-vi-mode
 )
 
 # now load your plugins
@@ -56,6 +57,25 @@ fpath+="$HOME/.local/bin/completions"
 
 # Use viins keymap as the default.
 bindkey -v
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[2 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[6 q'
+  fi
+}
+zle -N zle-keymap-select
+zle-line-init() {
+    echo -ne '\e[6 q'
+}
+zle -N zle-line-init
+echo -ne '\e[6 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
 # FZF
 # Go install
