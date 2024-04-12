@@ -119,16 +119,6 @@ return {
     config = true,
   },
   {
-    "echasnovski/mini.comment",
-    event = "VeryLazy",
-    config = true,
-    opts = {
-      options = {
-        ignore_blank_line = true,
-      },
-    },
-  },
-  {
     "j-hui/fidget.nvim",
     lazy = false,
     config = true,
