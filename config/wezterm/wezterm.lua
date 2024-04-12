@@ -92,8 +92,8 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   else
     title = pane.title
   end
-  title = wezterm.truncate_right(title, max_width - 4)
   title = (tab.tab_index + 1) .. ": " .. title
+  title = wezterm.truncate_right(title, max_width - 4)
   return wezterm.format({
     { Background = { Color = scheme.tab_bar.background } },
     { Text = " " },
