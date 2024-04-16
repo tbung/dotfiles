@@ -7,9 +7,17 @@ M.create_terminal = function(id)
     vim.cmd("terminal")
   end)
 
+  vim.api.nvim_create_autocmd("BufDelete", {
+    buffer = bufid,
+    callback = function()
+      terminals[id] = nil
+    end,
+  })
+
   local channel = vim.api.nvim_get_option_value("channel", { buf = bufid })
 
   local terminal = {
+    id = id,
     bufid = bufid,
     channel = channel,
   }
@@ -30,16 +38,17 @@ end
 M.goto_terminal = function(id)
   if not id then
     vim.ui.select(
-      vim.tbl_map(function(t)
-        return t.bufid
-      end, terminals),
+      vim.tbl_values(terminals),
       {
         prompt = "Terminal: ",
         kind = "terminals",
+        format_item = function(item)
+          return tostring(item.id) .. "    " .. vim.api.nvim_buf_get_name(item.bufid)
+        end
       },
-      function(selected)
+      function(selected, idx)
         if selected then
-          M.goto_terminal(selected)
+          M.goto_terminal(selected.id)
         end
       end
     )
@@ -48,6 +57,10 @@ M.goto_terminal = function(id)
 
   local terminal = M.get_terminal(id)
   vim.api.nvim_set_current_buf(terminal.bufid)
+end
+
+M.goto_new_terminal = function()
+  M.goto_terminal(#terminals + 1)
 end
 
 M.terminal_make = function()
