@@ -6,6 +6,7 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
@@ -23,6 +24,7 @@ return {
           undo = {},
         },
       })
+      require("telescope").load_extension("fzf")
       require("telescope").load_extension("ui-select")
       require("telescope").load_extension("file_browser")
       require("telescope").load_extension("undo")
@@ -64,13 +66,13 @@ return {
       {
         "<leader>fb",
         function()
-          require("telescope.builtin").buffers({ sort_lastused = true, ignore_current_buffer = true })
+          require("telescope.builtin").buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
         end,
       },
       {
         "<C-n>",
         function()
-          require("telescope.builtin").buffers({ sort_lastused = true, ignore_current_buffer = true })
+          require("telescope.builtin").buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
         end,
       },
       {
