@@ -1,3 +1,7 @@
+if vim.g.basic then
+  return {}
+end
+
 return {
   "mfussenegger/nvim-dap",
   dependencies = {

@@ -1,22 +1,26 @@
 return {
   {
     "danymat/neogen",
+    enabled = not vim.g.basic,
     cmd = "Neogen",
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = true,
   },
   {
     "nvim-treesitter/playground",
+    enabled = not vim.g.basic,
     cmd = "TSPlayground",
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    enabled = not vim.g.basic,
     event = { "BufReadPost", "BufNewFile" },
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
+    enabled = not vim.g.basic,
     event = { "BufReadPost", "BufNewFile" },
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = true,
@@ -40,10 +44,11 @@ return {
           additional_vim_regex_highlighting = false,
         },
         playground = {
-          enable = true,
+          enable = not vim.g.basic,
         },
 
         textobjects = {
+          enable = not vim.g.basic,
           select = {
             enable = true,
             lookahead = true,

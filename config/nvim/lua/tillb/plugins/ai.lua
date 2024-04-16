@@ -1,3 +1,7 @@
+if vim.g.basic then
+  return {}
+end
+
 return {
   {
     "zbirenbaum/copilot.lua",

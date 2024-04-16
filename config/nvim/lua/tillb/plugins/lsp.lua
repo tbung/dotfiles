@@ -1,3 +1,7 @@
+if vim.g.basic then
+  return {}
+end
+
 local cmp_kinds = {
   Text = "  ",
   Method = "  ",

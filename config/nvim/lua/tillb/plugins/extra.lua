@@ -18,7 +18,7 @@ return {
   {
     "jpalardy/vim-slime",
     ft = { "python", "sh" },
-    -- lazy = false,
+    enabled = not vim.g.basic,
     config = function()
       vim.g.slime_target = "wezterm"
       vim.g.slime_default_config = { pane_direction = "right" }
@@ -35,58 +35,8 @@ return {
     lazy = true,
   },
   {
-    "echasnovski/mini.clue",
-    event = "VimEnter",
-    config = function()
-      local miniclue = require("mini.clue")
-      miniclue.setup({
-        triggers = {
-          -- Leader triggers
-          { mode = "n", keys = "<Leader>" },
-          { mode = "x", keys = "<Leader>" },
-
-          -- `g` key
-          { mode = "n", keys = "g" },
-          { mode = "x", keys = "g" },
-
-          -- Marks
-          { mode = "n", keys = "'" },
-          { mode = "x", keys = "'" },
-
-          -- Registers
-          { mode = "n", keys = '"' },
-          { mode = "x", keys = '"' },
-          { mode = "i", keys = "<C-r>" },
-          { mode = "c", keys = "<C-r>" },
-
-          -- Window commands
-          { mode = "n", keys = "<C-w>" },
-
-          -- `z` key
-          { mode = "n", keys = "z" },
-          { mode = "x", keys = "z" },
-        },
-
-        clues = {
-          miniclue.gen_clues.g(),
-          miniclue.gen_clues.marks(),
-          miniclue.gen_clues.registers(),
-          miniclue.gen_clues.windows(),
-          miniclue.gen_clues.z(),
-        },
-
-        window = {
-          config = {
-            width = "auto",
-            border = "none",
-          },
-        },
-      })
-    end,
-  },
-
-  {
     "mickael-menu/zk-nvim",
+    enabled = not vim.g.basic,
     name = "zk",
     config = true,
     keys = {
@@ -109,6 +59,7 @@ return {
   {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
+    enabled = not vim.g.basic,
     keys = {
       {
         "<leader>vrn",
@@ -145,6 +96,7 @@ return {
   },
   {
     "folke/trouble.nvim",
+    enabled = not vim.g.basic,
     cmd = { "Trouble" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = true,
@@ -152,6 +104,7 @@ return {
   {
     "NvChad/nvim-colorizer.lua",
     config = true,
+    enabled = not vim.g.basic,
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       filetypes = {
@@ -169,6 +122,7 @@ return {
   {
     "goerz/jupytext.vim",
     lazy = false,
+    enabled = not vim.g.basic,
     config = function()
       vim.g.jupytext_fmt = "py:percent"
     end,
