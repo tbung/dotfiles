@@ -167,6 +167,9 @@ return {
       underline_to_undercurl("DiagnosticUnderlineHint")
 
       vim.diagnostic.config({
+        virtual_text = {
+          severity = { min = vim.diagnostic.severity.INFO },
+        },
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = " ",
