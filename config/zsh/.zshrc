@@ -36,7 +36,6 @@ repos=(
   # plugins you want loaded last
   zdharma-continuum/fast-syntax-highlighting
   zsh-users/zsh-autosuggestions
-  # jeffreytse/zsh-vi-mode
 )
 
 # now load your plugins
@@ -143,10 +142,10 @@ setopt NUMERIC_GLOB_SORT
 # No beeps
 unsetopt LIST_BEEP
 
-# Edit command in vim
+# Edit command in $EDITOR
 zle -N edit-command-line
 autoload -Uz edit-command-line
-bindkey -M vicmd 'v' edit-command-line
+bindkey -M visual 'v' edit-command-line  # v enters visual mode, so vv starts $EDITOR
 
 # Backspace should work as in vim
 bindkey -v '^?' backward-delete-char
