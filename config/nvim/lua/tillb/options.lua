@@ -1,5 +1,6 @@
 -- HACK: disable termsync while it's broken in wezterm mux
 vim.opt.termsync = false
+vim.opt.formatoptions = "cqj"
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -55,7 +56,7 @@ for _, ui in ipairs(vim.api.nvim_list_uis()) do
   end
 end
 
-if tty and (vim.g.clipboard == nil or vim.o.clipboard == "") and os.getenv("SSH_TTY") then
+if tty and (vim.g.clipboard == nil or vim.o.clipboard == "") and (os.getenv("SSH_CLIENT") or os.getenv("SSH_TTY")) then
   vim.g.clipboard = {
     name = "OSC 52",
     copy = {
