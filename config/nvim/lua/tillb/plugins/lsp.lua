@@ -111,11 +111,14 @@ return {
             client.server_capabilities.hoverProvider = false
           end,
         },
-        pyright = {
+        basedpyright = {
           settings = {
             python = {
               analysis = {
                 stubPath = vim.fn.stdpath("data") .. "/lazy/python-type-stubs",
+                autoSearchPaths = true,
+                diagnosticMode = "openFilesOnly",
+                useLibraryCodeForTypes = true,
               },
             },
           },
@@ -151,106 +154,34 @@ return {
         float = true,
       })
 
-      vim.api.nvim_set_hl(
-        0,
-        "DiagnosticUnderlineError",
-        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineError", true).special }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        "DiagnosticUnderlineWarn",
-        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineWarn", true).special }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        "DiagnosticUnderlineInfo",
-        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineInfo", true).special }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        "DiagnosticUnderlineHint",
-        { undercurl = true, special = vim.api.nvim_get_hl_by_name("DiagnosticUnderlineHint", true).special }
-      )
-
-      vim.cmd([[sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=]])
-      vim.cmd([[sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=]])
-      vim.cmd([[sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=]])
-      vim.cmd([[sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=]])
-
-      -- HACK: this is a workaround from https://github.com/neovim/neovim/issues/23291#issuecomment-1687088266
-
-      local FSWATCH_EVENTS = {
-        Created = 1,
-        Updated = 2,
-        Removed = 3,
-        -- Renamed
-        OwnerModified = 2,
-        AttributeModified = 2,
-        MovedFrom = 1,
-        MovedTo = 3,
-        -- IsFile
-        -- IsDir
-        -- IsSymLink
-        -- Link
-        -- Overflow
-      }
-
-      --- @param data string
-      --- @param opts table
-      --- @param callback fun(path: string, event: integer)
-      local function fswatch_output_handler(data, opts, callback)
-        local d = vim.split(data, "%s+")
-        local cpath = d[1]
-
-        for i = 2, #d do
-          if d[i] == "IsDir" or d[i] == "IsSymLink" or d[i] == "PlatformSpecific" then
-            return
-          end
-        end
-
-        if opts.include_pattern and opts.include_pattern:match(cpath) == nil then
-          return
-        end
-
-        if opts.exclude_pattern and opts.exclude_pattern:match(cpath) ~= nil then
-          return
-        end
-
-        for i = 2, #d do
-          local e = FSWATCH_EVENTS[d[i]]
-          if e then
-            callback(cpath, e)
-          end
-        end
+      local function underline_to_undercurl(hlname)
+        local hl = vim.api.nvim_get_hl(0, { name = hlname })
+        hl.undercurl = true
+        hl.underline = nil
+        vim.api.nvim_set_hl(0, hlname, hl)
       end
 
-      local function fswatch(path, opts, callback)
-        local obj = vim.system({
-          "fswatch",
-          "--recursive",
-          "--event-flags",
-          "--exclude",
-          "/.git/",
-          path,
-        }, {
-          stdout = function(_, data)
-            if not data then
-              return
-            end
-            for line in vim.gsplit(data, "\n", { plain = true, trimempty = true }) do
-              fswatch_output_handler(line, opts, callback)
-            end
-          end,
-        })
+      underline_to_undercurl("DiagnosticUnderlineError")
+      underline_to_undercurl("DiagnosticUnderlineWarn")
+      underline_to_undercurl("DiagnosticUnderlineInfo")
+      underline_to_undercurl("DiagnosticUnderlineHint")
 
-        return function()
-          obj:kill(2)
-        end
-      end
-
-      if vim.fn.executable("fswatch") == 1 then
-        require("vim.lsp._watchfiles")._watchfunc = fswatch
-      end
+      vim.diagnostic.config({
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
+          },
+          texthl = {
+            [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+            [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+            [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+            [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+          },
+        },
+      })
     end,
   },
   {
@@ -351,6 +282,7 @@ return {
         python = { "isort", "black" },
         bash = { "shfmt" },
         sh = { "shfmt" },
+        markdown = { "prettier" },
       },
 
       formatters = {
@@ -359,5 +291,9 @@ return {
         },
       },
     },
+    init = function()
+      -- vim.o.formatexpr = [[v:lua.require("conform").formatexpr({ async = true, lsp_fallback = "always", filter = function(client) return client.name ~= "ruff_lsp" end })]]
+      vim.o.formatexpr = [[v:lua.require("conform").formatexpr()]]
+    end,
   },
 }
