@@ -1,10 +1,29 @@
 local bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
 local bg_win = vim.api.nvim_get_hl(0, { name = "WinBar" }).bg
 
+local function get_icon_color_by_filetype(ft)
+  local ok, devicons = pcall(require, "nvim-web-devicons")
+
+  if not ok then
+    return nil, nil
+  end
+
+  return devicons.get_icon_color_by_filetype(ft, {})
+end
+
+local ft_icon = {}
+setmetatable(ft_icon, {
+  __index = function(t, k)
+    local icon, color = get_icon_color_by_filetype(k)
+    t[k] = { icon, color }
+    return { icon, color }
+  end,
+})
+
 function StatusFileIcon()
   local file_comp = "%#StatusLine#%t %h%m%r"
   local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-  local icon, color = require("nvim-web-devicons").get_icon_color_by_filetype(ft, {})
+  local icon, color = unpack(ft_icon[ft])
   if icon ~= nil then
     vim.api.nvim_set_hl(0, "StatusLineIcon", { fg = color, bg = bg })
     return "%#StatusLineIcon#" .. icon .. " " .. file_comp
@@ -15,7 +34,7 @@ end
 function WinbarFileIcon()
   local file_comp = "%#WinBar#%f %h%m%r"
   local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-  local icon, color = require("nvim-web-devicons").get_icon_color_by_filetype(ft, {})
+  local icon, color = unpack(ft_icon[ft])
   if icon ~= nil then
     vim.api.nvim_set_hl(0, "WinBarIcon", { fg = color, bg = bg_win })
     return "%#WinBarIcon#" .. icon .. " " .. file_comp
@@ -38,12 +57,24 @@ end
 function StatusDiagnostics()
   local str = ""
 
-  for _, severity in ipairs(severities) do
-    local count = #vim.diagnostic.get(0, { severity = severity })
+  local signs = vim.diagnostic.config().signs
+  if type(signs) == "table" then
+    signs = signs.text
+  elseif type(signs) == "boolean" then
+    signs = { "E", "W", "I", "H" }
+  elseif type(signs) == "function" then
+    signs = signs(0, 0).text
+  else
+    signs = nil
+  end
+
+
+  for i, severity in ipairs(severities) do
+    local count = #vim.diagnostic.get(0, { severity = i })
     if count > 0 then
-      local sign = vim.fn.sign_getdefined("DiagnosticSign" .. severity)[1]
-      if sign ~= nil then
-        str = str .. " %#DiagnosticStatus" .. severity .. "#" .. sign.text .. count .. "%#StatusLine#"
+      if signs ~= nil then
+        local sign = signs[i]
+        str = str .. " %#DiagnosticStatus" .. severity .. "#" .. sign .. count .. "%#StatusLine#"
       end
     end
   end
@@ -51,13 +82,15 @@ function StatusDiagnostics()
 end
 
 local C_fallback = {}
-setmetatable(C_fallback, {__index = function() return "#b4befe" end})
+setmetatable(C_fallback, {
+  __index = function()
+    return "#b4befe"
+  end,
+})
 local C = require("catppuccin.palettes").get_palette() or C_fallback
 
 local assets = {
   mode_icon = "",
-  dir = "",
-  file = "",
   lsp = {
     server = "",
   },
@@ -107,6 +140,9 @@ end
 
 function StatusLsp()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    return ""
+  end
   local names = vim.tbl_map(function(item)
     return item.name
   end, clients)
@@ -129,7 +165,7 @@ local statusline = {
     wrap("StatusMode"),
     wrap("StatusFileIcon"),
     [[ %P ]],
-    [[%l:%c%V]],
+    [[%-14.(%l:%c%V%)]], -- %V does not show up if %V==%c so fix the width of the entire %(...%) group
   }, " "),
   wrap("StatusDiagnostics"),
   table.concat({
