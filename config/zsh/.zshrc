@@ -75,8 +75,12 @@ zle-line-init() {
 zle -N zle-line-init
 
 function set-title() {
+    hostname=""
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+        hostname="(${(%):-%m}) "
+    fi
     curdir=( "${${(@s:/:)${(%):-%~}}::1}" ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(@s:/:)${(%):-%~}}[2,-1][-1]}} )
-    print -n "\e]0;${1::20} - ${(@j:/:)curdir}\a"
+    print -n "\e]0;${hostname}${1::20} - ${(@j:/:)curdir}\a"
 }
 
 preexec() {
@@ -166,8 +170,8 @@ bindkey -v '^?' backward-delete-char
 KEYTIMEOUT=1
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    if ! pgrep -u "$USER" ssh-agent >/dev/null;then
-    ssh-agent -t 1h >! "$XDG_RUNTIME_DIR/ssh-agent.env"
+    if ! (pgrep -a -u $USER '^ssh-agent' | grep -v gcr) >/dev/null;then
+        ssh-agent -t 1h >! "$XDG_RUNTIME_DIR/ssh-agent.env"
     fi
 
     if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
