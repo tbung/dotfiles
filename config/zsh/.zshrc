@@ -73,8 +73,22 @@ zle-line-init() {
     echo -ne '\e[6 q'
 }
 zle -N zle-line-init
-echo -ne '\e[6 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
+
+function set-title() {
+    curdir=( "${${(@s:/:)${(%):-%~}}::1}" ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(@s:/:)${(%):-%~}}[2,-1][-1]}} )
+    print -n "\e]0;${1::20} - ${(@j:/:)curdir}\a"
+}
+
+preexec() {
+    echo -ne '\e[6 q'; # Use beam shape cursor for each new prompt.
+
+    set-title $1
+}
+precmd() {
+    echo -ne '\e[6 q'; # Use beam shape cursor for each new prompt.
+
+    set-title zsh
+}
 
 # FZF
 # Go install
@@ -222,5 +236,3 @@ bindkey '^f' _open-project
 
 
 export GPG_TTY=$(tty)
-
-DISABLE_AUTO_TITLE="true"
