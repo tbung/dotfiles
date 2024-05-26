@@ -11,12 +11,18 @@ local function get_font_size(window)
     return default_font_size
   end
 
-  local num_lines = 56
-
-  local dimensions = window:get_dimensions()
   if screen == nil and window:is_focused() then
     screen = wezterm.gui.screens().active
   end
+
+  local num_lines
+  if screen.name == "Built-in Retina Display" then
+    num_lines = 46
+  else
+    num_lines = 56
+  end
+
+  local dimensions = window:get_dimensions()
   return screen.height / num_lines * 48 / dimensions.dpi
 end
 
@@ -47,51 +53,11 @@ local function ssh_domains()
   return _ssh_domains
 end
 
+
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local pane = tab.active_pane
-  local home_dir = wezterm.home_dir
+  local title = pane.title
 
-  if pane.domain_name:find("dkfz-work", 1, true) ~= nil then
-    home_dir = "/home/t974t"
-  end
-
-  local proc, _, domain
-  local domain_name = pane.domain_name
-  if domain_name == "SSH:dkfz-worker" then
-    domain_name = "SSH:cluster"
-  end
-  if domain_name == "SSHMUX:dkfz-workstation" then
-    domain_name = "SSHMUX:dkfz"
-  end
-
-  if pane.domain_name:find("SSH:", 1, true) == 1 then
-    proc = basename(pane.user_vars.WEZTERM_PROG) or basename(pane.user_vars.WEZTERM_SHELL) or pane.title
-    -- domain = "(" .. domain_name .. ") "
-    domain = ""
-  elseif pane.foreground_process_name ~= "" then
-    proc = basename(pane.foreground_process_name) or pane.title
-    domain = ""
-  else
-    proc = pane.title
-    if domain_name:find("MUX", 1, true) ~= nil then
-      -- domain = "(" .. string.gsub(domain_name, "SSHMUX:", "") .. ") "
-      domain = ""
-    else
-      domain = ""
-    end
-  end
-
-  local title
-  if pane.current_working_dir ~= nil then
-    title = pane.current_working_dir.path
-    title = string.gsub(title, home_dir, "~")
-    title = string.gsub(title, "~/Projects", "~p")
-    title = string.gsub(title, "/$", "")
-
-    title = domain .. proc .. " - " .. title
-  else
-    title = pane.title
-  end
   title = (tab.tab_index + 1) .. ": " .. title
   title = wezterm.truncate_right(title, max_width - 4)
   return wezterm.format({
