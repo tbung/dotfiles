@@ -57,8 +57,9 @@ function M.column()
     end
   end
 
-  local folded = vim.fn.foldclosed(vim.v.lnum) >= 0
-  local has_fold = vim.fn.foldlevel(vim.v.lnum) > vim.fn.foldlevel(vim.v.lnum - 1)
+  local folded = (vim.fn.foldclosed(vim.v.lnum) >= 0) and vim.opt.fillchars:get().foldclose
+  local has_fold = (vim.fn.foldlevel(vim.v.lnum) > vim.fn.foldlevel(vim.v.lnum - 1))
+      and vim.opt.fillchars:get().foldopen
 
   local nu = " "
   if vim.wo[win].number and vim.wo[win].relativenumber and vim.v.virtnum == 0 then
