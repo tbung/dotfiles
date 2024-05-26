@@ -1,6 +1,3 @@
-require("tillb.options")
-require("tillb.keymap")
-
 return {
   {
     "tpope/vim-fugitive",

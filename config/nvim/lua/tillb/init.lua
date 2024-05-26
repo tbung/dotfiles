@@ -1,5 +1,6 @@
--- local M = {}
--- M.setup = function()
+require("tillb.options")
+require("tillb.keymap")
+
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
@@ -34,6 +35,6 @@ require("lazy").setup("tillb.plugins", {
     },
   },
 })
--- end
---
--- return M
+
+-- needs to load after catppuccin has loaded
+require("tillb.statusline")

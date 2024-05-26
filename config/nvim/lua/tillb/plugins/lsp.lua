@@ -263,22 +263,6 @@ return {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
     cmd = { "ConformInfo" },
-    keys = {
-      {
-        "<leader>vf",
-        function()
-          require("conform").format({
-            async = true,
-            lsp_fallback = "always",
-            filter = function(client)
-              return client.name ~= "ruff_lsp"
-            end,
-          })
-        end,
-        mode = "",
-        desc = "Format buffer",
-      },
-    },
     opts = {
       formatters_by_ft = {
         lua = { "stylua" },
