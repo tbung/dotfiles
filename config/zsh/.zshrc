@@ -54,23 +54,34 @@ typeset -U path cdpath fpath manpath
 
 fpath+="$HOME/.local/bin/completions"
 
+function set-cursor-shape() {
+    case $1 in
+        block)
+            print -n '\e[2 q'
+            ;;
+        beam)
+            print -n '\e[6 q'
+            ;;
+    esac
+}
+
 # Use viins keymap as the default.
 bindkey -v
 # Change cursor shape for different vi modes.
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
-    echo -ne '\e[2 q'
+       set-cursor-shape 'block'
   elif [[ ${KEYMAP} == main ]] ||
        [[ ${KEYMAP} == viins ]] ||
        [[ ${KEYMAP} = '' ]] ||
        [[ $1 = 'beam' ]]; then
-    echo -ne '\e[6 q'
+         set-cursor-shape 'beam'
   fi
 }
 zle -N zle-keymap-select
 zle-line-init() {
-    echo -ne '\e[6 q'
+  set-cursor-shape 'beam'
 }
 zle -N zle-line-init
 
@@ -79,17 +90,26 @@ function set-title() {
     if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
         hostname="(${(%):-%m}) "
     fi
-    curdir=( "${${(@s:/:)${(%):-%~}}::1}" ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(@s:/:)${(%):-%~}}[2,-1][-1]}} )
+
+    # This splits a path into part before first /, part after last / and the middle part and shortens the middle part
+    #
+    # see zshexpn(1)
+    # ${(s:c:)var} -> split into words on c
+    # ${(r:1:)var} -> truncate all words to length 1
+    # ${(@)var} -> put every element into its own ""
+    # ${(%)var} -> do prompt expansion (see zshmisc(1))
+    # ${:-%~} -> actually ${var:-word}, use word if var is not defined
+    curdir=( "${${(@s:/:)${(%):-%~}}[1]}" ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(@s:/:)${(%):-%~}}[2,-1][-1]}} )
     print -n "\e]0;${hostname}${1::20} - ${(@j:/:)curdir}\a"
 }
 
 preexec() {
-    echo -ne '\e[6 q'; # Use beam shape cursor for each new prompt.
+    set-cursor-shape 'beam'
 
     set-title $1
 }
 precmd() {
-    echo -ne '\e[6 q'; # Use beam shape cursor for each new prompt.
+    set-cursor-shape 'beam'
 
     set-title zsh
 }
