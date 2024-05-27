@@ -258,5 +258,9 @@ zle -N _open-project
 ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=_open-project
 bindkey '^f' _open-project
 
+function fman () {
+    page=($(apropos . | fzf | sed -E 's/^([a-zA-Z\-]*)\(([0-9])\).*/\2 \1/'))
+    [[ -n "$page" ]] && man ${(@)page}
+}
 
 export GPG_TTY=$(tty)
