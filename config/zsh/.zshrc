@@ -100,7 +100,7 @@ function set-title() {
     # ${(%)var} -> do prompt expansion (see zshmisc(1))
     # ${:-%~} -> actually ${var:-word}, use word if var is not defined
     curdir=( "${${(@s:/:)${(%):-%~}}[1]}" ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(@s:/:)${(%):-%~}}[2,-1][-1]}} )
-    print -n "\e]0;${hostname}${1::20} - ${(@j:/:)curdir}\a"
+    print -n "\e]0;${hostname}${1:0:20} - ${(@j:/:)curdir}\a"
 }
 
 preexec() {
@@ -259,7 +259,7 @@ ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=_open-project
 bindkey '^f' _open-project
 
 function fman () {
-    page=($(apropos . | fzf | sed -E 's/^([a-zA-Z\-]*)\(([0-9])\).*/\2 \1/'))
+    page=($(apropos . | fzf | sed -E 's/^([a-zA-Z\-]*)[[:space:]]*\(([0-9])\).*/\2 \1/'))
     [[ -n "$page" ]] && man ${(@)page}
 }
 
