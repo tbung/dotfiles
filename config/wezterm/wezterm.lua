@@ -54,6 +54,20 @@ local function ssh_domains()
   return _ssh_domains
 end
 
+wezterm.on("user-var-changed", function(window, pane, name, value)
+  -- TODO: Just use hammerspoon/notify for notification depending on OS
+  if name == "to_wezterm_command_done" then
+    wezterm.log_info("the bell was rung in pane " .. pane:pane_id() .. "!")
+    local success, stdout, stderr = wezterm.run_child_process({
+      "/usr/local/bin/hs",
+      "-c",
+      'hs.notify.show("test1", "test1", "test1"):delivered()',
+    })
+    wezterm.log_info("success=" .. (success and "true" or "false"))
+    wezterm.log_info("stdout=" .. stdout)
+    wezterm.log_info("stderr=" .. stderr)
+  end
+end)
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local pane = tab.active_pane
@@ -292,18 +306,21 @@ local keys = {
 
       local tree = bsp.build_tree(nodes)
 
+      local old_pane = window:active_pane()
+
       tree:balance(nil, function(node)
         local direction
         local amount
 
         local node_pane = wezterm.mux.get_pane(node.pane)
+        print("pane=" .. node.pane)
 
-        local old_pane = window:active_pane()
-        node_pane:activate()
 
         if node.width ~= node_pane:get_dimensions().cols then
           direction = (node.width > node_pane:get_dimensions().cols) and "Right" or "Left"
           amount = math.abs(node.width - node_pane:get_dimensions().cols)
+          print("direction=" .. direction .. " amount=" .. amount)
+          node_pane:activate()
           window:perform_action(wezterm.action.AdjustPaneSize({ direction, amount }), node_pane)
         end
 
@@ -311,11 +328,12 @@ local keys = {
           direction = (node.height > node_pane:get_dimensions().viewport_rows) and "Down" or "Up"
           amount = math.abs(node.height - node_pane:get_dimensions().viewport_rows)
           print("direction=" .. direction .. " amount=" .. amount)
+          node_pane:activate()
           window:perform_action(wezterm.action.AdjustPaneSize({ direction, amount }), node_pane)
         end
-
-        old_pane:activate()
       end)
+
+      old_pane:activate()
     end),
   },
 }

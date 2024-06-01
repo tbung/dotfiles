@@ -28,6 +28,8 @@ function Node.print(self)
     .. self.height
     .. (self.horizontal ~= nil and (" horizontal=" .. (self.horizontal and "true" or "false")) or "")
     .. (self.pane ~= nil and (" pane=" .. self.pane) or "")
+    .. (self.children.left ~= nil and " child.left=true" or "")
+    .. (self.children.right ~= nil and " child.right=true" or "")
     .. " }"
   )
   if self.children.left ~= nil then
