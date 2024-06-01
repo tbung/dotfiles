@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local scheme = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
+local bsp = require("bsp")
 
 local default_font_size = 16
 
@@ -264,6 +265,58 @@ local keys = {
     key = "[",
     mods = "LEADER",
     action = wezterm.action.ActivateCopyMode,
+  },
+
+  {
+    key = "=",
+    mods = "LEADER",
+    action = wezterm.action_callback(function(window, pane)
+      local tab = window:active_tab()
+
+      ---@type Node[]
+      local nodes = {}
+
+      for _, p in ipairs(tab:panes_with_info()) do
+        table.insert(
+          nodes,
+          bsp.Node.new({
+            left = p.left,
+            top = p.top,
+            width = p.width,
+            height = p.height,
+            pane = p.pane:pane_id(),
+            children = { nil, nil },
+          })
+        )
+      end
+
+      local tree = bsp.build_tree(nodes)
+
+      tree:balance(nil, function(node)
+        local direction
+        local amount
+
+        local node_pane = wezterm.mux.get_pane(node.pane)
+
+        local old_pane = window:active_pane()
+        node_pane:activate()
+
+        if node.width ~= node_pane:get_dimensions().cols then
+          direction = (node.width > node_pane:get_dimensions().cols) and "Right" or "Left"
+          amount = math.abs(node.width - node_pane:get_dimensions().cols)
+          window:perform_action(wezterm.action.AdjustPaneSize({ direction, amount }), node_pane)
+        end
+
+        if node.height ~= node_pane:get_dimensions().viewport_rows then
+          direction = (node.height > node_pane:get_dimensions().viewport_rows) and "Down" or "Up"
+          amount = math.abs(node.height - node_pane:get_dimensions().viewport_rows)
+          print("direction=" .. direction .. " amount=" .. amount)
+          window:perform_action(wezterm.action.AdjustPaneSize({ direction, amount }), node_pane)
+        end
+
+        old_pane:activate()
+      end)
+    end),
   },
 }
 
