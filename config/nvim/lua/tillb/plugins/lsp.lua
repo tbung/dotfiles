@@ -37,14 +37,12 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     cmd = { "LspInfo", "Mason" },
     dependencies = {
-      "folke/neodev.nvim",
+      { "folke/lazydev.nvim", config = true },
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "microsoft/python-type-stubs",
     },
     config = function()
-      require("neodev").setup()
-
       require("mason").setup()
       require("mason-lspconfig").setup()
 
@@ -234,6 +232,7 @@ return {
         sources = cmp.config.sources({
           { name = "copilot" },
           { name = "nvim_lsp" },
+          { name = "lazydev", group_index = 0 },
           { name = "luasnip" },
           { name = "buffer" },
           { name = "path" },
