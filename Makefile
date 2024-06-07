@@ -25,3 +25,11 @@ $(make_subdirs):
 .PHONY: $(link_home)
 $(link_home):
 	ln -svfn ${DOTFILES_DIR}/home/$@ ${HOME}/$@
+
+.PHONY: install-nvim
+install-nvim:
+	$(eval TMPDIR := $(shell mktemp -d))
+	wget -O $(TMPDIR)/nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
+	tar -xzf $(TMPDIR)/nvim-linux64.tar.gz -C $(TMPDIR)
+	cp -rv $(TMPDIR)/nvim-linux64/* ${HOME}/.local/
+	rm -rf $(TMPDIR)
