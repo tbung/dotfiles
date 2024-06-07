@@ -1,6 +1,10 @@
 require("tillb.options")
 require("tillb.keymap")
 
+if vim.g.barebones then
+  return
+end
+
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
