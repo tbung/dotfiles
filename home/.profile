@@ -8,6 +8,8 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export ZK_NOTEBOOK_DIR="$HOME/wiki"
 
+# if $TERM got set to something not available, set it to xterm
+infocmp "$TERM" &>/dev/null || export TERM="xterm-256color"
 if [[ $(uname -s) == "Darwin" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin${PATH:+:}$PATH"
