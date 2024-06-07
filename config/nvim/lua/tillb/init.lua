@@ -1,7 +1,7 @@
 require("tillb.options")
 require("tillb.keymap")
 
-if vim.g.barebones then
+if vim.g.barebones or vim.env.NVIM_BAREBONES ~= nil then
   return
 end
 
