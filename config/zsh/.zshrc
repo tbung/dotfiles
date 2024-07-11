@@ -154,7 +154,9 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 unsetopt HIST_EXPIRE_DUPS_FIRST
 setopt SHARE_HISTORY
-unsetopt EXTENDED_HISTORY
+
+# timestamps in history
+setopt EXTENDED_HISTORY
 
 
 # Don't let > overwrite files. To overwrite, use >| instead.
