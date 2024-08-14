@@ -1,26 +1,26 @@
 return {
   {
     "danymat/neogen",
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     cmd = "Neogen",
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = true,
   },
   {
     "nvim-treesitter/playground",
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     cmd = "TSPlayground",
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     event = { "BufReadPost", "BufNewFile" },
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     event = { "BufReadPost", "BufNewFile" },
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = true,
@@ -33,9 +33,9 @@ return {
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
-        ensure_installed = "all",
-        sync_install = false,
-        auto_install = false,
+        -- ensure_installed = "all",
+        sync_install = true,
+        auto_install = true,
         indent = {
           enable = true,
         },
@@ -44,11 +44,11 @@ return {
           additional_vim_regex_highlighting = false,
         },
         playground = {
-          enable = not vim.g.basic,
+          enable = not (vim.g.basic or vim.env.NVIM_BASIC),
         },
 
         textobjects = {
-          enable = not vim.g.basic,
+          enable = not (vim.g.basic or vim.env.NVIM_BASIC),
           select = {
             enable = true,
             lookahead = true,

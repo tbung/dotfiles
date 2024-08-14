@@ -1,4 +1,4 @@
-if vim.g.basic then
+if (vim.g.basic or vim.env.NVIM_BASIC) then
   return {}
 end
 

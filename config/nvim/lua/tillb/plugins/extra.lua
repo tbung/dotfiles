@@ -18,7 +18,7 @@ return {
   {
     "jpalardy/vim-slime",
     ft = { "python", "sh" },
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     config = function()
       vim.g.slime_target = "wezterm"
       vim.g.slime_default_config = { pane_direction = "right" }
@@ -36,7 +36,7 @@ return {
   },
   {
     "mickael-menu/zk-nvim",
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     name = "zk",
     config = true,
     keys = {
@@ -59,7 +59,7 @@ return {
   {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     keys = {
       {
         "<leader>vrn",
@@ -96,7 +96,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     cmd = { "Trouble" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = true,
@@ -104,7 +104,7 @@ return {
   {
     "NvChad/nvim-colorizer.lua",
     config = true,
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       filetypes = {
@@ -122,7 +122,7 @@ return {
   {
     "goerz/jupytext.vim",
     lazy = false,
-    enabled = not vim.g.basic,
+    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     config = function()
       vim.g.jupytext_fmt = "py:percent"
     end,

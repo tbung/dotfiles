@@ -1,6 +1,6 @@
-if vim.g.basic then
-  return {}
-end
+-- if (vim.g.basic or vim.env.NVIM_BASIC) then
+--   return {}
+-- end
 
 return {
   {
