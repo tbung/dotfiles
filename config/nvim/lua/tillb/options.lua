@@ -1,5 +1,3 @@
--- HACK: disable termsync while it's broken in wezterm mux
-vim.opt.termsync = false
 vim.opt.formatoptions = "cqj"
 
 vim.opt.number = true
@@ -17,7 +15,7 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.sessionoptions = { "blank", "buffers", "curdir", "folds", "help", "tabpages", "winsize", "terminal", "options" }
+vim.opt.sessionoptions = { "blank", "buffers", "curdir", "folds", "help", "tabpages", "winsize", "terminal", "localoptions" }
 vim.opt.exrc = true
 
 vim.opt.hlsearch = false
