@@ -189,6 +189,7 @@ bindkey -M visual 'v' edit-command-line  # v enters visual mode, so vv starts $E
 
 # Backspace should work as in vim
 bindkey -v '^?' backward-delete-char
+bindkey -v '^H' backward-delete-word
 KEYTIMEOUT=1
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
