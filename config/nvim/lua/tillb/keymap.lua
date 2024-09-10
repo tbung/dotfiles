@@ -26,6 +26,8 @@ map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
+map("i", "<C-BS>", "<C-w>")
+map("i", "<C-h>", "<C-w>")
 
 -- LSP Stuff
 map("n", "gD", vim.lsp.buf.declaration)
