@@ -100,7 +100,7 @@ function set-title() {
     # ${(%)var} -> do prompt expansion (see zshmisc(1))
     # ${:-%~} -> actually ${var:-word}, use word if var is not defined
     curdir=( "${${(@s:/:)${(%):-%~}}[1]}" ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(@s:/:)${(%):-%~}}[2,-1][-1]}} )
-    print -n "\e]0;${hostname}${1:0:20} - ${(@j:/:)curdir}\a"
+    print -nf '\e]0;%s%s - %s\a' ${hostname} ${1:0:20} ${(@j:/:)curdir}
 }
 
 preexec() {
