@@ -276,6 +276,25 @@ local keys = {
   },
 
   {
+    key = "o",
+    mods = "LEADER",
+    action = wezterm.action.TogglePaneZoomState,
+  },
+
+  {
+    key = "0",
+    mods = "CTRL",
+    action = wezterm.action_callback(function(window, pane)
+      local overrides = window:get_config_overrides() or {}
+      screen = nil -- force font size update
+      overrides.font_size = get_font_size(window)
+      print(overrides.font_size)
+      window:set_config_overrides(overrides)
+      window:perform_action(wezterm.action.ResetFontSize, pane)
+    end),
+  },
+
+  {
     key = "[",
     mods = "LEADER",
     action = wezterm.action.ActivateCopyMode,
