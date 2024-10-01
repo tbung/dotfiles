@@ -62,8 +62,14 @@ function M.column()
       and vim.opt.fillchars:get().foldopen
 
   local nu = " "
-  if vim.wo[win].number and vim.wo[win].relativenumber and vim.v.virtnum == 0 then
-    nu = vim.v.relnum == 0 and vim.v.lnum .. [[%=]] or ([[%=]] .. vim.v.relnum)
+  if vim.wo[win].number and vim.wo[win].relativenumber then
+    if vim.v.virtnum == 0 then
+      nu = vim.v.relnum == 0 and vim.v.lnum .. [[%=]] or ([[%=]] .. vim.v.relnum)
+    elseif vim.v.virtnum > 0 then
+      nu = [[%=]]
+    else
+      vim.notify_once("Hit vim.v.virtnum < 0", vim.log.levels.WARN)
+    end
   end
 
   local components = {
