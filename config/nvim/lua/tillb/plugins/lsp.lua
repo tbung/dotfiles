@@ -152,6 +152,7 @@ return {
         float = true,
       })
 
+      -- TODO: Do we need this with the respective catppuccin settings? Do we use lsp ever without catppuccin?
       local function underline_to_undercurl(hlname)
         local hl = vim.api.nvim_get_hl(0, { name = hlname })
         hl.undercurl = true

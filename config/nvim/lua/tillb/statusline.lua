@@ -1,6 +1,29 @@
 local bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
 local bg_win = vim.api.nvim_get_hl(0, { name = "WinBar" }).bg
 
+local severities = {
+  "Error",
+  "Warn",
+  "Info",
+  "Hint",
+}
+
+for _, severity in ipairs(severities) do
+  local fg = vim.api.nvim_get_hl(0, { name = "DiagnosticSign" .. severity }).fg
+  vim.api.nvim_set_hl(0, "DiagnosticStatus" .. severity, { fg = fg, bg = bg })
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    bg = vim.api.nvim_get_hl(0, { name = "StatusLine" }).bg
+    bg_win = vim.api.nvim_get_hl(0, { name = "WinBar" }).bg
+    for _, severity in ipairs(severities) do
+      local fg = vim.api.nvim_get_hl(0, { name = "DiagnosticSign" .. severity }).fg
+      vim.api.nvim_set_hl(0, "DiagnosticStatus" .. severity, { fg = fg, bg = bg })
+    end
+  end,
+})
+
 local function get_icon_color_by_filetype(ft)
   local ok, devicons = pcall(require, "nvim-web-devicons")
 
@@ -42,18 +65,6 @@ function WinbarFileIcon()
   return file_comp
 end
 
-local severities = {
-  "Error",
-  "Warn",
-  "Info",
-  "Hint",
-}
-
-for _, severity in ipairs(severities) do
-  local fg = vim.api.nvim_get_hl(0, { name = "DiagnosticSign" .. severity }).fg
-  vim.api.nvim_set_hl(0, "DiagnosticStatus" .. severity, { fg = fg, bg = bg })
-end
-
 function StatusDiagnostics()
   local str = ""
 
@@ -67,7 +78,6 @@ function StatusDiagnostics()
   else
     signs = nil
   end
-
 
   for i, severity in ipairs(severities) do
     local count = #vim.diagnostic.get(0, { severity = i })
@@ -87,7 +97,12 @@ setmetatable(C_fallback, {
     return "#b4befe"
   end,
 })
-local C = require("catppuccin.palettes").get_palette() or C_fallback
+local ok, C = pcall(require, "catppuccin.palettes")
+if not ok or C == nil then
+  C = C_fallback
+else
+  C = C.get_palette()
+end
 
 local assets = {
   mode_icon = "",
