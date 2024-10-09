@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <light|dark|black>"
+    exit 1
+fi
+
+if [[ $1 == "light" ]]; then
+    printf "Catppuccin Latte\n" > $HOME/.config/wezterm/colorscheme
+    background="light"
+elif [[ $1 == "dark" ]]; then
+    printf "Catppuccin Mocha\n" > $HOME/.config/wezterm/colorscheme
+    background="dark"
+elif [[ $1 == "black" ]]; then
+    printf "Catppuccin Black\n" > $HOME/.config/wezterm/colorscheme
+    background="dark"
+else
+    echo "Usage: $0 <light|dark|black>"
+    exit 1
+fi
+
+runtime_dir="$XDG_RUNTIME_DIR"
+
+if [[ $(uname -s) == "Darwin" ]]; then
+    runtime_dir="$TMPDIR"
+fi
+
+find "$runtime_dir" -type s -name 'nvim*' 2>/dev/null | while IFS= read file; do
+# printf 'FOUND: %s\n' "$file"
+nvim --server $file --remote-send "<C-\><C-N>:set background=$background<CR>" &> /dev/null
+done
