@@ -35,9 +35,9 @@ require("lazy").setup("tillb.plugins", {
     rtp = {
       disabled_plugins = {
         "gzip",
-        "matchit",
-        "matchparen",
-        "netrwPlugin",
+        "matchit", -- replaced by vim-matchup
+        "matchparen", -- replaced by vim-matchup
+        "netrwPlugin", -- replaced by oil.nvim
         "tarPlugin",
         "tohtml",
         "tutor",
