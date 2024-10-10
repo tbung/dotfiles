@@ -9,16 +9,19 @@ catppuccin_black.tab_bar.background = "#000000"                  -- "#11111b"
 catppuccin_black.tab_bar.inactive_tab.bg_color = "#000000"       -- "#181825"
 catppuccin_black.tab_bar.inactive_tab_hover.bg_color = "#000000" -- "#1e1e2e"
 
+local scheme_name = "Catppuccin Mocha"
+
 local scheme_file = io.input(wezterm.config_dir .. "/colorscheme")
-local scheme_name = scheme_file:read()
-scheme_file:close()
-if wezterm.color.get_builtin_schemes()[scheme_name] == nil and scheme_name ~= "Catppuccin Black" then
-  scheme_name = "Catppuccin Mocha"
+if scheme_file ~= nil then
+  local maybe_scheme_name = scheme_file:read()
+  scheme_file:close()
+  if wezterm.color.get_builtin_schemes()[maybe_scheme_name] ~= nil or maybe_scheme_name == "Catppuccin Black" then
+    scheme_name = maybe_scheme_name
+  end
 end
 
 local scheme
 if scheme_name == "Catppuccin Black" then
-  -- scheme = wezterm.color.get_builtin_schemes()["Catppuccin Mocha"]
   scheme = catppuccin_black
 else
   scheme = wezterm.color.get_builtin_schemes()[scheme_name]
