@@ -16,12 +16,6 @@ end
 
 map("n", "<leader>gg", [[<cmd>G<cr>]])
 map("x", "<leader>p", [["_dP]])
-map("n", "]q", function()
-  vim.cmd("cnext")
-end)
-map("n", "[q", function()
-  vim.cmd("cprev")
-end)
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 map("n", "n", "nzzzv")
