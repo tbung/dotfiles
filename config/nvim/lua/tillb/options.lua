@@ -15,7 +15,17 @@ vim.opt.wrap = false
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.sessionoptions = { "blank", "buffers", "curdir", "folds", "help", "tabpages", "winsize", "terminal", "localoptions" }
+vim.opt.sessionoptions = {
+  "blank",
+  "buffers",
+  "curdir",
+  "folds",
+  "help",
+  "tabpages",
+  "winsize",
+  "terminal",
+  "localoptions",
+}
 vim.opt.exrc = true
 
 vim.opt.hlsearch = false
@@ -70,7 +80,7 @@ end
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    require("vim.highlight").on_yank({ timeout = 150 })
+    require("vim.hl").on_yank({ timeout = 150 })
   end,
   group = vim.api.nvim_create_augroup("highlight_yank", {}),
 })
