@@ -139,6 +139,11 @@ compinit -d $HOME/.cache/zsh/zcompdump-$ZSH_VERSION
 zstyle ':completion:*' menu select
 zstyle ':completion:*' cache-path $HOME/.cache/zsh/zcompcache
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# complete all make targets
+zstyle ':completion:*:make:*:targets' call-command true
+zstyle ':completion:*:*:make:*' tag-order 'targets'
+
 setopt COMPLETE_ALIASES
 
 # History options should be set in .zshrc and after oh-my-zsh sourcing.
@@ -226,6 +231,7 @@ alias wttr='curl wttr.in/heidelberg'
 
 
 # Named Directory Hashes
+hash -d a="/run/media/alexandria"
 hash -d c="$XDG_CONFIG_HOME"
 hash -d dot="$HOME/.dotfiles"
 hash -d d="$HOME/Data"
