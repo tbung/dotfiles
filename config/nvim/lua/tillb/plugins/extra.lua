@@ -54,6 +54,7 @@ return {
       { "<leader>zt", "<Cmd>ZkTags<CR>" },
       { "<leader>zf", "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>" },
     },
+    ft = { "markdown" },
   },
 
   {
@@ -80,7 +81,7 @@ return {
 
   {
     "stevearc/oil.nvim",
-    event = "VeryLazy",
+    lazy = false,
     keys = {
       {
         "<leader>-",
@@ -92,6 +93,38 @@ return {
       },
     },
     config = true,
+    config = function()
+      local permission_hlgroups = {
+        ["-"] = "NonText",
+        ["r"] = "DiagnosticSignWarn",
+        ["w"] = "DiagnosticSignError",
+        ["x"] = "DiagnosticSignOk",
+      }
+
+      require("oil").setup({
+        columns = {
+          {
+            "permissions",
+            highlight = function(permission_str)
+              local hls = {}
+              for i = 1, #permission_str do
+                local char = permission_str:sub(i, i)
+                table.insert(hls, { permission_hlgroups[char], i - 1, i })
+              end
+              return hls
+            end,
+          },
+          { "size",  highlight = "Special" },
+          { "mtime", highlight = "Number" },
+          {
+            "icon",
+            -- default_file = icon_file,
+            -- directory = icon_dir,
+            add_padding = true,
+          },
+        },
+      })
+    end,
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   {
