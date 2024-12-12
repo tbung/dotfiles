@@ -33,7 +33,7 @@ return {
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
-        -- ensure_installed = "all",
+        ensure_installed = { "lua", "c", "vim", "bash", "python" },
         sync_install = true,
         auto_install = true,
         indent = {
