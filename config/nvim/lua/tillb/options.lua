@@ -45,6 +45,8 @@ vim.opt.splitright = true
 vim.opt.laststatus = 3
 vim.opt.showmode = false
 
+vim.opt.wildignorecase = true
+
 vim.opt.foldenable = true
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
