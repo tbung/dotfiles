@@ -1,18 +1,5 @@
 return {
   {
-    "danymat/neogen",
-    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
-    cmd = "Neogen",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    config = true,
-  },
-  {
-    "nvim-treesitter/playground",
-    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
-    cmd = "TSPlayground",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-  },
-  {
     "nvim-treesitter/nvim-treesitter-textobjects",
     enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     event = { "BufReadPost", "BufNewFile" },
@@ -43,10 +30,6 @@ return {
           enable = true,
           additional_vim_regex_highlighting = false,
         },
-        playground = {
-          enable = not (vim.g.basic or vim.env.NVIM_BASIC),
-        },
-
         textobjects = {
           enable = not (vim.g.basic or vim.env.NVIM_BASIC),
           select = {
@@ -60,14 +43,8 @@ return {
               ["ac"] = "@class.outer",
               ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
             },
-            -- selection_modes = {
-            --   ["@parameter.outer"] = "v",
-            --   ["@function.outer"] = "V",
-            --   ["@class.outer"] = "V",
-            -- },
             include_surrounding_whitespace = false,
           },
-
           swap = {
             enable = true,
             swap_next = {
@@ -77,7 +54,6 @@ return {
               ["<leader>A"] = "@parameter.inner",
             },
           },
-
           move = {
             enable = true,
             set_jumps = true,
@@ -98,9 +74,6 @@ return {
               ["[]"] = "@class.outer",
             },
           },
-        },
-        matchup = {
-          enable = true,
         },
       })
     end,

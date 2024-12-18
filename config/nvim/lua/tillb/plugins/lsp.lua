@@ -52,10 +52,8 @@ return {
         clangd = {
           cmd = {
             "clangd",
+            "--clang-tidy",
             "--background-index",
-            -- TODO: these should be project local
-            -- "--query-driver=/home/tillb/.espressif/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/**/bin/xtensa-esp32-elf-*",
-            -- "--query-driver=/home/tillb/.espressif/tools/riscv32-esp-elf/esp-12.2.0_20230208/**/bin/riscv32-esp-elf-*",
           },
         },
         lua_ls = {
@@ -72,6 +70,7 @@ return {
         },
         -- TODO: ruff_lsp and black currently don't like jupytext, need to find fix for that
         ruff_lsp = {
+          -- ruff only provides hover for noqa comments, I don't need that
           on_attach = function(client)
             client.server_capabilities.hoverProvider = false
           end,
@@ -187,6 +186,7 @@ return {
         bash = { "shfmt" },
         sh = { "shfmt" },
         markdown = { "prettier" },
+        tex = { "latexindent" },
       },
 
       formatters = {
@@ -196,7 +196,6 @@ return {
       },
     },
     init = function()
-      -- vim.o.formatexpr = [[v:lua.require("conform").formatexpr({ async = true, lsp_fallback = "always", filter = function(client) return client.name ~= "ruff_lsp" end })]]
       vim.o.formatexpr = [[v:lua.require("conform").formatexpr()]]
     end,
   },

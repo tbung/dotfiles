@@ -30,6 +30,7 @@ return {
       vim.keymap.set("n", "<leader>sl", "<Plug>SlimeLineSend")
     end,
   },
+  -- TODO: Replace with mini.icons
   {
     "nvim-tree/nvim-web-devicons",
     lazy = true,
@@ -56,29 +57,10 @@ return {
     },
     ft = { "markdown" },
   },
-
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
-    keys = {
-      {
-        "<leader>vrn",
-        function()
-          return ":IncRename " .. vim.fn.expand("<cword>")
-        end,
-        expr = true,
-      },
-    },
-    dependencies = "neovim/nvim-lspconfig",
-    config = true,
-  },
-
   {
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewFileHistory" },
   },
-
   {
     "stevearc/oil.nvim",
     lazy = false,
@@ -92,7 +74,6 @@ return {
         desc = "Open parent directory",
       },
     },
-    config = true,
     config = function()
       local permission_hlgroups = {
         ["-"] = "NonText",
@@ -151,13 +132,5 @@ return {
         rgb_fn = true,
       },
     },
-  },
-  {
-    "goerz/jupytext.vim",
-    lazy = false,
-    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
-    config = function()
-      vim.g.jupytext_fmt = "py:percent"
-    end,
   },
 }

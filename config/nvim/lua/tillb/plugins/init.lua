@@ -1,9 +1,5 @@
 return {
   {
-    lazy = false,
-    "andymass/vim-matchup",
-  },
-  {
     "tpope/vim-fugitive",
     cmd = "G",
   },
