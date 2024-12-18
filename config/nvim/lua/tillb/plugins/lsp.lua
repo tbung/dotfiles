@@ -1,35 +1,6 @@
-if (vim.g.basic or vim.env.NVIM_BASIC) then
+if vim.g.basic or vim.env.NVIM_BASIC then
   return {}
 end
-
-local cmp_kinds = {
-  Text = "  ",
-  Method = "  ",
-  Function = "  ",
-  Constructor = "  ",
-  Field = "  ",
-  Variable = "  ",
-  Class = "  ",
-  Interface = "  ",
-  Module = "  ",
-  Property = "  ",
-  Unit = "  ",
-  Value = "  ",
-  Enum = "  ",
-  Keyword = "  ",
-  Snippet = "  ",
-  Color = "  ",
-  File = "  ",
-  Reference = "  ",
-  Folder = "  ",
-  EnumMember = "  ",
-  Constant = "  ",
-  Struct = "  ",
-  Event = "  ",
-  Operator = "  ",
-  TypeParameter = "  ",
-  Copilot = "  ",
-}
 
 return {
   {
@@ -48,10 +19,6 @@ return {
 
       local overrides = {
         ["arduino_language_server"] = {
-          capabilities = {
-            textDocument = { semanticTokens = vim.NIL },
-            workspace = { semanticTokens = vim.NIL },
-          },
           cmd = {
             "arduino-language-server",
             "-clangd",
@@ -127,7 +94,7 @@ return {
         "force",
         {},
         vim.lsp.protocol.make_client_capabilities(),
-        require("cmp_nvim_lsp").default_capabilities()
+        require("blink.cmp").get_lsp_capabilities()
       )
 
       local function setup(server_name)
@@ -187,77 +154,27 @@ return {
     end,
   },
   {
-    "L3MON4D3/LuaSnip",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function()
-        require("luasnip.loaders.from_vscode").lazy_load()
-      end,
-    },
+    "saghen/blink.cmp",
+    lazy = false,
+    dependencies = "rafamadriz/friendly-snippets",
+    version = "v0.*",
+    -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
-    lazy = true,
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    version = false, -- last release is way too old
-    event = "InsertEnter",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-emoji",
-      "saadparwaiz1/cmp_luasnip",
-      "zbirenbaum/copilot-cmp",
-    },
-    config = function()
-      local cmp = require("cmp")
+      keymap = { preset = "default" },
 
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = false }),
-        }),
-        sources = cmp.config.sources({
-          { name = "copilot" },
-          { name = "nvim_lsp" },
-          { name = "lazydev", group_index = 0 },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "path" },
-        }),
-        formatting = {
-          fields = { "abbr", "menu", "kind" },
-          format = function(entry, item)
-            item.kind = (cmp_kinds[item.kind] or "") .. item.kind
-            return item
-          end,
-        },
-      })
+      appearance = {
+        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
+        nerd_font_variant = "mono",
+      },
 
-      cmp.setup.filetype("markdown", {
-        sources = cmp.config.sources({
-          { name = "copilot" },
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "path" },
-          { name = "emoji" },
-        }),
-      })
-    end,
+      -- experimental signature help support
+      signature = { enabled = true },
+    },
   },
   {
     "stevearc/conform.nvim",

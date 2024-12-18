@@ -1,4 +1,4 @@
-if (vim.g.basic or vim.env.NVIM_BASIC) then
+if vim.g.basic or vim.env.NVIM_BASIC then
   return {}
 end
 
@@ -8,16 +8,8 @@ return {
     event = "InsertEnter",
     cmd = "Copilot",
     opts = {
-      suggestion = { enabled = false },
+      suggestion = { enabled = true },
       panel = { enabled = false },
     },
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-    event = "InsertEnter",
-    dependencies = "zbirenbaum/copilot.lua",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
   },
 }

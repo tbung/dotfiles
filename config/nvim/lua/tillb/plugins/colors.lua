@@ -22,7 +22,7 @@ return {
       end,
 
       integrations = {
-        cmp = true,
+        blink_cmp = true,
         gitsigns = true,
         telescope = true,
         mini = true,
