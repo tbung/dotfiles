@@ -31,6 +31,9 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("tillb.plugins", {
   dev = { path = "~/Projects", fallback = true },
   defaults = { lazy = true },
+  change_detection = {
+    enabled = false,
+  },
   performance = {
     rtp = {
       disabled_plugins = {
