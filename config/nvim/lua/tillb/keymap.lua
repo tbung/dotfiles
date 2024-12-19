@@ -14,6 +14,14 @@ local function map(mode, lhs, rhs)
   vim.keymap.set(mode, lhs, rhs, {})
 end
 
+local function maybe_require(name)
+  local ok, module_ = pcall(require, name)
+  if ok then
+    return module_
+  end
+  print(name .. " not installed")
+end
+
 map("n", "<leader>gg", [[<cmd>G<cr>]])
 map("x", "<leader>p", [["_dP]])
 map("n", "<C-d>", "<C-d>zz")
@@ -27,26 +35,11 @@ map("i", "<C-h>", "<C-w>")
 map("n", "gD", vim.lsp.buf.declaration)
 map("n", "gd", vim.lsp.buf.definition)
 map("n", "gr", vim.lsp.buf.references)
--- map("n", "<leader>vf", function()
---   vim.lsp.buf.format({
---     filter = function(client)
---       local excludes = {
---         "lua_ls",
---         "pylsp",
---       }
---       return not vim.tbl_contains({client.name, excludes})
---     end,
---   })
--- end)
---
+
 map("n", "<leader>vf", function()
-  require("conform").format({
-    async = true,
-    lsp_fallback = "always",
-    filter = function(client)
-      return client.name ~= "ruff_lsp"
-    end,
-  })
+  local cursor = vim.fn.getpos(".")
+  vim.cmd.normal("gggqG")
+  vim.fn.setpos(".", cursor)
 end)
 map("n", "<leader>vd", function()
   require("tillb.peekdefinition").peek_definition()
@@ -80,52 +73,102 @@ end)
 
 -- Telescope Stuff
 map("n", "<leader>ff", function()
-  require("telescope.builtin").find_files({ hidden = true, no_ignore = false })
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.find_files({ hidden = true, no_ignore = false })
+  end
 end)
 map("n", "<leader>fg", function()
-  require("telescope.builtin").git_files()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.git_files()
+  end
 end)
 map("n", "<leader>fe", function()
-  require("telescope").extensions.file_browser.file_browser({ hidden = true, no_ignore = true })
+  local m = maybe_require("telescope")
+  if m ~= nil then
+    m.extensions.file_browser.file_browser({ hidden = true, no_ignore = true })
+  end
 end)
 map("n", "<leader>ft", function()
-  require("telescope.builtin").live_grep({ hidden = true, no_ignore = true })
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.live_grep({ hidden = true, no_ignore = true })
+  end
 end)
 map("n", "<leader>fh", function()
-  require("telescope.builtin").help_tags()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.help_tags()
+  end
 end)
 map("n", "<leader>fb", function()
-  require("telescope.builtin").buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
+  end
 end)
 map("n", "<C-n>", function()
-  require("telescope.builtin").buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
+  else
+    vim.cmd.buffers()
+  end
 end)
 map("n", "<leader>fS", function()
-  require("telescope.builtin").lsp_workspace_symbols()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.lsp_workspace_symbols()
+  end
 end)
 map("n", "<leader>fs", function()
-  require("telescope.builtin").lsp_document_symbols()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.lsp_document_symbols()
+  end
 end)
 map("n", "<leader>fD", function()
-  require("telescope.builtin").diagnostics()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.diagnostics()
+  end
 end)
 map("n", "<leader>fd", function()
-  require("telescope.builtin").diagnostics({ bufnr = 0 })
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.diagnostics({ bufnr = 0 })
+  end
 end)
 map("n", "<leader>fm", function()
-  require("telescope.builtin").marks()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.marks()
+  end
 end)
 map("n", "<leader>fr", function()
-  require("telescope.builtin").resume()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.resume()
+  end
 end)
 map("n", "<leader>fc", function()
-  require("telescope.builtin").command_history()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.command_history()
+  end
 end)
 map("n", "<leader>fC", function()
-  require("telescope.builtin").commands()
+  local m = maybe_require("telescope.builtin")
+  if m ~= nil then
+    m.commands()
+  end
 end)
 map("n", "<leader>fu", function()
-  require("telescope").extensions.undo.undo()
+  local m = maybe_require("telescope")
+  if m ~= nil then
+    m.extensions.undo.undo()
+  end
 end)
 
 M.check = function()
