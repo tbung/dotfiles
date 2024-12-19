@@ -86,6 +86,15 @@ return {
     config = true,
   },
   {
+    "echasnovski/mini.align",
+    lazy = true,
+    keys = {
+      { "ga", mode = { "n", "x" } },
+      { "gA", mode = { "n", "x" } },
+    },
+    config = true,
+  },
+  {
     "echasnovski/mini.starter",
     event = "VimEnter",
     config = function()
@@ -112,7 +121,16 @@ return {
   },
   {
     "echasnovski/mini.surround",
-    event = "VeryLazy",
+    lazy = true,
+    keys = {
+      { "sa", mode = { "n", "x" } },
+      { "sd" },
+      { "sr" },
+      { "sf" },
+      { "sF" },
+      { "sh" },
+      { "sn" },
+    },
     config = true,
   },
   {
@@ -129,18 +147,10 @@ return {
   {
     "chrisgrieser/nvim-spider",
     keys = {
-      { mode = "n", "w", "<cmd>lua require('spider').motion('w')<CR>", desc = "Spider-w" },
-      { mode = "n", "e", "<cmd>lua require('spider').motion('e')<CR>", desc = "Spider-e" },
-      { mode = "n", "b", "<cmd>lua require('spider').motion('b')<CR>", desc = "Spider-b" },
-      { mode = "n", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
-      { mode = "o", "w", "<cmd>lua require('spider').motion('w')<CR>", desc = "Spider-w" },
-      { mode = "o", "e", "<cmd>lua require('spider').motion('e')<CR>", desc = "Spider-e" },
-      { mode = "o", "b", "<cmd>lua require('spider').motion('b')<CR>", desc = "Spider-b" },
-      { mode = "o", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
-      { mode = "x", "w", "<cmd>lua require('spider').motion('w')<CR>", desc = "Spider-w" },
-      { mode = "x", "e", "<cmd>lua require('spider').motion('e')<CR>", desc = "Spider-e" },
-      { mode = "x", "b", "<cmd>lua require('spider').motion('b')<CR>", desc = "Spider-b" },
-      { mode = "x", "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
+      { mode = { "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", desc = "Spider-w" },
+      { mode = { "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", desc = "Spider-e" },
+      { mode = { "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", desc = "Spider-b" },
+      { mode = { "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
     },
   },
   {
