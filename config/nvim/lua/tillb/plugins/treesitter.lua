@@ -1,13 +1,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     event = { "BufReadPost", "BufNewFile" },
     dependencies = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
-    enabled = not (vim.g.basic or vim.env.NVIM_BASIC),
     event = { "BufReadPost", "BufNewFile" },
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = true,
@@ -31,7 +29,6 @@ return {
           additional_vim_regex_highlighting = false,
         },
         textobjects = {
-          enable = not (vim.g.basic or vim.env.NVIM_BASIC),
           select = {
             enable = true,
             lookahead = true,

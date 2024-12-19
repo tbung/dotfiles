@@ -1,7 +1,7 @@
 require("tillb.options")
 require("tillb.keymap")
 
-if vim.g.barebones or vim.env.NVIM_BAREBONES ~= nil then
+if vim.g.basic or vim.env.NVIM_BASIC ~= nil then
   -- use default colors, but set background transparent
   for _, hl_name in ipairs({ "Normal", "NonText", "EndOfBuffer" }) do
     local hl = vim.api.nvim_get_hl(0, { name = hl_name })

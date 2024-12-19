@@ -1,7 +1,3 @@
--- if (vim.g.basic or vim.env.NVIM_BASIC) then
---   return {}
--- end
-
 return {
   {
     "nvim-telescope/telescope.nvim",
