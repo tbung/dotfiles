@@ -159,7 +159,14 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      keymap = { preset = "default" },
+      keymap = {
+        preset = "default",
+        cmdline = {
+          preset = "default",
+          ["<Up>"] = { "fallback" },
+          ["<Down>"] = { "fallback" },
+        },
+      },
 
       appearance = {
         -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
