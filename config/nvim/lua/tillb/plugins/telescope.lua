@@ -1,33 +1,23 @@
 return {
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope-ui-select.nvim",
-      "nvim-telescope/telescope-file-browser.nvim",
-      "debugloop/telescope-undo.nvim",
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = true },
+      dashboard = { enabled = false },
+      indent = { enabled = false },
+      input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      scroll = { enabled = false },
+      statuscolumn = { enabled = false },
+      words = { enabled = true },
     },
-    config = function()
-      require("telescope").setup({
-        defaults = {
-          path_display = { "filename_first" },
-        },
-        extensions = {
-          ["ui-select"] = {
-            require("telescope.themes").get_dropdown({}),
-          },
-          file_browser = {
-            sorting_strategy = "ascending",
-          },
-          undo = {},
-        },
-      })
-      require("telescope").load_extension("fzf")
-      require("telescope").load_extension("ui-select")
-      require("telescope").load_extension("file_browser")
-      require("telescope").load_extension("undo")
-    end,
-    cmd = "Telescope",
-  },
+  }
 }

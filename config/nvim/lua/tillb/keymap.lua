@@ -37,9 +37,10 @@ map("n", "gd", vim.lsp.buf.definition)
 map("n", "gr", vim.lsp.buf.references)
 
 map("n", "<leader>vf", function()
-  local cursor = vim.fn.getpos(".")
-  vim.cmd.normal("gggqG")
-  vim.fn.setpos(".", cursor)
+  -- local cursor = vim.fn.getpos(".")
+  -- vim.cmd.normal("gggqG")
+  -- vim.fn.setpos(".", cursor)
+  require("conform").format()
 end)
 map("n", "<leader>vd", function()
   require("tillb.peekdefinition").peek_definition()
@@ -73,102 +74,46 @@ end)
 
 -- Telescope Stuff
 map("n", "<leader>ff", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.find_files({ hidden = true, no_ignore = false })
-  end
+  Snacks.picker.files()
 end)
 map("n", "<leader>fg", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.git_files()
-  end
-end)
-map("n", "<leader>fe", function()
-  local m = maybe_require("telescope")
-  if m ~= nil then
-    m.extensions.file_browser.file_browser({ hidden = true, no_ignore = true })
-  end
+  Snacks.picker.git_files()
 end)
 map("n", "<leader>ft", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.live_grep({ hidden = true, no_ignore = true })
-  end
+  Snacks.picker.grep()
 end)
 map("n", "<leader>fh", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.help_tags()
-  end
+  Snacks.picker.help()
 end)
 map("n", "<leader>fb", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
-  end
+  Snacks.picker.buffers({ current = false })
 end)
 map("n", "<C-n>", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.buffers({ sort_lastused = true, sort_mru = true, ignore_current_buffer = true })
-  else
-    vim.cmd.buffers()
-  end
+  -- Snacks.picker.buffers({ current = false })
+  Snacks.picker.smart({
+    multi = { { source = "buffers", current = false, sort_lastused = false }, "files" },
+  })
 end)
 map("n", "<leader>fS", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.lsp_workspace_symbols()
-  end
+  Snacks.picker.lsp_workspace_symbols()
 end)
 map("n", "<leader>fs", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.lsp_document_symbols()
-  end
+  Snacks.picker.lsp_symbols()
 end)
 map("n", "<leader>fD", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.diagnostics()
-  end
+  Snacks.picker.diagnostics()
 end)
 map("n", "<leader>fd", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.diagnostics({ bufnr = 0 })
-  end
+  Snacks.picker.diagnostics_buffer()
 end)
 map("n", "<leader>fm", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.marks()
-  end
+  Snacks.picker.marks()
 end)
 map("n", "<leader>fr", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.resume()
-  end
-end)
-map("n", "<leader>fc", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.command_history()
-  end
-end)
-map("n", "<leader>fC", function()
-  local m = maybe_require("telescope.builtin")
-  if m ~= nil then
-    m.commands()
-  end
+  Snacks.picker.resume()
 end)
 map("n", "<leader>fu", function()
-  local m = maybe_require("telescope")
-  if m ~= nil then
-    m.extensions.undo.undo()
-  end
+  Snacks.picker.undo()
 end)
 
 M.check = function()
