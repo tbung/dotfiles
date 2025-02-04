@@ -16,6 +16,33 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     cmd = "TSUpdate",
     config = function()
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.markdown = {
+        install_info = {
+          -- url = "https://github.com/MDeiml/tree-sitter-markdown",
+          url = "https://github.com/tbung/tree-sitter-markdown",
+          location = "tree-sitter-markdown",
+          files = { "src/parser.c", "src/scanner.c" },
+          branch = "fix-link-destination-with-tags",
+        },
+        maintainers = { "@MDeiml" },
+        readme_name = "markdown (basic highlighting)",
+        experimental = true,
+      }
+
+      parser_config.markdown_inline = {
+        install_info = {
+          -- url = "https://github.com/MDeiml/tree-sitter-markdown",
+          url = "https://github.com/tbung/tree-sitter-markdown",
+          location = "tree-sitter-markdown-inline",
+          files = { "src/parser.c", "src/scanner.c" },
+          branch = "fix-link-destination-with-tags",
+        },
+        maintainers = { "@MDeiml" },
+        readme_name = "markdown_inline (needed for full highlighting)",
+        experimental = true,
+      }
+
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         ensure_installed = { "lua", "c", "vim", "bash", "python" },
