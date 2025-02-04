@@ -90,9 +90,10 @@ map("n", "<leader>fb", function()
 end)
 map("n", "<C-n>", function()
   -- Snacks.picker.buffers({ current = false })
-  Snacks.picker.smart({
-    multi = { { source = "buffers", current = false, sort_lastused = false }, "files" },
-  })
+  Snacks.picker.smart()
+  -- require("snacks").picker.smart({
+  --   multi = { { source = "buffers", current = false, sort_lastused = true }, "recent", "files" },
+  -- })
 end)
 map("n", "<leader>fS", function()
   Snacks.picker.lsp_workspace_symbols()
