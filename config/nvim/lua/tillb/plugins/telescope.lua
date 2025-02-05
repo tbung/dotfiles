@@ -19,5 +19,5 @@ return {
       statuscolumn = { enabled = false },
       words = { enabled = true },
     },
-  }
+  },
 }

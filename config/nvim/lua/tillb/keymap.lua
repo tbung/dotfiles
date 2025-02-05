@@ -89,11 +89,16 @@ map("n", "<leader>fb", function()
   Snacks.picker.buffers({ current = false })
 end)
 map("n", "<C-n>", function()
-  -- Snacks.picker.buffers({ current = false })
-  Snacks.picker.smart()
-  -- require("snacks").picker.smart({
-  --   multi = { { source = "buffers", current = false, sort_lastused = true }, "recent", "files" },
-  -- })
+  Snacks.picker.smart({
+    multi = { { source = "buffers", current = false }, "files" },
+    matcher = {
+      on_match = function(_, item)
+        if item.flags and item.flags:find("#") then
+          item.score = 20000
+        end
+      end,
+    },
+  })
 end)
 map("n", "<leader>fS", function()
   Snacks.picker.lsp_workspace_symbols()
