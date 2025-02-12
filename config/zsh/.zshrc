@@ -193,6 +193,7 @@ autoload -Uz edit-command-line
 bindkey -M visual 'v' edit-command-line  # v enters visual mode, so vv starts $EDITOR
 
 # Backspace should work as in vim
+WORDCHARS=''
 bindkey -v '^?' backward-delete-char
 bindkey -v '^H' backward-delete-word
 KEYTIMEOUT=1
