@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+selected=$(sed -n '/Host [^\*]/s/Host //p' $HOME/.ssh/config | fzf --bind enter:accept-or-print-query)
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+if [[ -z $TMUX ]]; then
+    kitty +kitten ssh -t $selected "tmux new-session -As default"
+else
+    tmux new-window "ssh $selected"
+fi

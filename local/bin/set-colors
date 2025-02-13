@@ -7,12 +7,19 @@ fi
 
 if [[ $1 == "light" ]]; then
     printf "Catppuccin Latte\n" > $HOME/.config/wezterm/colorscheme
+    kitten themes "Catppuccin-Latte"
+    kitten @ set-colors $HOME/.config/kitty/current-theme.conf
     background="light"
 elif [[ $1 == "dark" ]]; then
     printf "Catppuccin Mocha\n" > $HOME/.config/wezterm/colorscheme
+    kitten themes "Catppuccin-Mocha"
+    kitten @ set-colors $HOME/.config/kitty/current-theme.conf
     background="dark"
 elif [[ $1 == "black" ]]; then
     printf "Catppuccin Black\n" > $HOME/.config/wezterm/colorscheme
+    kitten themes "Catppuccin-Mocha"
+    kitten @ set-colors $HOME/.config/kitty/current-theme.conf
+    kitten @ set-colors background="#000000"
     background="dark"
 else
     echo "Usage: $0 <light|dark|black>"

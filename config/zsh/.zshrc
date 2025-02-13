@@ -3,9 +3,6 @@
 (( ${+commands[direnv]} )) && eval "$(direnv hook zsh)"
 [[ -v DIRENV_DIR ]] && direnv reload
 
-function prompt_my_tmux() {
-    p10k segment -t $'%BTMUX%b' -f 'red' -c "$TMUX"
-}
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -227,6 +224,7 @@ alias lsd='lsd -lah'
 (( ${+commands[nvim]} )) && alias vi='nvim --cmd "lua vim.g.barebones=true"'
 alias wiki='zk edit -i'
 alias wttr='curl wttr.in/heidelberg'
+alias tm='tmux new-session -As default'
 
 # Global Aliases
 
