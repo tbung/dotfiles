@@ -1,0 +1,6 @@
+theme = catppuccin-mocha
+font-family = "Victor Mono"
+font-size = 14
+
+# fix opt-backspace on macos
+keybind = opt+backspace=text:\x08
