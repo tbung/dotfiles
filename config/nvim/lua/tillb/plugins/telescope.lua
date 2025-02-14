@@ -13,6 +13,7 @@ return {
         win = {
           keys = {
             i_ctrl_bs = { "<C-BS>", "delete_word", mode = "i", expr = true },
+            i_ctrl_h = { "<c-h>", "delete_word", mode = "i", expr = true },
           },
           actions = {
             delete_word = function()
@@ -27,6 +28,7 @@ return {
           input = {
             keys = {
               ["<C-BS>"] = { "<c-s-w>", mode = "i", expr = true },
+              ["<c-h>"] = { "<c-s-w>", mode = "i", expr = true },
             },
           },
         },
