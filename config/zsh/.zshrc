@@ -95,8 +95,9 @@ function set-title() {
     # ${(r:1:)var} -> truncate all words to length 1
     # ${(@)var} -> put every element into its own ""
     # ${(%)var} -> do prompt expansion (see zshmisc(1))
+    # ${(A)var} -> force array, even if scalar
     # ${:-%~} -> actually ${var:-word}, use word if var is not defined
-    curdir=( "${${(@s:/:)${(%):-%~}}[1]}" ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(@s:/:)${(%):-%~}}[2,-1][-1]}} )
+    curdir=( ${${(A)${(@s:/:)${(%):-%~}}}[1]} ${(@)${(@s:/:r:1:)${(%):-%~}}[2,-2]} ${(@)${${(A)${(@s:/:)${(%):-%~}}}[2,-1][-1]}} )
     print -nf '\e]0;%s%s - %s\a' "${hostname}" "${1:0:20}" "${(@j:/:)curdir}"
 }
 
