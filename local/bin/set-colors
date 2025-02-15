@@ -1,38 +1,124 @@
 #!/usr/bin/env bash
 
+tmux_prefix="\ePtmux;\e"
+tmux_suffix="\e\e\\ "
+
+OSC="${TMUX:+$tmux_prefix}\e]"
+ST="${TMUX:+$tmux_suffix}\e\\"
+
+set_palette() {
+    printf "%b4;%s;%s%b" "$OSC" "$1" "$2" "$ST"
+}
+
+set_foreground() {
+    printf "%b10;%s%b" "$OSC" "$1" "$ST"
+}
+
+set_background() {
+    printf "%b11;%s%b" "$OSC" "$1" "$ST"
+}
+
+set_cursor() {
+    printf "%b12;%s%b" "$OSC" "$1" "$ST"
+}
+
+set_selection_foreground() {
+    printf "%b19;%s%b" "$OSC" "$1" "$ST"
+}
+
+set_selection_background() {
+    printf "%b17;%s%b" "$OSC" "$1" "$ST"
+}
+
+set-light() {
+    set_palette 0 "#5c5f77"
+    set_palette 1 "#d20f39"
+    set_palette 2 "#40a02b"
+    set_palette 3 "#df8e1d"
+    set_palette 4 "#1e66f5"
+    set_palette 5 "#ea76cb"
+    set_palette 6 "#179299"
+    set_palette 7 "#acb0be"
+    set_palette 8 "#6c6f85"
+    set_palette 9 "#de293e"
+    set_palette 10 "#49af3d"
+    set_palette 11 "#eea02d"
+    set_palette 12 "#456eff"
+    set_palette 13 "#fe85d8"
+    set_palette 14 "#2d9fa8"
+    set_palette 15 "#bcc0cc"
+    set_background "#eff1f5"
+    # set_foreground "#4c4f69"
+    set_foreground "#0c0f29"
+    set_cursor "#dc8a78"
+    set_selection_background "#acb0be"
+    set_selection_foreground "#4c4f69"
+}
+
+set-black() {
+    set_palette 0 "#45475a"
+    set_palette 1 "#f38ba8"
+    set_palette 2 "#a6e3a1"
+    set_palette 3 "#f9e2af"
+    set_palette 4 "#89b4fa"
+    set_palette 5 "#f5c2e7"
+    set_palette 6 "#94e2d5"
+    set_palette 7 "#a6adc8"
+    set_palette 8 "#585b70"
+    set_palette 9 "#f37799"
+    set_palette 10 "#89d88b"
+    set_palette 11 "#ebd391"
+    set_palette 12 "#74a8fc"
+    set_palette 13 "#f2aede"
+    set_palette 14 "#6bd7ca"
+    set_palette 15 "#bac2de"
+    # set_background "#1e1e2e"
+    set_background "#000000"
+    set_foreground "#cdd6f4"
+    set_cursor "#f5e0dc"
+    set_selection_background "#585b70"
+    set_selection_foreground "#cdd6f4"
+}
+
+set-nvim-background() {
+    runtime_dir="$XDG_RUNTIME_DIR"
+
+    if [[ $(uname -s) == "Darwin" ]]; then
+        runtime_dir="$TMPDIR"
+    fi
+
+    find "$runtime_dir" -type s -name 'nvim*' 2>/dev/null | while IFS= read -r file; do
+        nvim --server "$file" --remote-send "<C-\><C-N>:set background=$1<CR>" &>/dev/null
+    done
+}
+
 if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 <light|dark|black>"
+    echo "Usage: $0 <light|dark>"
     exit 1
 fi
 
 if [[ $1 == "light" ]]; then
-    printf "Catppuccin Latte\n" > $HOME/.config/wezterm/colorscheme
-    kitten themes "Catppuccin-Latte"
-    kitten @ set-colors $HOME/.config/kitty/current-theme.conf
-    background="light"
+    if [[ $TERM == "wezterm" ]]; then
+        printf "Catppuccin Latte\n" >"$HOME/.config/wezterm/colorscheme"
+    elif [[ $TERM == "xterm-kitty" ]]; then
+        kitten themes "Catppuccin-Latte"
+        kitten @ set-colors "$HOME/.config/kitty/current-theme.conf"
+    fi
+
+    set-light
+    set-nvim-background "light"
 elif [[ $1 == "dark" ]]; then
-    printf "Catppuccin Mocha\n" > $HOME/.config/wezterm/colorscheme
-    kitten themes "Catppuccin-Mocha"
-    kitten @ set-colors $HOME/.config/kitty/current-theme.conf
-    background="dark"
-elif [[ $1 == "black" ]]; then
-    printf "Catppuccin Black\n" > $HOME/.config/wezterm/colorscheme
-    kitten themes "Catppuccin-Mocha"
-    kitten @ set-colors $HOME/.config/kitty/current-theme.conf
-    kitten @ set-colors background="#000000"
-    background="dark"
+    if [[ $TERM == "wezterm" ]]; then
+        printf "Catppuccin Black\n" >"$HOME/.config/wezterm/colorscheme"
+    elif [[ $TERM == "xterm-kitty" ]]; then
+        kitten themes "Catppuccin-Mocha"
+        kitten @ set-colors "$HOME/.config/kitty/current-theme.conf"
+        kitten @ set-colors background="#000000"
+    fi
+
+    set-black
+    set-nvim-background "dark"
 else
-    echo "Usage: $0 <light|dark|black>"
+    echo "Usage: $0 <light|dark>"
     exit 1
 fi
-
-runtime_dir="$XDG_RUNTIME_DIR"
-
-if [[ $(uname -s) == "Darwin" ]]; then
-    runtime_dir="$TMPDIR"
-fi
-
-find "$runtime_dir" -type s -name 'nvim*' 2>/dev/null | while IFS= read file; do
-# printf 'FOUND: %s\n' "$file"
-nvim --server $file --remote-send "<C-\><C-N>:set background=$background<CR>" &> /dev/null
-done
