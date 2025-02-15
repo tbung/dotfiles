@@ -21,7 +21,7 @@ return {
             return "]c"
           end
           vim.schedule(function()
-            gs.next_hunk()
+            gs.nav_hunk("prev")
           end)
           return "<Ignore>"
         end, { expr = true })
@@ -31,7 +31,7 @@ return {
             return "[c"
           end
           vim.schedule(function()
-            gs.prev_hunk()
+            gs.nav_hunk("next")
           end)
           return "<Ignore>"
         end, { expr = true })
@@ -45,20 +45,7 @@ return {
         map("v", "<leader>gr", function()
           gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
         end)
-        map("n", "<leader>gS", gs.stage_buffer)
-        map("n", "<leader>gu", gs.undo_stage_hunk)
-        map("n", "<leader>gR", gs.reset_buffer)
         map("n", "<leader>gp", gs.preview_hunk)
-        map("n", "<leader>gb", function()
-          gs.blame_line({ full = true })
-        end)
-        map("n", "<leader>gd", gs.diffthis)
-        map("n", "<leader>gD", function()
-          gs.diffthis("~")
-        end)
-
-        -- Text object
-        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
       end,
     },
   },
