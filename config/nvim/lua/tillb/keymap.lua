@@ -2,24 +2,25 @@ local M = {}
 
 local mappings = {}
 
-local function map(mode, lhs, rhs)
-  local m = 'map("' .. mode .. ', "' .. lhs .. '")'
+---@param modes string|string[]
+---@param lhs string
+---@param rhs string|function
+---@return nil
+local function map(modes, lhs, rhs)
+  if type(modes) ~= "table" then
+    modes = { modes }
+  end
+  for _, mode in ipairs(modes) do
+    local m = 'map("' .. mode .. ', "' .. lhs .. '")'
 
-  if mappings[m] ~= nil then
-    error("already defined")
+    if mappings[m] ~= nil then
+      error("already defined")
+    end
+
+    mappings[m] = vim.fn.maparg(lhs, mode)
   end
 
-  mappings[m] = vim.fn.maparg(lhs, mode)
-
-  vim.keymap.set(mode, lhs, rhs, {})
-end
-
-local function maybe_require(name)
-  local ok, module_ = pcall(require, name)
-  if ok then
-    return module_
-  end
-  print(name .. " not installed")
+  vim.keymap.set(modes, lhs, rhs, {})
 end
 
 map("n", "<leader>gg", [[<cmd>G<cr>]])
@@ -28,20 +29,15 @@ map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
-map("i", "<C-BS>", "<C-w>")
-map("i", "<C-h>", "<C-w>")
+map({ "i", "c" }, "<C-BS>", "<C-w>")
+map({ "i", "c" }, "<C-h>", "<C-w>")
 
 -- LSP Stuff
 map("n", "gD", vim.lsp.buf.declaration)
 map("n", "gd", vim.lsp.buf.definition)
 map("n", "gr", vim.lsp.buf.references)
 
-map("n", "<leader>vf", function()
-  -- local cursor = vim.fn.getpos(".")
-  -- vim.cmd.normal("gggqG")
-  -- vim.fn.setpos(".", cursor)
-  require("conform").format()
-end)
+map("n", "<leader>vf", vim.lsp.buf.format)
 map("n", "<leader>vd", function()
   require("tillb.peekdefinition").peek_definition()
 end)
@@ -73,6 +69,7 @@ map("n", "<leader>tm", function()
 end)
 
 -- Telescope Stuff
+---@module "snacks"
 map("n", "<leader>ff", function()
   Snacks.picker.files()
 end)

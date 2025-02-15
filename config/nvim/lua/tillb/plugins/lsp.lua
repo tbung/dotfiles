@@ -178,28 +178,4 @@ return {
       signature = { enabled = true },
     },
   },
-  {
-    "stevearc/conform.nvim",
-    event = { "BufWritePre" },
-    cmd = { "ConformInfo" },
-    opts = {
-      formatters_by_ft = {
-        lua = { "stylua" },
-        python = { "isort", "black" },
-        bash = { "shfmt" },
-        sh = { "shfmt" },
-        markdown = { "prettier" },
-        tex = { "latexindent" },
-      },
-
-      formatters = {
-        black = {
-          prepend_args = { "--safe" },
-        },
-      },
-    },
-    init = function()
-      vim.o.formatexpr = [[v:lua.require("conform").formatexpr()]]
-    end,
-  },
 }
