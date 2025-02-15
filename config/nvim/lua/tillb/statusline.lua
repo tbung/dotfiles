@@ -24,31 +24,35 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-local function get_icon_color_by_filetype(ft)
-  local ok, devicons = pcall(require, "nvim-web-devicons")
+---@param ft string
+---@return string|nil, string|nil
+local function get_icon(ft)
+  local ok, devicons = pcall(require, "mini.icons")
 
   if not ok then
     return nil, nil
   end
 
-  return devicons.get_icon_color_by_filetype(ft, {})
+  local icon, hl, _ = devicons.get("filetype", ft)
+  return icon, hl
 end
 
 local ft_icon = {}
 setmetatable(ft_icon, {
   __index = function(t, k)
-    local icon, color = get_icon_color_by_filetype(k)
-    t[k] = { icon, color }
-    return { icon, color }
+    local icon, hl = get_icon(k)
+    t[k] = { icon, hl }
+    return { icon, hl }
   end,
 })
 
 function StatusFileIcon()
   local file_comp = "%#StatusLine#%t %h%m%r"
   local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-  local icon, color = unpack(ft_icon[ft])
+  local icon, hl = unpack(ft_icon[ft])
   if icon ~= nil then
-    vim.api.nvim_set_hl(0, "StatusLineIcon", { fg = color, bg = bg })
+    local fg = vim.api.nvim_get_hl(0, { name = hl }).fg
+    vim.api.nvim_set_hl(0, "StatusLineIcon", { fg = fg, bg = bg })
     return "%#StatusLineIcon#" .. icon .. " " .. file_comp
   end
   return file_comp
@@ -57,9 +61,10 @@ end
 function WinbarFileIcon()
   local file_comp = "%#WinBar#%f %h%m%r"
   local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })
-  local icon, color = unpack(ft_icon[ft])
+  local icon, hl = unpack(ft_icon[ft])
   if icon ~= nil then
-    vim.api.nvim_set_hl(0, "WinBarIcon", { fg = color, bg = bg_win })
+    local fg = vim.api.nvim_get_hl(0, { name = hl }).fg
+    vim.api.nvim_set_hl(0, "WinBarIcon", { fg = fg, bg = bg_win })
     return "%#WinBarIcon#" .. icon .. " " .. file_comp
   end
   return file_comp
@@ -104,16 +109,6 @@ else
   C = C.get_palette()
 end
 
-local assets = {
-  mode_icon = "",
-  lsp = {
-    server = "",
-  },
-  git = {
-    branch = "",
-  },
-}
-
 local mode_colors = {
   ["n"] = { "NORMAL", C.lavender },
   ["no"] = { "N-PENDING", C.lavender },
@@ -149,8 +144,7 @@ function StatusMode()
   local name = (mode_colors[mode.mode] or { "NORMAL", C.lavender })[1]
   local color = (mode_colors[mode.mode] or { "NORMAL", C.lavender })[2]
   vim.api.nvim_set_hl(0, "StatusMode", { fg = C.surface0, bg = color, bold = true })
-
-  return "%#StatusMode# " .. assets.mode_icon .. " " .. name .. " %#StatusLine#"
+  return "%#StatusMode# " .. name .. " %#StatusLine#"
 end
 
 function StatusLsp()
@@ -161,12 +155,13 @@ function StatusLsp()
   local names = vim.tbl_map(function(item)
     return item.name
   end, clients)
-  return "%#StatusLineNC#" .. assets.lsp.server .. " " .. table.concat(names, ", ") .. "%#StatusLine#"
+  return "%#StatusLineNC#" .. table.concat(names, ", ") .. "%#StatusLine#"
 end
 
 function StatusGit()
   if vim.b.gitsigns_head then
-    return assets.git.branch .. " " .. vim.b.gitsigns_head
+    local icon, _ = unpack(ft_icon["git"])
+    return icon .. " " .. vim.b.gitsigns_head
   end
   return ""
 end

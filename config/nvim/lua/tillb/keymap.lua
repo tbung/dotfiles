@@ -68,7 +68,7 @@ map("n", "<leader>tm", function()
   require("tillb.terminal").terminal_make()
 end)
 
--- Telescope Stuff
+-- Pickers
 ---@module "snacks"
 map("n", "<leader>ff", function()
   Snacks.picker.files()

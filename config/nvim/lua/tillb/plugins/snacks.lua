@@ -1,3 +1,4 @@
+---@module "snacks"
 return {
   {
     "folke/snacks.nvim",
@@ -6,8 +7,11 @@ return {
     ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
-      dashboard = { enabled = false },
-      indent = { enabled = false },
+      indent = {
+        enabled = true,
+        scope = { enabled = false },
+        animate = { enabled = false },
+      },
       input = {
         enabled = true,
         win = {

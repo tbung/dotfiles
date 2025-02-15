@@ -139,29 +139,12 @@ return {
     config = true,
   },
   {
-    "folke/todo-comments.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = "nvim-lua/plenary.nvim",
-    config = true,
-  },
-  {
     "chrisgrieser/nvim-spider",
     keys = {
-      { mode = { "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", desc = "Spider-w" },
-      { mode = { "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", desc = "Spider-e" },
-      { mode = { "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", desc = "Spider-b" },
+      { mode = { "n", "o", "x" }, "w",  "<cmd>lua require('spider').motion('w')<CR>",  desc = "Spider-w" },
+      { mode = { "n", "o", "x" }, "e",  "<cmd>lua require('spider').motion('e')<CR>",  desc = "Spider-e" },
+      { mode = { "n", "o", "x" }, "b",  "<cmd>lua require('spider').motion('b')<CR>",  desc = "Spider-b" },
       { mode = { "n", "o", "x" }, "ge", "<cmd>lua require('spider').motion('ge')<CR>", desc = "Spider-ge" },
-    },
-  },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    main = "ibl",
-    opts = {
-      scope = {
-        show_start = false,
-        show_end = false,
-      },
     },
   },
   {
@@ -183,10 +166,10 @@ return {
       vim.keymap.set("n", "<leader>sl", "<Plug>SlimeLineSend")
     end,
   },
-  -- TODO: Replace with mini.icons
   {
-    "nvim-tree/nvim-web-devicons",
+    "echasnovski/mini.icons",
     lazy = true,
+    config = true,
   },
   {
     "mickael-menu/zk-nvim",
@@ -247,47 +230,26 @@ return {
               return hls
             end,
           },
-          { "size", highlight = "Special" },
+          { "size",  highlight = "Special" },
           { "mtime", highlight = "Number" },
           {
             "icon",
-            -- default_file = icon_file,
-            -- directory = icon_dir,
             add_padding = true,
           },
         },
       })
     end,
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "echasnovski/mini.icons" },
   },
   {
     "folke/trouble.nvim",
     cmd = { "Trouble" },
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "echasnovski/mini.icons" },
     config = true,
-  },
-  {
-    "NvChad/nvim-colorizer.lua",
-    config = true,
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      filetypes = {
-        "python",
-        "css",
-        "scss",
-        "javascript",
-        html = { mode = "foreground" },
-      },
-      user_default_options = {
-        rgb_fn = true,
-      },
-    },
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
     ft = { "markdown" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
