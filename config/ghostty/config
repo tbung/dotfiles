@@ -1,6 +1,9 @@
 theme = catppuccin-mocha
+background = #000000
 font-family = "Victor Mono"
 font-size = 14
+gtk-titlebar-hide-when-maximized = true
+adw-toolbar-style = flat
 
 # fix opt-backspace on macos
 keybind = opt+backspace=text:\x08
