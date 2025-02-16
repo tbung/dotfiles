@@ -1,4 +1,7 @@
 config/kitty/themes/*
+config/kitty/current-theme.conf
+config/kitty/kitty.conf.bak
+config/wezterm/colorscheme
 config/zsh/plugins/*
 config/zsh/functions/*.zwc
 home/.pyenv/*

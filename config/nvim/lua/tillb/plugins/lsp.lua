@@ -161,11 +161,6 @@ return {
     opts = {
       keymap = {
         preset = "default",
-        cmdline = {
-          preset = "default",
-          ["<Up>"] = { "fallback" },
-          ["<Down>"] = { "fallback" },
-        },
       },
 
       appearance = {
@@ -176,6 +171,7 @@ return {
 
       -- experimental signature help support
       signature = { enabled = true },
+      cmdline = { enabled = false },
     },
   },
 }
