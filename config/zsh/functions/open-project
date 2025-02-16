@@ -1,0 +1,25 @@
+local dir
+if (( ${+commands[fd]} )); then
+    dir=$(fd --hidden --prune .git$ ${HOME}/Projects -x dirname | fzf)
+else
+    dir=$(printf '%s\n' ${HOME}/Projects/**/.git | xargs dirname | fzf)
+fi
+
+if [[ -z "$dir" ]]; then
+    zle && zle redisplay
+    return 0
+fi
+
+if zle; then
+    zle push-line
+    BUFFER="cd $dir"
+    zle accept-line
+    local ret=$?
+    unset dir
+    zle reset-prompt
+    return $ret
+else
+    cd $dir
+fi
+
+# vim:ft=zsh

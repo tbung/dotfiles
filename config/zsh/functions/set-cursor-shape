@@ -1,0 +1,10 @@
+case $1 in
+    block)
+        print -n '\e[2 q'
+        ;;
+    beam)
+        print -n '\e[6 q'
+        ;;
+esac
+
+# vim:ft=zsh

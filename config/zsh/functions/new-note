@@ -1,0 +1,6 @@
+if ! vared -cep "Title: " title; then
+    return 1
+fi
+zk new -t "$title"
+
+# vim:ft=zsh
