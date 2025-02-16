@@ -1,0 +1,4 @@
+set-cursor-shape 'beam'
+set-title $1
+
+# vim:ft=zsh

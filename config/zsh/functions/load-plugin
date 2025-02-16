@@ -1,0 +1,22 @@
+: ${ZPLUGINDIR:=${ZDOTDIR:-~/.config/zsh}/plugins}
+
+repo=$1
+plugdir=$ZPLUGINDIR/${repo:t}
+initfile=$plugdir/${repo:t}.plugin.zsh
+
+if [[ ! -d $plugdir ]]; then
+    print "Cloning $repo..."
+    git clone -q --depth 1 --recursive --shallow-submodules \
+        https://github.com/$repo $plugdir
+
+    if [[ ${repo:t} == "powerlevel10k" ]]; then
+        make -C $plugdir pkg
+    else
+        for file in $plugdir/**/*.zsh; do
+            zcompile -R -- "$file".zwc "$file"
+        done
+    fi
+fi
+
+initfiles=($plugdir/${repo:t}.{plugin.zsh,zsh-theme,zsh,sh}(N))
+source $initfiles[1]

@@ -1,0 +1,3 @@
+set-cursor-shape 'beam'
+
+# vim:ft=zsh
