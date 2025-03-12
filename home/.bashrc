@@ -11,8 +11,6 @@ shopt -s globstar
 shopt -s checkjobs
 
 
-eval "$(zoxide init bash )"
-
 eval "$(direnv hook bash)"
 
 

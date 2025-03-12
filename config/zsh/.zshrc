@@ -164,17 +164,31 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     fi
 fi
 
-(( ${+commands[zoxide]} )) && eval "$(zoxide init zsh)"
-
 # FZF
 # Go install
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+fi
 # brew install
-(( ${+commands[brew]} )) && [ -f $(brew --prefix)/opt/fzf/shell/key-bindings.zsh ] && source $(brew --prefix)/opt/fzf/shell/key-bindings.zsh
-(( ${+commands[brew]} )) && [ -f $(brew --prefix)/opt/fzf/shell/completion.zsh ] && source $(brew --prefix)/opt/fzf/shell/completion.zsh
+if [[ -v commands[brew] ]]; then
+    if [ -f $(brew --prefix)/opt/fzf/shell/key-bindings.zsh ]; then
+        source $(brew --prefix)/opt/fzf/shell/key-bindings.zsh
+    fi
+    if [ -f $(brew --prefix)/opt/fzf/shell/completion.zsh ]; then
+        source $(brew --prefix)/opt/fzf/shell/completion.zsh
+    fi
+fi
 # apt install
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-[ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
+if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+fi
+if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
+    source /usr/share/doc/fzf/examples/completion.zsh
+fi
 # pacman install
-[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+if [ -f /usr/share/fzf/key-bindings.zsh ]; then
+    source /usr/share/fzf/key-bindings.zsh
+fi
+if [ -f /usr/share/fzf/completion.zsh ]; then
+    source /usr/share/fzf/completion.zsh
+fi
