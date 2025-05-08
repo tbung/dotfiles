@@ -36,7 +36,7 @@ return {
           colored_indent_levels = false,
         },
         native_lsp = {
-				underlines = {  -- TODO: Do we then need to change this in the LSP setup?
+				underlines = {
 					errors = { "undercurl" },
 					hints = { "undercurl" },
 					warnings = { "undercurl" },
