@@ -79,32 +79,14 @@ return {
       { "ga", mode = { "n", "x" } },
       { "gA", mode = { "n", "x" } },
     },
+    opts = {
+      modifiers = {
+        ["i"] = function(steps, _)
+          table.insert(steps.pre_split, require("mini.align").gen_step.ignore_split({ [[".-"]], "%(.-%)" }))
+        end
+      },
+    },
     config = true,
-  },
-  {
-    "echasnovski/mini.starter",
-    event = "VimEnter",
-    config = function()
-      local starter = require("mini.starter")
-      starter.setup({
-        items = {
-          starter.sections.recent_files(5, true, true),
-          starter.sections.builtin_actions(),
-          starter.sections.sessions(5, true),
-        },
-        silent = true,
-      })
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "LazyVimStarted",
-        callback = function()
-          local stats = require("lazy").stats()
-          local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-          starter.config.footer = "Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-          pcall(starter.refresh)
-        end,
-      })
-    end,
   },
   {
     "echasnovski/mini.surround",
