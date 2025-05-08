@@ -99,6 +99,14 @@ unsetopt LIST_BEEP
 # use ctrl+n to accept next word from zsh-autosuggestions
 bindkey "^n" forward-word
 
+# use arrows to history substring search (if on the first line)
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+
 # Use viins keymap as the default.
 bindkey -v
 
