@@ -36,6 +36,7 @@ require("lazy").setup("tillb.plugins", {
   },
   performance = {
     rtp = {
+      reset = false, -- otherwise system-level files are not loaded (e.g. ghostty installs a syntax file on arch)
       disabled_plugins = {
         "gzip",
         "netrwPlugin", -- replaced by oil.nvim
