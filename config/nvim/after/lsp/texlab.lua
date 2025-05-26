@@ -3,7 +3,7 @@ return {
     texlab = {
       auxDirectory = "./build",
       build = {
-        args = { "-pdf", "-output-directory=./build", "-interaction=nonstopmode", "-synctex=1", "%f" },
+        args = { "-output-directory=./build", "-interaction=nonstopmode", "-synctex=1", "%f" },
         onSave = true,
       },
       latexindent = {
