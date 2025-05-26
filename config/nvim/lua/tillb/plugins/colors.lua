@@ -7,14 +7,13 @@ return {
     local options = {
       flavour = "auto", -- latte, frappe, macchiato, mocha
       background = {    -- :h background
-        light = "latte",
-        dark = "mocha",
-      },
+        light = "latte", dark = "mocha", },
 
       custom_highlights = function(colors)
         return {
           Folded = { bg = colors.mantle },
           Normal = { bg = "none" },
+          NormalFloat = { bg = "none" },
           NormalNC = { bg = "none" },
           Pmenu = { bg = colors.none },
           WinBar = { style = { "bold" } },
@@ -27,22 +26,17 @@ return {
         telescope = true,
         mini = true,
         markdown = true,
-        dap = {
-          enabled = true,
-          enable_ui = true,
-        },
-        indent_blankline = {
-          enabled = true,
-          colored_indent_levels = false,
-        },
+        dap = { enabled = true, enable_ui = true, },
+        indent_blankline = { enabled = true, colored_indent_levels = false, },
+        snacks = { enabled = true },
         native_lsp = {
-				underlines = {
-					errors = { "undercurl" },
-					hints = { "undercurl" },
-					warnings = { "undercurl" },
-					information = { "undercurl" },
-					ok = { "undercurl" },
-				},
+          underlines = {
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
+            ok = { "undercurl" },
+          },
         },
       },
     }
