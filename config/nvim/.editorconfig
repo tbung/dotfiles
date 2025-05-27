@@ -7,3 +7,5 @@ align_array_table = false
 trailing_table_separator = smart
 break_all_list_when_line_exceed = true
 auto_collapse_lines = true
+call_arg_parentheses = keep
+quote_style = double
