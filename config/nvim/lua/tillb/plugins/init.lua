@@ -73,22 +73,6 @@ return {
     config = true,
   },
   {
-    "echasnovski/mini.align",
-    lazy = true,
-    keys = {
-      { "ga", mode = { "n", "x" } },
-      { "gA", mode = { "n", "x" } },
-    },
-    opts = {
-      modifiers = {
-        ["i"] = function(steps, _)
-          table.insert(steps.pre_split, require("mini.align").gen_step.ignore_split({ [[".-"]], "%(.-%)" }))
-        end
-      },
-    },
-    config = true,
-  },
-  {
     "echasnovski/mini.surround",
     lazy = true,
     keys = {

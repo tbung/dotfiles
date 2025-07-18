@@ -89,8 +89,12 @@ map("n", "<C-n>", function()
   Snacks.picker.smart({
     multi = { { source = "buffers", current = false }, "files" },
     matcher = {
-      on_match = function(_, item)
-        if item.flags and item.flags:find("#") then
+      on_match = function(ctx, item)
+        -- prioritize buffers, especially alternate buffer
+        if item.buf then
+          item.score = item.score + 8
+        end
+        if item.flags and item.flags:find("#") and ctx.pattern == "" then
           item.score = 20000
         end
       end,

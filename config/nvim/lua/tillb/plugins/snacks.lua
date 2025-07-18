@@ -6,7 +6,7 @@ return {
     lazy = false,
     ---@type snacks.Config
     opts = {
-      bigfile = { enabled = true },
+      bigfile = { enabled = false },
       indent = {
         enabled = true,
         scope = { enabled = false },
