@@ -2,6 +2,7 @@ theme = catppuccin-mocha
 background = #000000
 font-family = "Victor Mono"
 font-size = 14
+maximize = true
 gtk-titlebar-hide-when-maximized = true
 adw-toolbar-style = flat
 
