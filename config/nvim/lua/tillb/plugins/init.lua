@@ -68,11 +68,6 @@ return {
     opts = { highlight_on_key = true, dim = true },
   },
   {
-    "echasnovski/mini.sessions",
-    event = "VimEnter",
-    config = true,
-  },
-  {
     "echasnovski/mini.surround",
     lazy = true,
     keys = {
@@ -193,12 +188,6 @@ return {
       })
     end,
     dependencies = { "echasnovski/mini.icons" },
-  },
-  {
-    "folke/trouble.nvim",
-    cmd = { "Trouble" },
-    dependencies = { "echasnovski/mini.icons" },
-    config = true,
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",

@@ -8,6 +8,10 @@ return {
       local lsppath = vim.fn.stdpath("data") .. "/lazy/nvim-lspconfig"
       vim.opt.rtp:prepend(lsppath)
 
+      vim.lsp.enable("basedpyright")
+      vim.lsp.enable("lua_ls")
+      vim.lsp.enable("texlab")
+
       vim.diagnostic.config({
         virtual_text = true,
         update_in_insert = false,
@@ -26,7 +30,6 @@ return {
     end,
   },
   { "mason-org/mason.nvim", lazy = false, config = true },
-  { "williamboman/mason-lspconfig.nvim", event = { "BufReadPre", "BufNewFile" }, config = true },
   {
     "saghen/blink.cmp",
     lazy = false,
