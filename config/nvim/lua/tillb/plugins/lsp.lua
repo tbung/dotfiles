@@ -1,47 +1,39 @@
-return {
-  { "folke/lazydev.nvim", ft = "lua", config = true },
-  {
-    "neovim/nvim-lspconfig",
-    lazy = true,
-    dependencies = { "microsoft/python-type-stubs" },
-    init = function()
-      local lsppath = vim.fn.stdpath("data") .. "/lazy/nvim-lspconfig"
-      vim.opt.rtp:prepend(lsppath)
+vim.pack.add({
+  "https://github.com/neovim/nvim-lspconfig",
+  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
+})
 
-      vim.lsp.enable("basedpyright")
-      vim.lsp.enable("lua_ls")
-      vim.lsp.enable("texlab")
-
-      vim.diagnostic.config({
-        virtual_text = true,
-        update_in_insert = false,
-        underline = true,
-        severity_sort = true,
-        float = true,
-        signs = {
-          text = {
-            [vim.diagnostic.severity.ERROR] = " ",
-            [vim.diagnostic.severity.WARN] = " ",
-            [vim.diagnostic.severity.INFO] = " ",
-            [vim.diagnostic.severity.HINT] = " ",
-          },
-        },
-      })
-    end,
-  },
-  { "mason-org/mason.nvim", lazy = false, config = true },
-  {
-    "saghen/blink.cmp",
-    lazy = false,
-    dependencies = "rafamadriz/friendly-snippets",
-    version = "v1.*",
-
-    ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
-    opts = {
-      -- experimental signature help support
-      signature = { enabled = true },
-      cmdline = { enabled = false },
+vim.diagnostic.config({
+  virtual_text = true,
+  update_in_insert = false,
+  underline = true,
+  severity_sort = true,
+  float = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
     },
   },
-}
+})
+
+require("blink.cmp").setup({
+  -- experimental signature help support
+  signature = { enabled = true },
+  cmdline = { enabled = false },
+})
+
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
+  once = true,
+  callback = function()
+    -- local server_configs = vim.iter(vim.api.nvim_get_runtime_file("lsp/*.lua", true))
+    --     :map(function(file)
+    --       return vim.fn.fnamemodify(file, ":t:r")
+    --     end)
+    --     :totable()
+    local server_configs = { "lua_ls", "texlab", "basedpyright" }
+    vim.lsp.enable(server_configs)
+  end,
+})
