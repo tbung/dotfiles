@@ -46,7 +46,12 @@ map("n", "gD", vim.lsp.buf.declaration)
 map("n", "gd", vim.lsp.buf.definition)
 map("n", "gr", vim.lsp.buf.references)
 
-map("n", "<leader>vf", vim.lsp.buf.format)
+map("n", "<leader>vf", function()
+  vim.lsp.buf.format()
+  vim.api.nvim_exec_autocmds("User",
+    { buffer = vim.api.nvim_get_current_buf(), group = vim.api.nvim_create_augroup("UserLspFormat", {
+    }), })
+end)
 map("n", "<leader>vd", function()
   require("tillb.peekdefinition").peek_definition()
 end)
