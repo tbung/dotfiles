@@ -3,12 +3,12 @@ vim.pack.add({ { src = "https://github.com/catppuccin/nvim", name = "catppuccin"
 local options = {
   flavour = "auto",
   background = { light = "latte", dark = "mocha" },
+  float = { transparent = true, },
 
   custom_highlights = function(colors)
     return {
       Folded = { bg = colors.mantle },
       Normal = { bg = "none" },
-      NormalFloat = { bg = "none" },
       NormalNC = { bg = "none" },
       Pmenu = { bg = colors.none },
       WinBar = { style = { "bold" } },
