@@ -1,16 +1,12 @@
-vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
-
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("my.lsp", {}),
   callback = function(args)
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     if client:supports_method("textDocument/completion") then
-      -- if client.name == "lua_ls" then
-      --   client.server_capabilities.completionProvider.triggerCharacters = { "a" }
-      -- end
       vim.lsp.completion.enable(true, client.id, args.buf, {
         autotrigger = false,
         convert = function(item)
+          -- TODO: Proper hl groups
           return { kind_hlgroup = "BlinkCmpKind" .. vim.lsp.protocol.CompletionItemKind[item.kind] }
         end,
       })

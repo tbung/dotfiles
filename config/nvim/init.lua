@@ -59,4 +59,6 @@ vim.o.fillchars =  "foldclose:,foldopen:"
 
 vim.o.statuscolumn = [[%!v:lua.require'tillb.signcol'.column()]]
 
-require("tillb")
+vim.cmd.colorscheme("basic")
+
+require("tillb.statusline")

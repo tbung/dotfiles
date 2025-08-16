@@ -62,17 +62,4 @@ function M.update_signs(buf)
   end
 end
 
-function M.setup_autocmds()
-  vim.api.nvim_create_autocmd("BufEnter", { callback = function(args)
-    M.update_signs(args.buf)
-  end })
-
-  vim.api.nvim_create_autocmd("User", {
-    group = vim.api.nvim_create_augroup("UserLspFormat", {}),
-    callback = function(args)
-      M.update_signs(args.buf)
-    end,
-  })
-end
-
 return M

@@ -32,7 +32,8 @@ vim.api.nvim_create_autocmd("UIEnter", {
   once = true,
   callback = function()
     vim.schedule(function()
-      vim.lsp.enable({ "luals", "clangd", "basedpyright", "ruff" })
+      require("tillb.keymap")
+
       vim.diagnostic.config({
         virtual_text = true,
         update_in_insert = false,
@@ -60,9 +61,32 @@ vim.api.nvim_create_autocmd("UIEnter", {
   end,
 })
 
+vim.api.nvim_create_autocmd("BufReadPre", {
+  group = group,
+  once = true,
+  callback = function(args)
+    local server_configs = { "lua_ls", "texlab", "basedpyright", "ruff" }
+    vim.lsp.enable(server_configs)
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   group = group,
   callback = function(args)
     pcall(vim.treesitter.start, args.buf)
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = group,
+  callback = function(args)
+    require("tillb.marks").update_signs(args.buf)
+  end
+})
+
+vim.api.nvim_create_autocmd("User", {
+  group = vim.api.nvim_create_augroup("UserLspFormat", {}),
+  callback = function(args)
+    require("tillb.marks").update_signs(args.buf)
   end,
 })
