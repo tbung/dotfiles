@@ -1,4 +1,9 @@
-local severities = { "Error", "Warn", "Info", "Hint" }
+local hl_severity = {
+  [vim.diagnostic.severity.ERROR] = "Error",
+  [vim.diagnostic.severity.WARN] = "Warn",
+  [vim.diagnostic.severity.INFO] = "Info",
+  [vim.diagnostic.severity.HINT] = "Hint",
+}
 
 ---@param ft string
 ---@return string|nil, string|nil
@@ -28,29 +33,17 @@ local function cwd()
 end
 
 local function diagnostics()
-  local str = ""
+  local counts = vim.diagnostic.count(0)
+  local user_signs = vim.tbl_get(vim.diagnostic.config() --[[@as vim.diagnostic.Opts]], "signs", "text") or {}
+  local signs = vim.tbl_extend("keep", user_signs, { "E", "W", "I", "H" })
+  local result_str = vim
+      .iter(pairs(counts))
+      :map(function(severity, count)
+        return ("%%#DiagnosticSign%s#%s%s%%#StatusLine#"):format(hl_severity[severity], signs[severity], count)
+      end)
+      :join(" ")
 
-  local signs = vim.diagnostic.config().signs
-  if type(signs) == "table" then
-    signs = signs.text
-  elseif type(signs) == "boolean" then
-    signs = { "E", "W", "I", "H" }
-  elseif type(signs) == "function" then
-    signs = signs(0, 0).text
-  else
-    signs = nil
-  end
-
-  for i, severity in ipairs(severities) do
-    local count = #vim.diagnostic.get(0, { severity = i })
-    if count > 0 then
-      if signs ~= nil then
-        local sign = signs[i]
-        str = str .. " %#DiagnosticSign" .. severity .. "#" .. sign .. count .. "%#StatusLine#"
-      end
-    end
-  end
-  return str
+  return result_str
 end
 
 local function lsp()
