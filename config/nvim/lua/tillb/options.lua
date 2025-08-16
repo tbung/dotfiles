@@ -62,6 +62,8 @@ vim.opt.fillchars = {
 
 vim.opt.statuscolumn = [[%!v:lua.require'tillb.signcol'.column()]]
 
+require("vim._extui").enable({})
+
 local tty = false
 for _, ui in ipairs(vim.api.nvim_list_uis()) do
   if ui.chan == 1 and ui.stdout_tty then
