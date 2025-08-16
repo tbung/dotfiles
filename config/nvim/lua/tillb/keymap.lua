@@ -32,6 +32,9 @@ map("n", "N", "Nzzzv")
 map({ "i", "c" }, "<C-BS>", "<C-w>")
 map({ "i", "c" }, "<C-h>", "<C-w>")
 
+map("n", "m", function() R("tillb.marks").set_mark() end)
+map("n", "dm", function() R("tillb.marks").unset_mark() end)
+
 -- LSP Stuff
 map("n", "gD", vim.lsp.buf.declaration)
 map("n", "gd", vim.lsp.buf.definition)

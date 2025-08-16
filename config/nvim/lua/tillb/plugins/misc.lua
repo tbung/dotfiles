@@ -5,7 +5,6 @@ vim.pack.add({
   "https://github.com/j-hui/fidget.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/echasnovski/mini.nvim",
-  "https://github.com/chentoast/marks.nvim",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/jpalardy/vim-slime",

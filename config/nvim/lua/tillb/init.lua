@@ -2,6 +2,7 @@ require("tillb.options")
 require("tillb.keymap")
 vim.cmd.colorscheme("basic")
 require("tillb.statusline")
+require("tillb.marks").setup_autocmds()
 
 if vim.g.basic or vim.env.NVIM_BASIC ~= nil then
   return
