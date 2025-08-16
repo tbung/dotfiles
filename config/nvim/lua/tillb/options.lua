@@ -47,6 +47,10 @@ vim.opt.showmode = false
 
 vim.opt.wildignorecase = true
 
+vim.o.completeopt = "menuone,fuzzy,popup,noinsert"
+vim.o.autocomplete = true
+vim.o.complete = "."
+
 vim.opt.foldenable = true
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
