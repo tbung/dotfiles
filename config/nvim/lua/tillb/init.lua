@@ -10,5 +10,4 @@ end
 require("tillb.plugins.lsp")
 require("tillb.plugins.colors")
 require("tillb.plugins.treesitter")
-require("tillb.plugins.snacks")
 require("tillb.plugins.misc")

@@ -4,12 +4,12 @@ vim.pack.add({
   "https://github.com/jinh0/eyeliner.nvim",
   "https://github.com/j-hui/fidget.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
-  "https://github.com/echasnovski/mini.icons",
-  "https://github.com/echasnovski/mini.surround",
+  "https://github.com/echasnovski/mini.nvim",
   "https://github.com/chentoast/marks.nvim",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/jpalardy/vim-slime",
+  "https://github.com/folke/snacks.nvim",
 })
 
 vim.schedule(function()
@@ -52,3 +52,31 @@ vim.g.slime_bracketed_paste = 1
 vim.keymap.set("v", "<leader>sc", "<Plug>SlimeRegionSend")
 vim.keymap.set("n", "<leader>sc", "<Plug>SlimeMotionSend")
 vim.keymap.set("n", "<leader>sl", "<Plug>SlimeLineSend")
+require("snacks").setup({
+  bigfile = { enabled = false },
+  indent = { enabled = true, scope = { enabled = false }, animate = { enabled = false } },
+  input = {
+    enabled = true,
+    win = {
+      keys = {
+        i_ctrl_bs = { "<C-BS>", "delete_word", mode = "i", expr = true },
+        i_ctrl_h = { "<c-h>", "delete_word", mode = "i", expr = true },
+      },
+      actions = { delete_word = function()
+        return "<c-s-w>"
+      end },
+    },
+  },
+  picker = {
+    enabled = true,
+    win = {
+      input = {
+        keys = { ["<C-BS>"] = { "<c-s-w>", mode = "i", expr = true }, ["<c-h>"] = { "<c-s-w>", mode = "i", expr = true } },
+      },
+    },
+  },
+  notifier = { enabled = false },
+  quickfile = { enabled = false },
+  words = { enabled = false },
+  image = { enabled = false },
+})
