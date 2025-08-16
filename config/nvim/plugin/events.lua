@@ -17,22 +17,17 @@ vim.api.nvim_create_autocmd("TermOpen", {
   group = group,
 })
 
-vim.api.nvim_create_autocmd("CmdlineEnter", {
-  group = group,
-  once = true,
-  callback = function()
-    if vim.version().minor >= 12 then
-      require("vim._extui").enable({})
-    end
-  end,
-})
-
 vim.api.nvim_create_autocmd("UIEnter", {
   group = group,
   once = true,
   callback = function()
     vim.schedule(function()
       require("tillb.keymap")
+
+      -- NOTE: Could load this on CmdLineEnter, but that causes a flicker that bugs me
+      if vim.version().minor >= 12 then
+        require("vim._extui").enable({})
+      end
 
       vim.diagnostic.config({
         virtual_text = true,
@@ -81,7 +76,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   group = group,
   callback = function(args)
     require("tillb.marks").update_signs(args.buf)
-  end
+  end,
 })
 
 vim.api.nvim_create_autocmd("User", {
