@@ -33,13 +33,13 @@ map("n", "N", "Nzzzv")
 map({ "i", "c" }, "<C-BS>", "<C-w>")
 map({ "i", "c" }, "<C-h>", "<C-w>")
 
-map("n", "m", function() R("tillb.marks").set_mark() end)
-map("n", "dm", function() R("tillb.marks").unset_mark() end)
+map("n", "m", function() require("tillb.marks").set_mark() end)
+map("n", "dm", function() require("tillb.marks").unset_mark() end)
 
-map("n", "f", function() return R("tillb.line-nav").on_key("f") end, { expr = true })
-map("n", "F", function() return R("tillb.line-nav").on_key("F") end, { expr = true })
-map("n", "t", function() return R("tillb.line-nav").on_key("t") end, { expr = true })
-map("n", "T", function() return R("tillb.line-nav").on_key("T") end, { expr = true })
+map("n", "f", function() return require("tillb.line-nav").on_key("f") end, { expr = true })
+map("n", "F", function() return require("tillb.line-nav").on_key("F") end, { expr = true })
+map("n", "t", function() return require("tillb.line-nav").on_key("t") end, { expr = true })
+map("n", "T", function() return require("tillb.line-nav").on_key("T") end, { expr = true })
 
 -- LSP Stuff
 map("n", "gD", vim.lsp.buf.declaration)
