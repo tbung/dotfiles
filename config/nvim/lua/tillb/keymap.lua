@@ -5,8 +5,9 @@ local mappings = {}
 ---@param modes string|string[]
 ---@param lhs string
 ---@param rhs string|function
+---@param opts vim.keymap.set.Opts|nil
 ---@return nil
-local function map(modes, lhs, rhs)
+local function map(modes, lhs, rhs, opts)
   if type(modes) ~= "table" then
     modes = { modes }
   end
@@ -20,7 +21,7 @@ local function map(modes, lhs, rhs)
     mappings[m] = vim.fn.maparg(lhs, mode)
   end
 
-  vim.keymap.set(modes, lhs, rhs, {})
+  vim.keymap.set(modes, lhs, rhs, opts or {})
 end
 
 map("n", "<leader>gg", [[<cmd>G<cr>]])
@@ -34,6 +35,11 @@ map({ "i", "c" }, "<C-h>", "<C-w>")
 
 map("n", "m", function() R("tillb.marks").set_mark() end)
 map("n", "dm", function() R("tillb.marks").unset_mark() end)
+
+map("n", "f", function() return R("tillb.line-nav").on_key("f") end, { expr = true })
+map("n", "F", function() return R("tillb.line-nav").on_key("F") end, { expr = true })
+map("n", "t", function() return R("tillb.line-nav").on_key("t") end, { expr = true })
+map("n", "T", function() return R("tillb.line-nav").on_key("T") end, { expr = true })
 
 -- LSP Stuff
 map("n", "gD", vim.lsp.buf.declaration)

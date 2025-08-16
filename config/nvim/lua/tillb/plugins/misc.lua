@@ -1,7 +1,6 @@
 vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/tpope/vim-eunuch",
-  "https://github.com/jinh0/eyeliner.nvim",
   "https://github.com/j-hui/fidget.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/echasnovski/mini.nvim",
@@ -11,7 +10,6 @@ vim.pack.add({
 })
 
 vim.schedule(function()
-  require("eyeliner").setup({ highlight_on_key = true, dim = true })
   require("fidget").setup({})
   require("mini.surround").setup({})
 end)
