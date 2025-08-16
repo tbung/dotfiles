@@ -7,7 +7,6 @@ vim.pack.add({
   "https://github.com/echasnovski/mini.nvim",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
-  "https://github.com/jpalardy/vim-slime",
   "https://github.com/folke/snacks.nvim",
 })
 
@@ -43,14 +42,6 @@ require("oil").setup({
   },
 })
 
-vim.g.slime_target = "tmux"
-vim.g.slime_default_config = { pane_direction = "right" }
-vim.g.slime_no_mappings = 1
-vim.g.slime_bracketed_paste = 1
-
-vim.keymap.set("v", "<leader>sc", "<Plug>SlimeRegionSend")
-vim.keymap.set("n", "<leader>sc", "<Plug>SlimeMotionSend")
-vim.keymap.set("n", "<leader>sl", "<Plug>SlimeLineSend")
 require("snacks").setup({
   bigfile = { enabled = false },
   indent = { enabled = true, scope = { enabled = false }, animate = { enabled = false } },
