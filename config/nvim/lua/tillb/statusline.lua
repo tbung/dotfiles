@@ -1,3 +1,5 @@
+local M = {}
+
 local hl_severity = {
   [vim.diagnostic.severity.ERROR] = "Error",
   [vim.diagnostic.severity.WARN] = "Warn",
@@ -65,7 +67,7 @@ local function git()
   return ""
 end
 
-function Statusline()
+function M.statusline()
   return table.concat({
     "%<" .. cwd(),
     "%h%w%m%r",
@@ -79,9 +81,8 @@ function Statusline()
   }, " ")
 end
 
-function Winbar()
+function M.winbar()
   return "%#WinBar#" .. vim.fn.expand("%:.") .. " %h%m%r"
 end
 
-vim.opt.statusline = [[%<%{%v:lua.Statusline()%}]]
-vim.opt.winbar = [[%<%{%v:lua.Winbar()%}]]
+return M

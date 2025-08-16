@@ -55,10 +55,10 @@ vim.o.foldenable = true
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.foldtext = ""
-vim.o.fillchars =  "foldclose:,foldopen:"
+vim.o.fillchars = "foldclose:,foldopen:"
 
-vim.o.statuscolumn = [[%!v:lua.require'tillb.signcol'.column()]]
+vim.o.statuscolumn = [[%!v:lua.require("tillb.signcol").column()]]
+vim.o.statusline = [[%<%{%v:lua.require("tillb.statusline").statusline()%}]]
+vim.o.winbar = [[%<%{%v:lua.require("tillb.statusline").winbar()%}]]
 
 vim.cmd.colorscheme("basic")
-
-require("tillb.statusline")
