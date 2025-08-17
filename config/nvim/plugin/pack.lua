@@ -8,15 +8,65 @@ vim.pack.add({
 
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/tpope/vim-eunuch",
-  "https://github.com/j-hui/fidget.nvim",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/echasnovski/mini.nvim",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
   "https://github.com/folke/snacks.nvim",
-}, { load = true })
+  "https://github.com/j-hui/fidget.nvim",
 
--- NOTE: these three have to be loaded immediately to work properly
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/olimorris/codecompanion.nvim",
+  "https://github.com/ravitemer/mcphub.nvim",
+  "https://github.com/MeanderingProgrammer/render-markdown.nvim",
+}, { load = false })
+
+local group = vim.api.nvim_create_augroup("tillb-pack", {})
+
+vim.api.nvim_create_autocmd("UIEnter", {
+  group = group,
+  once = true,
+  callback = function(args)
+    vim.schedule(function()
+      require("fidget").setup({})
+      require("mini.surround").setup({})
+      vim.cmd.packadd("vim-fugitive")
+      vim.cmd.packadd("vim-eunuch")
+      vim.cmd.packadd("gitsigns.nvim")
+    end)
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufReadPre", {
+  group = group,
+  callback = function(args)
+    require("nvim-treesitter").install({ vim.treesitter.language.get_lang(vim.bo.filetype) })
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = group,
+  callback = function(args)
+    require("treesitter-context").setup({ enable = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("PackChanged", {
+  group = group,
+  callback = function(args)
+    local spec = args.data.spec
+
+    if spec and spec.name == "nvim-treesitter" and args.data.kind == "update" then
+      vim.notify("nvim-treesitter was updated, updating parsers", vim.log.levels.INFO)
+
+      vim.schedule(function()
+        require("nvim-treesitter").update()
+      end)
+    end
+  end,
+})
+
+-- NOTE: these have to be loaded immediately to work properly
 require("catppuccin").setup({
   float = { transparent = true },
 
@@ -48,7 +98,6 @@ require("catppuccin").setup({
   },
 })
 vim.cmd.colorscheme("catppuccin")
-
 
 local permission_hlgroups = {
   ["-"] = "NonText",
@@ -103,46 +152,4 @@ require("snacks").setup({
   quickfile = { enabled = false },
   words = { enabled = false },
   image = { enabled = false },
-})
-
-local group = vim.api.nvim_create_augroup("tillb-pack", {})
-
-vim.api.nvim_create_autocmd("UIEnter", {
-  group = group,
-  once = true,
-  callback = function(args)
-    vim.schedule(function()
-      require("fidget").setup({})
-      require("mini.surround").setup({})
-    end)
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufReadPre", {
-  group = group,
-  callback = function(args)
-    require("nvim-treesitter").install({ vim.treesitter.language.get_lang(vim.bo.filetype) })
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = group,
-  callback = function(args)
-    require("treesitter-context").setup({ enable = true })
-  end,
-})
-
-vim.api.nvim_create_autocmd("PackChanged", {
-  group = group,
-  callback = function(args)
-    local spec = args.data.spec
-
-    if spec and spec.name == "nvim-treesitter" and args.data.kind == "update" then
-      vim.notify("nvim-treesitter was updated, updating parsers", vim.log.levels.INFO)
-
-      vim.schedule(function()
-        require("nvim-treesitter").update()
-      end)
-    end
-  end,
 })

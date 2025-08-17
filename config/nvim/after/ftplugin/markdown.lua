@@ -7,4 +7,4 @@ vim.opt_local.breakindentopt = "shift:4"
 vim.keymap.set("n", "j", "gj", { buffer = true })
 vim.keymap.set("n", "k", "gk", { buffer = true })
 
-vim.pack.add({ "https://github.com/MeanderingProgrammer/render-markdown.nvim" })
+vim.cmd.packadd("render-markdown.nvim")
