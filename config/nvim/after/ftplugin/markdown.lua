@@ -7,4 +7,5 @@ vim.opt_local.breakindentopt = "shift:4"
 vim.keymap.set("n", "j", "gj", { buffer = true })
 vim.keymap.set("n", "k", "gk", { buffer = true })
 
-vim.cmd.packadd("render-markdown.nvim")
+-- NOTE: Currently can't fully disable this for LSP preview windows
+-- vim.cmd.packadd("render-markdown.nvim")
