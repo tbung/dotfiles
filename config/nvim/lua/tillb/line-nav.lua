@@ -71,20 +71,15 @@ function M.highlight(direction)
       invalidate = false,
     })
   end
-  vim.api.nvim_create_autocmd("CursorMoved", {
-    buffer = buf,
-    once = true,
-    callback = function(args)
-      vim.api.nvim_buf_clear_namespace(buf, vim.api.nvim_create_namespace("line-nav"), row - 1, row)
-      vim.on_key(nil, vim.api.nvim_create_namespace("line-nav"))
-    end,
-  })
+
+  -- ignore next {f, F, t, T}, then clear on the next key
   vim.on_key(function(key, typed)
-    if vim.fn.keytrans(key) == "<Esc>" then
+    vim.on_key(function(key, typed)
       vim.api.nvim_buf_clear_namespace(buf, vim.api.nvim_create_namespace("line-nav"), row - 1, row)
       vim.on_key(nil, vim.api.nvim_create_namespace("line-nav"))
-    end
+    end, vim.api.nvim_create_namespace("line-nav"))
   end, vim.api.nvim_create_namespace("line-nav"))
+
   vim.cmd.redraw()
 end
 
