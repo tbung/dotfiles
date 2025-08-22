@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd("BufReadPre", {
   group = group,
   once = true,
   callback = function(args)
-    local server_configs = { "lua_ls", "texlab", "basedpyright", "ruff" }
+    local server_configs = { "lua_ls", "texlab", "basedpyright", "ruff", "bashls" }
     vim.lsp.enable(server_configs)
   end,
 })
