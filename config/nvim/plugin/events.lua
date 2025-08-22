@@ -49,9 +49,9 @@ vim.api.nvim_create_autocmd("UIEnter", {
         require("tillb.terminal").edit_makeprg()
       end, {})
 
-      vim.api.nvim_create_user_command("TMake", function()
-        require("tillb.terminal").terminal_make()
-      end, {})
+      vim.api.nvim_create_user_command("TMake", function(args)
+        require("tillb.terminal").terminal_make(args)
+      end, { bang = true })
     end)
   end,
 })

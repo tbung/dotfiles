@@ -7,20 +7,13 @@ M.create_terminal = function(id)
     vim.cmd("terminal")
   end)
 
-  vim.api.nvim_create_autocmd("BufDelete", {
-    buffer = bufid,
-    callback = function()
-      terminals[id] = nil
-    end,
-  })
+  vim.api.nvim_create_autocmd("BufDelete", { buffer = bufid, callback = function()
+    terminals[id] = nil
+  end, })
 
   local channel = vim.api.nvim_get_option_value("channel", { buf = bufid })
 
-  local terminal = {
-    id = id,
-    bufid = bufid,
-    channel = channel,
-  }
+  local terminal = { id = id, bufid = bufid, channel = channel, }
   terminals[id] = terminal
   return terminal
 end
@@ -44,7 +37,7 @@ M.goto_terminal = function(id)
         kind = "terminals",
         format_item = function(item)
           return tostring(item.id) .. "    " .. vim.api.nvim_buf_get_name(item.bufid)
-        end
+        end,
       },
       function(selected, idx)
         if selected then
@@ -63,11 +56,13 @@ M.goto_new_terminal = function()
   M.goto_terminal(#terminals + 1)
 end
 
-M.terminal_make = function()
+M.terminal_make = function(args)
   local terminal = M.get_terminal(0)
   vim.api.nvim_chan_send(terminal.channel, vim.o.makeprg .. "\n")
-  M.goto_terminal(0)
-  vim.api.nvim_win_set_cursor(0, { vim.api.nvim_buf_line_count(0), 0 })
+  if not args or not args.bang then
+    M.goto_terminal(0)
+    vim.api.nvim_win_set_cursor(0, { vim.api.nvim_buf_line_count(0), 0 })
+  end
 end
 
 M.edit_makeprg = function()
