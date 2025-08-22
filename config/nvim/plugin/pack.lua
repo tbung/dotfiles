@@ -112,6 +112,10 @@ require("catppuccin").setup({
       NormalNC = { bg = "none" },
       Pmenu = { bg = colors.none },
       WinBar = { style = { "bold" } },
+
+      -- NOTE: without this, light-mode makes the cursor hard to see
+      TermCursor = { bg = colors.none },
+      TermCursorNC = { bg = colors.none },
     }
   end,
 
