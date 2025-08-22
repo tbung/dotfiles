@@ -12,7 +12,8 @@ vim.pack.add({
   "https://github.com/echasnovski/mini.nvim",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
-  "https://github.com/folke/snacks.nvim",
+  -- "https://github.com/folke/snacks.nvim",
+  { src = "https://github.com/dpetka2001/snacks.nvim", version = "fix/preview_hack_win_opts" },
   "https://github.com/j-hui/fidget.nvim",
 
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
@@ -160,7 +161,6 @@ require("oil").setup({
 })
 
 require("snacks").setup({
-  bigfile = { enabled = false },
   indent = { enabled = true, scope = { enabled = false }, animate = { enabled = false } },
   input = {
     enabled = true,
@@ -182,8 +182,4 @@ require("snacks").setup({
       },
     },
   },
-  notifier = { enabled = false },
-  quickfile = { enabled = false },
-  words = { enabled = false },
-  image = { enabled = false },
 })
