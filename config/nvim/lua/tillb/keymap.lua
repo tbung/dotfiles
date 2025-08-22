@@ -36,10 +36,10 @@ map({ "i", "c" }, "<C-h>", "<C-w>")
 map("n", "m", function() require("tillb.marks").set_mark() end)
 map("n", "dm", function() require("tillb.marks").unset_mark() end)
 
-map("n", "f", function() return require("tillb.line-nav").on_key("f") end, { expr = true })
-map("n", "F", function() return require("tillb.line-nav").on_key("F") end, { expr = true })
-map("n", "t", function() return require("tillb.line-nav").on_key("t") end, { expr = true })
-map("n", "T", function() return require("tillb.line-nav").on_key("T") end, { expr = true })
+map({ "n", "x", "o" }, "f", function() return require("tillb.line-nav").on_key("f") end, { expr = true })
+map({ "n", "x", "o" }, "F", function() return require("tillb.line-nav").on_key("F") end, { expr = true })
+map({ "n", "x", "o" }, "t", function() return require("tillb.line-nav").on_key("t") end, { expr = true })
+map({ "n", "x", "o" }, "T", function() return require("tillb.line-nav").on_key("T") end, { expr = true })
 
 -- LSP Stuff
 map("n", "gD", vim.lsp.buf.declaration)
@@ -50,7 +50,7 @@ map("n", "<leader>vf", function()
   vim.lsp.buf.format()
   vim.api.nvim_exec_autocmds("User",
     { buffer = vim.api.nvim_get_current_buf(), group = vim.api.nvim_create_augroup("UserLspFormat", {
-    }), })
+    }) })
 end)
 map("n", "<leader>vd", function()
   require("tillb.peekdefinition").peek_definition()
