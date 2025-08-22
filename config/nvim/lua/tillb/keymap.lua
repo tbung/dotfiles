@@ -101,7 +101,7 @@ map("n", "<leader>fb", function()
 end)
 map("n", "<C-n>", function()
   Snacks.picker.smart({
-    multi = { { source = "buffers", current = false }, "files" },
+    multi = { { source = "buffers", current = true }, "files" },
     matcher = {
       on_match = function(ctx, item)
         -- prioritize buffers, especially alternate buffer
@@ -113,6 +113,18 @@ map("n", "<C-n>", function()
         end
       end,
     },
+    transform = function(item, ctx)
+      -- print(vim.inspect(ctx))
+      ctx.meta.done = ctx.meta.done or {} ---@type table<string, boolean>
+      local path = Snacks.picker.util.path(item)
+      if not path or ctx.meta.done[path] then
+        return false
+      end
+      ctx.meta.done[path] = true
+      if item.flags and item.flags:find("%%") then
+        return false
+      end
+    end,
   })
 end)
 map("n", "<leader>fS", function()
