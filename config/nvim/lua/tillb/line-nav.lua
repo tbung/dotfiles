@@ -1,5 +1,9 @@
 -- Inspired by https://github.com/jinh0/eyeliner.nvim
 
+vim.api.nvim_set_hl(0, "LineNavDim", { fg = vim.api.nvim_get_hl(0, { name = "Comment" }).fg })
+vim.api.nvim_set_hl(0, "LineNavPrimary", { fg = vim.api.nvim_get_hl(0, { name = "Constant" }).fg })
+vim.api.nvim_set_hl(0, "LineNavSecondary", { fg = vim.api.nvim_get_hl(0, { name = "Define" }).fg })
+
 local M = {}
 
 local function isalpha(str)
@@ -16,6 +20,8 @@ function M.highlight(direction)
   local buf = vim.api.nvim_get_current_buf()
   local row, col = unpack(vim.api.nvim_win_get_cursor(win))
 
+  set_extmark(buf, ns, row - 1, 0, { end_col = #line, hl_group = "LineNavDim", invalidate = false })
+
   if direction == "right" then
     iter:skip(col + 1)
 
@@ -23,7 +29,7 @@ function M.highlight(direction)
       return
     end
 
-    set_extmark(buf, ns, row - 1, col, { end_col = #line, hl_group = "Comment", invalidate = false })
+    -- set_extmark(buf, ns, row - 1, col, { end_col = #line, hl_group = "LineNavDim", invalidate = false })
   else
     if col == 0 then
       return
@@ -31,7 +37,7 @@ function M.highlight(direction)
 
     iter:take(col + 1):rev()
 
-    set_extmark(buf, ns, row - 1, 0, { end_col = col, hl_group = "Comment", invalidate = false })
+    -- set_extmark(buf, ns, row - 1, 0, { end_col = col, hl_group = "LineNavDim", invalidate = false })
   end
 
   local freqs = {} --- @type table[string, integer]
@@ -52,7 +58,7 @@ function M.highlight(direction)
       if acc.freq <= 2 then
         set_extmark(buf, ns, row - 1, acc.idx - 1, {
           end_col = acc.idx,
-          hl_group = (acc.freq == 1 and "Constant") or "Define",
+          hl_group = (acc.freq == 1 and "LineNavPrimary") or "LineNavSecondary",
           invalidate = false,
         })
       end
