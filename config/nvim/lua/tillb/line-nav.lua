@@ -2,83 +2,71 @@
 
 local M = {}
 
+local function isalpha(str)
+  return str and ((str <= "z" and str >= "a") or (str <= "Z" and str >= "A"))
+end
+
 function M.highlight(direction)
+  local ns = vim.api.nvim_create_namespace("line-nav")
+  local set_extmark = vim.api.nvim_buf_set_extmark
+
   local line = vim.api.nvim_get_current_line()
+  local iter = vim.iter(vim.split(line, "")):enumerate()
   local win = vim.api.nvim_get_current_win()
   local buf = vim.api.nvim_get_current_buf()
   local row, col = unpack(vim.api.nvim_win_get_cursor(win))
 
-  local start, end_, step
   if direction == "right" then
-    start = col
-    end_ = #line
-    step = 1
-  elseif direction == "left" then
-    start = col
-    end_ = 1
-    step = -1
+    iter:skip(col + 1)
+
+    if iter:peek() == nil then
+      return
+    end
+
+    set_extmark(buf, ns, row - 1, col, { end_col = #line, hl_group = "Comment", invalidate = false })
+  else
+    if col == 0 then
+      return
+    end
+
+    iter:take(col + 1):rev()
+
+    set_extmark(buf, ns, row - 1, 0, { end_col = col, hl_group = "Comment", invalidate = false })
   end
 
   local freqs = {} --- @type table[string, integer]
+  local acc = { idx = nil, freq = 99999 }
 
-  -- Skip until end of current word, but count freqs
-  local char = line:sub(start, start)
-  local byte = char:lower()
-  while (byte >= "a" and byte <= "z") and start ~= end_ do
-    freqs[char] = (freqs[char] or 0) + 1
-    start = start + step
-    char = line:sub(start, start)
-    byte = char:lower()
-  end
+  iter:skip(function(_, c)
+    freqs[c] = (freqs[c] or 0) + 1
+    return isalpha(c)
+  end):each(function(i, c)
+    freqs[c] = (freqs[c] or 0) + 1
 
-  local chars = {}
-
-  local min_word = { idx = nil, freq = 99999 }
-  for i = start, end_, step do
-    char = line:sub(i, i)
-    byte = char:lower()
-    freqs[char] = (freqs[char] or 0) + 1
-
-    if byte >= "a" and byte <= "z" then
-      if freqs[char] < min_word.freq then
-        min_word = { idx = i, freq = freqs[char] }
+    if isalpha(c) then
+      if freqs[c] < acc.freq then
+        acc.idx = i
+        acc.freq = freqs[c]
       end
     else
-      if min_word.idx ~= nil and min_word.freq <= 2 then
-        table.insert(chars, min_word)
+      if acc.freq <= 2 then
+        set_extmark(buf, ns, row - 1, acc.idx - 1, {
+          end_col = acc.idx,
+          hl_group = (acc.freq == 1 and "Constant") or "Define",
+          invalidate = false,
+        })
       end
-      min_word = { freq = 99999 }
+      acc.freq = 99999
     end
-  end
-
-  if direction == "right" then
-    vim.api.nvim_buf_set_extmark(buf, vim.api.nvim_create_namespace("line-nav"), row - 1, col, {
-      end_col = #line,
-      hl_group = "Comment",
-      invalidate = false,
-    })
-  else
-    vim.api.nvim_buf_set_extmark(buf, vim.api.nvim_create_namespace("line-nav"), row - 1, 0, {
-      end_col = col,
-      hl_group = "Comment",
-      invalidate = false,
-    })
-  end
-  for _, char in ipairs(chars) do
-    vim.api.nvim_buf_set_extmark(buf, vim.api.nvim_create_namespace("line-nav"), row - 1, char.idx - 1, {
-      end_col = char.idx,
-      hl_group = (char.freq == 1 and "Constant") or "Define",
-      invalidate = false,
-    })
-  end
+  end)
 
   -- ignore next {f, F, t, T}, then clear on the next key
-  vim.on_key(function(key, typed)
-    vim.on_key(function(key, typed)
-      vim.api.nvim_buf_clear_namespace(buf, vim.api.nvim_create_namespace("line-nav"), row - 1, row)
-      vim.on_key(nil, vim.api.nvim_create_namespace("line-nav"))
-    end, vim.api.nvim_create_namespace("line-nav"))
-  end, vim.api.nvim_create_namespace("line-nav"))
+  vim.on_key(function()
+    vim.on_key(function()
+      vim.api.nvim_buf_clear_namespace(buf, ns, row - 1, row)
+      vim.on_key(nil, ns)
+    end, ns)
+  end, ns)
 
   vim.cmd.redraw()
 end
