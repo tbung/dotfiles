@@ -16,6 +16,13 @@ elseif vim.go.background == "light" then
   -- vim.api.nvim_set_hl(0, "WinBar", { fg = "#4c4f69", bold = true, bg = nil })
 end
 
+for _, severity in ipairs({ "Error", "Warn", "Info", "Hint", "Ok" }) do
+  local hl = vim.api.nvim_get_hl(0, { name = "DiagnosticUnderline" .. severity })
+  hl.underline = false
+  hl.undercurl = true
+  vim.api.nvim_set_hl(0, "DiagnosticUnderline" .. severity, hl)
+end
+
 vim.api.nvim_set_hl(0, "WinBar", { fg = nil, bold = true, bg = nil })
 vim.api.nvim_set_hl(0, "WinBarNC", { link = "WinBar" })
 
