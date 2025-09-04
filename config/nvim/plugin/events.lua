@@ -44,6 +44,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
           },
         },
       })
+      vim.lsp.enable({ "lua_ls", "texlab", "basedpyright", "ruff", "bashls", "jsonls", "clangd" })
 
       vim.api.nvim_create_user_command("EditMakeprg", function()
         require("tillb.terminal").edit_makeprg()
@@ -53,15 +54,6 @@ vim.api.nvim_create_autocmd("UIEnter", {
         require("tillb.terminal").terminal_make(args)
       end, { bang = true })
     end)
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufReadPre", {
-  group = group,
-  once = true,
-  callback = function(args)
-    local server_configs = { "lua_ls", "texlab", "basedpyright", "ruff", "bashls" }
-    vim.lsp.enable(server_configs)
   end,
 })
 
