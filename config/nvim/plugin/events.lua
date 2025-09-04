@@ -77,3 +77,17 @@ vim.api.nvim_create_autocmd("User", {
     require("tillb.marks").update_signs(args.buf)
   end,
 })
+
+vim.api.nvim_create_autocmd("CmdlineChanged", {
+  group = vim.api.nvim_create_augroup("CmdlineAutocompletion", { clear = true }),
+  callback = function(ev)
+    local cmdline = vim.fn.getcmdline()
+    local cmdline_cmd = vim.fn.split(cmdline, " ")[1]
+    local is_relevant = cmdline_cmd == "find" or cmdline_cmd == "fin" or cmdline_cmd == "help" or cmdline_cmd == "h" or
+        cmdline_cmd == "buffer" or cmdline_cmd == "buf" or cmdline_cmd == "b"
+
+    if ev.event == "CmdlineChanged" and is_relevant and cmdline:match("^%a* ") then
+      vim.fn.wildtrigger()
+    end
+  end,
+})

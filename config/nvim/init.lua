@@ -46,6 +46,15 @@ vim.o.laststatus = 3
 vim.o.showmode = false
 
 vim.o.wildignorecase = true
+vim.o.wildoptions = "pum,fuzzy"
+vim.o.wildmode = "noselect:lastused,full"
+if vim.fn.executable("fd") == 1 then
+  function _G.Fd_findfunc(cmdarg, _cmdcomplete)
+    return require("tillb.findfunc").fd_findfunc(cmdarg, _cmdcomplete)
+  end
+  vim.o.findfunc = 'v:lua.Fd_findfunc'
+end
+
 
 vim.o.completeopt = "menuone,fuzzy,popup,noinsert"
 vim.o.autocomplete = true
@@ -78,4 +87,3 @@ vim.g.loaded_2html_plugin = 1
 vim.g.loaded_rrhelper = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_matchparen = 1
-

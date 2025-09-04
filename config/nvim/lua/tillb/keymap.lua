@@ -33,6 +33,11 @@ map("n", "N", "Nzzzv")
 map({ "i", "c" }, "<C-BS>", "<C-w>")
 map({ "i", "c" }, "<C-h>", "<C-w>")
 
+map("c", "<Left>", "<Space><BS><Left>")
+map("c", "<Right>", "<Space><BS><Right>")
+map("c", "<Up>", "<C-U><Up>")
+map("c", "<Down>", "<C-U><Down>")
+
 map("n", "m", function() require("tillb.marks").set_mark() end)
 map("n", "dm", function() require("tillb.marks").unset_mark() end)
 
@@ -84,9 +89,10 @@ end)
 
 -- Pickers
 ---@module "snacks"
-map("n", "<leader>ff", function()
-  Snacks.picker.files()
-end)
+-- map("n", "<leader>ff", function()
+--   Snacks.picker.files()
+-- end)
+map("n", "<leader>ff", ":find ")
 map("n", "<leader>fg", function()
   Snacks.picker.git_files()
 end)
@@ -96,9 +102,10 @@ end)
 map("n", "<leader>fh", function()
   Snacks.picker.help()
 end)
-map("n", "<leader>fb", function()
-  Snacks.picker.buffers({ current = false })
-end)
+-- map("n", "<leader>fb", function()
+--   Snacks.picker.buffers({ current = false })
+-- end)
+map("n", "<leader>fb", ":b ")
 map("n", "<C-n>", function()
   Snacks.picker.smart({
     multi = { { source = "buffers", current = true }, "files" },

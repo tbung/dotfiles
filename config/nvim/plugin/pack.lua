@@ -108,9 +108,12 @@ require("catppuccin").setup({
   custom_highlights = function(colors)
     return {
       Folded = { bg = colors.mantle },
-      Normal = { bg = "none" },
-      NormalNC = { bg = "none" },
-      Pmenu = { bg = colors.none },
+      Normal = { bg = colors.none },
+      NormalNC = { bg = colors.none },
+      Pmenu = { fg = colors.overlay2, bg = colors.surface0 },
+      PmenuMatch = { fg = colors.text, bg = colors.surface0 },
+      PmenuSel = { fg = colors.overlay2, bg = colors.surface1 },
+      PmenuMatchSel = { fg = colors.text, bg = colors.surface1 },
       WinBar = { style = { "bold" } },
 
       -- NOTE: without this, light-mode makes the cursor hard to see
