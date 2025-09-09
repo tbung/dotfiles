@@ -24,11 +24,6 @@ vim.api.nvim_create_autocmd("UIEnter", {
     vim.schedule(function()
       require("tillb.keymap")
 
-      -- NOTE: Could load this on CmdLineEnter, but that causes a flicker that bugs me
-      if vim.version().minor >= 12 then
-        require("vim._extui").enable({})
-      end
-
       vim.diagnostic.config({
         virtual_text = true,
         update_in_insert = false,

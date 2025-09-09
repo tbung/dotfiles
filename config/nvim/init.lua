@@ -52,9 +52,14 @@ if vim.fn.executable("fd") == 1 then
   function _G.Fd_findfunc(cmdarg, _cmdcomplete)
     return require("tillb.findfunc").fd_findfunc(cmdarg, _cmdcomplete)
   end
-  vim.o.findfunc = 'v:lua.Fd_findfunc'
+
+  vim.o.findfunc = "v:lua.Fd_findfunc"
 end
 
+-- NOTE: Could load this on CmdLineEnter, but that causes a flicker that bugs me
+if vim.version().minor >= 12 then
+  require("vim._extui").enable({})
+end
 
 vim.o.completeopt = "menuone,fuzzy,popup,noinsert"
 vim.o.autocomplete = true
