@@ -35,8 +35,8 @@ map({ "i", "c" }, "<C-h>", "<C-w>")
 
 map("c", "<Left>", "<Space><BS><Left>")
 map("c", "<Right>", "<Space><BS><Right>")
-map("c", "<Up>", "<C-U><Up>")
-map("c", "<Down>", "<C-U><Down>")
+map("c", "<Up>", function() return (vim.fn.wildmenumode() == 1) and "<C-E><Up>" or "<Up>" end, { expr = true })
+map("c", "<Down>", function() return (vim.fn.wildmenumode() == 1) and "<C-E><Down>" or "<Down>" end, { expr = true })
 
 map("n", "m", function() require("tillb.marks").set_mark() end)
 map("n", "dm", function() require("tillb.marks").unset_mark() end)
@@ -106,34 +106,35 @@ end)
 --   Snacks.picker.buffers({ current = false })
 -- end)
 map("n", "<leader>fb", ":b ")
-map("n", "<C-n>", function()
-  Snacks.picker.smart({
-    multi = { { source = "buffers", current = true }, "files" },
-    matcher = {
-      on_match = function(ctx, item)
-        -- prioritize buffers, especially alternate buffer
-        if item.buf then
-          item.score = item.score + 8
-        end
-        if item.flags and item.flags:find("#") and ctx.pattern == "" then
-          item.score = 20000
-        end
-      end,
-    },
-    transform = function(item, ctx)
-      -- print(vim.inspect(ctx))
-      ctx.meta.done = ctx.meta.done or {} ---@type table<string, boolean>
-      local path = Snacks.picker.util.path(item)
-      if not path or ctx.meta.done[path] then
-        return false
-      end
-      ctx.meta.done[path] = true
-      if item.flags and item.flags:find("%%") then
-        return false
-      end
-    end,
-  })
-end)
+-- map("n", "<C-n>", function()
+--   Snacks.picker.smart({
+--     multi = { { source = "buffers", current = true }, "files" },
+--     matcher = {
+--       on_match = function(ctx, item)
+--         -- prioritize buffers, especially alternate buffer
+--         if item.buf then
+--           item.score = item.score + 8
+--         end
+--         if item.flags and item.flags:find("#") and ctx.pattern == "" then
+--           item.score = 20000
+--         end
+--       end,
+--     },
+--     transform = function(item, ctx)
+--       -- print(vim.inspect(ctx))
+--       ctx.meta.done = ctx.meta.done or {} ---@type table<string, boolean>
+--       local path = Snacks.picker.util.path(item)
+--       if not path or ctx.meta.done[path] then
+--         return false
+--       end
+--       ctx.meta.done[path] = true
+--       if item.flags and item.flags:find("%%") then
+--         return false
+--       end
+--     end,
+--   })
+-- end)
+map("n", "<C-n>", ":find ")
 map("n", "<leader>fS", function()
   Snacks.picker.lsp_workspace_symbols()
 end)
