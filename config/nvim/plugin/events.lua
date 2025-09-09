@@ -73,16 +73,39 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+local cmd_group = vim.api.nvim_create_augroup("CmdlineAutocompletion", {})
+
+---@param cmd string
+---@return boolean
+local function should_autocomplete(cmd)
+  return vim.regex([[^\s*\(fin\%[d]\)\|\(b\%[uffer]\)\|\(h%[elp]\)\s]]):match_str(cmd) and true or false
+end
+
+
 vim.api.nvim_create_autocmd("CmdlineChanged", {
-  group = vim.api.nvim_create_augroup("CmdlineAutocompletion", { clear = true }),
+  group = cmd_group,
   callback = function(ev)
     local cmdline = vim.fn.getcmdline()
-    local cmdline_cmd = vim.fn.split(cmdline, " ")[1]
-    local is_relevant = cmdline_cmd == "find" or cmdline_cmd == "fin" or cmdline_cmd == "help" or cmdline_cmd == "h" or
-        cmdline_cmd == "buffer" or cmdline_cmd == "buf" or cmdline_cmd == "b"
 
-    if ev.event == "CmdlineChanged" and is_relevant and cmdline:match("^%a* ") then
+    if should_autocomplete(cmdline) then
       vim.fn.wildtrigger()
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("CmdlineLeavePre", {
+  group = cmd_group,
+  callback = function(ev)
+    local info = vim.fn.cmdcomplete_info()
+    if info.matches == nil then
+      return
+    end
+
+    local cmdline = vim.fn.getcmdline()
+    local cmdline_cmd = vim.fn.split(cmdline, " ")[1]
+
+    if should_autocomplete(cmdline) and info.selected == -1 then
+      vim.fn.setcmdline(cmdline_cmd .. " " .. info.matches[1])
     end
   end,
 })
