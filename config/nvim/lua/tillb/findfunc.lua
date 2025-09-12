@@ -59,7 +59,7 @@ end
 function M.fd_findfunc(cmdarg, _cmdcomplete)
   if #cmdarg == 0 then
     M.refresh()
-    vim.wait(200, function() return #fnames > 0 end)
+    -- vim.wait(200, function() return #fnames > 0 end, 50, true)
     return fnames
   else
     return vim.fn.matchfuzzy(fnames, cmdarg, { matchseq = 1, limit = 100 })
