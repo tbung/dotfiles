@@ -2,14 +2,11 @@ local M = {}
 
 local fnames = {} ---@type string[]
 local handle ---@type vim.SystemObj?
-local needs_refresh = true
 
 function M.refresh()
-  if handle ~= nil or not needs_refresh then
+  if handle ~= nil then
     return
   end
-
-  needs_refresh = false
 
   fnames = {}
 
@@ -37,9 +34,6 @@ function M.refresh()
         end
       end,
     }, function(obj)
-      if obj.code ~= 0 then
-        print("Command failed")
-      end
       handle = nil
     end)
 
@@ -47,19 +41,18 @@ function M.refresh()
   vim.api.nvim_create_autocmd("CmdlineLeave", {
     once = true,
     callback = function()
-      needs_refresh = true
       if handle then
         handle:wait(0)
         handle = nil
       end
     end,
   })
+
+  vim.wait(200, function() return #fnames > 0 end, 50, true)
 end
 
 function M.fd_findfunc(cmdarg, _cmdcomplete)
   if #cmdarg == 0 then
-    M.refresh()
-    -- vim.wait(200, function() return #fnames > 0 end, 50, true)
     return fnames
   else
     return vim.fn.matchfuzzy(fnames, cmdarg, { matchseq = 1, limit = 100 })

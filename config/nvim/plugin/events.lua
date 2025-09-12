@@ -81,6 +81,13 @@ local function should_autocomplete(cmd)
   return vim.regex([[^\s*\(fin\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\s]]):match_str(cmd) and true or false
 end
 
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+  group = cmd_group,
+  pattern = ":",
+  callback = function(ev)
+    require("tillb.findfunc").refresh()
+  end,
+})
 
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   group = cmd_group,
