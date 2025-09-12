@@ -96,8 +96,17 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
     local cmdline = vim.fn.getcmdline()
 
     if should_autocomplete(cmdline) then
+      vim.o.wildmode = "noselect:lastused,full"
       vim.fn.wildtrigger()
     end
+  end,
+})
+
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  group = cmd_group,
+  pattern = ":",
+  callback = function(ev)
+    vim.o.wildmode = "longest:full,full"
   end,
 })
 

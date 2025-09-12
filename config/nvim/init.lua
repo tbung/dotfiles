@@ -47,7 +47,7 @@ vim.o.showmode = false
 
 vim.o.wildignorecase = true
 vim.o.wildoptions = "pum,fuzzy"
-vim.o.wildmode = "noselect:lastused,full"
+vim.o.wildmode = "longest:full,full"
 if vim.fn.executable("fd") == 1 then
   function _G.Fd_findfunc(cmdarg, _cmdcomplete)
     return require("tillb.findfunc").fd_findfunc(cmdarg, _cmdcomplete)
