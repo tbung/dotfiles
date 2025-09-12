@@ -12,8 +12,6 @@ vim.pack.add({
   "https://github.com/echasnovski/mini.nvim",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
-  -- "https://github.com/folke/snacks.nvim",
-  { src = "https://github.com/dpetka2001/snacks.nvim", version = "fix/preview_hack_win_opts" },
   "https://github.com/j-hui/fidget.nvim",
 
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
@@ -48,6 +46,9 @@ vim.api.nvim_create_autocmd("UIEnter", {
     vim.schedule(function()
       require("fidget").setup({})
       require("mini.surround").setup({})
+      require("mini.pick").setup({})
+      vim.ui.select = require("mini.pick").ui_select
+
       vim.cmd.packadd("vim-fugitive")
       vim.cmd.packadd("vim-eunuch")
       vim.cmd.packadd("gitsigns.nvim")
@@ -164,29 +165,5 @@ require("oil").setup({
     { "size", highlight = "Special" },
     { "mtime", highlight = "Number" },
     { "icon", add_padding = true },
-  },
-})
-
-require("snacks").setup({
-  indent = { enabled = true, scope = { enabled = false }, animate = { enabled = false } },
-  input = {
-    enabled = true,
-    win = {
-      keys = {
-        i_ctrl_bs = { "<C-BS>", "delete_word", mode = "i", expr = true },
-        i_ctrl_h = { "<c-h>", "delete_word", mode = "i", expr = true },
-      },
-      actions = { delete_word = function()
-        return "<c-s-w>"
-      end },
-    },
-  },
-  picker = {
-    enabled = true,
-    win = {
-      input = {
-        keys = { ["<C-BS>"] = { "<c-s-w>", mode = "i", expr = true }, ["<c-h>"] = { "<c-s-w>", mode = "i", expr = true } },
-      },
-    },
   },
 })

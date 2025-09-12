@@ -41,6 +41,8 @@ vim.api.nvim_create_autocmd("UIEnter", {
       })
       vim.lsp.enable({ "lua_ls", "texlab", "basedpyright", "ruff", "bashls", "jsonls", "clangd" })
 
+      vim.ui.input = require("tillb.input").input
+
       vim.api.nvim_create_user_command("EditMakeprg", function()
         require("tillb.terminal").edit_makeprg()
       end, {})

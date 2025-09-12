@@ -34,7 +34,7 @@ M.terminal_make = function(args)
 end
 
 M.edit_makeprg = function()
-  vim.ui.input({ default = vim.o.makeprg }, function(input)
+  vim.ui.input({ default = vim.o.makeprg, prompt = "makeprg" }, function(input)
     if input ~= nil then
       vim.o.makeprg = input
     end
