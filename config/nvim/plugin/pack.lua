@@ -15,10 +15,6 @@ vim.pack.add({
   "https://github.com/j-hui/fidget.nvim",
 
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
-
-  "https://github.com/nvim-lua/plenary.nvim",
-  "https://github.com/olimorris/codecompanion.nvim",
-  "https://github.com/ravitemer/mcphub.nvim",
 }, { load = false })
 
 ---@param cmd string|string[]
@@ -52,23 +48,6 @@ vim.api.nvim_create_autocmd("UIEnter", {
       vim.cmd.packadd("vim-fugitive")
       vim.cmd.packadd("vim-eunuch")
       vim.cmd.packadd("gitsigns.nvim")
-
-      command_stub({ "CodeCompanion", "CodeCompanionActions", "CodeCompanionChat", "CodeCompanionCmd", "MCPHub" },
-        function(cargs)
-          vim.cmd.packadd("plenary.nvim")
-          vim.cmd.packadd("mcphub.nvim")
-          vim.cmd.packadd("codecompanion.nvim")
-
-          require("mcphub").setup({ cmd = "npx", cmdArgs = { "mcp-hub@latest" } })
-          require("codecompanion").setup({
-            extensions = {
-              mcphub = {
-                callback = "mcphub.extensions.codecompanion",
-                opts = { make_vars = true, make_slash_commands = true, show_result_in_chat = true },
-              },
-            },
-          })
-        end)
     end)
   end,
 })
