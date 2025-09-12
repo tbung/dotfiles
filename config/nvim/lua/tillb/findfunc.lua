@@ -51,12 +51,37 @@ function M.refresh()
   vim.wait(200, function() return #fnames > 0 end, 50, true)
 end
 
-function M.fd_findfunc(cmdarg, _cmdcomplete)
+local function findfunc_impl(names, cmdarg, _cmdcomplete)
   if #cmdarg == 0 then
-    return fnames
+    return names
   else
-    return vim.fn.matchfuzzy(fnames, cmdarg, { matchseq = 1, limit = 100 })
+    return vim.fn.matchfuzzy(names, cmdarg, { matchseq = 1, limit = 100 })
   end
+end
+
+function M.find_buffers_and_files(cmdarg, _cmdcomplete)
+  local buffers = vim.iter(vim.api.nvim_list_bufs())
+      :filter(function(buf) return vim.fn.buflisted(buf) == 1 end)
+      :map(function(buf)
+        return vim.api.nvim_buf_get_name(buf):gsub("^" .. (vim.loop.cwd() or ""), "")
+      end)
+      :totable()
+
+  vim.list_extend(buffers, fnames)
+
+  local alternate = vim.fn.expand("#")
+  local current = vim.fn.expand("%")
+  if alternate ~= current and alternate ~= "" then
+    table.insert(buffers, 1, alternate)
+  end
+
+  vim.list.unique(buffers)
+
+  return findfunc_impl(buffers, cmdarg, _cmdcomplete)
+end
+
+function M.fd_findfunc(cmdarg, _cmdcomplete)
+  return findfunc_impl(fnames, cmdarg, _cmdcomplete)
 end
 
 return M

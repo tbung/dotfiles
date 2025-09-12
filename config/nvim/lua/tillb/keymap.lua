@@ -134,7 +134,7 @@ map("n", "<leader>fb", ":b ")
 --     end,
 --   })
 -- end)
-map("n", "<C-n>", ":find ")
+map("n", "<C-n>", ":Find ")
 map("n", "<leader>fS", function()
   Snacks.picker.lsp_workspace_symbols()
 end)

@@ -48,6 +48,23 @@ vim.api.nvim_create_autocmd("UIEnter", {
       vim.api.nvim_create_user_command("TMake", function(args)
         require("tillb.terminal").terminal_make(args)
       end, { bang = true })
+
+      vim.api.nvim_create_user_command("Find", function(opts)
+          local bufnr = vim.fn.bufnr(opts.args)
+          if bufnr ~= -1 then
+            vim.api.nvim_set_current_buf(bufnr)
+            return
+          end
+          vim.cmd("find " .. opts.args)
+        end,
+        {
+          nargs = 1,
+          complete = function(arglead, cmdline, cursorpos)
+            return require("tillb.findfunc").find_buffers_and_files(arglead, true)
+          end,
+          force = true,
+        }
+      )
     end)
   end,
 })
@@ -78,7 +95,7 @@ local cmd_group = vim.api.nvim_create_augroup("CmdlineAutocompletion", {})
 ---@param cmd string
 ---@return boolean
 local function should_autocomplete(cmd)
-  return vim.regex([[^\s*\(fin\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\s]]):match_str(cmd) and true or false
+  return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\)\s]]):match_str(cmd) and true or false
 end
 
 vim.api.nvim_create_autocmd("CmdlineEnter", {
