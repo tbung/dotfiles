@@ -1,6 +1,6 @@
 local dir
 if (( ${+commands[fd]} )); then
-    dir=$(fd --hidden --prune .git$ ${HOME}/Projects -x dirname | fzf)
+    dir=$(fd --hidden --max-depth=3 --prune \^.git$ ${HOME}/Projects -x dirname | fzf)
 else
     dir=$(printf '%s\n' ${HOME}/Projects/**/.git | xargs dirname | fzf)
 fi
