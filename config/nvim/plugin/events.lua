@@ -78,12 +78,13 @@ local cmd_group = vim.api.nvim_create_augroup("CmdlineAutocompletion", {})
 ---@param cmd string
 ---@return boolean
 local function should_autocomplete(cmd)
-  return vim.regex([[^\s*\(fin\%[d]\)\|\(b\%[uffer]\)\|\(h%[elp]\)\s]]):match_str(cmd) and true or false
+  return vim.regex([[^\s*\(fin\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\s]]):match_str(cmd) and true or false
 end
 
 
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   group = cmd_group,
+  pattern = ":",
   callback = function(ev)
     local cmdline = vim.fn.getcmdline()
 
@@ -95,6 +96,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
 
 vim.api.nvim_create_autocmd("CmdlineLeavePre", {
   group = cmd_group,
+  pattern = ":",
   callback = function(ev)
     local info = vim.fn.cmdcomplete_info()
     if info.matches == nil then
