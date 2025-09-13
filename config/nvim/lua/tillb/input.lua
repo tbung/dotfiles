@@ -10,20 +10,25 @@ function M.input(opts, on_confirm)
   local text = opts.default or ""
 
   local buf = vim.api.nvim_create_buf(false, true)
+  local border = { "", { "─", "MsgSeparator" }, "", "", "", "", "", "" }
+
   local win = vim.api.nvim_open_win(buf, true,
     {
       focusable = true,
       style = "minimal",
-      border = "rounded",
+      border = border,
       height = 1,
-      width = width,
-      relative = "win",
-      row = vim.api.nvim_win_get_height(0) / 2 - 1,
-      col = vim.api.nvim_win_get_width(0) / 2 - width / 2,
+      width = 10000,
+      relative = "editor",
+      row = vim.o.lines - vim.o.cmdheight,
+      col = 0,
       title = opts.prompt,
     })
 
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, { text })
+  if opts.highlight then
+    opts.highlight()
+  end
   vim.cmd("startinsert!")
 
   vim.keymap.set({ "n", "i", "v" }, "<cr>", function()

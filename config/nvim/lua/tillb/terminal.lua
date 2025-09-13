@@ -34,7 +34,16 @@ M.terminal_make = function(args)
 end
 
 M.edit_makeprg = function()
-  vim.ui.input({ default = vim.o.makeprg, prompt = "makeprg" }, function(input)
+  vim.ui.input({
+    default = vim.o.makeprg,
+    prompt = "makeprg",
+    highlight = function()
+      local buf = vim.api.nvim_get_current_buf()
+      local parser = assert(vim.treesitter.get_parser(buf, "bash", {}))
+      local highlighter = vim.treesitter.highlighter.new(parser)
+      highlighter.active[buf] = highlighter
+    end,
+  }, function(input)
     if input ~= nil then
       vim.o.makeprg = input
     end
