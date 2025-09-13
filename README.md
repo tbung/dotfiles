@@ -6,7 +6,7 @@ Dotfiles for my terminal-based workflow.
 
 ## The Setup
 
-Neovim in Zsh in WezTerm.
+Neovim in Zsh in Tmux in Ghostty.
 
 I also like using modern alternatives to common command-line tools like `ripgrep`,
 `fd-find`, `lsd` and such.
