@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("my.lsp", {}),
+  group = vim.api.nvim_create_augroup("tillb.lsp-autocompletion", {}),
   callback = function(args)
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     if client:supports_method("textDocument/completion") then
@@ -63,6 +63,61 @@ vim.api.nvim_create_autocmd("LspAttach", {
           end)
         end,
       })
+    end
+  end,
+})
+
+local cmd_group = vim.api.nvim_create_augroup("tillb.cmdline-autocompletion", {})
+
+---@param cmd string
+---@return boolean
+local function should_autocomplete(cmd)
+  return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\)\s]]):match_str(cmd) and true or false
+end
+
+vim.api.nvim_create_autocmd("CmdlineEnter", {
+  group = cmd_group,
+  pattern = ":",
+  callback = function(ev)
+    require("tillb.findfunc").refresh()
+  end,
+})
+
+vim.api.nvim_create_autocmd("CmdlineChanged", {
+  group = cmd_group,
+  pattern = ":",
+  callback = function(ev)
+    local cmdline = vim.fn.getcmdline()
+
+    if should_autocomplete(cmdline) then
+      vim.o.wildmode = "noselect:lastused,full"
+      vim.fn.wildtrigger()
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  group = cmd_group,
+  pattern = ":",
+  callback = function(ev)
+    vim.o.wildmode = "longest:full,full"
+  end,
+})
+
+vim.api.nvim_create_autocmd("CmdlineLeavePre", {
+  group = cmd_group,
+  pattern = ":",
+  callback = function(ev)
+    local info = vim.fn.cmdcomplete_info()
+    if info.matches == nil then
+      return
+    end
+
+    local cmdline = vim.fn.getcmdline()
+    local cmdline_cmd = vim.fn.split(cmdline, " ")[1]
+
+    if should_autocomplete(cmdline) and info.selected == -1 then
+      vim.fn.setcmdline(cmdline_cmd .. " " .. info.matches[1])
     end
   end,
 })
