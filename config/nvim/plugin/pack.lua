@@ -90,21 +90,18 @@ require("catppuccin").setup({
       PmenuSel = { fg = colors.overlay2, bg = colors.surface1 },
       PmenuMatchSel = { fg = colors.text, bg = colors.surface1 },
       WinBar = { style = { "bold" } },
+      MiniPickBorder = { link = "MsgBorder" },
+      MiniPickBorderText = { link = "Normal" },
 
       -- NOTE: without this, light-mode makes the cursor hard to see
       TermCursor = { bg = colors.none },
       TermCursorNC = { bg = colors.none },
-      MiniPickBorder = { link = "MsgBorder" },
-      MiniPickBorderText = { link = "Normal" },
     }
   end,
 
   integrations = {
-    blink_cmp = true,
     gitsigns = true,
     mini = true,
-    markdown = true,
-    snacks = { enabled = true },
     native_lsp = {
       underlines = {
         errors = { "undercurl" },
