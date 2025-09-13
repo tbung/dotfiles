@@ -17,23 +17,7 @@ vim.pack.add({
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 }, { load = false })
 
----@param cmd string|string[]
-local function command_stub(cmd, callback)
-  if type(cmd) == "string" then
-    cmd = { cmd }
-  end
-
-  vim.iter(cmd):map(function(c)
-    vim.api.nvim_create_user_command(c, function(args)
-      vim.iter(cmd):map(vim.api.nvim_del_user_command) -- remove stub commands
-      print("test")
-      callback()
-      vim.cmd(c)
-    end, {})
-  end)
-end
-
-local group = vim.api.nvim_create_augroup("tillb-pack", {})
+local group = vim.api.nvim_create_augroup("tillb.pack", {})
 
 vim.api.nvim_create_autocmd("UIEnter", {
   group = group,
