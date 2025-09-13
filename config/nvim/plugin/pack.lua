@@ -26,7 +26,20 @@ vim.api.nvim_create_autocmd("UIEnter", {
     vim.schedule(function()
       require("fidget").setup({})
       require("mini.surround").setup({})
-      require("mini.pick").setup({})
+
+      require("mini.pick").setup({
+        options = { content_from_bottom = true },
+        window = {
+          config = {
+            width = 10000,
+            height = math.floor(0.5 * vim.o.lines),
+            relative = "editor",
+            border = { "", { "─", "MsgSeparator" }, "", "", "", " ", "", "" },
+            row = vim.o.lines - vim.o.cmdheight,
+            col = 0,
+          },
+        },
+      })
       vim.ui.select = require("mini.pick").ui_select
 
       vim.cmd.packadd("vim-fugitive")
@@ -83,6 +96,8 @@ require("catppuccin").setup({
       -- NOTE: without this, light-mode makes the cursor hard to see
       TermCursor = { bg = colors.none },
       TermCursorNC = { bg = colors.none },
+      MiniPickBorder = { link = "MsgBorder" },
+      MiniPickBorderText = { link = "Normal" },
     }
   end,
 
