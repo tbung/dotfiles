@@ -71,8 +71,12 @@ local cmd_group = vim.api.nvim_create_augroup("tillb.cmdline-autocompletion", {}
 
 ---@param cmd string
 ---@return boolean
-local function should_autocomplete(cmd)
-  return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\)\s]]):match_str(cmd) and true or false
+local function should_autocomplete(cmdtype, cmd)
+  if cmdtype == ":" then
+    return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\)\s]]):match_str(cmd) and true or false
+  else
+    return cmdtype == "/"
+  end
 end
 
 vim.api.nvim_create_autocmd("CmdlineEnter", {
@@ -85,11 +89,11 @@ vim.api.nvim_create_autocmd("CmdlineEnter", {
 
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   group = cmd_group,
-  pattern = ":",
   callback = function(ev)
+    local cmdtype = vim.fn.getcmdtype()
     local cmdline = vim.fn.getcmdline()
 
-    if should_autocomplete(cmdline) then
+    if should_autocomplete(cmdtype, cmdline) then
       vim.o.wildmode = "noselect:lastused,full"
       vim.fn.wildtrigger()
     end
@@ -116,7 +120,7 @@ vim.api.nvim_create_autocmd("CmdlineLeavePre", {
     local cmdline = vim.fn.getcmdline()
     local cmdline_cmd = vim.fn.split(cmdline, " ")[1]
 
-    if should_autocomplete(cmdline) and info.selected == -1 then
+    if should_autocomplete(":", cmdline) and info.selected == -1 then
       vim.fn.setcmdline(cmdline_cmd .. " " .. info.matches[1])
     end
   end,
