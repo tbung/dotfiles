@@ -12,7 +12,6 @@ vim.pack.add({
   "https://github.com/echasnovski/mini.nvim",
   "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
-  "https://github.com/j-hui/fidget.nvim",
 
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 }, { load = false })
@@ -24,7 +23,6 @@ vim.api.nvim_create_autocmd("UIEnter", {
   once = true,
   callback = function(args)
     vim.schedule(function()
-      require("fidget").setup({})
       require("mini.surround").setup({})
 
       require("mini.pick").setup({
