@@ -75,7 +75,7 @@ vim.o.statuscolumn = [[%!v:lua.require("tillb.signcol").column()]]
 vim.o.statusline = [[%<%{%v:lua.require("tillb.statusline").statusline()%}]]
 vim.o.winbar = [[%<%{%v:lua.require("tillb.statusline").winbar()%}]]
 
-vim.cmd.colorscheme("basic")
+vim.cmd.colorscheme("blackppuccin")
 
 -- disable a bunch of legacy plugins
 vim.g.loaded_gzip = 1

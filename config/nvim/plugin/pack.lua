@@ -4,8 +4,6 @@ vim.pack.add({
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
   "https://github.com/nvim-treesitter/nvim-treesitter-context",
 
-  { src = "https://github.com/catppuccin/nvim", name = "catppuccin" },
-
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/tpope/vim-eunuch",
   "https://github.com/lewis6991/gitsigns.nvim",
@@ -77,44 +75,6 @@ vim.api.nvim_create_autocmd("PackChanged", {
 })
 
 -- NOTE: these have to be loaded immediately to work properly
-require("catppuccin").setup({
-  float = { transparent = true },
-
-  custom_highlights = function(colors)
-    return {
-      Folded = { bg = colors.mantle },
-      Normal = { bg = colors.none },
-      NormalNC = { bg = colors.none },
-      Pmenu = { fg = colors.overlay2, bg = colors.surface0 },
-      PmenuMatch = { fg = colors.text, bg = colors.surface0 },
-      PmenuSel = { fg = colors.overlay2, bg = colors.surface1 },
-      PmenuMatchSel = { fg = colors.text, bg = colors.surface1 },
-      WinBar = { style = { "bold" } },
-      MiniPickBorder = { link = "MsgBorder" },
-      MiniPickBorderText = { link = "Normal" },
-
-      -- NOTE: without this, light-mode makes the cursor hard to see
-      TermCursor = { bg = colors.none },
-      TermCursorNC = { bg = colors.none },
-    }
-  end,
-
-  integrations = {
-    gitsigns = true,
-    mini = true,
-    native_lsp = {
-      underlines = {
-        errors = { "undercurl" },
-        hints = { "undercurl" },
-        warnings = { "undercurl" },
-        information = { "undercurl" },
-        ok = { "undercurl" },
-      },
-    },
-  },
-})
-vim.cmd.colorscheme("catppuccin")
-
 local permission_hlgroups = {
   ["-"] = "NonText",
   ["r"] = "DiagnosticSignWarn",
