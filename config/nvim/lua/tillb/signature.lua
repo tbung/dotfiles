@@ -5,15 +5,15 @@ local sig_help_ns = vim.api.nvim_create_namespace("tillb.signature_help")
 
 local M = {}
 
----@class Window
+---@class tillb.signature.Window
 ---@field id number?
 ---@field bufid number?
 local win = { bufid = nil, id = nil }
 
 local function client_positional_params(params)
-  local win = vim.api.nvim_get_current_win()
+  local winid = vim.api.nvim_get_current_win()
   return function(client)
-    local ret = vim.lsp.util.make_position_params(win, client.offset_encoding)
+    local ret = vim.lsp.util.make_position_params(winid, client.offset_encoding)
     if params then
       ret = vim.tbl_extend("force", ret, params)
     end
@@ -112,25 +112,46 @@ function M.signature_help()
   end)
 end
 
+---@class tillb.signature.Space
+---@field up integer
+---@field down integer
+
+---@return tillb.signature.Space
+local function get_free_space()
+  local cursor_line, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
+  local pos = vim.fn.screenpos(0, cursor_line, cursor_col)
+  return { up = vim.o.lines - pos.row, down = pos.row - 1 }
+end
+
 function M.update_pos()
   if not win.id or not vim.api.nvim_win_is_valid(win.id) then
     return
   end
 
-  local offset_y = 1
-  local anchor = "NW"
+  local space = get_free_space()
 
+  local popupmenu_is_up = false
   local popupmenu_pos = vim.fn.pum_getpos()
   if popupmenu_pos.row ~= nil then
     local cursor_screen_row = vim.fn.winline()
-    local popupmenu_is_up = popupmenu_pos.row - cursor_screen_row < 0
-    if not popupmenu_is_up then
-      anchor = "SW"
-      offset_y = 0
-    end
+    popupmenu_is_up = popupmenu_pos.row - cursor_screen_row < 0
   end
 
-  vim.api.nvim_win_set_config(win.id, { relative = "cursor", anchor = anchor, row = offset_y, col = 0 })
+  local offset_y
+  local anchor
+  local height
+  if space.down >= space.up and (not popupmenu_pos or popupmenu_is_up) then
+    offset_y = 1
+    anchor = "NW"
+    height = math.min(vim.api.nvim_win_get_height(win.id), space.down, 10)
+  else
+    anchor = "SW"
+    offset_y = 0
+    height = math.min(vim.api.nvim_win_get_height(win.id), space.up, 10)
+  end
+
+  vim.api.nvim_win_set_config(win.id,
+    { relative = "cursor", anchor = anchor, row = offset_y, col = 0, height = height, zindex = 1000 })
 end
 
 function M.close()
