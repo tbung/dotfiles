@@ -74,7 +74,10 @@ vim.api.nvim_create_autocmd("UIEnter", {
 vim.api.nvim_create_autocmd("FileType", {
   group = group,
   callback = function(args)
-    pcall(vim.treesitter.start, args.buf)
+    local ok, _ = pcall(vim.treesitter.start, args.buf)
+    if ok then
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
   end,
 })
 
