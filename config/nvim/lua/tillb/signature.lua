@@ -120,7 +120,7 @@ end
 local function get_free_space()
   local cursor_line, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
   local pos = vim.fn.screenpos(0, cursor_line, cursor_col)
-  return { up = vim.o.lines - pos.row, down = pos.row - 1 }
+  return { up = pos.row - 1, down = vim.o.lines - pos.row }
 end
 
 function M.update_pos()
@@ -140,7 +140,7 @@ function M.update_pos()
   local offset_y
   local anchor
   local height
-  if space.down >= space.up and (not popupmenu_pos or popupmenu_is_up) then
+  if (not popupmenu_pos and space.down >= space.up) or popupmenu_is_up then
     offset_y = 1
     anchor = "NW"
     height = math.min(vim.api.nvim_win_get_height(win.id), space.down, 10)
