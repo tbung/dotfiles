@@ -5,6 +5,16 @@ vim.pack.add({
 require("catppuccin").setup({
   float = { transparent = true },
 
+  lsp_styles = {
+    underlines = {
+      errors = { "undercurl" },
+      hints = { "undercurl" },
+      warnings = { "undercurl" },
+      information = { "undercurl" },
+      ok = { "undercurl" },
+    },
+  },
+
   custom_highlights = function(colors)
     return {
       Folded = { bg = colors.mantle },
@@ -27,15 +37,6 @@ require("catppuccin").setup({
   integrations = {
     gitsigns = true,
     mini = true,
-    native_lsp = {
-      underlines = {
-        errors = { "undercurl" },
-        hints = { "undercurl" },
-        warnings = { "undercurl" },
-        information = { "undercurl" },
-        ok = { "undercurl" },
-      },
-    },
   },
 })
 
