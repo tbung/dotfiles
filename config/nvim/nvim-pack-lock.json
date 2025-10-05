@@ -1,0 +1,49 @@
+{
+  "plugins": {
+    "catppuccin": {
+      "rev": "e79d09f",
+      "src": "https://github.com/catppuccin/nvim"
+    },
+    "diffview.nvim": {
+      "rev": "4516612",
+      "src": "https://github.com/sindrets/diffview.nvim"
+    },
+    "gitsigns.nvim": {
+      "rev": "1ee5c1f",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "mini.nvim": {
+      "rev": "61a5d44",
+      "src": "https://github.com/echasnovski/mini.nvim"
+    },
+    "nvim-lspconfig": {
+      "rev": "e688b48",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-treesitter": {
+      "rev": "01ced749",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'main'"
+    },
+    "nvim-treesitter-context": {
+      "rev": "41847d3",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
+    },
+    "oil.nvim": {
+      "rev": "919e155",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "7e6af36",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
+    "vim-eunuch": {
+      "rev": "e86bb79",
+      "src": "https://github.com/tpope/vim-eunuch"
+    },
+    "vim-fugitive": {
+      "rev": "61b51c0",
+      "src": "https://github.com/tpope/vim-fugitive"
+    }
+  }
+}
