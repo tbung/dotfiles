@@ -25,7 +25,7 @@ M.open_terminal = function()
 end
 
 M.terminal_make = function(args)
-  local term = M.create_terminal(vim.o.makeprg)
+  local term = M.create_terminal(vim.fn.expandcmd(vim.o.makeprg))
 
   if not args or not args.bang then
     vim.api.nvim_set_current_buf(term.bufid)
