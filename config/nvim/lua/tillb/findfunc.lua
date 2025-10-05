@@ -24,7 +24,7 @@ function M.refresh()
           data = prev .. data
         end
 
-        if data[#data] == "\n" then
+        if data:sub(#data, #data) == "\n" then
           vim.list_extend(fnames, vim.split(data, "\n", { trimempty = true }))
         else
           local parts = vim.split(data, "\n", { trimempty = true })
