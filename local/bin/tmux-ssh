@@ -9,5 +9,15 @@ fi
 if [[ -z $TMUX ]]; then
     ssh -t "$selected" "tmux new-session -As default"
 else
-    tmux new-window "ssh $selected"
+    tmux new-session -ds "$selected" 'ssh -t '"$selected"' "tmux new-session -As default"'
+    tmux set-option prefix None
+    tmux set-option key-table nroot
+    tmux set-option status off
+    
+    # switch back to default on detach
+    tmux set-option remain-on-exit on
+    tmux set-option 'pane-died[0]' 'switch-client -tdefault'
+    tmux set-option 'pane-died[1]' "kill-session -t$selected"
+    
+    tmux switch-client -t "$selected"
 fi
