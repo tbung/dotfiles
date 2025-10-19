@@ -61,20 +61,25 @@ end
 
 function M.find_buffers_and_files(cmdarg, _cmdcomplete)
   local buffers = vim.iter(vim.api.nvim_list_bufs())
-      :filter(function(buf) return vim.fn.buflisted(buf) == 1 end)
+      :filter(function(buf) return vim.fn.buflisted(buf) == 1 and vim.bo[buf] ~= "nofile" end)
       :map(function(buf)
-        return vim.api.nvim_buf_get_name(buf):gsub("^" .. (vim.loop.cwd() or ""), "")
+        return { id = buf, lastused = vim.fn.getbufinfo(buf)[1].lastused }
       end)
       :totable()
 
-  vim.list_extend(buffers, fnames)
+  table.sort(buffers, function(a, b) return a.lastused > b.lastused end)
 
-  local alternate = vim.fn.expand("#")
   local current = vim.fn.expand("%")
-  if alternate ~= current and alternate ~= "" then
-    table.insert(buffers, 1, alternate)
-  end
 
+  buffers = vim.iter(buffers):map(function(buf)
+    local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf.id), ":.")
+    if name == current then
+      return nil
+    end
+    return name
+  end):totable()
+
+  vim.list_extend(buffers, fnames)
   vim.list.unique(buffers)
 
   return findfunc_impl(buffers, cmdarg, _cmdcomplete)
