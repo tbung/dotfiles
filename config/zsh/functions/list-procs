@@ -1,0 +1,3 @@
+ps -eo state,pid,rss,vsz,command | grep -v ' grep ' | grep -v ' rg '
+
+# vim: ft=zsh

@@ -29,7 +29,7 @@ fpath+="$HOME/.local/bin/completions"
 (( ${+commands[brew]} )) && fpath+="$(brew --prefix)/share/zsh/site-functions"
 
 # compile and autoload all custom functions
-for file in ${ZDOTDIR}/functions/^*.zwc; do
+for file in ${ZDOTDIR}/functions/^*.zwc ; do
     [[ ! "$file".zwc -nt "$file" ]] && print "Compiling $file" && zcompile -R -- "$file".zwc "$file"
 done
 autoload ${ZDOTDIR}/functions/*(:t)
@@ -130,20 +130,13 @@ alias :q='exit'
 alias :wq='exit'
 alias cd..='cd ..'
 alias g='git'
-alias ga='git add'
-alias gap='git add --patch'
-alias gc='git commit'
-alias gpl='git pull'
-alias gps='git push'
-alias gs='git status'
 alias ls='ls --color=auto'
 alias lsd='lsd -lah'
-(( ${+commands[nvim]} )) && alias vim='nvim --cmd "lua vim.g.basic=true"'
-(( ${+commands[nvim]} )) && alias vi='nvim --cmd "lua vim.g.barebones=true"'
 alias wiki='zk edit -i'
 alias wttr='curl wttr.in/heidelberg'
 alias tm='tmux new-session -As default'
 alias nn='new-note'
+alias p='list-procs'
 
 # Named Directory Hashes
 hash -d a="/run/media/alexandria"
