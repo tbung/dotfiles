@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
       -- NOTE: currently, lsp omnifunc (and lsp.complete.get) opens new pum instead of just getting the items
       -- https://github.com/neovim/neovim/issues/35257
-      vim.api.nvim_set_option_value("complete", "o", { buf = args.buf })
+      vim.api.nvim_set_option_value("complete", ".,o", { buf = args.buf })
       vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = args.buf })
     end
 
@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
           local current_char = line:sub(col, col)
 
           if (
-                vim.tbl_contains(client.server_capabilities.signatureHelpProvider.triggerCharacters, current_char, {})
+                vim.tbl_contains(client.server_capabilities.signatureHelpProvider.triggerCharacters or {}, current_char, {})
                 or (
                   client.server_capabilities.signatureHelpProvider.retriggerCharacters
                   and vim.tbl_contains(client.server_capabilities.signatureHelpProvider.retriggerCharacters, current_char, {})
