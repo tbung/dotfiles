@@ -8,7 +8,6 @@ vim.pack.add({
   "https://github.com/tpope/vim-eunuch",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/echasnovski/mini.nvim",
-  "https://github.com/sindrets/diffview.nvim",
   "https://github.com/stevearc/oil.nvim",
 
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
@@ -41,6 +40,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
       vim.cmd.packadd("vim-fugitive")
       vim.cmd.packadd("vim-eunuch")
       vim.cmd.packadd("gitsigns.nvim")
+      vim.cmd.packadd("nvim-treesitter")
     end)
   end,
 })
