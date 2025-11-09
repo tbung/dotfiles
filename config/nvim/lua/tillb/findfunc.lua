@@ -69,7 +69,7 @@ function M.find_buffers_and_files(cmdarg, _cmdcomplete)
 
   table.sort(buffers, function(a, b) return a.lastused > b.lastused end)
 
-  local current = vim.fn.expand("%")
+  local current = vim.fn.expand("%:.")
 
   buffers = vim.iter(buffers):map(function(buf)
     local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf.id), ":.")
@@ -78,8 +78,7 @@ function M.find_buffers_and_files(cmdarg, _cmdcomplete)
     end
     return name
   end):totable()
-
-  vim.list_extend(buffers, fnames)
+  vim.list_extend(buffers, vim.iter(fnames):filter(function(name) return name ~= current end):totable())
   vim.list.unique(buffers)
 
   return findfunc_impl(buffers, cmdarg, _cmdcomplete)
