@@ -22,22 +22,27 @@ function M.highlight(direction)
 
   set_extmark(buf, ns, row - 1, 0, { end_col = #line, hl_group = "LineNavDim", invalidate = false })
 
+  -- ignore next {f, F, t, T}, then clear on the next key
+  -- do this early, so we can return and not leave highlighting up
+  vim.on_key(function()
+    vim.on_key(function()
+      vim.api.nvim_buf_clear_namespace(buf, ns, row - 1, row)
+      vim.on_key(nil, ns)
+    end, ns)
+  end, ns)
+
   if direction == "right" then
     iter:skip(col + 1)
 
     if iter:peek() == nil then
       return
     end
-
-    -- set_extmark(buf, ns, row - 1, col, { end_col = #line, hl_group = "LineNavDim", invalidate = false })
   else
     if col == 0 then
       return
     end
 
     iter:take(col + 1):rev()
-
-    -- set_extmark(buf, ns, row - 1, 0, { end_col = col, hl_group = "LineNavDim", invalidate = false })
   end
 
   local freqs = {} --- @type table[string, integer]
@@ -65,14 +70,6 @@ function M.highlight(direction)
       acc.freq = 99999
     end
   end)
-
-  -- ignore next {f, F, t, T}, then clear on the next key
-  vim.on_key(function()
-    vim.on_key(function()
-      vim.api.nvim_buf_clear_namespace(buf, ns, row - 1, row)
-      vim.on_key(nil, ns)
-    end, ns)
-  end, ns)
 
   vim.cmd.redraw()
 end
