@@ -9,9 +9,9 @@ fi
 sessname="${selected//\./_}"
 
 if [[ -z $TMUX ]]; then
-    ssh -t "$selected" sh -lc "tmux new-session -As default"
+    ssh -t "$selected" sh -lc '"tmux new-session -As default"'
 else
-    tmux new-session -ds "$sessname" 'ssh -t '"$selected"' sh -lc "tmux new-session -As default"'
+    tmux new-session -ds "$sessname" "ssh -t $selected sh -lc "\''"tmux new-session -As default"'\'
     tmux set-option prefix None
     tmux set-option key-table nroot
     tmux set-option status off
