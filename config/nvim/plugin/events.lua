@@ -68,6 +68,10 @@ vim.api.nvim_create_autocmd("UIEnter", {
         }
       )
     end)
+
+    vim.api.nvim_create_user_command("Search", function()
+      require("tillb.websearch").interactive()
+    end, { nargs = 0, force = true, })
   end,
 })
 

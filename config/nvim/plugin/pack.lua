@@ -22,6 +22,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
     vim.schedule(function()
       require("mini.surround").setup({})
 
+      vim.cmd.packadd("mini.pick")
       require("mini.pick").setup({
         options = { content_from_bottom = true },
         window = {
@@ -36,6 +37,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
         },
       })
       vim.ui.select = require("mini.pick").ui_select
+      require('mini.extra').setup()
 
       vim.cmd.packadd("vim-fugitive")
       vim.cmd.packadd("vim-eunuch")
