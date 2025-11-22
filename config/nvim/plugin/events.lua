@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
             vim.api.nvim_set_current_buf(bufnr)
             return
           end
-          vim.cmd("find " .. opts.args)
+          vim.cmd("edit " .. opts.args)
         end,
         {
           nargs = 1,
