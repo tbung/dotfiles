@@ -1,0 +1,21 @@
+if ! vared -cep "Search: " query; then
+    return 1
+fi
+
+engines=(
+  "Python https://docs.python.org/3/search.html?q=%s"
+  "Wikipedia https://en.wikipedia.org/wiki/Special:Search?search=%s"
+  "Google https://google.com/search?q=%s"
+)
+
+engine=$(printf "%s\n" "${engines[@]}" | fzf --with-nth=1 --accept-nth=2)
+
+cmd="xdg-open"
+
+if [[ $(uname) == "Darwin" ]]; then
+    cmd="open"
+fi
+
+$cmd $(printf "$engine" "$query")
+
+# vim:ft=zsh

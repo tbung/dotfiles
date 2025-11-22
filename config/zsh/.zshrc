@@ -139,6 +139,7 @@ alias wttr='curl wttr.in/heidelberg'
 alias tm='tmux new-session -As default'
 alias nn='new-note'
 alias p='list-procs'
+alias ws='web-search'
 
 # Named Directory Hashes
 hash -d a="/run/media/alexandria"
