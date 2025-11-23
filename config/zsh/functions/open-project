@@ -1,8 +1,8 @@
 local dir
 if (( ${+commands[fd]} )); then
-    dir=$(fd --hidden --max-depth=3 --prune \^.git$ ${HOME}/Projects -x dirname | fzf)
+    dir=$(fd --hidden --max-depth=2 --prune \^.git$ ${HOME}/Projects -x dirname | fzf -d'/' --with-nth=-1)
 else
-    dir=$(printf '%s\n' ${HOME}/Projects/**/.git | xargs dirname | fzf)
+    dir=$(printf '%s\n' ${HOME}/Projects/*/.git | xargs dirname | fzf -d'/' --with-nth=-1)
 fi
 
 if [[ -z "$dir" ]]; then
