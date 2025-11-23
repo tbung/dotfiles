@@ -10,43 +10,59 @@ function M.refresh()
 
   fnames = {}
 
-  local prev
+  if vim.fn.executable("fd") == 1 then
+    local prev
 
-  handle = vim.system({ "fd", "-t", "f", "--hidden", "--color=never", "-E", ".git" },
-    {
-      stdout = function(err, data)
-        assert(not err, err)
-        if not data then
-          return
-        end
+    handle = vim.system({ "fd", "-t", "f", "--hidden", "--color=never", "-E", ".git" },
+      {
+        stdout = function(err, data)
+          assert(not err, err)
+          if not data then
+            return
+          end
 
-        if prev then
-          data = prev .. data
-        end
+          if prev then
+            data = prev .. data
+          end
 
-        if data:sub(#data, #data) == "\n" then
-          vim.list_extend(fnames, vim.split(data, "\n", { trimempty = true }))
-        else
-          local parts = vim.split(data, "\n", { trimempty = true })
-          prev = parts[#parts]
-          parts[#parts] = nil
-          vim.list_extend(fnames, parts)
+          if data:sub(#data, #data) == "\n" then
+            vim.list_extend(fnames, vim.split(data, "\n", { trimempty = true }))
+          else
+            local parts = vim.split(data, "\n", { trimempty = true })
+            prev = parts[#parts]
+            parts[#parts] = nil
+            vim.list_extend(fnames, parts)
+          end
+        end,
+      }, function(obj)
+        handle = nil
+      end)
+
+
+    vim.api.nvim_create_autocmd("CmdlineLeave", {
+      once = true,
+      callback = function()
+        if handle then
+          handle:wait(0)
+          handle = nil
         end
       end,
-    }, function(obj)
-      handle = nil
-    end)
+    })
+  else
+    vim.schedule(function()
+      local iter = vim.iter(vim.fs.dir(".", { depth = 99 })):map(function(path, type)
+        if type ~= "file" then
+          return nil
+        end
+        return path
+      end)
 
-
-  vim.api.nvim_create_autocmd("CmdlineLeave", {
-    once = true,
-    callback = function()
-      if handle then
-        handle:wait(0)
-        handle = nil
+      for p in iter do
+        table.insert(fnames, p)
       end
-    end,
-  })
+    end)
+  end
+
 
   vim.wait(200, function() return #fnames > 0 end, 50, true)
 end
