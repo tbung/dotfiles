@@ -16,7 +16,7 @@ fi
 export TERMINAL="wezterm"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
-export ZK_NOTEBOOK_DIR="$HOME/wiki"
+export ZK_NOTEBOOK_DIR="$HOME/notes"
 
 # if $TERM got set to something not available, set it to xterm
 infocmp "$TERM" &>/dev/null || export TERM="xterm-256color"
