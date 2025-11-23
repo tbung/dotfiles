@@ -1,0 +1,13 @@
+#compdef _set-colors set-colors
+
+function _set-colors {
+    function _commands {
+        local -a commands
+        commands=(
+            'light:Turn on light mode'
+            'dark:Turn on dark mode'
+        )
+        _describe 'command' commands
+    }
+    _arguments "1: :_commands"
+}
