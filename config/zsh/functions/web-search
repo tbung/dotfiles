@@ -2,6 +2,9 @@ if ! vared -cep "Search: " query; then
     return 1
 fi
 
+# URI encode query
+query=$(printf %s "$query" | jq -r -R @uri)
+
 engines=(
   "Python https://docs.python.org/3/search.html?q=%s"
   "Wikipedia https://en.wikipedia.org/wiki/Special:Search?search=%s"
