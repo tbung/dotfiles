@@ -10,58 +10,55 @@ function M.refresh()
 
   fnames = {}
 
+  local command
+
   if vim.fn.executable("fd") == 1 then
-    local prev
+    command = { "fd", "-t", "f", "--hidden", "--color=never", "-E", ".git" }
+  elseif vim.fn.executable("rg") == 1 then
+    command = { "rg", "--files", "--no-message", "--hidden", "--color=never", "-g", "!.git" }
+  else
+    command = { "find" }
+    vim.list_extend(command, vim.iter(vim.fs.dir(".")):map(function(path, _) return path end):totable())
+    vim.list_extend(command, { "-type", "f", "-not", "-path", "*/.git/*" })
+  end
 
-    handle = vim.system({ "fd", "-t", "f", "--hidden", "--color=never", "-E", ".git" },
-      {
-        stdout = function(err, data)
-          assert(not err, err)
-          if not data then
-            return
-          end
+  local prev
 
-          if prev then
-            data = prev .. data
-          end
+  handle = vim.system(command,
+    {
+      stdout = function(err, data)
+        assert(not err, err)
+        if not data then
+          return
+        end
 
-          if data:sub(#data, #data) == "\n" then
-            vim.list_extend(fnames, vim.split(data, "\n", { trimempty = true }))
-          else
-            local parts = vim.split(data, "\n", { trimempty = true })
-            prev = parts[#parts]
-            parts[#parts] = nil
-            vim.list_extend(fnames, parts)
-          end
-        end,
-      }, function(obj)
-        handle = nil
-      end)
+        if prev then
+          data = prev .. data
+        end
 
-
-    vim.api.nvim_create_autocmd("CmdlineLeave", {
-      once = true,
-      callback = function()
-        if handle then
-          handle:wait(0)
-          handle = nil
+        if data:sub(#data, #data) == "\n" then
+          vim.list_extend(fnames, vim.split(data, "\n", { trimempty = true }))
+        else
+          local parts = vim.split(data, "\n", { trimempty = true })
+          prev = parts[#parts]
+          parts[#parts] = nil
+          vim.list_extend(fnames, parts)
         end
       end,
-    })
-  else
-    vim.schedule(function()
-      local iter = vim.iter(vim.fs.dir(".", { depth = 99 })):map(function(path, type)
-        if type ~= "file" then
-          return nil
-        end
-        return path
-      end)
-
-      for p in iter do
-        table.insert(fnames, p)
-      end
+    }, function(obj)
+      handle = nil
     end)
-  end
+
+
+  vim.api.nvim_create_autocmd("CmdlineLeave", {
+    once = true,
+    callback = function()
+      if handle then
+        handle:wait(0)
+        handle = nil
+      end
+    end,
+  })
 
 
   vim.wait(200, function() return #fnames > 0 end, 50, true)
