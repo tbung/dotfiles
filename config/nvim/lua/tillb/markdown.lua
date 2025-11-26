@@ -37,11 +37,75 @@ local _admonitions = {
   ["[!cite]"] = { "@markup.quote", "󱆨 Cite" },
 }
 
+---comment
+---@param node TSNode
+---@param type? string
+---@param parent? string
+---@return integer
+local function get_level(node, type, parent)
+  type = type or node:type()
+
+  local level = 0
+  while node and node:type() ~= parent do
+    if node:type() == type then
+      level = level + 1
+    end
+    node = node:parent()
+  end
+
+  return level
+end
+
+---@param bufid integer
+---@param linenr integer
+---@param query string
+---
+---@return Range2[]
+local function line_find_all(bufid, linenr, query)
+  ---@type Range2[]
+  local matches = {}
+  local text = vim.api.nvim_buf_get_lines(bufid, linenr, linenr + 1, true)[1]
+  while #text do
+    local start, end_ = text:find(query)
+    if not start or not end_ then
+      return matches
+    end
+    table.insert(matches, { start, end_ })
+    text = text:sub(end_ + 1)
+  end
+
+  return matches
+end
+
+---@param bufid integer
+---@param node TSNode
+---@param query string
+---
+---@return Range2[]
+local function node_find_all(bufid, node, query)
+  ---@type Range2[]
+  local matches = {}
+  local text = vim.treesitter.get_node_text(node, bufid)
+  local offset = 1
+  while offset do
+    local start, end_ = text:find(query, offset)
+    if not start or not end_ then
+      return matches
+    end
+    table.insert(matches, { start, end_ })
+    offset = end_ + 1
+  end
+
+  return matches
+end
+
 function renderers.quote(bufid, node, parser_inline)
   local row_start, col_start, row_end, col_end = node:range()
 
   local hl = "@markup.quote"
   local replacement
+
+  local level = get_level(node, "block_quote", "section")
 
   local query_inline = vim.treesitter.query.parse("markdown_inline", [[
     (shortcut_link) @link
@@ -76,27 +140,40 @@ function renderers.quote(bufid, node, parser_inline)
 
   local query = vim.treesitter.query.parse("markdown", [[
     (block_quote_marker) @marker
-    (block_continuation) @marker
+    (block_continuation) @continuation
     ]])
 
   for id, child in query:iter_captures(node, bufid, row_start, row_end) do
+    local name = query.captures[id]
+    local child_level = get_level(child, "block_quote", "section")
+
+    -- ignore markers of nested blocks
+    if name == "marker" and child_level ~= level then
+      goto continue
+    end
+
     local child_row_start, child_col_start, child_row_end, child_col_end = child:range()
+
+    -- while the parser considers all continuations to belong to the innermost block, we can check how many there are
+    -- and only deal with the one corresponding to this level
+    local range = node_find_all(bufid, child, "> ")[level]
+    if name == "continuation" then
+      if range == nil then
+        goto continue
+      end
+      child_col_start = range[1] - 1
+      child_col_end = range[2] - 1
+    end
     vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
-      hl_group = nil,
-      conceal = "",
+      virt_text = { { "┃", hl } },
+      virt_text_pos = "overlay",
       end_row = child_row_end,
       end_col = child_col_end,
       hl_mode = "combine",
+      right_gravity = false,
       invalidate = true,
     })
-    vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
-      virt_text = { { "┃ ", hl } },
-      virt_text_pos = "inline",
-      end_row = child_row_end,
-      end_col = child_col_end,
-      hl_mode = "combine",
-      invalidate = true,
-    })
+    ::continue::
   end
 end
 
@@ -165,14 +242,20 @@ local function in_range(q, start, end_)
   return start <= q and q <= end_
 end
 
+---@param bufid integer
 ---@param mode string
 ---@param concealcursor string
 ---@param cursorrow integer
----@param node_start integer
----@param node_end integer
+---@param node TSNode
 ---@return boolean
-local function should_conceal(mode, concealcursor, cursorrow, node_start, node_end)
+local function should_conceal(bufid, mode, concealcursor, cursorrow, node)
+  local node_start, _, node_end, _ = node:range()
+
   if not in_range(cursorrow, node_start, node_end) then
+    return true
+  end
+
+  if node:type() == "block_quote" and not line_find_all(bufid, cursorrow, ">")[get_level(node, "block_quote", "section")] then
     return true
   end
   return (concealcursor:find(mode) ~= nil)
@@ -209,7 +292,7 @@ function M.render_range(bufid, start_row, end_row)
   for id, node in query:iter_captures(tree:root(), bufid, start_row, end_row) do
     local name = query.captures[id]
     local node_start_row, _, node_end_row, _ = node:range()
-    if should_conceal(current_mode, current_concealcursor, current_row, node_start_row, node_end_row) then
+    if should_conceal(bufid, current_mode, current_concealcursor, current_row, node) then
       renderers[name](bufid, node, parser_inline)
     end
   end
