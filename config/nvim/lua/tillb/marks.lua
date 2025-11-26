@@ -62,9 +62,10 @@ function M.update_signs(buf)
   end
 end
 
--- TODO: add this to formatexpr
--- vim.api.nvim_exec_autocmds("User",
---   { buffer = vim.api.nvim_get_current_buf(), group = vim.api.nvim_create_augroup("UserLspFormat", {}), }
--- )
+function M.attach(buf)
+  vim.api.nvim_buf_attach(buf, false, { on_lines = function(_, buf)
+    M.update_signs(buf)
+  end })
+end
 
 return M
