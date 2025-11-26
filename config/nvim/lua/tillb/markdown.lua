@@ -100,6 +100,7 @@ local function node_find_all(bufid, node, query)
 end
 
 function renderers.quote(bufid, node, parser_inline)
+  -- FIXME: expects "> blah" and cannot deal with ">blah"
   local row_start, col_start, row_end, col_end = node:range()
 
   local hl = "@markup.quote"
@@ -239,7 +240,7 @@ end
 ---@param end_ integer
 ---@return boolean
 local function in_range(q, start, end_)
-  return start <= q and q <= end_
+  return start <= q and q < end_
 end
 
 ---@param bufid integer
