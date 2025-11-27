@@ -102,7 +102,6 @@ local function node_find_all(bufid, node, query)
 end
 
 function renderers.quote(bufid, node, parser_inline)
-  -- FIXME: expects "> blah" and cannot deal with ">blah"
   local row_start, col_start, row_end, col_end = node:range()
 
   local marks = {}
@@ -124,16 +123,10 @@ function renderers.quote(bufid, node, parser_inline)
       hl, replacement = unpack(_admonitions[text:lower()])
       local child_row_start, child_col_start, child_row_end, child_col_end = child:range()
       table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
-        hl_group = nil,
-        conceal = "",
-        end_row = child_row_end,
-        end_col = child_col_end,
-        hl_mode = "combine",
-        invalidate = true,
-      }))
-      table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
         virt_text = { { replacement or text, hl } },
         virt_text_pos = "inline",
+        hl_group = nil,
+        conceal = "",
         end_row = child_row_end,
         end_col = child_col_end,
         hl_mode = "combine",
@@ -161,17 +154,18 @@ function renderers.quote(bufid, node, parser_inline)
 
     -- while the parser considers all continuations to belong to the innermost block, we can check how many there are
     -- and only deal with the one corresponding to this level
-    local range = node_find_all(bufid, child, "> ")[level]
     if name == "continuation" then
+      local range = node_find_all(bufid, child, "> *")[level]
       if range == nil then
         goto continue
       end
       child_col_start = range[1] - 1
-      child_col_end = range[2] - 1
+      child_col_end = range[2]
     end
     table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
-      virt_text = { { "┃", hl } },
-      virt_text_pos = "overlay",
+      virt_text = { { "┃ ", hl } },
+      virt_text_pos = "inline",
+      conceal = "",
       end_row = child_row_end,
       end_col = child_col_end,
       hl_mode = "combine",
