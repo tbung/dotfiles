@@ -5,7 +5,43 @@ local ns = vim.api.nvim_create_namespace("tillb.markdown")
 ---@type table<string, fun(bufid: integer, node: TSNode, parser_inline: vim.treesitter.LanguageTree?)>
 local renderers = {}
 
+---@type table<any, { mark: [integer, integer, integer, integer, vim.api.keyset.set_extmark] }[]>
 M.marks = {}
+
+---@type table<any, boolean>
+M.node_shown = {}
+
+M.marks_to_node = {}
+
+---@param node TSNode
+---@param bufid integer
+---@param ns_id integer
+---@param line integer
+---@param col integer
+---@param opts vim.api.keyset.set_extmark
+function M.mark(node, bufid, ns_id, line, col, opts)
+  local id = vim.api.nvim_buf_set_extmark(bufid, ns_id, line, col, opts)
+  if M.marks[node:id()] == nil then
+    M.marks[node:id()] = {}
+  end
+
+  M.marks_to_node[id] = node
+
+  table.insert(M.marks[node:id()],
+    { mark = { bufid, ns_id, line, col, opts }, })
+end
+
+---@param node TSNode
+---@return boolean
+function M.mark_from_cache(node)
+  if M.marks[node:id()] ~= nil then
+    for _, mark in ipairs(M.marks[node:id()]) do
+      vim.api.nvim_buf_set_extmark(unpack(mark.mark))
+    end
+    return true
+  end
+  return false
+end
 
 local _admonitions = {
   -- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts
@@ -102,9 +138,10 @@ local function node_find_all(bufid, node, query)
 end
 
 function renderers.quote(bufid, node, parser_inline)
+  if M.mark_from_cache(node) then
+    return
+  end
   local row_start, col_start, row_end, col_end = node:range()
-
-  local marks = {}
 
   local hl = "@markup.quote"
   local replacement
@@ -122,7 +159,7 @@ function renderers.quote(bufid, node, parser_inline)
       end
       hl, replacement = unpack(_admonitions[text:lower()])
       local child_row_start, child_col_start, child_row_end, child_col_end = child:range()
-      table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
+      M.mark(node, bufid, ns, child_row_start, child_col_start, {
         virt_text = { { replacement or text, hl } },
         virt_text_pos = "inline",
         hl_group = nil,
@@ -131,7 +168,7 @@ function renderers.quote(bufid, node, parser_inline)
         end_col = child_col_end,
         hl_mode = "combine",
         invalidate = true,
-      }))
+      })
       ::continue::
     end
   end)
@@ -162,7 +199,7 @@ function renderers.quote(bufid, node, parser_inline)
       child_col_start = range[1] - 1
       child_col_end = range[2]
     end
-    table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
+    M.mark(node, bufid, ns, child_row_start, child_col_start, {
       virt_text = { { "┃ ", hl } },
       virt_text_pos = "inline",
       conceal = "",
@@ -171,11 +208,9 @@ function renderers.quote(bufid, node, parser_inline)
       hl_mode = "combine",
       right_gravity = false,
       invalidate = true,
-    }))
+    })
     ::continue::
   end
-
-  M.marks[node:id()] = marks
 end
 
 function renderers.hline(bufid, node)
@@ -201,8 +236,10 @@ function renderers.listitem(bufid, node, parser_inline)
 end
 
 function renderers.table(bufid, node, parser_inline)
+  if M.mark_from_cache(node) then
+    return
+  end
   local row_start, col_start, row_end, col_end = node:range()
-  local marks = {}
   local conceal_query = vim.treesitter.query.get("markdown_inline", "highlights")
   local query = vim.treesitter.query.parse("markdown", [[
   (pipe_table_delimiter_row) @delim
@@ -273,11 +310,11 @@ function renderers.table(bufid, node, parser_inline)
   if col_start > 0 then
     header_prefix = vim.iter(vim.split(
       vim.api.nvim_buf_get_lines(bufid, row_start, row_start + 1, true)[1]:sub(1, col_start), "")):map(function(c)
-      return { c, "Normal", }
+      return { c, "Normal" }
     end):totable()
     footer_prefix = vim.iter(vim.split(
       vim.api.nvim_buf_get_lines(bufid, row_end - 1, row_end, true)[1]:sub(1, col_start), "")):map(function(c)
-      return { c, "Normal", }
+      return { c, "Normal" }
     end):totable()
     for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufid, ns, { row_start, col_start }, { row_start, 0 }, { details = true })) do
       if mark[4].conceal ~= nil then
@@ -328,39 +365,39 @@ function renderers.table(bufid, node, parser_inline)
             conceal = "┼"
           end
         end
-        table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+        M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
           hl_group = "@punctuation.special",
           conceal = conceal,
           end_row = cell_row_end,
           end_col = cell_col_end,
           hl_mode = "combine",
           invalidate = true,
-        }))
+        })
       else
         if delim then
-          table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+          M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
             hl_group = "@punctuation.special",
             conceal = "─",
             end_row = cell_row_end,
             end_col = cell_col_end,
             hl_mode = "combine",
             invalidate = true,
-          }))
-          table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+          })
+          M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
             virt_text = { { string.rep("─", cell.width), "@punctuation.special" } },
             virt_text_pos = "inline",
             end_row = cell_row_end,
             hl_mode = "combine",
             invalidate = true,
-          }))
+          })
         else
-          table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+          M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
             virt_text = { { string.rep(" ", cell.width - (cell_col_end - cell_col_start)), "@punctuation.special" } },
             virt_text_pos = "inline",
             end_row = cell_row_end,
             hl_mode = "combine",
             invalidate = true,
-          }))
+          })
         end
       end
     end
@@ -391,20 +428,18 @@ function renderers.table(bufid, node, parser_inline)
   header = vim.list_extend(header_prefix, header)
   footer = vim.list_extend(footer_prefix, footer)
 
-  table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_start, col_start, {
+  M.mark(node, bufid, ns, row_start, col_start, {
     virt_lines = { header },
     virt_lines_above = true,
     hl_mode = "combine",
     invalidate = true,
-  }))
-  table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_end - 1, col_start, {
+  })
+  M.mark(node, bufid, ns, row_end - 1, col_start, {
     virt_lines = { footer },
     virt_lines_above = false,
     hl_mode = "combine",
     invalidate = true,
-  }))
-
-  M.marks[node:id()] = marks
+  })
 end
 
 ---@param bufid integer
@@ -485,43 +520,41 @@ M.last_render_time = nil
 
 ---@param bufid integer
 function M.refresh_viewport(bufid)
-  local time = vim.uv.now()
-  if M.last_render_time and time - M.last_render_time < 100 then
-    return
-  end
+  -- local time = vim.uv.hrtime()
+  -- if M.last_render_time and time - M.last_render_time < 100 then
+  --   return
+  -- end
   unconceal_all(bufid)
   local winid = vim.fn.bufwinid(bufid)
   local row_start = vim.fn.line("w0", winid) - 1
   local row_end = vim.fn.line("w$", winid)
   M.render_range(bufid, row_start, row_end)
-  M.last_render_time = time
+  -- M.last_render_time = time
+  -- vim.print(vim.uv.hrtime() - time)
 end
+
+vim.api.nvim_set_hl(0, "MarkdownCalloutNote", { link = "DiagnosticFloatingInfo" })
+vim.api.nvim_set_hl(0, "MarkdownCalloutTip", { link = "DiagnosticFloatingOk" })
+vim.api.nvim_set_hl(0, "MarkdownCalloutImportant", { link = "DiagnosticFloatingHint" })
+vim.api.nvim_set_hl(0, "MarkdownCalloutWarning", { link = "DiagnosticFloatingWarn" })
+vim.api.nvim_set_hl(0, "MarkdownCalloutCaution", { link = "DiagnosticFloatingError" })
 
 ---@param bufid? integer
 function M.attach(bufid)
   bufid = bufid or vim.api.nvim_get_current_buf()
-
-  M.cursor = vim.api.nvim_win_get_cursor(0)
-  M.cursor[1] = M.cursor[1]
-
-  vim.api.nvim_set_hl(0, "MarkdownCalloutNote", { link = "DiagnosticFloatingInfo" })
-  vim.api.nvim_set_hl(0, "MarkdownCalloutTip", { link = "DiagnosticFloatingOk" })
-  vim.api.nvim_set_hl(0, "MarkdownCalloutImportant", { link = "DiagnosticFloatingHint" })
-  vim.api.nvim_set_hl(0, "MarkdownCalloutWarning", { link = "DiagnosticFloatingWarn" })
-  vim.api.nvim_set_hl(0, "MarkdownCalloutCaution", { link = "DiagnosticFloatingError" })
 
   vim.api.nvim_create_autocmd("InsertEnter", { callback = function(args)
     unconceal_all(args.buf)
   end })
   vim.api.nvim_create_autocmd("InsertLeave", { callback = function(args)
     M.refresh_viewport(args.buf)
-  end, })
+  end })
   vim.api.nvim_create_autocmd("CursorMoved", { callback = function(args)
     M.refresh_viewport(args.buf)
-  end, })
+  end })
   vim.api.nvim_create_autocmd("WinScrolled", { callback = function(args)
     M.refresh_viewport(args.buf)
-  end, })
+  end })
 
   vim.api.nvim_buf_attach(bufid, true,
     {
@@ -540,6 +573,17 @@ function M.attach(bufid)
     })
 
   M.refresh_viewport(bufid)
+end
+
+function M.test()
+  local bufid = vim.api.nvim_get_current_buf()
+  vim.uv.update_time()
+  local time = vim.uv.now()
+  for i = 1, 500 do
+    M.refresh_viewport(bufid)
+  end
+  vim.uv.update_time()
+  vim.print(vim.uv.now() - time)
 end
 
 return M
