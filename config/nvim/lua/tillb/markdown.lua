@@ -204,36 +204,6 @@ function renderers.hline(bufid, node)
 end
 
 function renderers.listitem(bufid, node, parser_inline)
-  local row_start, col_start, row_end, col_end = node:range()
-  local marks = {}
-  local query_inline = vim.treesitter.query.parse("markdown_inline", [[
-  (
-    ((shortcut_link) @tasklist
-      (#eq? @tasklist "[-]"))
-  )
-  ]])
-  parser_inline:for_each_tree(function(stree, _)
-    for id, child in query_inline:iter_captures(stree:root(), bufid, row_start, row_end) do
-      local child_row_start, child_col_start, child_row_end, child_col_end = child:range()
-      table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
-        hl_group = nil,
-        conceal = "",
-        end_row = child_row_end,
-        end_col = child_col_end,
-        hl_mode = "combine",
-        invalidate = true,
-      }))
-      table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, child_row_start, child_col_start, {
-        virt_text = { { "[-]", "WarningMsg" } },
-        virt_text_pos = "inline",
-        end_row = child_row_end,
-        hl_mode = "combine",
-        invalidate = true,
-      }))
-    end
-  end)
-
-  M.marks[node:id()] = marks
 end
 
 function renderers.table(bufid, node, parser_inline)

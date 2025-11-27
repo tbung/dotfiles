@@ -8,5 +8,11 @@ vim.opt_local.breakindentopt = "shift:4"
 vim.keymap.set("n", "j", "gj", { buffer = true })
 vim.keymap.set("n", "k", "gk", { buffer = true })
 
--- NOTE: Currently can't fully disable this for LSP preview windows
--- vim.cmd.packadd("render-markdown.nvim")
+local query = vim.treesitter.query.get("markdown_inline", "highlights")
+if query then
+  -- from :Inspect!
+  local pattern_index = 15
+  query.query:disable_pattern(pattern_index)
+  vim.treesitter.stop()
+  vim.treesitter.start()
+end
