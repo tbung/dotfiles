@@ -445,7 +445,14 @@ function M.unrender_range(bufid, start_row, end_row)
   end
 end
 
-M.cursor = {}
+---@param bufid integer
+function M.refresh_viewport(bufid)
+  unconceal_all(bufid)
+  local winid = vim.fn.bufwinid(bufid)
+  local row_start = vim.fn.line("w0", winid) - 1
+  local row_end = vim.fn.line("w$", winid)
+  M.render_range(bufid, row_start, row_end)
+end
 
 ---@param bufid? integer
 function M.attach(bufid)
@@ -463,49 +470,33 @@ function M.attach(bufid)
   vim.api.nvim_create_autocmd("InsertEnter", { callback = function(args)
     unconceal_all(args.buf)
   end })
-  vim.api.nvim_create_autocmd("InsertLeave", {
-    callback = function(args)
-      local winid = vim.fn.bufwinid(args.buf)
-      local row_start = vim.fn.line("w0", winid) - 1
-      local row_end = vim.fn.line("w$", winid)
-      M.render_range(args.buf, row_start, row_end)
-    end,
-  })
-  vim.api.nvim_create_autocmd("CursorMoved", {
-    callback = function(args)
-      unconceal_all(args.buf)
-      local winid = vim.fn.bufwinid(args.buf)
-      local row_start = vim.fn.line("w0", winid) - 1
-      local row_end = vim.fn.line("w$", winid)
-      M.render_range(args.buf, row_start, row_end)
-      -- M.cursor = vim.api.nvim_win_get_cursor(0)
-      -- M.unrender_range(args.buf, M.cursor[1] - 1, M.cursor[1])
-    end,
-  })
+  vim.api.nvim_create_autocmd("InsertLeave", { callback = function(args)
+    M.refresh_viewport(args.buf)
+  end, })
+  vim.api.nvim_create_autocmd("CursorMoved", { callback = function(args)
+    M.refresh_viewport(args.buf)
+  end, })
+  vim.api.nvim_create_autocmd("WinScrolled", { callback = function(args)
+    M.refresh_viewport(args.buf)
+  end, })
 
-  -- vim.api.nvim_buf_attach(bufid, true,
-  --   {
-  --     on_lines = function(
-  --         _,
-  --         bufnr,
-  --         changedtick,
-  --         first,
-  --         last_old,
-  --         last_new,
-  --         byte_count,
-  --         deleted_codepoints,
-  --         deleted_codeunits)
-  --       vim.print({ first, last_old, last_new })
-  --       M.clear_lines(bufnr, first, last_old)
-  --       -- M.unrender_range(bufnr, first, last_old)
-  --       -- M.render_range(bufnr, first, last_new)
-  --     end
-  --   })
+  vim.api.nvim_buf_attach(bufid, true,
+    {
+      on_lines = function(
+          _,
+          bufnr,
+          changedtick,
+          first,
+          last_old,
+          last_new,
+          byte_count,
+          deleted_codepoints,
+          deleted_codeunits)
+        M.refresh_viewport(bufnr)
+      end,
+    })
 
-  local winid = vim.fn.bufwinid(bufid)
-  local row_start = vim.fn.line("w0", winid) - 1
-  local row_end = vim.fn.line("w$", winid)
-  M.render_range(bufid, row_start, row_end)
+  M.refresh_viewport(bufid)
 end
 
 return M
