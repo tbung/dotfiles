@@ -481,46 +481,20 @@ function M.render_range(bufid, start_row, end_row)
   end
 end
 
----@param bufid? integer
----@param start_row? integer
----@param end_row? integer
-function M.unrender_range(bufid, start_row, end_row)
-  bufid = bufid or 0
-  local winid = vim.fn.bufwinid(bufid)
-  local current_conceallevel = vim.wo[winid].conceallevel
-
-  if current_conceallevel < 1 then
-    return
-  end
-
-  local query = vim.treesitter.query.parse("markdown", [[
-    (block_quote) @quote
-    (thematic_break) @hline
-    (list_item) @listitem
-    (pipe_table) @table
-  ]])
-
-  local parser = vim.treesitter.get_parser(bufid, "markdown")
-  assert(parser)
-
-  local tree = parser:parse(true)[1]
-
-  for _, node in query:iter_captures(tree:root(), bufid, start_row, end_row) do
-    if M.marks[node:id()] then
-      for _, mark in ipairs(M.marks[node:id()]) do
-        vim.api.nvim_buf_del_extmark(bufid, ns, mark)
-      end
-    end
-  end
-end
+M.last_render_time = nil
 
 ---@param bufid integer
 function M.refresh_viewport(bufid)
+  local time = vim.uv.now()
+  if M.last_render_time and time - M.last_render_time < 100 then
+    return
+  end
   unconceal_all(bufid)
   local winid = vim.fn.bufwinid(bufid)
   local row_start = vim.fn.line("w0", winid) - 1
   local row_end = vim.fn.line("w$", winid)
   M.render_range(bufid, row_start, row_end)
+  M.last_render_time = time
 end
 
 ---@param bufid? integer
