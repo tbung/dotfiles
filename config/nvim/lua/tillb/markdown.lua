@@ -1,45 +1,113 @@
 local M = {}
 
 local ns = vim.api.nvim_create_namespace("tillb.markdown")
+local group = vim.api.nvim_create_augroup("tillb.markdown", {})
 
----@type table<string, fun(bufid: integer, node: TSNode, parser_inline: vim.treesitter.LanguageTree?)>
-local renderers = {}
-
----@type table<any, { mark: [integer, integer, integer, integer, vim.api.keyset.set_extmark] }[]>
-M.marks = {}
-
----@type table<any, TSNode>
-M.nodes = {}
-
----@type table<any, boolean>
-M.node_shown = {}
-
-M.marks_to_node = {}
+---@class Range
+---@field row_start integer
+---@field row_end integer
+---@field col_start integer
+---@field col_end integer
+local Range = {}
 
 ---@param node TSNode
----@param bufid integer
----@param ns_id integer
+---@return Range
+function Range:from_node(node)
+  local o = setmetatable({}, self)
+  local row_start, col_start, row_end, col_end = node:range()
+  o.row_start = row_start
+  o.row_end = row_end
+  o.col_start = col_start
+  o.col_end = col_end
+  return o
+end
+
+---@param line integer
+---@return boolean
+function Range:contains_line(line)
+  return self.row_start <= line and line < self.row_end
+end
+
+---@class Node
+---@field capture string
+---@field node TSNode
+---@field range Range
+local Node = {}
+
+---@param node TSNode
+---@param capture? string
+---@return self
+function Node:new(node, capture)
+  local o = {}
+  setmetatable({}, self)
+  o.node = node
+  o.capture = capture
+  o.range = Range:from_node(node)
+  return o
+end
+
+---@param line integer
+---@return boolean
+function Node:contains_line(line)
+  return self.range:contains_line(line)
+end
+
+---@class TableRow: Node
+---@field cells Node[]
+local TableRow = setmetatable({}, Node)
+
+---@param node TSNode
+---@return self
+function TableRow:new(node)
+  local o = setmetatable({}, self)
+  o.node = node
+  o.range = Range:from_node(node)
+  o.cells = {}
+  return o
+end
+
+---@class tillb.markdown.Renderer
+---@field private marks table<any, { mark: [integer, integer, integer, integer, vim.api.keyset.set_extmark] }[]>
+---@field private nodes table<any, TSNode>
+---@field bufid integer
+---@field winid integer
+---@field parser_inline vim.treesitter.LanguageTree
+local Renderer = {}
+Renderer.__index = Renderer
+
+---@param scope TSNode
+function Renderer:clear_cache(scope)
+  for node_id, _ in pairs(self.marks) do
+    local node = self.nodes[node_id]
+    if node and vim.treesitter.node_contains(scope, { node:range() }) then
+      self.marks[node_id] = nil
+    end
+  end
+end
+
+
+
+---@param node TSNode
 ---@param line integer
 ---@param col integer
 ---@param opts vim.api.keyset.set_extmark
-function M.mark(node, bufid, ns_id, line, col, opts)
-  local id = vim.api.nvim_buf_set_extmark(bufid, ns_id, line, col, opts)
-  if M.marks[node:id()] == nil then
-    M.marks[node:id()] = {}
+function Renderer:mark(node, line, col, opts)
+  local id = vim.api.nvim_buf_set_extmark(self.bufid, ns, line, col, opts)
+
+  if self.marks[node:id()] == nil then
+    self.marks[node:id()] = {}
   end
 
-  M.marks_to_node[id] = node
-
-  table.insert(M.marks[node:id()],
-    { mark = { bufid, ns_id, line, col, opts } })
+  table.insert(self.marks[node:id()],
+    { mark = { self.bufid, ns, line, col, opts } })
 end
 
 ---@param node TSNode
 ---@return boolean
-function M.mark_from_cache(node)
-  M.nodes[node:id()] = node
-  if M.marks[node:id()] ~= nil then
-    for _, mark in ipairs(M.marks[node:id()]) do
+function Renderer:mark_from_cache(node)
+  self.nodes[node:id()] = node
+  if self.marks[node:id()] ~= nil then
+    for _, mark in ipairs(self.marks[node:id()]) do
       vim.api.nvim_buf_set_extmark(unpack(mark.mark))
     end
     return true
@@ -79,7 +147,6 @@ local _admonitions = {
   ["[!cite]"] = { "@markup.quote", "󱆨 Cite" },
 }
 
----comment
 ---@param node TSNode
 ---@param type? string
 ---@param parent? string
@@ -141,8 +208,11 @@ local function node_find_all(bufid, node, query)
   return matches
 end
 
-function renderers.quote(bufid, node, parser_inline)
-  if M.mark_from_cache(node) then
+---@type table<string, fun(renderer: tillb.markdown.Renderer, node: TSNode, parser_inline: vim.treesitter.LanguageTree?)>
+local handlers = {}
+
+function handlers.quote(renderer, node)
+  if renderer:mark_from_cache(node) then
     return
   end
   local row_start, col_start, row_end, col_end = node:range()
@@ -155,15 +225,15 @@ function renderers.quote(bufid, node, parser_inline)
   local query_inline = vim.treesitter.query.parse("markdown_inline", [[
     (shortcut_link) @link
     ]])
-  parser_inline:for_each_tree(function(stree, _)
-    for id, child in query_inline:iter_captures(stree:root(), bufid, row_start, row_start + 1) do
-      local text = vim.treesitter.get_node_text(child, bufid)
+  renderer.parser_inline:for_each_tree(function(stree, _)
+    for id, child in query_inline:iter_captures(stree:root(), renderer.bufid, row_start, row_start + 1) do
+      local text = vim.treesitter.get_node_text(child, renderer.bufid)
       if text:match("%[![a-zA-Z]+%]") == nil or _admonitions[text:lower()] == nil then
         goto continue
       end
       hl, replacement = unpack(_admonitions[text:lower()])
       local child_row_start, child_col_start, child_row_end, child_col_end = child:range()
-      M.mark(node, bufid, ns, child_row_start, child_col_start, {
+      renderer:mark(node, child_row_start, child_col_start, {
         virt_text = { { replacement or text, hl } },
         virt_text_pos = "inline",
         hl_group = nil,
@@ -182,7 +252,7 @@ function renderers.quote(bufid, node, parser_inline)
     (block_continuation) @continuation
     ]])
 
-  for id, child in query:iter_captures(node, bufid, row_start, row_end) do
+  for id, child in query:iter_captures(node, renderer.bufid, row_start, row_end) do
     local name = query.captures[id]
     local child_level = get_level(child, "block_quote", "section")
 
@@ -196,14 +266,14 @@ function renderers.quote(bufid, node, parser_inline)
     -- while the parser considers all continuations to belong to the innermost block, we can check how many there are
     -- and only deal with the one corresponding to this level
     if name == "continuation" then
-      local range = node_find_all(bufid, child, "> *")[level]
+      local range = node_find_all(renderer.bufid, child, "> *")[level]
       if range == nil then
         goto continue
       end
       child_col_start = range[1] - 1
       child_col_end = range[2]
     end
-    M.mark(node, bufid, ns, child_row_start, child_col_start, {
+    renderer:mark(node, child_row_start, child_col_start, {
       virt_text = { { "┃ ", hl } },
       virt_text_pos = "inline",
       conceal = "",
@@ -217,34 +287,31 @@ function renderers.quote(bufid, node, parser_inline)
   end
 end
 
-function renderers.hline(bufid, node)
+function handlers.hline(renderer, node)
+  if renderer:mark_from_cache(node) then
+    return
+  end
   local row_start, col_start, row_end, col_end = node:range()
-  local marks = {}
-  local winid = vim.fn.bufwinid(bufid)
   local width = (
-    vim.fn.getwininfo(winid)[1].width
-    - vim.fn.getwininfo(winid)[1].textoff
+    vim.fn.getwininfo(renderer.winid)[1].width
+    - vim.fn.getwininfo(renderer.winid)[1].textoff
     - col_start)
-  table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_start, col_start, {
+  renderer:mark(node, row_start, col_start, {
     virt_text = { { string.rep("─", width), "LineNr" } },
     virt_text_pos = "overlay",
     end_row = row_end,
     hl_mode = "combine",
     invalidate = true,
-  }))
-
-  M.marks[node:id()] = marks
+  })
 end
 
-function renderers.listitem(bufid, node, parser_inline)
-end
-
-function renderers.table(bufid, node, parser_inline)
-  if M.mark_from_cache(node) then
+function handlers.table(renderer, node)
+  if renderer:mark_from_cache(node) then
     return
   end
   local row_start, col_start, row_end, col_end = node:range()
   local conceal_query = vim.treesitter.query.get("markdown_inline", "highlights")
+  assert(conceal_query)
   local query = vim.treesitter.query.parse("markdown", [[
   (pipe_table_delimiter_row) @delim
   [
@@ -267,7 +334,7 @@ function renderers.table(bufid, node, parser_inline)
   ---@type Cell[][]
   local columns = {}
 
-  for id, child in query:iter_captures(node, bufid, row_start, row_end) do
+  for id, child in query:iter_captures(node, renderer.bufid, row_start, row_end) do
     ---@type Row
     local row = { node = child, cells = {} }
 
@@ -277,7 +344,7 @@ function renderers.table(bufid, node, parser_inline)
       local cell_row_start, cell_col_start, cell_row_end, cell_col_end = subchild:range()
       local width = cell_col_end - cell_col_start
 
-      parser_inline:for_each_tree(function(stree, _)
+      renderer.parser_inline:for_each_tree(function(stree, _)
         for id, n, meta in conceal_query:iter_captures(stree:root(), bufid, cell_row_start, cell_row_end, { start_col = cell_col_start, end_col = cell_col_end + 1 }) do
           local name = conceal_query.captures[id]
           if name == "conceal" then
@@ -313,14 +380,15 @@ function renderers.table(bufid, node, parser_inline)
   local footer_prefix = {}
   if col_start > 0 then
     header_prefix = vim.iter(vim.split(
-      vim.api.nvim_buf_get_lines(bufid, row_start, row_start + 1, true)[1]:sub(1, col_start), "")):map(function(c)
+      vim.api.nvim_buf_get_lines(renderer.bufid, row_start, row_start + 1, true)[1]:sub(1, col_start), "")):map(function(
+        c)
       return { c, "Normal" }
     end):totable()
     footer_prefix = vim.iter(vim.split(
-      vim.api.nvim_buf_get_lines(bufid, row_end - 1, row_end, true)[1]:sub(1, col_start), "")):map(function(c)
+      vim.api.nvim_buf_get_lines(renderer.bufid, row_end - 1, row_end, true)[1]:sub(1, col_start), "")):map(function(c)
       return { c, "Normal" }
     end):totable()
-    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufid, ns, { row_start, col_start }, { row_start, 0 }, { details = true })) do
+    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(renderer.bufid, ns, { row_start, col_start }, { row_start, 0 }, { details = true })) do
       if mark[4].conceal ~= nil then
         header_prefix[mark[3] + 1][1] = mark[4].conceal
         for i = mark[3] + 2, (mark[4].end_col or mark[3] + 2) do
@@ -333,7 +401,7 @@ function renderers.table(bufid, node, parser_inline)
         end
       end
     end
-    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufid, ns, { row_end - 1, col_start }, { row_end - 1, 0 }, { details = true })) do
+    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(renderer.bufid, ns, { row_end - 1, col_start }, { row_end - 1, 0 }, { details = true })) do
       if mark[4].conceal ~= nil then
         footer_prefix[mark[3] + 1][1] = mark[4].conceal
         for i = mark[3] + 2, (mark[4].end_col or mark[3] + 2) do
@@ -356,7 +424,7 @@ function renderers.table(bufid, node, parser_inline)
     for _, cell in ipairs(row.cells) do
       local first = cell == row.cells[1]
       local last = cell == row.cells[#row.cells]
-      local text = vim.treesitter.get_node_text(cell.node, bufid)
+      local text = vim.treesitter.get_node_text(cell.node, renderer.bufid)
       local cell_row_start, cell_col_start, cell_row_end, cell_col_end = cell.node:range()
       if cell.node:type() == "|" then
         local conceal = "│"
@@ -369,7 +437,7 @@ function renderers.table(bufid, node, parser_inline)
             conceal = "┼"
           end
         end
-        M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
+        renderer:mark(node, cell_row_start, cell_col_start, {
           hl_group = "@punctuation.special",
           conceal = conceal,
           end_row = cell_row_end,
@@ -379,7 +447,7 @@ function renderers.table(bufid, node, parser_inline)
         })
       else
         if delim then
-          M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
+          renderer:mark(node, cell_row_start, cell_col_start, {
             hl_group = "@punctuation.special",
             conceal = "─",
             end_row = cell_row_end,
@@ -387,7 +455,7 @@ function renderers.table(bufid, node, parser_inline)
             hl_mode = "combine",
             invalidate = true,
           })
-          M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
+          renderer:mark(node, cell_row_start, cell_col_start, {
             virt_text = { { string.rep("─", cell.width), "@punctuation.special" } },
             virt_text_pos = "inline",
             end_row = cell_row_end,
@@ -395,7 +463,7 @@ function renderers.table(bufid, node, parser_inline)
             invalidate = true,
           })
         else
-          M.mark(node, bufid, ns, cell_row_start, cell_col_start, {
+          renderer:mark(node, cell_row_start, cell_col_start, {
             virt_text = { { string.rep(" ", cell.width - (cell_col_end - cell_col_start)), "@punctuation.special" } },
             virt_text_pos = "inline",
             end_row = cell_row_end,
@@ -432,13 +500,13 @@ function renderers.table(bufid, node, parser_inline)
   header = vim.list_extend(header_prefix, header)
   footer = vim.list_extend(footer_prefix, footer)
 
-  M.mark(node, bufid, ns, row_start, col_start, {
+  renderer:mark(node, row_start, col_start, {
     virt_lines = { header },
     virt_lines_above = true,
     hl_mode = "combine",
     invalidate = true,
   })
-  M.mark(node, bufid, ns, row_end - 1, col_start, {
+  renderer:mark(node, row_end - 1, col_start, {
     virt_lines = { footer },
     virt_lines_above = false,
     hl_mode = "combine",
@@ -446,9 +514,8 @@ function renderers.table(bufid, node, parser_inline)
   })
 end
 
----@param bufid integer
-local function unconceal_all(bufid)
-  vim.api.nvim_buf_clear_namespace(bufid, ns, 0, -1)
+function Renderer:unconceal_all()
+  vim.api.nvim_buf_clear_namespace(self.bufid, ns, 0, -1)
 end
 
 ---@param bufid integer
@@ -483,74 +550,85 @@ local function should_conceal(bufid, mode, concealcursor, cursorrow, node)
   return (concealcursor:find(mode:lower()) ~= nil)
 end
 
----@param bufid? integer
----@param start_row? integer
----@param end_row? integer
-function M.render_range(bufid, start_row, end_row)
-  bufid = bufid or 0
-  local winid = vim.fn.bufwinid(bufid)
-  local current_conceallevel = vim.wo[winid].conceallevel
+local query = vim.treesitter.query.parse("markdown", [[
+    (block_quote) @quote
+    (thematic_break) @hline
+    (pipe_table) @table
+]])
+
+function Renderer:get_root()
+  if not self.root then
+    local parser = vim.treesitter.get_parser(self.bufid, "markdown")
+    assert(parser)
+
+    local tree = parser:parse(true)[1]
+    self.parser_inline = parser:children()["markdown_inline"]
+    self.root = tree:root()
+  end
+  return self.root
+end
+
+function Renderer:for_each_inline_capture(query, callback)
+end
+
+---@param callback fun(node: Node)
+---@param start? integer
+---@param end_? integer
+function Renderer:for_each_capture(callback, start, end_)
+  for id, node in query:iter_captures(self:get_root(), self.bufid, start, end_) do
+    local name = query.captures[id]
+    callback(Node:new(node, name))
+  end
+end
+
+---@param start? integer
+---@param end_? integer
+function Renderer:render_range(start, end_)
+  local current_conceallevel = vim.wo[self.winid].conceallevel
 
   if current_conceallevel < 1 then
     return
   end
 
-  local query = vim.treesitter.query.parse("markdown", [[
-    (block_quote) @quote
-    (thematic_break) @hline
-    (list_item) @listitem
-    (pipe_table) @table
-  ]])
-
-  local parser = vim.treesitter.get_parser(bufid, "markdown")
-  assert(parser)
-
-  local tree = parser:parse(true)[1]
-  local parser_inline = parser:children()["markdown_inline"]
-
-  local current_row = vim.api.nvim_win_get_cursor(winid)[1] - 1
+  local current_row = vim.api.nvim_win_get_cursor(self.winid)[1] - 1
   local current_mode = vim.api.nvim_get_mode().mode
-  local current_concealcursor = vim.wo[winid].concealcursor
+  local current_concealcursor = vim.wo[self.winid].concealcursor
 
-  for id, node in query:iter_captures(tree:root(), bufid, start_row, end_row) do
-    local name = query.captures[id]
-    if should_conceal(bufid, current_mode, current_concealcursor, current_row, node) then
-      if M.marks[node:id()] == nil then
-        for node_id, _ in pairs(M.marks) do
-          local localnode = M.nodes[node_id]
-          if localnode and vim.treesitter.node_contains(node, { localnode:range() }) then
-            M.marks[node_id] = nil
-          end
-        end
+  self:for_each_capture(function(node)
+    if should_conceal(self.bufid, current_mode, current_concealcursor, current_row, node.node) then
+      if self.marks[node.node:id()] == nil then
+        self:clear_cache(node.node)
       end
-      renderers[name](bufid, node, parser_inline)
+      handlers[node.capture](self, node.node)
     else
-      -- invalidate cache for range
-      for node_id, _ in pairs(M.marks) do
-        local localnode = M.nodes[node_id]
-        if localnode and vim.treesitter.node_contains(node, { localnode:range() }) then
-          M.marks[node_id] = nil
-        end
-      end
+      self:clear_cache(node.node)
     end
-  end
+  end, start, end_)
 end
 
-M.last_render_time = nil
-
----@param bufid integer
-function M.refresh_viewport(bufid)
+function Renderer:refresh_viewport()
   -- local time = vim.uv.hrtime()
   -- if M.last_render_time and time - M.last_render_time < 100 then
   --   return
   -- end
-  unconceal_all(bufid)
-  local winid = vim.fn.bufwinid(bufid)
-  local row_start = vim.fn.line("w0", winid) - 1
-  local row_end = vim.fn.line("w$", winid)
-  M.render_range(bufid, row_start, row_end)
+  self:unconceal_all()
+  local row_start = vim.fn.line("w0", self.winid) - 1
+  local row_end = vim.fn.line("w$", self.winid)
+  self:render_range(row_start, row_end)
   -- M.last_render_time = time
   -- vim.print(vim.uv.hrtime() - time)
+end
+
+---@param bufid integer
+---@return tillb.markdown.Renderer
+function Renderer.new(bufid)
+  ---@type tillb.markdown.Renderer
+  local o = setmetatable({}, Renderer)
+  o.bufid = bufid
+  o.marks = {}
+  o.nodes = {}
+  o.winid = vim.fn.bufwinid(bufid)
+  return o
 end
 
 vim.api.nvim_set_hl(0, "MarkdownCalloutNote", { link = "DiagnosticFloatingInfo" })
@@ -559,40 +637,36 @@ vim.api.nvim_set_hl(0, "MarkdownCalloutImportant", { link = "DiagnosticFloatingH
 vim.api.nvim_set_hl(0, "MarkdownCalloutWarning", { link = "DiagnosticFloatingWarn" })
 vim.api.nvim_set_hl(0, "MarkdownCalloutCaution", { link = "DiagnosticFloatingError" })
 
+M.renderers = {}
+M.autocmds = {}
+
 ---@param bufid? integer
 function M.attach(bufid)
   bufid = bufid or vim.api.nvim_get_current_buf()
 
-  vim.api.nvim_create_autocmd("InsertEnter", { callback = function(args)
-    unconceal_all(args.buf)
-  end })
-  vim.api.nvim_create_autocmd("InsertLeave", { callback = function(args)
-    M.refresh_viewport(args.buf)
-  end })
-  vim.api.nvim_create_autocmd("CursorMoved", { callback = function(args)
-    M.refresh_viewport(args.buf)
-  end })
-  vim.api.nvim_create_autocmd("WinScrolled", { callback = function(args)
-    M.refresh_viewport(args.buf)
+  local renderer = Renderer.new(bufid)
+  local autocmds = {}
+
+  table.insert(autocmds, vim.api.nvim_create_autocmd("InsertEnter", {
+    group = group,
+    callback = function(args)
+      renderer:unconceal_all()
+    end,
+    buffer = bufid,
+  }))
+  table.insert(autocmds, vim.api.nvim_create_autocmd({ "InsertLeave", "CursorMoved", "WinScrolled" }, {
+    callback = function(args)
+      renderer:refresh_viewport()
+    end,
+    buffer = bufid,
+  }))
+
+  vim.api.nvim_buf_attach(bufid, true, { on_lines = function()
+    renderer:refresh_viewport()
   end })
 
-  vim.api.nvim_buf_attach(bufid, true,
-    {
-      on_lines = function(
-          _,
-          bufnr,
-          changedtick,
-          first,
-          last_old,
-          last_new,
-          byte_count,
-          deleted_codepoints,
-          deleted_codeunits)
-        M.refresh_viewport(bufnr)
-      end,
-    })
-
-  M.refresh_viewport(bufid)
+  renderer:refresh_viewport()
+  M.renderers[bufid] = renderer
 end
 
 function M.test()
