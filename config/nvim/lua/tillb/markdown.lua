@@ -203,6 +203,7 @@ end
 function renderers.table(bufid, node, parser_inline)
   local row_start, col_start, row_end, col_end = node:range()
   local marks = {}
+  local conceal_query = vim.treesitter.query.get("markdown_inline", "highlights")
   local query = vim.treesitter.query.parse("markdown", [[
   (pipe_table_delimiter_row) @delim
   [
@@ -232,14 +233,25 @@ function renderers.table(bufid, node, parser_inline)
     local col = 1
 
     for subchild, _ in child:iter_children() do
-      local _, cell_col_start, _, cell_col_end = subchild:range()
+      local cell_row_start, cell_col_start, cell_row_end, cell_col_end = subchild:range()
+      local width = cell_col_end - cell_col_start
+
+      parser_inline:for_each_tree(function(stree, _)
+        for id, n, meta in conceal_query:iter_captures(stree:root(), bufid, cell_row_start, cell_row_end, { start_col = cell_col_start, end_col = cell_col_end + 1 }) do
+          local name = conceal_query.captures[id]
+          if name == "conceal" then
+            local _, start, _, end_ = n:range()
+            width = width - (end_ - start) + #meta.conceal
+          end
+        end
+      end)
+      local cell = { node = subchild, width = width }
+      table.insert(row.cells, cell)
       if subchild:type() ~= "|" then
         if not columns[col] then
           columns[col] = {}
         end
-        local cell = { node = subchild, width = cell_col_end - cell_col_start }
         table.insert(columns[col], cell)
-        table.insert(row.cells, cell)
         col = col + 1
       end
     end
@@ -256,77 +268,139 @@ function renderers.table(bufid, node, parser_inline)
     end
   end
 
-  -- vim.print(rows)
+  local header_prefix = {}
+  local footer_prefix = {}
+  if col_start > 0 then
+    header_prefix = vim.iter(vim.split(
+      vim.api.nvim_buf_get_lines(bufid, row_start, row_start + 1, true)[1]:sub(1, col_start), "")):map(function(c)
+      return { c, "Normal", }
+    end):totable()
+    footer_prefix = vim.iter(vim.split(
+      vim.api.nvim_buf_get_lines(bufid, row_end - 1, row_end, true)[1]:sub(1, col_start), "")):map(function(c)
+      return { c, "Normal", }
+    end):totable()
+    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufid, ns, { row_start, col_start }, { row_start, 0 }, { details = true })) do
+      if mark[4].conceal ~= nil then
+        header_prefix[mark[3] + 1][1] = mark[4].conceal
+        for i = mark[3] + 2, (mark[4].end_col or mark[3] + 2) do
+          header_prefix[i][1] = ""
+        end
+      end
+      if mark[4].virt_text and mark[4].virt_text_pos == "inline" then
+        for i, virt_text in ipairs(mark[4].virt_text) do
+          table.insert(header_prefix, mark[3] + i, virt_text)
+        end
+      end
+    end
+    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufid, ns, { row_end - 1, col_start }, { row_end - 1, 0 }, { details = true })) do
+      if mark[4].conceal ~= nil then
+        footer_prefix[mark[3] + 1][1] = mark[4].conceal
+        for i = mark[3] + 2, (mark[4].end_col or mark[3] + 2) do
+          footer_prefix[i][1] = ""
+        end
+      end
+      if mark[4].virt_text and mark[4].virt_text_pos == "inline" then
+        for i, virt_text in ipairs(mark[4].virt_text) do
+          table.insert(footer_prefix, mark[3] + i, virt_text)
+        end
+      end
+    end
+  end
+
 
   for _, row in ipairs(rows) do
     local row_start, col_start, row_end, col_end = row.node:range()
     local head = row.node:type() == "pipe_table_header"
     local delim = row.node:type() == "pipe_table_delimiter_row"
-    table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_start, col_start, {
-      hl_group = nil,
-      conceal = "",
-      end_row = row_end,
-      end_col = col_end,
-      hl_mode = "combine",
-      invalidate = true,
-    }))
-    local virts = { { delim and "├" or "│", "@punctuation.special" } }
     for _, cell in ipairs(row.cells) do
+      local first = cell == row.cells[1]
       local last = cell == row.cells[#row.cells]
       local text = vim.treesitter.get_node_text(cell.node, bufid)
-      if delim then
-        table.insert(virts, { string.rep("─", cell.width), "@punctuation.special" })
-        table.insert(virts, { last and "┤" or "┼", "@punctuation.special" })
+      local cell_row_start, cell_col_start, cell_row_end, cell_col_end = cell.node:range()
+      if cell.node:type() == "|" then
+        local conceal = "│"
+        if delim then
+          if first then
+            conceal = "├"
+          elseif last then
+            conceal = "┤"
+          else
+            conceal = "┼"
+          end
+        end
+        table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+          hl_group = "@punctuation.special",
+          conceal = conceal,
+          end_row = cell_row_end,
+          end_col = cell_col_end,
+          hl_mode = "combine",
+          invalidate = true,
+        }))
       else
-        table.insert(virts,
-          { string.format("%-" .. cell.width .. "s", text), head and "@markup.heading.markdown" or "Normal" })
-        table.insert(virts, { "│", "@punctuation.special" })
+        if delim then
+          table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+            hl_group = "@punctuation.special",
+            conceal = "─",
+            end_row = cell_row_end,
+            end_col = cell_col_end,
+            hl_mode = "combine",
+            invalidate = true,
+          }))
+          table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+            virt_text = { { string.rep("─", cell.width), "@punctuation.special" } },
+            virt_text_pos = "inline",
+            end_row = cell_row_end,
+            hl_mode = "combine",
+            invalidate = true,
+          }))
+        else
+          table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, cell_row_start, cell_col_start, {
+            virt_text = { { string.rep(" ", cell.width - (cell_col_end - cell_col_start)), "@punctuation.special" } },
+            virt_text_pos = "inline",
+            end_row = cell_row_end,
+            hl_mode = "combine",
+            invalidate = true,
+          }))
+        end
       end
     end
-
-    table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_start, col_start, {
-      virt_text = virts,
-      virt_text_pos = "inline",
-      end_row = row_end,
-      hl_mode = "combine",
-      invalidate = true,
-    }))
   end
 
-  local header = { { "┌", "@punctuation.special" } }
-  local footer = { { "└", "@punctuation.special" } }
+  local header = {}
+  local footer = {}
   for _, cell in ipairs(rows[1].cells) do
     local last = cell == rows[1].cells[#rows[1].cells]
-    table.insert(header, { string.rep("─", cell.width), "@punctuation.special" })
-    table.insert(footer, { string.rep("─", cell.width), "@punctuation.special" })
-    table.insert(header, { last and "┐" or "┬", "@punctuation.special" })
-    table.insert(footer, { last and "┘" or "┴", "@punctuation.special" })
+    local first = cell == rows[1].cells[1]
+    if cell.node:type() == "|" then
+      if last then
+        table.insert(header, { "┐", "@punctuation.special" })
+        table.insert(footer, { "┘", "@punctuation.special" })
+      elseif first then
+        table.insert(header, { "┌", "@punctuation.special" })
+        table.insert(footer, { "└", "@punctuation.special" })
+      else
+        table.insert(header, { "┬", "@punctuation.special" })
+        table.insert(footer, { "┴", "@punctuation.special" })
+      end
+    else
+      table.insert(header, { string.rep("─", cell.width + 1), "@punctuation.special" })
+      table.insert(footer, { string.rep("─", cell.width + 1), "@punctuation.special" })
+    end
   end
 
-  -- table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_start, col_start, {
-  --   virt_lines = { header },
-  --   virt_lines_above = true,
-  --   hl_mode = "combine",
-  --   invalidate = true,
-  -- }))
-  -- table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_end - 1, col_start, {
-  --   virt_lines = { footer },
-  --   virt_lines_above = false,
-  --   hl_mode = "combine",
-  --   invalidate = true,
-  -- }))
-  table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_start - 1, col_start, {
-    virt_text = header,
-    virt_text_pos = "overlay",
-    strict = false,
+  header = vim.list_extend(header_prefix, header)
+  footer = vim.list_extend(footer_prefix, footer)
+
+  table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_start, col_start, {
+    virt_lines = { header },
+    virt_lines_above = true,
     hl_mode = "combine",
     invalidate = true,
   }))
-  table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_end, col_start, {
-    virt_text = footer,
-    virt_text_pos = "overlay",
+  table.insert(marks, vim.api.nvim_buf_set_extmark(bufid, ns, row_end - 1, col_start, {
+    virt_lines = { footer },
+    virt_lines_above = false,
     hl_mode = "combine",
-    strict = false,
     invalidate = true,
   }))
 
@@ -359,11 +433,6 @@ end
 ---@return boolean
 local function should_conceal(bufid, mode, concealcursor, cursorrow, node)
   local node_start, _, node_end, _ = node:range()
-
-  if node:type() == "pipe_table" then
-    node_start = node_start - 1
-    node_end = node_end + 1
-  end
 
   if not in_range(cursorrow, node_start, node_end) then
     return true
