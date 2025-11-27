@@ -8,6 +8,9 @@ local renderers = {}
 ---@type table<any, { mark: [integer, integer, integer, integer, vim.api.keyset.set_extmark] }[]>
 M.marks = {}
 
+---@type table<any, TSNode>
+M.nodes = {}
+
 ---@type table<any, boolean>
 M.node_shown = {}
 
@@ -28,12 +31,13 @@ function M.mark(node, bufid, ns_id, line, col, opts)
   M.marks_to_node[id] = node
 
   table.insert(M.marks[node:id()],
-    { mark = { bufid, ns_id, line, col, opts }, })
+    { mark = { bufid, ns_id, line, col, opts } })
 end
 
 ---@param node TSNode
 ---@return boolean
 function M.mark_from_cache(node)
+  M.nodes[node:id()] = node
   if M.marks[node:id()] ~= nil then
     for _, mark in ipairs(M.marks[node:id()]) do
       vim.api.nvim_buf_set_extmark(unpack(mark.mark))
@@ -511,7 +515,23 @@ function M.render_range(bufid, start_row, end_row)
   for id, node in query:iter_captures(tree:root(), bufid, start_row, end_row) do
     local name = query.captures[id]
     if should_conceal(bufid, current_mode, current_concealcursor, current_row, node) then
+      if M.marks[node:id()] == nil then
+        for node_id, _ in pairs(M.marks) do
+          local localnode = M.nodes[node_id]
+          if localnode and vim.treesitter.node_contains(node, { localnode:range() }) then
+            M.marks[node_id] = nil
+          end
+        end
+      end
       renderers[name](bufid, node, parser_inline)
+    else
+      -- invalidate cache for range
+      for node_id, _ in pairs(M.marks) do
+        local localnode = M.nodes[node_id]
+        if localnode and vim.treesitter.node_contains(node, { localnode:range() }) then
+          M.marks[node_id] = nil
+        end
+      end
     end
   end
 end
