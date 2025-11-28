@@ -37,9 +37,23 @@ vim.api.nvim_create_autocmd("UIEnter", {
       vim.ui.select = require("mini.pick").ui_select
       require('mini.extra').setup()
 
-      vim.cmd.packadd("vim-fugitive")
       vim.cmd.packadd("vim-eunuch")
+
+      vim.cmd.packadd("vim-fugitive")
       vim.cmd.packadd("gitsigns.nvim")
+      vim.api.nvim_create_user_command("GReview", function(cargs)
+        local ret = vim.fn.FugitiveExecute({ "merge-base", "HEAD", cargs.args })
+
+        if ret.exit_status ~= 0 then
+          return
+        end
+
+        local base = ret.stdout[1]
+
+        require("gitsigns").change_base(base, true)
+        require("gitsigns").setqflist("all")
+      end, { nargs = 1 })
+
       vim.cmd.packadd("nvim-treesitter")
     end)
   end,
