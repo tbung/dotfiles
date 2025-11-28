@@ -33,3 +33,8 @@
 	a = add
     l = log --oneline --graph --all
     la = log --all --graph --pretty=format:'%C(bold black)%ad%Creset %C(auto)%h%d %s %C(bold black)<%aN>%Creset' --date=format-local:'%Y-%m-%d %H:%M'
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
