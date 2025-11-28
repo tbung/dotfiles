@@ -96,13 +96,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   group = group,
   callback = function(args)
     require("tillb.marks").update_signs(args.buf)
-  end,
-})
-
-vim.api.nvim_create_autocmd("User", {
-  group = vim.api.nvim_create_augroup("UserLspFormat", {}),
-  callback = function(args)
-    require("tillb.marks").update_signs(args.buf)
+    require("tillb.marks").attach(args.buf)
   end,
 })
 
