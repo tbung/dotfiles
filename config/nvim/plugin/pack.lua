@@ -9,8 +9,6 @@ vim.pack.add({
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/echasnovski/mini.nvim",
   "https://github.com/stevearc/oil.nvim",
-
-  "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 }, { load = false })
 
 local group = vim.api.nvim_create_augroup("tillb.pack", {})

@@ -16,3 +16,5 @@ if query then
   vim.treesitter.stop()
   vim.treesitter.start()
 end
+
+require("tillb.markdown").attach()
