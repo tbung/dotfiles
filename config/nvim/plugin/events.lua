@@ -69,9 +69,16 @@ vim.api.nvim_create_autocmd("UIEnter", {
       )
     end)
 
-    vim.api.nvim_create_user_command("Search", function()
-      require("tillb.websearch").interactive()
-    end, { nargs = 0, force = true, })
+    vim.api.nvim_create_user_command("Search", function(args)
+      local query = #args.args > 0 and args.args or nil
+      if args.range == 2 and not query then
+        local start = vim.fn.getpos("'<")
+        local end_ = vim.fn.getpos("'>")
+        query = table.concat(vim.api.nvim_buf_get_text(0, start[2] - 1, start[3] - 1, end_[2] - 1, end_[3], {}), "\n")
+        query = #query > 0 and query or nil
+      end
+      require("tillb.websearch").interactive(query)
+    end, { nargs = "?", force = true, range = true })
   end,
 })
 
