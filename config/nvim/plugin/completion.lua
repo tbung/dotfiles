@@ -73,7 +73,7 @@ local cmd_group = vim.api.nvim_create_augroup("tillb.cmdline-autocompletion", {}
 ---@return boolean
 local function should_autocomplete(cmdtype, cmd)
   if cmdtype == ":" then
-    return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\)\s]]):match_str(cmd) and true or false
+    return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\|\(P\%[ick]\)\)\s]]):match_str(cmd) and true or false
   else
     return cmdtype == "/"
   end
