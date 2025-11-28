@@ -24,6 +24,7 @@ infocmp "$TERM" &>/dev/null || export TERM="xterm-256color"
 if [ "$(uname -s)" = "Darwin" ]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin${PATH:+:}$PATH"
+    export PATH="/opt/homebrew/opt/curl/bin${PATH:+:}$PATH"
     export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
 
