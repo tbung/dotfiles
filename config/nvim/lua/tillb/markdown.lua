@@ -261,7 +261,7 @@ function handlers.quote(renderer, node)
     -- while the parser considers all continuations to belong to the innermost block, we can check how many there are
     -- and only deal with the one corresponding to this level
     if child.capture == "continuation" then
-      local range = node_find_all(renderer.bufid, child.node, "> *")[level]
+      local range = node_find_all(renderer.bufid, child.node, "> ?")[level]
       if range == nil then
         goto continue
       end
