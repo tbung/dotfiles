@@ -13,7 +13,7 @@
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "mini.nvim": {
-      "rev": "72b0194c56c984476c5975b62eb340fd1aa1686a",
+      "rev": "c007f4b3822c99b98328bc214589a721c69d1514",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "nvim-lspconfig": {
