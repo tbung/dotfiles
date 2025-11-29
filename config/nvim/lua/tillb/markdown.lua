@@ -318,6 +318,7 @@ function handlers.table(renderer, node)
   ---@class Cell
   ---@field node TSNode
   ---@field width integer
+  ---@field target_width integer
 
   ---@class Row
   ---@field cells Cell[]
@@ -332,12 +333,15 @@ function handlers.table(renderer, node)
   for id, child in query:iter_captures(node, renderer.bufid, row_start, row_end) do
     ---@type Row
     local row = { node = child, cells = {} }
+    local row_start, col_start, row_end, col_end = child:range()
 
     local col = 1
+    local prev_end = col_start - 1
 
     for subchild, _ in child:iter_children() do
       local cell_row_start, cell_col_start, cell_row_end, cell_col_end = subchild:range()
-      local width = cell_col_end - cell_col_start
+      local width = cell_col_end - cell_col_start + (cell_col_start - prev_end - 1)
+      prev_end = cell_col_end
 
       renderer.parser_inline:for_each_tree(function(stree, _)
         for id, n, meta in conceal_query:iter_captures(stree:root(), bufid, cell_row_start, cell_row_end, { start_col = cell_col_start, end_col = cell_col_end + 1 }) do
@@ -367,7 +371,7 @@ function handlers.table(renderer, node)
       width = math.max(width, cell.width)
     end
     for _, cell in ipairs(col) do
-      cell.width = width
+      cell.target_width = width
     end
   end
 
@@ -451,7 +455,7 @@ function handlers.table(renderer, node)
             invalidate = true,
           })
           renderer:mark(node, cell_row_start, cell_col_start, {
-            virt_text = { { string.rep("─", cell.width), "@punctuation.special" } },
+            virt_text = { { string.rep("─", cell.target_width), "@punctuation.special" } },
             virt_text_pos = "inline",
             end_row = cell_row_end,
             hl_mode = "combine",
@@ -459,7 +463,7 @@ function handlers.table(renderer, node)
           })
         else
           renderer:mark(node, cell_row_start, cell_col_start, {
-            virt_text = { { string.rep(" ", cell.width - (cell_col_end - cell_col_start)), "@punctuation.special" } },
+            virt_text = { { string.rep(" ", cell.target_width - cell.width), "@punctuation.special" } },
             virt_text_pos = "inline",
             end_row = cell_row_end,
             hl_mode = "combine",
@@ -487,8 +491,8 @@ function handlers.table(renderer, node)
         table.insert(footer, { "┴", "@punctuation.special" })
       end
     else
-      table.insert(header, { string.rep("─", cell.width + 1), "@punctuation.special" })
-      table.insert(footer, { string.rep("─", cell.width + 1), "@punctuation.special" })
+      table.insert(header, { string.rep("─", cell.target_width + 1), "@punctuation.special" })
+      table.insert(footer, { string.rep("─", cell.target_width + 1), "@punctuation.special" })
     end
   end
 
