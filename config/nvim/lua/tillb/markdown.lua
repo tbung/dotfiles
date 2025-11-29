@@ -124,6 +124,33 @@ function Renderer:clear_cache()
 end
 
 ---@param scope TSNode
+function Renderer:clear_cache_in(scope)
+  for node_id, _ in pairs(self.marks) do
+    local node = self.nodes[node_id]
+    if node and vim.treesitter.node_contains(scope, { node.row_start, node.col_start, node.row_end, node.col_end }) then
+      self.marks[node_id] = nil
+    end
+  end
+end
+
+---@param row_start integer
+---@param row_end integer
+function Renderer:clear_outside_range(row_start, row_end)
+  for node_id, _ in pairs(self.marks) do
+    local node = self.nodes[node_id]
+    if node and (row_start > node.row_end or row_end < node.row_start) then
+      for _, mark in ipairs(self.marks[node_id]) do
+        if mark.id then
+          vim.api.nvim_buf_del_extmark(self.bufid, ns, mark.id)
+        end
+      end
+      self.marks[node_id] = nil
+      self.nodes[node_id] = nil
+    end
+  end
+end
+
+---@param scope TSNode
 function Renderer:unrender(scope)
   for node_id, _ in pairs(self.marks) do
     local node = self.nodes[node_id]
@@ -597,9 +624,14 @@ function Renderer:render_range(start, end_)
 
   self:for_each_capture(query, function(node)
     if node:should_conceal(current_mode, current_concealcursor, current_row) then
+      if self.marks[node.id] == nil then
+        self:unrender(node.node)
+        self:clear_cache_in(node.node)
+      end
       handlers[node.capture](self, node)
     else
       self:unrender(node.node)
+      self:clear_cache_in(node.node)
     end
   end, start, end_)
 end
@@ -626,9 +658,9 @@ function Renderer:refresh_viewport()
     self:refresh_conceals()
     self.changedtick = changedtick
   end
-  -- TODO: unrender outside viewport
   local row_start = vim.fn.line("w0", self.winid) - 1
   local row_end = vim.fn.line("w$", self.winid)
+  self:clear_outside_range(row_start, row_end)
   self:render_range(row_start, row_end)
 end
 
