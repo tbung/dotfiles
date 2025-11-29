@@ -104,21 +104,36 @@ function Node:find_all(pattern)
 end
 
 ---@class tillb.markdown.Renderer
----@field private marks table<any, { mark: [integer, integer, integer, integer, vim.api.keyset.set_extmark] }[]>
+---@field private marks table<any, { id?: integer, mark: [integer, integer, integer, integer, vim.api.keyset.set_extmark] }[]>
 ---@field private nodes table<any, tillb.markdown.Node>
 ---@field private conceals table<integer, tillb.markdown.Node[]>
+---@field private changedtick? integer
 ---@field bufid integer
 ---@field winid integer
 ---@field parser_inline vim.treesitter.LanguageTree
 local Renderer = {}
 Renderer.__index = Renderer
 
+function Renderer:clear_cache()
+  for node_id, _ in pairs(self.marks) do
+    local node = self.nodes[node_id]
+    if node then
+      self.marks[node_id] = nil
+    end
+  end
+end
+
 ---@param scope TSNode
-function Renderer:clear_cache(scope)
+function Renderer:unrender(scope)
   for node_id, _ in pairs(self.marks) do
     local node = self.nodes[node_id]
     if node and vim.treesitter.node_contains(scope, { node.row_start, node.col_start, node.row_end, node.col_end }) then
-      self.marks[node_id] = nil
+      for _, mark in ipairs(self.marks[node_id]) do
+        if mark.id then
+          vim.api.nvim_buf_del_extmark(self.bufid, ns, mark.id)
+          mark.id = nil
+        end
+      end
     end
   end
 end
@@ -135,7 +150,7 @@ function Renderer:mark(node, line, col, opts)
   end
 
   table.insert(self.marks[node.id],
-    { mark = { self.bufid, ns, line, col, opts } })
+    { id = id, mark = { self.bufid, ns, line, col, opts } })
 end
 
 ---@param node tillb.markdown.Node
@@ -145,7 +160,9 @@ function Renderer:mark_from_cache(node)
   self.nodes[node.id] = node
   if self.marks[node.id] ~= nil then
     for _, mark in ipairs(self.marks[node.id]) do
-      set_extmark(mark.mark[1], mark.mark[2], mark.mark[3], mark.mark[4], mark.mark[5])
+      if not mark.id then
+        mark.id = set_extmark(mark.mark[1], mark.mark[2], mark.mark[3], mark.mark[4], mark.mark[5])
+      end
     end
     return true
   end
@@ -388,9 +405,7 @@ function handlers.table(renderer, node)
     end
   end
 
-
   for _, row in ipairs(rows) do
-    local head = row.node.type == "pipe_table_header"
     local delim = row.node.type == "pipe_table_delimiter_row"
     for _, cell in ipairs(row.cells) do
       local first = cell == row.cells[1]
@@ -485,6 +500,11 @@ end
 
 function Renderer:unconceal_all()
   api.nvim_buf_clear_namespace(self.bufid, ns, 0, -1)
+  for _, marks in pairs(self.marks) do
+    for _, mark in pairs(marks) do
+      mark.id = nil
+    end
+  end
 end
 
 ---@param mode string
@@ -577,13 +597,9 @@ function Renderer:render_range(start, end_)
 
   self:for_each_capture(query, function(node)
     if node:should_conceal(current_mode, current_concealcursor, current_row) then
-      -- if this was previously not rendered we need to rerender all children too
-      -- if self.marks[node.node:id()] == nil then
-      --   self:clear_cache(node.node)
-      -- end
       handlers[node.capture](self, node)
     else
-      -- self:clear_cache(node.node)
+      self:unrender(node.node)
     end
   end, start, end_)
 end
@@ -603,17 +619,17 @@ function Renderer:refresh_conceals()
 end
 
 function Renderer:refresh_viewport()
-  -- local time = vim.uv.hrtime()
-  -- if M.last_render_time and time - M.last_render_time < 100 then
-  --   return
-  -- end
-  self:unconceal_all()
-  self:refresh_conceals()
+  local changedtick = api.nvim_buf_get_changedtick(self.bufid)
+  if not self.changedtick or self.changedtick ~= changedtick then
+    self:unconceal_all()
+    self:clear_cache()
+    self:refresh_conceals()
+    self.changedtick = changedtick
+  end
+  -- TODO: unrender outside viewport
   local row_start = vim.fn.line("w0", self.winid) - 1
   local row_end = vim.fn.line("w$", self.winid)
   self:render_range(row_start, row_end)
-  -- M.last_render_time = time
-  -- vim.print(vim.uv.hrtime() - time)
 end
 
 ---@param bufid integer
@@ -655,16 +671,12 @@ function M.attach(bufid)
     end,
     buffer = bufid,
   }))
-  table.insert(autocmds, api.nvim_create_autocmd({ "InsertLeave", "CursorMoved", "WinScrolled" }, {
+  table.insert(autocmds, api.nvim_create_autocmd({ "InsertLeave", "CursorMoved", "WinScrolled", "TextChanged" }, {
     callback = function(args)
       M.renderers[args.buf]:refresh_viewport()
     end,
     buffer = bufid,
   }))
-
-  api.nvim_buf_attach(bufid, true, { on_lines = function(_, bufnr)
-    M.renderers[bufnr]:refresh_viewport()
-  end })
 
   renderer:refresh_viewport()
   M.renderers[bufid] = renderer
