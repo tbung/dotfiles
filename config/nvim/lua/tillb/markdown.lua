@@ -2,6 +2,7 @@ local M = {}
 
 local ns = vim.api.nvim_create_namespace("tillb.markdown")
 local group = vim.api.nvim_create_augroup("tillb.markdown", {})
+local api = vim.api
 
 ---@param s string
 ---@param pattern string
@@ -105,6 +106,7 @@ end
 ---@class tillb.markdown.Renderer
 ---@field private marks table<any, { mark: [integer, integer, integer, integer, vim.api.keyset.set_extmark] }[]>
 ---@field private nodes table<any, tillb.markdown.Node>
+---@field private conceals table<integer, tillb.markdown.Node[]>
 ---@field bufid integer
 ---@field winid integer
 ---@field parser_inline vim.treesitter.LanguageTree
@@ -126,9 +128,9 @@ end
 ---@param col integer
 ---@param opts vim.api.keyset.set_extmark
 function Renderer:mark(node, line, col, opts)
-  local id = vim.api.nvim_buf_set_extmark(self.bufid, ns, line, col, opts)
+  local id = api.nvim_buf_set_extmark(self.bufid, ns, line, col, opts)
 
-  if self.marks[node.id] == nil then
+  if not self.marks[node.id] then
     self.marks[node.id] = {}
   end
 
@@ -139,10 +141,11 @@ end
 ---@param node tillb.markdown.Node
 ---@return boolean
 function Renderer:mark_from_cache(node)
+  local set_extmark = api.nvim_buf_set_extmark
   self.nodes[node.id] = node
   if self.marks[node.id] ~= nil then
     for _, mark in ipairs(self.marks[node.id]) do
-      vim.api.nvim_buf_set_extmark(unpack(mark.mark))
+      set_extmark(mark.mark[1], mark.mark[2], mark.mark[3], mark.mark[4], mark.mark[5])
     end
     return true
   end
@@ -181,6 +184,16 @@ local _admonitions = {
   ["[!cite]"] = { "@markup.quote", "󱆨 Cite" },
 }
 
+
+local quote_query_inline = vim.treesitter.query.parse("markdown_inline", [[
+    (shortcut_link) @link
+  ]])
+local quote_query = vim.treesitter.query.parse("markdown", [[
+    (block_quote_marker) @marker
+    (block_continuation) @continuation
+    ]])
+
+
 ---@type table<string, fun(renderer: tillb.markdown.Renderer, node: tillb.markdown.Node, parser_inline: vim.treesitter.LanguageTree?)>
 local handlers = {}
 
@@ -188,23 +201,18 @@ function handlers.quote(renderer, node)
   if renderer:mark_from_cache(node) then
     return
   end
-  -- local row_start, col_start, row_end, col_end = node:range()
 
   local hl = "@markup.quote"
   local replacement
 
   local level = node:get_level("block_quote", "section")
-
-  local query_inline = vim.treesitter.query.parse("markdown_inline", [[
-    (shortcut_link) @link
-  ]])
-  renderer:for_each_inline_capture(query_inline, function(child)
+  renderer:for_each_inline_capture(quote_query_inline, function(child)
     local text = child:text()
     if text:match("%[![a-zA-Z]+%]") == nil or _admonitions[text:lower()] == nil then
       goto continue
     end
     hl, replacement = unpack(_admonitions[text:lower()])
-    renderer:mark(child, child.row_start, child.col_start, {
+    renderer:mark(node, child.row_start, child.col_start, {
       virt_text = { { replacement or text, hl } },
       virt_text_pos = "inline",
       hl_group = nil,
@@ -217,12 +225,7 @@ function handlers.quote(renderer, node)
     ::continue::
   end, node.row_start, node.row_start + 1)
 
-  local query = vim.treesitter.query.parse("markdown", [[
-    (block_quote_marker) @marker
-    (block_continuation) @continuation
-    ]])
-
-  renderer:for_each_capture(query, function(child)
+  renderer:for_each_capture(quote_query, function(child)
     local child_level = child:get_level("block_quote", "section")
 
     -- ignore markers of nested blocks
@@ -244,7 +247,7 @@ function handlers.quote(renderer, node)
       mark_start = range[1] - 1
       mark_end = range[2]
     end
-    renderer:mark(child, child.row_start, mark_start, {
+    renderer:mark(node, child.row_start, mark_start, {
       virt_text = { { "┃ ", hl } },
       virt_text_pos = "inline",
       conceal = "",
@@ -275,13 +278,7 @@ function handlers.hline(renderer, node)
   })
 end
 
-function handlers.table(renderer, node)
-  if renderer:mark_from_cache(node) then
-    return
-  end
-  local conceal_query = vim.treesitter.query.get("markdown_inline", "highlights")
-  assert(conceal_query)
-  local query = vim.treesitter.query.parse("markdown", [[
+local table_query = vim.treesitter.query.parse("markdown", [[
   (pipe_table_delimiter_row) @delim
   [
     (pipe_table_header)
@@ -289,6 +286,10 @@ function handlers.table(renderer, node)
   ] @row
   ]])
 
+function handlers.table(renderer, node)
+  if renderer:mark_from_cache(node) then
+    return
+  end
   ---@class Cell
   ---@field node tillb.markdown.Node
   ---@field width integer
@@ -304,7 +305,7 @@ function handlers.table(renderer, node)
   ---@type Cell[][]
   local columns = {}
 
-  renderer:for_each_capture_in_node(node, query, function(child)
+  renderer:for_each_capture_in_node(node, table_query, function(child)
     ---@type Row
     local row = { node = child, cells = {} }
 
@@ -317,11 +318,11 @@ function handlers.table(renderer, node)
       local width = subchild.col_end - subchild.col_start + (subchild.col_start - prev_end - 1)
       prev_end = subchild.col_end
 
-      renderer:for_each_inline_capture(conceal_query, function(cnode, meta)
-        if cnode.capture == "conceal" then
-          width = width - (cnode.col_end - cnode.col_start) + #meta.conceal
+      for _, cnode in ipairs(renderer.conceals[subchild.row_start] or {}) do
+        if vim.treesitter.node_contains(subchild.node, { cnode.node:range() }) then
+          width = width - (cnode.col_end - cnode.col_start) -- + #meta.conceal
         end
-      end, subchild.row_start, subchild.row_end, subchild.col_start, subchild.col_end + 1)
+      end
       local cell = { node = subchild, width = width }
       table.insert(row.cells, cell)
       if subchild.type ~= "|" then
@@ -349,17 +350,17 @@ function handlers.table(renderer, node)
   local footer_prefix = {}
   if node.col_start > 0 then
     header_prefix = vim.iter(vim.split(
-          vim.api.nvim_buf_get_lines(renderer.bufid, node.row_start, node.row_start + 1, true)[1]:sub(1, node.col_start),
+          api.nvim_buf_get_lines(renderer.bufid, node.row_start, node.row_start + 1, true)[1]:sub(1, node.col_start),
           ""))
         :map(function(c)
           return { c, "Normal" }
         end):totable()
     footer_prefix = vim.iter(vim.split(
-          vim.api.nvim_buf_get_lines(renderer.bufid, node.row_end - 1, node.row_end, true)[1]:sub(1, node.col_start), ""))
+          api.nvim_buf_get_lines(renderer.bufid, node.row_end - 1, node.row_end, true)[1]:sub(1, node.col_start), ""))
         :map(function(c)
           return { c, "Normal" }
         end):totable()
-    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(renderer.bufid, ns, { node.row_start, node.col_start }, { node.row_start, 0 }, { details = true })) do
+    for _, mark in ipairs(api.nvim_buf_get_extmarks(renderer.bufid, ns, { node.row_start, node.col_start }, { node.row_start, 0 }, { details = true })) do
       if mark[4].conceal ~= nil then
         header_prefix[mark[3] + 1][1] = mark[4].conceal
         for i = mark[3] + 2, (mark[4].end_col or mark[3] + 2) do
@@ -372,7 +373,7 @@ function handlers.table(renderer, node)
         end
       end
     end
-    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(renderer.bufid, ns, { node.row_end - 1, node.col_start }, { node.row_end - 1, 0 }, { details = true })) do
+    for _, mark in ipairs(api.nvim_buf_get_extmarks(renderer.bufid, ns, { node.row_end - 1, node.col_start }, { node.row_end - 1, 0 }, { details = true })) do
       if mark[4].conceal ~= nil then
         footer_prefix[mark[3] + 1][1] = mark[4].conceal
         for i = mark[3] + 2, (mark[4].end_col or mark[3] + 2) do
@@ -483,7 +484,7 @@ function handlers.table(renderer, node)
 end
 
 function Renderer:unconceal_all()
-  vim.api.nvim_buf_clear_namespace(self.bufid, ns, 0, -1)
+  api.nvim_buf_clear_namespace(self.bufid, ns, 0, -1)
 end
 
 ---@param mode string
@@ -495,7 +496,7 @@ function Node:should_conceal(mode, concealcursor, cursorrow)
     return true
   end
 
-  if self.type == "block_quote" and not vim.api.nvim_buf_get_lines(self.bufid, cursorrow, cursorrow + 1, true)[1]:find_all(">")[self:get_level("block_quote", "section")] then
+  if self.type == "block_quote" and not api.nvim_buf_get_lines(self.bufid, cursorrow, cursorrow + 1, true)[1]:find_all(">")[self:get_level("block_quote", "section")] then
     return true
   end
   return (concealcursor:find(mode:lower()) ~= nil)
@@ -570,21 +571,35 @@ function Renderer:render_range(start, end_)
     return
   end
 
-  local current_row = vim.api.nvim_win_get_cursor(self.winid)[1] - 1
-  local current_mode = vim.api.nvim_get_mode().mode
+  local current_row = api.nvim_win_get_cursor(self.winid)[1] - 1
+  local current_mode = api.nvim_get_mode().mode
   local current_concealcursor = vim.wo[self.winid].concealcursor
 
   self:for_each_capture(query, function(node)
     if node:should_conceal(current_mode, current_concealcursor, current_row) then
       -- if this was previously not rendered we need to rerender all children too
-      if self.marks[node.node:id()] == nil then
-        self:clear_cache(node.node)
-      end
+      -- if self.marks[node.node:id()] == nil then
+      --   self:clear_cache(node.node)
+      -- end
       handlers[node.capture](self, node)
     else
-      self:clear_cache(node.node)
+      -- self:clear_cache(node.node)
     end
   end, start, end_)
+end
+
+function Renderer:refresh_conceals()
+  local conceal_query = vim.treesitter.query.get("markdown_inline", "highlights")
+  assert(conceal_query)
+  self.conceals = {}
+  self:for_each_inline_capture(conceal_query, function(cnode, meta)
+    if cnode.capture == "conceal" then
+      if not self.conceals[cnode.row_start] then
+        self.conceals[cnode.row_start] = {}
+      end
+      table.insert(self.conceals[cnode.row_start], cnode)
+    end
+  end)
 end
 
 function Renderer:refresh_viewport()
@@ -593,6 +608,7 @@ function Renderer:refresh_viewport()
   --   return
   -- end
   self:unconceal_all()
+  self:refresh_conceals()
   local row_start = vim.fn.line("w0", self.winid) - 1
   local row_end = vim.fn.line("w$", self.winid)
   self:render_range(row_start, row_end)
@@ -608,15 +624,16 @@ function Renderer.new(bufid)
   o.bufid = bufid
   o.marks = {}
   o.nodes = {}
+  o.conceals = {}
   o.winid = vim.fn.bufwinid(bufid)
   return o
 end
 
-vim.api.nvim_set_hl(0, "MarkdownCalloutNote", { link = "DiagnosticFloatingInfo" })
-vim.api.nvim_set_hl(0, "MarkdownCalloutTip", { link = "DiagnosticFloatingOk" })
-vim.api.nvim_set_hl(0, "MarkdownCalloutImportant", { link = "DiagnosticFloatingHint" })
-vim.api.nvim_set_hl(0, "MarkdownCalloutWarning", { link = "DiagnosticFloatingWarn" })
-vim.api.nvim_set_hl(0, "MarkdownCalloutCaution", { link = "DiagnosticFloatingError" })
+api.nvim_set_hl(0, "MarkdownCalloutNote", { link = "DiagnosticFloatingInfo" })
+api.nvim_set_hl(0, "MarkdownCalloutTip", { link = "DiagnosticFloatingOk" })
+api.nvim_set_hl(0, "MarkdownCalloutImportant", { link = "DiagnosticFloatingHint" })
+api.nvim_set_hl(0, "MarkdownCalloutWarning", { link = "DiagnosticFloatingWarn" })
+api.nvim_set_hl(0, "MarkdownCalloutCaution", { link = "DiagnosticFloatingError" })
 
 ---@type table<integer, tillb.markdown.Renderer>
 M.renderers = {}
@@ -626,26 +643,26 @@ M.autocmds = {}
 
 ---@param bufid? integer
 function M.attach(bufid)
-  bufid = bufid or vim.api.nvim_get_current_buf()
+  bufid = bufid or api.nvim_get_current_buf()
 
   local renderer = Renderer.new(bufid)
   local autocmds = {}
 
-  table.insert(autocmds, vim.api.nvim_create_autocmd("InsertEnter", {
+  table.insert(autocmds, api.nvim_create_autocmd("InsertEnter", {
     group = group,
     callback = function(args)
       M.renderers[args.buf]:unconceal_all()
     end,
     buffer = bufid,
   }))
-  table.insert(autocmds, vim.api.nvim_create_autocmd({ "InsertLeave", "CursorMoved", "WinScrolled" }, {
+  table.insert(autocmds, api.nvim_create_autocmd({ "InsertLeave", "CursorMoved", "WinScrolled" }, {
     callback = function(args)
       M.renderers[args.buf]:refresh_viewport()
     end,
     buffer = bufid,
   }))
 
-  vim.api.nvim_buf_attach(bufid, true, { on_lines = function(_, bufnr)
+  api.nvim_buf_attach(bufid, true, { on_lines = function(_, bufnr)
     M.renderers[bufnr]:refresh_viewport()
   end })
 
@@ -654,11 +671,12 @@ function M.attach(bufid)
 end
 
 function M.test()
-  local bufid = vim.api.nvim_get_current_buf()
+  local bufid = api.nvim_get_current_buf()
   vim.uv.update_time()
   local renderer = Renderer.new(bufid)
   local time = vim.uv.now()
   require("jit.p").start("lri1", "/tmp/profile")
+  renderer:refresh_viewport()
   for _ = 1, 500 do
     renderer:refresh_viewport()
   end
