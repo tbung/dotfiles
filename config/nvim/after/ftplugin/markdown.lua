@@ -15,3 +15,15 @@ if query then
 end
 
 require("tillb.markdown").attach()
+vim.api.nvim_create_autocmd("InsertEnter", {
+  callback = function(args)
+    vim.wo.conceallevel = 0
+  end,
+  buffer = 0,
+})
+vim.api.nvim_create_autocmd("InsertLeave", {
+  callback = function(args)
+    vim.wo.conceallevel = 2
+  end,
+  buffer = 0,
+})

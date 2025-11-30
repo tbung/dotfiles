@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
           },
         },
       })
-      vim.lsp.enable({ "lua_ls", "texlab", "basedpyright", "ruff", "bashls", "jsonls", "clangd", "html", "asm_lsp", "ts_ls" })
+      vim.lsp.enable({ "lua_ls", "texlab", "basedpyright", "ruff", "bashls", "jsonls", "clangd", "html", "asm_lsp", "ts_ls", "markdown_oxide" })
 
       vim.ui.input = require("tillb.input").input
 
