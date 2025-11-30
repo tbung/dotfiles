@@ -580,6 +580,9 @@ end
 ---@param col_end? integer
 function Renderer:for_each_inline_capture(query_inline, callback, row_start, row_end, col_start, col_end)
   self:get_root()
+  if not self.parser_inline then
+    return
+  end
   self.parser_inline:for_each_tree(function(tree, _)
     for id, node, meta in query_inline:iter_captures(tree:root(), self.bufid, row_start, row_end, { start_col = col_start, end_col = col_end }) do
       local name = query_inline.captures[id]
