@@ -9,9 +9,14 @@ engines=(
   "Python https://docs.python.org/3/search.html?q=%s"
   "Wikipedia https://en.wikipedia.org/wiki/Special:Search?search=%s"
   "Google https://google.com/search?q=%s"
+  "ArchWiki https://wiki.archlinux.org/index.php?search=%s&title=Special%%3ASearch&wprov=acrw1_-1",
 )
 
 engine=$(printf "%s\n" "${engines[@]}" | fzf --with-nth=1 --accept-nth=2)
+
+if [[ -z "$engine" ]]; then
+    return 1
+fi
 
 cmd="xdg-open"
 
