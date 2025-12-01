@@ -82,10 +82,10 @@ function M.find_buffers_and_files(cmdarg, _cmdcomplete)
 
   table.sort(buffers, function(a, b) return a.lastused > b.lastused end)
 
-  local current = vim.fn.expand("%:.")
+  local current = vim.fn.expand("%:p:.")
 
   buffers = vim.iter(buffers):map(function(buf)
-    local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf.id), ":.")
+    local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(buf.id), ":p:.")
     if name == current then
       return nil
     end
