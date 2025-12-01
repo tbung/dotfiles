@@ -7,16 +7,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   group = group,
 })
 
-vim.api.nvim_create_autocmd("TermOpen", {
-  callback = function()
-    vim.wo.spell = false
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-    vim.wo.signcolumn = "no"
-  end,
-  group = group,
-})
-
 vim.api.nvim_create_autocmd("UIEnter", {
   group = group,
   once = true,
