@@ -30,6 +30,14 @@ vim.api.nvim_create_autocmd("UIEnter", {
         underline = true,
         severity_sort = true,
         float = true,
+        status = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
+          },
+        },
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = " ",
@@ -39,7 +47,19 @@ vim.api.nvim_create_autocmd("UIEnter", {
           },
         },
       })
-      vim.lsp.enable({ "lua_ls", "texlab", "basedpyright", "ruff", "bashls", "jsonls", "clangd", "html", "asm_lsp", "ts_ls", "markdown_oxide" })
+      vim.lsp.enable({
+        "lua_ls",
+        "texlab",
+        "basedpyright",
+        "ruff",
+        "bashls",
+        "jsonls",
+        "clangd",
+        "html",
+        "asm_lsp",
+        "ts_ls",
+        "markdown_oxide"
+      })
 
       vim.ui.input = require("tillb.input").input
 

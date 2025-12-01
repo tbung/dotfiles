@@ -1,12 +1,5 @@
 local M = {}
 
-local hl_severity = {
-  [vim.diagnostic.severity.ERROR] = "Error",
-  [vim.diagnostic.severity.WARN] = "Warn",
-  [vim.diagnostic.severity.INFO] = "Info",
-  [vim.diagnostic.severity.HINT] = "Hint",
-}
-
 ---@param ft string
 ---@return string|nil, string|nil
 local function get_icon(ft)
@@ -34,20 +27,6 @@ local function cwd()
   return vim.fn.fnamemodify(vim.fn.getcwd(), ":~")
 end
 
-local function diagnostics()
-  local counts = vim.diagnostic.count(0)
-  local user_signs = vim.tbl_get(vim.diagnostic.config() --[[@as vim.diagnostic.Opts]], "signs", "text") or {}
-  local signs = vim.tbl_extend("keep", user_signs, { "E", "W", "I", "H" })
-  local result_str = vim
-      .iter(pairs(counts))
-      :map(function(severity, count)
-        return ("%%#DiagnosticSign%s#%s%s%%#StatusLine#"):format(hl_severity[severity], signs[severity], count)
-      end)
-      :join(" ")
-
-  return result_str
-end
-
 local function lsp()
   local clients = vim.lsp.get_clients({ bufnr = 0 })
   if #clients == 0 then
@@ -56,7 +35,7 @@ local function lsp()
   local names = vim.tbl_map(function(item)
     return item.name
   end, clients)
-  return "%#StatusLineNC#" .. table.concat(names, ", ") .. "%#StatusLine#"
+  return "%#StatusLineSecondary#" .. table.concat(names, ", ") .. "%#StatusLine#"
 end
 
 local function git()
@@ -71,9 +50,9 @@ function M.statusline()
   return table.concat({
     "%<" .. cwd(),
     "%h%w%m%r",
-    "%#StatusLineNC#%{% &ruler ? ( &rulerformat == '' ? '%P %-14.(%l,%c%V%)' : &rulerformat ) : '' %}%#StatusLine#",
+    "%#StatusLineSecondary#%{% &ruler ? ( &rulerformat == '' ? '%P %-14.(%l,%c%V%)' : &rulerformat ) : '' %}%#StatusLine#",
     "%=",
-    diagnostics(),
+    vim.diagnostic.status(),
     "%=",
     lsp(),
     " ",

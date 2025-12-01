@@ -27,6 +27,7 @@ require("catppuccin").setup({
       WinBar = { style = { "bold" } },
       MiniPickBorder = { link = "MsgBorder" },
       MiniPickBorderText = { link = "Normal" },
+      StatusLineSecondary = { link = "StatusLineNC" },
 
       -- NOTE: without this, light-mode makes the cursor hard to see
       TermCursor = { bg = colors.none },

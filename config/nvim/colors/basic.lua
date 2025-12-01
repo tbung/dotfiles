@@ -7,18 +7,13 @@ for _, hl_name in ipairs({ "Normal", "NonText", "EndOfBuffer" }) do
 end
 
 if vim.go.background == "dark" then
-  vim.api.nvim_set_hl(0, "StatusLine", { fg = "#cdd6f4", bg = "#181825" })
-  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#45475a", bg = "#181825" })
-  -- vim.api.nvim_set_hl(0, "WinBar", { fg = "#f5e0dc", bold = true, bg = nil })
+  vim.api.nvim_set_hl(0, "StatusLineSecondary", { fg = "DarkGrey", default = true, })
 elseif vim.go.background == "light" then
-  vim.api.nvim_set_hl(0, "StatusLine", { fg = "#4c4f69", bg = "#e6e9ef" })
-  vim.api.nvim_set_hl(0, "StatusLineNC", { fg = "#bcc0cc", bg = "#e6e9ef" })
-  -- vim.api.nvim_set_hl(0, "WinBar", { fg = "#4c4f69", bold = true, bg = nil })
 end
 
 for _, severity in ipairs({ "Error", "Warn", "Info", "Hint", "Ok" }) do
   local hl = vim.api.nvim_get_hl(0, { name = "DiagnosticUnderline" .. severity })
-  hl.underline = false
+  hl.underline = nil
   hl.undercurl = true
   vim.api.nvim_set_hl(0, "DiagnosticUnderline" .. severity, hl)
 end
