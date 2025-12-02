@@ -163,7 +163,7 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
         ssh-agent -t 1h >! "$XDG_RUNTIME_DIR/ssh-agent.env"
     fi
 
-    if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+    if [[ ! -e "$SSH_AUTH_SOCK" ]]; then
         source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
     fi
 fi
