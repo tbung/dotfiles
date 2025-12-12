@@ -8,7 +8,8 @@ local M = {}
 ---@class tillb.signature.Window
 ---@field id number?
 ---@field bufid number?
-local win = { bufid = nil, id = nil }
+---@field active_offset number?
+local win = { bufid = nil, id = nil, active_offset = nil }
 
 local function client_positional_params(params)
   local winid = vim.api.nvim_get_current_win()
@@ -90,7 +91,9 @@ function M.signature_help()
       end
 
       local buf, win = vim.lsp.util.open_floating_preview(lines, "markdown",
-        { max_width = 100, max_height = 10, relative = "cursor", offset_x = 0, offset_y = 0, close_events = {} })
+        { max_width = 100, max_height = 10, relative = "cursor", offset_x = 0, offset_y = 0, close_events = {}, border = {"", "", "", " ", "", "", "", " "} })
+
+      vim.wo[win].winhighlight = "NormalFloat:Pmenu,FloatBorder:Pmenu"
 
       if hl then
         vim.api.nvim_buf_clear_namespace(buf, sig_help_ns, 0, -1)
@@ -102,12 +105,13 @@ function M.signature_help()
           { hl[3], hl[4] }
         )
       end
-      return buf, win
+      return buf, win, hl and hl[2] or 0
     end
 
-    local fbuf, fwin = show_signature()
+    local fbuf, fwin, active_offset = show_signature()
     win.bufid = fbuf
     win.id = fwin
+    -- win.active_offset = active_offset
     M.update_pos()
   end)
 end
@@ -151,7 +155,7 @@ function M.update_pos()
   end
 
   vim.api.nvim_win_set_config(win.id,
-    { relative = "cursor", anchor = anchor, row = offset_y, col = 0, height = height, zindex = 1000 })
+    { relative = "cursor", anchor = anchor, row = offset_y, col = -1 - (win.active_offset or 0), height = height, zindex = 1000, border = {"", "", "", " ", "", "", "", " "} })
 end
 
 function M.close()
