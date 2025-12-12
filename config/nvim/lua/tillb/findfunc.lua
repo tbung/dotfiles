@@ -3,8 +3,12 @@ local M = {}
 local fnames = {} ---@type string[]
 local handle ---@type vim.SystemObj?
 
+function M.reset()
+  fnames = {}
+end
+
 function M.refresh()
-  if handle ~= nil then
+  if handle ~= nil or #fnames > 0 then
     return
   end
 
@@ -54,7 +58,7 @@ function M.refresh()
     once = true,
     callback = function()
       if handle then
-        handle:wait(0)
+        handle:kill("sigkill")
         handle = nil
       end
     end,

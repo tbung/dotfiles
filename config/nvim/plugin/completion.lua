@@ -11,9 +11,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end,
       })
 
-      -- NOTE: currently, lsp omnifunc (and lsp.complete.get) opens new pum instead of just getting the items
-      -- https://github.com/neovim/neovim/issues/35257
-      vim.api.nvim_set_option_value("complete", ".,o", { buf = args.buf })
+      vim.api.nvim_set_option_value("complete", "o,.,w,b,u", { buf = args.buf })
       vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = args.buf })
     end
 
@@ -79,14 +77,6 @@ local function should_autocomplete(cmdtype, cmd)
   end
 end
 
-vim.api.nvim_create_autocmd("CmdlineEnter", {
-  group = cmd_group,
-  pattern = ":",
-  callback = function(ev)
-    require("tillb.findfunc").refresh()
-  end,
-})
-
 vim.api.nvim_create_autocmd("CmdlineChanged", {
   group = cmd_group,
   callback = function(ev)
@@ -94,6 +84,7 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
     local cmdline = vim.fn.getcmdline()
 
     if should_autocomplete(cmdtype, cmdline) then
+      require("tillb.findfunc").refresh()
       vim.o.wildmode = "noselect:lastused,full"
       vim.fn.wildtrigger()
     end
@@ -105,6 +96,7 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
   pattern = ":",
   callback = function(ev)
     vim.o.wildmode = "longest:full,full"
+    require("tillb.findfunc").reset()
   end,
 })
 
