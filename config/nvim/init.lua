@@ -15,17 +15,6 @@ vim.o.wrap = false
 vim.o.swapfile = false
 vim.o.backup = false
 vim.o.undofile = true
-vim.o.sessionoptions = table.concat({
-  "blank",
-  "buffers",
-  "curdir",
-  "folds",
-  "help",
-  "tabpages",
-  "winsize",
-  "terminal",
-  "localoptions",
-}, ",")
 vim.o.exrc = true
 
 vim.o.hlsearch = false
@@ -55,6 +44,8 @@ if vim.fn.executable("fd") == 1 then
 
   vim.o.findfunc = "v:lua.Fd_findfunc"
 end
+
+vim.loader.enable()
 
 -- NOTE: Could load this on CmdLineEnter, but that causes a flicker that bugs me
 if vim.version().minor >= 12 then
