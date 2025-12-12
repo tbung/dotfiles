@@ -96,6 +96,9 @@ setopt NUMERIC_GLOB_SORT
 # No beeps
 unsetopt LIST_BEEP
 
+# Save cd history
+setopt AUTO_PUSHD
+
 # use ctrl+n to accept next word from zsh-autosuggestions
 bindkey "^n" forward-word
 
@@ -134,12 +137,16 @@ alias cd..='cd ..'
 alias g='git'
 alias ls='ls --color=auto'
 alias lsd='lsd -lah'
+(( ${+commands[lsd]} )) || alias lsd='ls -lah'
 alias notes='zk edit -i'
 alias nn='new-note'
 alias wttr='curl wttr.in/heidelberg'
 alias tm='tmux new-session -As default'
 alias p='list-procs'
 alias ws='web-search'
+alias 1x='kitten @ set-font-size 0'
+alias 2x='kitten @ set-font-size 30'
+alias 4x='kitten @ set-font-size 40'
 
 # Named Directory Hashes
 hash -d a="/run/media/alexandria"
