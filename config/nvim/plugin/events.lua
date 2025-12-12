@@ -48,7 +48,9 @@ vim.api.nvim_create_autocmd("UIEnter", {
         "html",
         "asm_lsp",
         "ts_ls",
-        "markdown_oxide"
+        "markdown_oxide",
+        "hls",
+        "nixd",
       })
 
       vim.ui.input = require("tillb.input").input

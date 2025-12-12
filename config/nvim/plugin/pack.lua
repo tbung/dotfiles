@@ -53,6 +53,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
         local base = ret.stdout[1]
 
         require("gitsigns").change_base(base, true)
+        require("gitsigns").toggle_word_diff(true)
         require("gitsigns").setqflist("all")
       end, { nargs = 1 })
 
