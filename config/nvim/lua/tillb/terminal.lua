@@ -5,11 +5,15 @@ local M = {}
 
 local terminal = nil ---@type Terminal?
 
+---@param cmd string|string[]?
 M.create_terminal = function(cmd)
+  if type(cmd) == "table" then
+    cmd = table.concat(cmd, " ")
+  end
   local bufid = vim.api.nvim_create_buf(true, false)
 
   vim.api.nvim_buf_call(bufid, function()
-    vim.cmd("terminal " .. (cmd or vim.o.shell))
+    vim.cmd.terminal(cmd)
   end)
 
   terminal = { bufid = bufid }
@@ -24,10 +28,12 @@ M.open_terminal = function()
   vim.api.nvim_set_current_buf(terminal.bufid)
 end
 
-M.terminal_make = function(args)
-  local term = M.create_terminal(vim.fn.expandcmd(vim.o.makeprg))
+---@param args string[]
+---@param focus boolean
+M.terminal_make = function(args, focus)
+  local term = M.create_terminal({ vim.fn.expandcmd(vim.o.makeprg), unpack(args) })
 
-  if not args or not args.bang then
+  if focus then
     vim.api.nvim_set_current_buf(term.bufid)
     vim.api.nvim_win_set_cursor(0, { vim.api.nvim_buf_line_count(0), 0 })
   end

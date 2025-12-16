@@ -59,9 +59,9 @@ vim.api.nvim_create_autocmd("UIEnter", {
         require("tillb.terminal").edit_makeprg()
       end, {})
 
-      vim.api.nvim_create_user_command("TMake", function(args)
-        require("tillb.terminal").terminal_make(args)
-      end, { bang = true })
+      vim.api.nvim_create_user_command("Make", function(args)
+        require("tillb.terminal").terminal_make(args.fargs, not args.bang)
+      end, { bang = true, nargs = "*" })
 
       vim.api.nvim_create_user_command("Find", function(opts)
           local bufnr = vim.fn.bufnr(opts.args)
