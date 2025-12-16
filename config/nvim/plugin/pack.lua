@@ -7,10 +7,11 @@ vim.pack.add({
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/tpope/vim-eunuch",
   "https://github.com/lewis6991/gitsigns.nvim",
+  "https://github.com/sindrets/diffview.nvim",
   "https://github.com/echasnovski/mini.nvim",
   "https://github.com/stevearc/oil.nvim",
 
-  "https://github.com/folke/snacks.nvim"
+  "https://github.com/folke/snacks.nvim",
 }, { load = false })
 
 local group = vim.api.nvim_create_augroup("tillb.pack", {})
@@ -37,25 +38,19 @@ vim.api.nvim_create_autocmd("UIEnter", {
         },
       })
       vim.ui.select = require("mini.pick").ui_select
-      require('mini.extra').setup()
+      require("mini.extra").setup()
 
       vim.cmd.packadd("vim-eunuch")
 
       vim.cmd.packadd("vim-fugitive")
       vim.cmd.packadd("gitsigns.nvim")
-      vim.api.nvim_create_user_command("GReview", function(cargs)
-        local ret = vim.fn.FugitiveExecute({ "merge-base", "HEAD", cargs.args })
-
-        if ret.exit_status ~= 0 then
-          return
-        end
-
-        local base = ret.stdout[1]
-
-        require("gitsigns").change_base(base, true)
-        require("gitsigns").toggle_word_diff(true)
-        require("gitsigns").setqflist("all")
-      end, { nargs = 1 })
+      vim.cmd.packadd("diffview.nvim")
+      require("diffview").setup({
+        file_panel = {
+          listing_style = "list",
+          win_config = { position = "bottom", height = 10, win_opts = {} },
+        },
+      })
 
       vim.cmd.packadd("nvim-treesitter")
     end)
@@ -118,6 +113,4 @@ require("oil").setup({
   },
 })
 
-require("snacks").setup({
-  image = { enabled = true },
-})
+require("snacks").setup({ image = { enabled = true } })
