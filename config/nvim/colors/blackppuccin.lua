@@ -1,7 +1,7 @@
 vim.pack.add({ { src = "https://github.com/catppuccin/nvim", name = "catppuccin" } })
 
 require("catppuccin").setup({
-  float = { transparent = true },
+  -- float = { transparent = true },
 
   lsp_styles = {
     underlines = {

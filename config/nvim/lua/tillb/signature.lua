@@ -91,7 +91,24 @@ function M.signature_help()
       end
 
       local buf, win = vim.lsp.util.open_floating_preview(lines, "markdown",
-        { max_width = 100, max_height = 10, relative = "cursor", offset_x = 0, offset_y = 0, close_events = {}, border = {"", "", "", " ", "", "", "", " "} })
+        {
+          max_width = 100,
+          max_height = 10,
+          relative = "cursor",
+          offset_x = 0,
+          offset_y = 0,
+          close_events = {},
+          border = {
+            "",
+            "",
+            "",
+            " ",
+            "",
+            "",
+            "",
+            " "
+          }
+        })
 
       vim.wo[win].winhighlight = "NormalFloat:Pmenu,FloatBorder:Pmenu"
 
@@ -155,13 +172,83 @@ function M.update_pos()
   end
 
   vim.api.nvim_win_set_config(win.id,
-    { relative = "cursor", anchor = anchor, row = offset_y, col = -1 - (win.active_offset or 0), height = height, zindex = 1000, border = {"", "", "", " ", "", "", "", " "} })
+    {
+      relative = "cursor",
+      anchor = anchor,
+      row = offset_y,
+      col = -1 - (win.active_offset or 0),
+      height = height,
+      zindex = 1000,
+      border = {
+        "",
+        "",
+        "",
+        " ",
+        "",
+        "",
+        "",
+        " "
+      }
+    })
 end
 
 function M.close()
   if win.id and vim.api.nvim_win_is_valid(win.id) then
     vim.api.nvim_win_close(win.id, true)
   end
+end
+
+function M.enable_autocmds(buf, client)
+  local group = vim.api.nvim_create_augroup("tillb.signature", { clear = true })
+  vim.api.nvim_create_autocmd({ "TextChangedI", "InsertEnter" }, {
+    buffer = buf,
+    group = group,
+    callback = function()
+      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+      local line = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
+      if not line or line == "" then
+        return
+      end
+
+      local current_char = line:sub(col, col)
+
+      if (
+            vim.tbl_contains(client.server_capabilities.signatureHelpProvider.triggerCharacters or {}, current_char, {})
+            or (
+              client.server_capabilities.signatureHelpProvider.retriggerCharacters
+              and vim.tbl_contains(client.server_capabilities.signatureHelpProvider.retriggerCharacters, current_char, {})
+            )
+          ) then
+        require("tillb.signature").signature_help()
+      end
+    end,
+  })
+  vim.api.nvim_create_autocmd("CursorMovedI", {
+    buffer = buf,
+    group = group,
+    callback = function()
+      require("tillb.signature").signature_help()
+    end,
+  })
+  vim.api.nvim_create_autocmd("CompleteChanged", {
+    buffer = buf,
+    group = group,
+    callback = function()
+      require("tillb.signature").update_pos()
+    end,
+  })
+  vim.api.nvim_create_autocmd({ "ModeChanged", "BufLeave" }, {
+    buffer = buf,
+    group = group,
+    callback = function()
+      vim.schedule(function()
+        local mode = vim.api.nvim_get_mode().mode
+        if not mode:match("i") and not mode:match("s") then
+          require("tillb.signature").close()
+        end
+      end)
+    end,
+  })
 end
 
 return M

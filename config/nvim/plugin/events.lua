@@ -1,4 +1,4 @@
-local group = vim.api.nvim_create_augroup("tillb", {})
+local group = vim.api.nvim_create_augroup("tillb.events", { clear = true })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
@@ -16,7 +16,6 @@ vim.api.nvim_create_autocmd("UIEnter", {
 
       vim.diagnostic.config({
         virtual_text = true,
-        update_in_insert = false,
         underline = true,
         severity_sort = true,
         float = true,
@@ -37,10 +36,12 @@ vim.api.nvim_create_autocmd("UIEnter", {
           },
         },
       })
+
       vim.lsp.enable({
         "lua_ls",
         "texlab",
-        "basedpyright",
+        -- "basedpyright",
+        "ty",
         "ruff",
         "bashls",
         "jsonls",

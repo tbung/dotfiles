@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("tillb.lsp-autocompletion", {}),
+  group = vim.api.nvim_create_augroup("tillb.lsp-autocompletion", { clear = true }),
   callback = function(args)
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     if client:supports_method("textDocument/completion") then
@@ -7,7 +7,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
         autotrigger = false,
         convert = function(item)
           -- TODO: Proper hl groups
-          return { kind_hlgroup = "BlinkCmpKind" .. vim.lsp.protocol.CompletionItemKind[item.kind] }
+          if vim.lsp.protocol.CompletionItemKind[item.kind] ~= nil then
+            return { kind_hlgroup = "BlinkCmpKind" .. vim.lsp.protocol.CompletionItemKind[item.kind] }
+          end
+
+          return {}
         end,
       })
 
@@ -16,62 +20,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     if client:supports_method("textDocument/signatureHelp") then
-      vim.api.nvim_create_autocmd({ "TextChangedI", "InsertEnter" }, {
-        buffer = args.buf,
-        callback = function()
-          local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-          local line = vim.api.nvim_buf_get_lines(args.buf, row - 1, row, false)[1]
-          if not line or line == "" then
-            return
-          end
-
-          local current_char = line:sub(col, col)
-
-          if (
-                vim.tbl_contains(client.server_capabilities.signatureHelpProvider.triggerCharacters or {}, current_char, {})
-                or (
-                  client.server_capabilities.signatureHelpProvider.retriggerCharacters
-                  and vim.tbl_contains(client.server_capabilities.signatureHelpProvider.retriggerCharacters, current_char, {})
-                )
-              ) then
-            require("tillb.signature").signature_help()
-          end
-        end,
-      })
-      vim.api.nvim_create_autocmd("CursorMovedI", {
-        buffer = args.buf,
-        callback = function()
-          require("tillb.signature").signature_help()
-        end,
-      })
-      vim.api.nvim_create_autocmd("CompleteChanged", {
-        buffer = args.buf,
-        callback = function()
-          require("tillb.signature").update_pos()
-        end,
-      })
-      vim.api.nvim_create_autocmd({ "ModeChanged", "BufLeave" }, {
-        buffer = args.buf,
-        callback = function()
-          vim.schedule(function()
-            local mode = vim.api.nvim_get_mode().mode
-            if not mode:match("i") and not mode:match("s") then
-              require("tillb.signature").close()
-            end
-          end)
-        end,
-      })
+      require("tillb.signature").enable_autocmds(args.buf, client)
     end
   end,
 })
 
-local cmd_group = vim.api.nvim_create_augroup("tillb.cmdline-autocompletion", {})
+local cmd_group = vim.api.nvim_create_augroup("tillb.cmdline-autocompletion", { clear = true })
 
 ---@param cmd string
 ---@return boolean
 local function should_autocomplete(cmdtype, cmd)
   if cmdtype == ":" then
-    return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\|\(P\%[ick]\)\)\s]]):match_str(cmd) and true or false
+    return vim.regex([[^\(\([fF]in\%[d]\)\|\(b\%[uffer]\)\|\(h\%[elp]\)\|\(P\%[ick]\)\)\s]]):match_str(cmd) and true or
+        false
   else
     return cmdtype == "/"
   end
