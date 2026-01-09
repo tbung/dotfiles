@@ -100,7 +100,7 @@ unsetopt LIST_BEEP
 setopt AUTO_PUSHD
 
 # use ctrl+n to accept next word from zsh-autosuggestions
-bindkey "^n" forward-word
+bindkey "^n" vi-forward-word
 
 # use arrows to history substring search (if on the first line)
 autoload -U up-line-or-beginning-search
