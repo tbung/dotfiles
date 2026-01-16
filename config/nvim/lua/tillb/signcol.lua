@@ -6,18 +6,6 @@ function M.get_signs(win)
   local lnum = vim.v.lnum
   local signs = {}
 
-  if vim.fn.has("nvim-0.10") == 0 then
-    -- Only needed for Neovim <0.10
-    -- Newer versions include legacy signs in nvim_buf_get_extmarks
-    for _, sign in ipairs(vim.fn.sign_getplaced(buf, { group = "*", lnum = lnum })[1].signs) do
-      local ret = vim.fn.sign_getdefined(sign.name)[1]
-      if ret then
-        ret.priority = sign.priority
-        signs[#signs + 1] = ret
-      end
-    end
-  end
-
   -- Get extmark signs
   local extmarks = vim.api.nvim_buf_get_extmarks(
     buf,

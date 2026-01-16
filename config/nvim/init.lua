@@ -47,7 +47,6 @@ end
 
 vim.loader.enable()
 
--- NOTE: Could load this on CmdLineEnter, but that causes a flicker that bugs me
 if vim.version().minor >= 12 then
   require("vim._extui").enable({})
 end
@@ -83,3 +82,44 @@ vim.g.loaded_2html_plugin = 1
 vim.g.loaded_rrhelper = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_matchparen = 1
+
+vim.diagnostic.config({
+  virtual_text = true,
+  underline = true,
+  severity_sort = true,
+  float = true,
+  status = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = " ",
+      [vim.diagnostic.severity.WARN] = " ",
+      [vim.diagnostic.severity.INFO] = " ",
+      [vim.diagnostic.severity.HINT] = " ",
+    },
+  },
+})
+
+vim.lsp.enable({
+  "lua_ls",
+  "texlab",
+  "ty",
+  "ruff",
+  "bashls",
+  "jsonls",
+  "clangd",
+  "html",
+  "asm_lsp",
+  "ts_ls",
+  "markdown_oxide",
+  "hls",
+  "nixd",
+})
+
+vim.ui.input = require("tillb.input").input

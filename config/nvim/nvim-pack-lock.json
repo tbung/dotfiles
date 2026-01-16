@@ -9,19 +9,19 @@
       "src": "https://github.com/sindrets/diffview.nvim"
     },
     "gitsigns.nvim": {
-      "rev": "72acb69020c92d99cf388bfeb390481ccec50c04",
+      "rev": "42d6aed4e94e0f0bbced16bbdcc42f57673bd75e",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "mini.nvim": {
-      "rev": "29b9e13f891f9c83f44ff5bf44d22daa1af1dc71",
+      "rev": "c9d3bc2df3015d82eabe3d2d88dac1ef5746e9e8",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "5a82e10b2df0ed31bec642c1c0344baee7c458b6",
+      "rev": "92ee7d42320edfbb81f3cad851314ab197fa324a",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "2ba5ec184609a96b513bf4c53a20512d64e27f39",
+      "rev": "8aada0e3940c573e38b417a226b43bc8675f8958",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
@@ -30,7 +30,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "oil.nvim": {
-      "rev": "81b8a91735ad5cd24a6b3137f14a89f19176364f",
+      "rev": "6b59a6cf623fa2245c7454ddb458df5bdb6615d3",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "snacks.nvim": {

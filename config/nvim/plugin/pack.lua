@@ -1,6 +1,6 @@
-vim.pack.add({
-  "https://github.com/neovim/nvim-lspconfig",
+vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" }, { load = false })
 
+vim.pack.add({
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
   "https://github.com/nvim-treesitter/nvim-treesitter-context",
 
@@ -8,66 +8,14 @@ vim.pack.add({
   "https://github.com/tpope/vim-eunuch",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/sindrets/diffview.nvim",
-  "https://github.com/echasnovski/mini.nvim",
-  "https://github.com/stevearc/oil.nvim",
-
-  "https://github.com/folke/snacks.nvim",
-}, { load = false })
+})
 
 local group = vim.api.nvim_create_augroup("tillb.pack", {})
-
-vim.api.nvim_create_autocmd("UIEnter", {
-  group = group,
-  once = true,
-  callback = function(args)
-    vim.schedule(function()
-      require("mini.surround").setup({})
-
-      vim.cmd.packadd("mini.pick")
-      require("mini.pick").setup({
-        options = { content_from_bottom = true },
-        window = {
-          config = {
-            width = 10000,
-            height = math.floor(0.5 * vim.o.lines),
-            relative = "editor",
-            border = { "", { "─", "MsgSeparator" }, "", "", "", " ", "", "" },
-            row = vim.o.lines - vim.o.cmdheight,
-            col = 0,
-          },
-        },
-      })
-      vim.ui.select = require("mini.pick").ui_select
-      require("mini.extra").setup()
-
-      vim.cmd.packadd("vim-eunuch")
-
-      vim.cmd.packadd("vim-fugitive")
-      vim.cmd.packadd("gitsigns.nvim")
-      vim.cmd.packadd("diffview.nvim")
-      require("diffview").setup({
-        file_panel = {
-          listing_style = "list",
-          win_config = { position = "bottom", height = 10, win_opts = {} },
-        },
-      })
-
-      vim.cmd.packadd("nvim-treesitter")
-    end)
-  end,
-})
 
 vim.api.nvim_create_autocmd("BufReadPre", {
   group = group,
   callback = function(args)
     require("nvim-treesitter").install({ vim.treesitter.language.get_lang(vim.bo.filetype) })
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufReadPost", {
-  group = group,
-  callback = function(args)
-    require("treesitter-context").setup({ enable = true })
   end,
 })
 
@@ -86,31 +34,66 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
--- NOTE: these have to be loaded immediately to work properly
-local permission_hlgroups = {
-  ["-"] = "NonText",
-  ["r"] = "DiagnosticSignWarn",
-  ["w"] = "DiagnosticSignError",
-  ["x"] = "DiagnosticSignOk",
-}
+vim.pack.add({ "https://github.com/echasnovski/mini.nvim" }, {
+  load = function()
+    vim.schedule(function()
+      vim.cmd.packadd("mini.nvim")
+      require("mini.surround").setup({})
 
-require("oil").setup({
-  columns = {
-    {
-      "permissions",
-      highlight = function(permission_str)
-        local hls = {}
-        for i = 1, #permission_str do
-          local char = permission_str:sub(i, i)
-          table.insert(hls, { permission_hlgroups[char], i - 1, i })
-        end
-        return hls
-      end,
-    },
-    { "size", highlight = "Special" },
-    { "mtime", highlight = "Number" },
-    { "icon", add_padding = true },
-  },
+      require("mini.pick").setup({
+        options = { content_from_bottom = true },
+        window = {
+          config = {
+            width = 10000,
+            height = math.floor(0.5 * vim.o.lines),
+            relative = "editor",
+            border = { "", { "─", "MsgSeparator" }, "", "", "", " ", "", "" },
+            row = vim.o.lines - vim.o.cmdheight,
+            col = 0,
+          },
+        },
+      })
+      vim.ui.select = require("mini.pick").ui_select
+
+      require("mini.extra").setup()
+    end)
+  end,
 })
 
-require("snacks").setup({ image = { enabled = true } })
+vim.pack.add({ "https://github.com/stevearc/oil.nvim" }, {
+  load = function()
+    vim.cmd.packadd("oil.nvim")
+    local permission_hlgroups = {
+      ["-"] = "NonText",
+      ["r"] = "DiagnosticSignWarn",
+      ["w"] = "DiagnosticSignError",
+      ["x"] = "DiagnosticSignOk",
+    }
+
+    require("oil").setup({
+      columns = {
+        {
+          "permissions",
+          highlight = function(permission_str)
+            local hls = {}
+            for i = 1, #permission_str do
+              local char = permission_str:sub(i, i)
+              table.insert(hls, { permission_hlgroups[char], i - 1, i })
+            end
+            return hls
+          end,
+        },
+        { "size", highlight = "Special" },
+        { "mtime", highlight = "Number" },
+        { "icon", add_padding = true },
+      },
+    })
+  end,
+})
+
+vim.pack.add({ "https://github.com/folke/snacks.nvim" }, {
+  load = function()
+    vim.cmd.packadd("snacks.nvim")
+    require("snacks").setup({ image = { enabled = true } })
+  end,
+})
