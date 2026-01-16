@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+source ~/.profile
+
+if command -v fd 2>/dev/null; then
+    selected=$(fd -t d --max-depth 1 . "$HOME/Projects" |
+        sed 's/\/$//g' |
+        cat - <(echo "$HOME/notes") |
+        fzf --nth=-1 --with-nth=-1 --delimiter=/ --reverse)
+else
+    selected=$(find "$HOME/Projects" -mindepth 1 -maxdepth 1 -type d |
+        sed 's/\/$//g' |
+        cat - <(echo "$HOME/notes") |
+        fzf --nth=-1 --with-nth=-1 --delimiter=/ --reverse)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . -)
+
+while IFS= read -r title; do
+    echo "$title"
+    if [[ $selected_name == "$title" ]]; then
+        kitten @ focus-tab --match=title:"$title"
+        exit 0
+    fi
+done < <(kitten @ ls | jq -r '.[0].tabs.[].title')
+
+if [[ $selected == "$HOME/notes" ]]; then
+    cmd="zsh -lic notes"
+fi
+
+kitten @ launch --type tab --title "$selected_name" --cwd "$selected" $cmd
