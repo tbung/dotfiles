@@ -1,37 +1,52 @@
 vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" }, { load = false })
 
 vim.pack.add({
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
-  "https://github.com/nvim-treesitter/nvim-treesitter-context",
-
   "https://github.com/tpope/vim-fugitive",
   "https://github.com/tpope/vim-eunuch",
   "https://github.com/lewis6991/gitsigns.nvim",
   "https://github.com/sindrets/diffview.nvim",
 })
 
-local group = vim.api.nvim_create_augroup("tillb.pack", {})
+vim.pack.add({
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+  "https://github.com/nvim-treesitter/nvim-treesitter-context",
+}, {
+  load = function()
+    vim.cmd.packadd("nvim-treesitter")
+    vim.cmd.packadd("nvim-treesitter-context")
 
-vim.api.nvim_create_autocmd("BufReadPre", {
-  group = group,
-  callback = function(args)
-    require("nvim-treesitter").install({ vim.treesitter.language.get_lang(vim.bo.filetype) })
-  end,
-})
+    local group = vim.api.nvim_create_augroup("tillb.pack", { clear = true })
 
-vim.api.nvim_create_autocmd("PackChanged", {
-  group = group,
-  callback = function(args)
-    local spec = args.data.spec
+    vim.api.nvim_create_autocmd("FileType", {
+      group = group,
+      callback = function(args)
+        local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
+        local installed = require("nvim-treesitter").get_installed("parsers")
+        if vim.tbl_contains(installed, lang) then
+          return
+        end
+        local langs = require("nvim-treesitter").get_available()
+        if vim.tbl_contains(langs, lang) then
+          require("nvim-treesitter").install({ lang })
+        end
+      end,
+    })
 
-    if spec and spec.name == "nvim-treesitter" and args.data.kind == "update" then
-      vim.notify("nvim-treesitter was updated, updating parsers", vim.log.levels.INFO)
+    vim.api.nvim_create_autocmd("PackChanged", {
+      group = group,
+      callback = function(args)
+        local spec = args.data.spec
 
-      vim.schedule(function()
-        require("nvim-treesitter").update()
-      end)
-    end
-  end,
+        if spec and spec.name == "nvim-treesitter" and args.data.kind == "update" then
+          vim.notify("nvim-treesitter was updated, updating parsers", vim.log.levels.INFO)
+
+          vim.schedule(function()
+            require("nvim-treesitter").update()
+          end)
+        end
+      end,
+    })
+  end
 })
 
 vim.pack.add({ "https://github.com/echasnovski/mini.nvim" }, {
