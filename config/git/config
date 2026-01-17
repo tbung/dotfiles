@@ -32,7 +32,7 @@
 	pl = pull
 	a = add
     l = log --oneline --graph --all
-    la = log --all --graph --pretty=format:'%C(bold black)%ad%Creset %C(auto)%h%d %s %C(bold black)<%aN>%Creset' --date=format-local:'%Y-%m-%d %H:%M'
+    la = log --all --graph --pretty=format:'%C(bold black)%ad%Creset %C(auto)%h%d %s %C(bold black)<%aN>%Creset' --date=format-local:'%Y-%m-%d %H:%M:%S'
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
