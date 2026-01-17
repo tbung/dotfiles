@@ -15,6 +15,9 @@ fi
 
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
+[[ ! "${ZDOTDIR}/.zshrc.zwc" -nt "${ZDOTDIR}/.zshrc" ]] && print "Compiling .zshrc" && zcompile -R -- "${ZDOTDIR}/.zshrc.zwc" "${ZDOTDIR}/.zshrc"
+
+[[ ! ${ZDOTDIR}/.p10k.zsh.zwc -nt ${ZDOTDIR}/.p10k.zsh ]] && print "Compiling .p10k.zsh" && zcompile -R -- ${ZDOTDIR}/.p10k.zsh.zwc ${ZDOTDIR}/.p10k.zsh
 [[ ! -f ${ZDOTDIR}/.p10k.zsh ]] || source ${ZDOTDIR}/.p10k.zsh
 
 # Set up fpath and plugins
@@ -24,9 +27,6 @@ typeset -U path cdpath fpath manpath
 # NOTE: this overwrites some stuff depending on what is in the directory,
 # notably preexec, precmd and some zle functions
 fpath=("${ZDOTDIR}/functions" $fpath)
-
-fpath+="$HOME/.local/bin/completions"
-(( ${+commands[brew]} )) && fpath+="$(brew --prefix)/share/zsh/site-functions"
 
 # compile and autoload all custom functions
 for file in ${ZDOTDIR}/functions/^*.zwc ; do
@@ -39,11 +39,26 @@ load-plugin zsh-users/zsh-completions
 load-plugin zsh-users/zsh-syntax-highlighting
 load-plugin zsh-users/zsh-autosuggestions
 
+fpath+="$HOME/.local/bin/completions"
+
+# FZF
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,spinner:#F5E0DC,hl:#F38BA8 \
+--color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
+--color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
+--color=selected-bg:#45475A \
+--color=border:#6C7086,label:#CDD6F4"
+
+(( ${+commands[fzf]} )) && source <(fzf --zsh)
+
 # Completion
 [[ -d $HOME/.cache/zsh ]] || mkdir -p $HOME/.cache/zsh
 
 autoload -Uz compinit
 compinit -C -d $HOME/.cache/zsh/zcompdump-$EUID-$ZSH_VERSION
+[[ ! "$HOME/.cache/zsh/zcompdump-$EUID-$ZSH_VERSION".zwc -nt "$HOME/.cache/zsh/zcompdump-$EUID-$ZSH_VERSION" ]] && \
+    print "Compiling $HOME/.cache/zsh/zcompdump-$EUID-$ZSH_VERSION" && \
+    zcompile -R -- "$HOME/.cache/zsh/zcompdump-$EUID-$ZSH_VERSION".zwc "$HOME/.cache/zsh/zcompdump-$EUID-$ZSH_VERSION"
 if [[ $EUID != 0 ]]; then
     zstyle ':completion:*' use-cache yes
     zstyle ':completion:*' cache-path $HOME/.cache/zsh/zcompcache
@@ -173,39 +188,4 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     if [[ ! -e "$SSH_AUTH_SOCK" ]]; then
         source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
     fi
-fi
-
-# FZF
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#313244,spinner:#F5E0DC,hl:#F38BA8 \
---color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
---color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
---color=selected-bg:#45475A \
---color=border:#6C7086,label:#CDD6F4"
-# Go install
-if [ -f ~/.fzf.zsh ]; then
-    source ~/.fzf.zsh
-fi
-# brew install
-if [[ -v commands[brew] ]]; then
-    if [ -f $(brew --prefix)/opt/fzf/shell/key-bindings.zsh ]; then
-        source $(brew --prefix)/opt/fzf/shell/key-bindings.zsh
-    fi
-    if [ -f $(brew --prefix)/opt/fzf/shell/completion.zsh ]; then
-        source $(brew --prefix)/opt/fzf/shell/completion.zsh
-    fi
-fi
-# apt install
-if [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-fi
-if [ -f /usr/share/doc/fzf/examples/completion.zsh ]; then
-    source /usr/share/doc/fzf/examples/completion.zsh
-fi
-# pacman install
-if [ -f /usr/share/fzf/key-bindings.zsh ]; then
-    source /usr/share/fzf/key-bindings.zsh
-fi
-if [ -f /usr/share/fzf/completion.zsh ]; then
-    source /usr/share/fzf/completion.zsh
 fi

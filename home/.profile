@@ -26,6 +26,10 @@ if [ "$(uname -s)" = "Darwin" ]; then
     export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin${PATH:+:}$PATH"
     export PATH="/opt/homebrew/opt/curl/bin${PATH:+:}$PATH"
     export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
+    if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+      . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+    fi
+    command -v nix >/dev/null && export FPATH="$FPATH${FPATH:+:}/nix/var/nix/profiles/default/share/zsh/site-functions"
 fi
 
 export PATH="$HOME/.local/bin${PATH:+:}$PATH"
