@@ -1,3 +1,5 @@
+config/karabiner/assets/*
+config/karabiner/automatic_backups/*
 config/kitty/themes/*
 config/kitty/kitty.d/*
 config/kitty/kitty.conf.bak
